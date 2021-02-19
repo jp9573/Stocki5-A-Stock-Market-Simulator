@@ -31,6 +31,6 @@ deploy:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
   only:
-    - feature/springmvc-project-init
+    - develop
   tags:
     - dalfcs_gitlab_docker_ci
