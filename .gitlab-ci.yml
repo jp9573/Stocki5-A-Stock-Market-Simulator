@@ -33,4 +33,4 @@ deploy:
   only:
     - feature/springmvc-project-init
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
