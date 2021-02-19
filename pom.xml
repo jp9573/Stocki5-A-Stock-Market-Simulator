@@ -3,7 +3,7 @@
   <groupId>stocki5</groupId>
   <artifactId>stocki5</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+<!--  <packaging>war</packaging>-->
   <dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 		<dependency>
