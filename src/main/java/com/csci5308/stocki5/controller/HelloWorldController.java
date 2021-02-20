@@ -6,14 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.csci5308.stocki5.config.Stocki5DbConnection;
 import com.csci5308.stocki5.model.HelloWorld;
 
 @Controller
