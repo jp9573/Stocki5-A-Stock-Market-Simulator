@@ -89,18 +89,18 @@
 	</profiles>
 	<build>
 		<filters>
-			<filter>src/resources/config.${env}.properties</filter>
+			<filter>src/main/resources/config.${env}.properties</filter>
 		</filters>
 		<resources>
 			<resource>
-				<directory>src/resources</directory>
+				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
 					<include>*.properties</include>
 				</includes>
 			</resource>
 		</resources>
-    <sourceDirectory>src</sourceDirectory>
+    <sourceDirectory>src/main/java</sourceDirectory>
     <plugins>
       <!-- <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
