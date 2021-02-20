@@ -5,10 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 
-@Service
+@Configuration
 public class Stocki5DbConnection {
+
+	@Value("${jdbc.driverClassName}")
+	private String driver;
+
 	@Value("${jdbc.url}")
 	private String database;
 
@@ -20,9 +24,14 @@ public class Stocki5DbConnection {
 
 	public Connection createConnection() {
 		Connection connection = null;
-		System.out.println(database + username + password);
 		try {
-			connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
+			try {
+				Class.forName(driver);
+				connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
+				System.out.println(connection);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
