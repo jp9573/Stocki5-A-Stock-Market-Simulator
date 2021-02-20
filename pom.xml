@@ -46,8 +46,60 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
-	</dependencies>
-  <build>
+
+	  <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	  <dependency>
+		  <groupId>mysql</groupId>
+		  <artifactId>mysql-connector-java</artifactId>
+		  <version>8.0.23</version>
+	  </dependency>
+
+	  <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-jdbc</artifactId>
+		  <version>5.2.12.RELEASE</version>
+	  </dependency>
+
+  </dependencies>
+	<profiles>
+		<profile>
+			<id>devint</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<env>devint</env>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>production</id>
+			<properties>
+				<env>production</env>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<filters>
+			<filter>src/resources/config.${env}.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<directory>src/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>*.properties</include>
+				</includes>
+			</resource>
+		</resources>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <!-- <plugin>
@@ -104,4 +156,5 @@
 			</plugin>
     </plugins>
   </build>
+
 </project>
