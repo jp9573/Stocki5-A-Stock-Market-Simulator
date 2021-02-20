@@ -1,19 +1,13 @@
 package com.csci5308.stocki5.controller;
 
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 public class main {
     public static void main(String[] args) {
         main app = new main();
-        Properties prop = app.loadPropertiesFile("config.devint.properties");
+        Properties prop = app.loadPropertiesFile("config.properties");
         prop.forEach((k, v) -> System.out.println(k + ":" + v));
     }
 
