@@ -4,7 +4,7 @@ variables:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile -P env=test
+    - mvn $MAVEN_CLI_OPTS compile -Ptest -DprofileIdEnabled=true
   tags:
     - ugrad
   only:
