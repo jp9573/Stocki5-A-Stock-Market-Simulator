@@ -6,7 +6,7 @@ build:
   script:
     - mvn $MAVEN_CLI_OPTS compile -Ptest -DprofileIdEnabled=true
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
   only:
     - develop
 
@@ -22,7 +22,7 @@ test:
       junit:
         - target/surefire-reports/TEST-*.xml
   tags:
-    - dalfcs_docker_kvm
+    - ugrad
 
 deploy:
   stage: deploy
