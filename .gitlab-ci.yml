@@ -4,14 +4,16 @@ variables:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile
+    - mvn $MAVEN_CLI_OPTS compile -P test
   tags:
     - ugrad
+  only:
+    - develop
 
 test:
   stage: test
   script:
-    - mvn verify
+    - mvn verify -P test
   artifacts:
     when: always
     paths:
