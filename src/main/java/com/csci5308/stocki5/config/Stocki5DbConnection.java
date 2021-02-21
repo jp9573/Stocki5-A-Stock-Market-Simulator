@@ -23,12 +23,13 @@ public class Stocki5DbConnection {
 	private String password;
 
 	public Connection createConnection() {
+		System.out.println(driver+" "+database+" "+username+" "+password);
 		Connection connection = null;
 		try {
 			try {
 				Class.forName(driver);
 				connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
-				System.out.println(connection);
+
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
