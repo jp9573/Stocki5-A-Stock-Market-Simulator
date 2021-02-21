@@ -4,7 +4,7 @@ variables:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS compile -P test
+    - mvn $MAVEN_CLI_OPTS compile -P env=test
   tags:
     - ugrad
   only:
@@ -13,7 +13,7 @@ build:
 test:
   stage: test
   script:
-    - mvn verify -P test
+    - mvn verify -P env=test
   artifacts:
     when: always
     paths:
