@@ -28,6 +28,7 @@ deploy:
   stage: deploy
   image: ruby:2.6
   script:
+    - mvn package -Ptest -DprofileIdEnabled=true
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
