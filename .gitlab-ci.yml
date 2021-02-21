@@ -6,14 +6,14 @@ build:
   script:
     - mvn $MAVEN_CLI_OPTS compile -Ptest -DprofileIdEnabled=true
   tags:
-    - ugrad
+    - dalfcs_docker_kvm
   only:
     - develop
 
 test:
   stage: test
   script:
-    - mvn verify -P env=test
+    - mvn verify -Ptest -DprofileIdEnabled=true
   artifacts:
     when: always
     paths:
@@ -22,7 +22,7 @@ test:
       junit:
         - target/surefire-reports/TEST-*.xml
   tags:
-    - ugrad
+    - dalfcs_docker_kvm
 
 deploy:
   stage: deploy
@@ -35,4 +35,4 @@ deploy:
   only:
     - develop
   tags:
-    - dalfcs_gitlab_docker_ci
+    - dalfcs_docker_kvm
