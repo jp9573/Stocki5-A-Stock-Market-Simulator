@@ -60,9 +60,6 @@
 	<profiles>
 		<profile>
 			<id>devint</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
 				<env>devint</env>
 			</properties>
@@ -75,6 +72,9 @@
 		</profile>
 		<profile>
 			<id>test</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<env>test</env>
 			</properties>
