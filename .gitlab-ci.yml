@@ -6,8 +6,6 @@ build:
   script:
     - mvn -Denv=test $MAVEN_CLI_OPTS compile
   tags:
-    - ugrad
-  only:
     - dalfcs_gitlab_docker_ci
 
 test:
