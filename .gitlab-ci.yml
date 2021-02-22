@@ -8,7 +8,7 @@ build:
   tags:
     - ugrad
   only:
-    - develop
+    - dalfcs_gitlab_docker_ci
 
 test:
   stage: test
@@ -22,7 +22,7 @@ test:
       junit:
         - target/surefire-reports/TEST-*.xml
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
 
 deploy:
   stage: deploy
