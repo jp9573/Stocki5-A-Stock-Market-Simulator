@@ -6,7 +6,7 @@ build:
   script:
     - mvn -Denv=test $MAVEN_CLI_OPTS compile
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
 
 test:
   stage: test
@@ -20,7 +20,7 @@ test:
       junit:
         - target/surefire-reports/TEST-*.xml
   tags:
-    - dalfcs_gitlab_docker_ci
+    - ugrad
 
 deploy:
   stage: deploy
