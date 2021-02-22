@@ -22,6 +22,8 @@ public class HelloWorldController {
 
 	@RequestMapping("/helloworld")
 	public String handler(Model model) throws SQLException {
+		int id =0;
+		String name = "";
 		HelloWorld helloWorld = new HelloWorld();
 
 		Connection c = stocki5DbConnection.createConnection();
@@ -30,10 +32,12 @@ public class HelloWorldController {
 		while (resultSet.next()) {
 			System.out.println(resultSet.getInt("id"));
 			System.out.println(resultSet.getString("name"));
+			id = resultSet.getInt("id");
+			name = resultSet.getString("name");
 		}
 		stocki5DbConnection.closeConnection(c);
 
-		helloWorld.setMessage("Hello World Example Using Spring MVC 5!!!");
+		helloWorld.setMessage("Hello World Example Using Spring MVC 5!!! "+id+" "+name);
 		helloWorld.setDateTime(LocalDateTime.now().toString());
 		model.addAttribute("helloWorld", helloWorld);
 
