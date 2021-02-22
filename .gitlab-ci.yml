@@ -7,8 +7,6 @@ build:
     - mvn -Denv=test $MAVEN_CLI_OPTS compile
   tags:
     - ugrad
-  only:
-    - develop
 
 test:
   stage: test
