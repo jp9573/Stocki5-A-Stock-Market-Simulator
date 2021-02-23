@@ -4,14 +4,14 @@ variables:
 build:
   stage: build
   script:
-    - mvn -Denv=test $MAVEN_CLI_OPTS compile
+    - mvn $MAVEN_CLI_OPTS compile
   tags:
     - ugrad
 
 test:
   stage: test
   script:
-    - mvn -Denv=test verify
+    - mvn verify
   artifacts:
     when: always
     paths:
