@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class UserCode extends User
 {
-	public String generateUserCode()
+	public final void generateUserCode()
 	{
 		if (null != super.getFirstName() && null != super.getLastName())
 		{
@@ -14,8 +14,7 @@ public class UserCode extends User
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 			String date = simpleDateFormat.format(new Date());
 			String userCode = String.valueOf(firstNameFirstChar) + String.valueOf(lastNameFirstChar) + date;
-			return userCode.toUpperCase();
+			super.setUserCode(userCode.toUpperCase());
 		}
-		return null;
 	}
 }

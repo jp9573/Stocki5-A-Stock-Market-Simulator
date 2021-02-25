@@ -3,6 +3,7 @@ package com.csci5308.stocki5.user;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController
 {
+	@Autowired
+	UserDb userDb;
+	
+	@Autowired
+	UserSignUp userSignUp;
 
 	@RequestMapping(value = "/signupuser", method = RequestMethod.POST)
 	public ModelAndView signUpUser(@RequestParam(value = "firstName", required = true) String firstName,
@@ -36,7 +42,7 @@ public class UserController
 		model.addObject("password", password);
 		model.addObject("confirmPassword", confirmPassword);
 
-		User user = new User();
+		UserCode user = new UserCode();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setContactNo(contactNumber);
@@ -46,6 +52,7 @@ public class UserController
 		user.setCountry(country);
 		user.setPassword(password);
 		user.setConfirmPassword(confirmPassword);
+		user.setGender(gender);
 		try
 		{
 			user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
@@ -56,7 +63,6 @@ public class UserController
 			model.setViewName("signup");
 			return model;
 		}
-		user.setGender(gender);
 
 		String isValid = user.validate();
 
@@ -66,6 +72,8 @@ public class UserController
 			model.setViewName("signup");
 			return model;
 		}
+		
+		userSignUp.addUser(userDb, user);
 		
 		model.setViewName("index");
 		return model;

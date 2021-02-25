@@ -10,7 +10,8 @@ public class UserCodeTest
 	@Test
 	public void generateUserCodeTestNegative()
 	{
-		Assert.assertNull(userCode.generateUserCode());
+		userCode.generateUserCode();
+		Assert.assertNull(userCode.getUserCode());
 	}
 
 	@Test
@@ -18,6 +19,7 @@ public class UserCodeTest
 	{
 		userCode.setFirstName("John");
 		userCode.setLastName("Doe");
-		Assert.assertNotNull(userCode.generateUserCode());
+		userCode.generateUserCode();
+		Assert.assertNotNull(userCode.getUserCode());
 	}
 }
