@@ -41,6 +41,8 @@ public class User
 
 	private double funds;
 
+	private String role;
+
 	public final String getUserCode()
 	{
 		return userCode;
@@ -211,6 +213,16 @@ public class User
 		this.funds = funds;
 	}
 
+	public String getRole()
+	{
+		return role;
+	}
+
+	public void setRole(String role)
+	{
+		this.role = role;
+	}
+
 	public final String validate()
 	{
 		EmailValidator eValidator = EmailValidator.getInstance();
@@ -239,14 +251,15 @@ public class User
 		{
 			return "State/Province cannot be less than 3 characters or more than 20 characters.";
 		}
-		
+
 		Date date = new Date();
 		long diffInMilliSeconds = date.getTime() - this.getDateOfBirth().getTime();
 		long diff = TimeUnit.DAYS.convert(diffInMilliSeconds, TimeUnit.MILLISECONDS);
-		if(diff <= 0) {
+		if (diff <= 0)
+		{
 			return "Invalid Date of Birth.";
 		}
-		if(diff < 6570 )
+		if (diff < 6570)
 		{
 			return "Minimum age to sign up with STOCKI5 is 18 years or above.";
 		}

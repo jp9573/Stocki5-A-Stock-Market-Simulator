@@ -19,17 +19,11 @@ public class UserDb implements UserDbInterface
 	@Override
 	public boolean insertUser(User user)
 	{
-		user.setFunds(50000.0);
-		user.setInternationalCommodityExchange(1);
-		user.setInternationalDerivativeExchange(1);
-		user.setInternationalStockExchange(1);
-		user.setForeignExchange(1);
-
 		Connection connection = dbConnection.createConnection();
 
 		try
 		{
-			String insertUserSql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String insertUserSql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insertUserSql);
 
 			statement.setString(1, user.getUserCode());
@@ -49,6 +43,7 @@ public class UserDb implements UserDbInterface
 			statement.setInt(15, user.getInternationalDerivativeExchange());
 			statement.setInt(16, user.getForeignExchange());
 			statement.setDouble(17, user.getFunds());
+			statement.setString(18, user.getRole());
 			int userCount = statement.executeUpdate();
 			if (userCount > 0)
 			{
