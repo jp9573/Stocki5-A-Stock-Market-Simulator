@@ -22,7 +22,7 @@ test:
   tags:
     - ugrad
 
-deploy:
+deploy_develop:
   stage: deploy
   image: ruby:2.6
   script:
@@ -35,7 +35,7 @@ deploy:
   tags:
     - dalfcs_docker_kvm
     
-deploy:
+deploy_release:
   stage: deploy
   image: ruby:2.6
   script:
