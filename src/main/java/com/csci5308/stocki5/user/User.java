@@ -239,6 +239,17 @@ public class User
 		{
 			return "State/Province cannot be less than 3 characters or more than 20 characters.";
 		}
+		
+		Date date = new Date();
+		long diffInMilliSeconds = date.getTime() - this.getDateOfBirth().getTime();
+		long diff = TimeUnit.DAYS.convert(diffInMilliSeconds, TimeUnit.MILLISECONDS);
+		if(diff <= 0) {
+			return "Invalid Date of Birth.";
+		}
+		if(diff < 6570 )
+		{
+			return "Minimum age to sign up with STOCKI5 is 18 years or above.";
+		}
 
 		if (this.getPassword().length() < 8 || this.getPassword().length() > 20)
 		{
@@ -250,17 +261,6 @@ public class User
 			return "Password and confirm password missmatch.";
 		}
 
-		Date date = new Date();
-		long diffInMilliSeconds = date.getTime() - this.getDateOfBirth().getTime();
-		long diff = TimeUnit.DAYS.convert(diffInMilliSeconds, TimeUnit.MILLISECONDS);
-		if(diff <= 0) {
-			return "Invalid Date of Birth.";
-		}
-		if(diff < 6570 )
-		{
-			return "Minimum age to sign up with STOCKI5 is 18 years or above.";
-		}
-		
 		return "valid";
 	}
 }
