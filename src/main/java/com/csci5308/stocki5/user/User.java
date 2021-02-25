@@ -40,177 +40,177 @@ public class User
 
 	private double funds;
 
-	public String getUserCode()
+	public final String getUserCode()
 	{
 		return userCode;
 	}
 
-	public void setUserCode(String userCode)
+	public final void setUserCode(String userCode)
 	{
 		this.userCode = userCode;
 	}
 
-	public String getFirstName()
+	public final String getFirstName()
 	{
 		return firstName;
 	}
 
-	public void setFirstName(String firstName)
+	public final void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
 
-	public String getLastName()
+	public final String getLastName()
 	{
 		return lastName;
 	}
 
-	public void setLastName(String lastName)
+	public final void setLastName(String lastName)
 	{
 		this.lastName = lastName;
 	}
 
-	public String getEmailId()
+	public final String getEmailId()
 	{
 		return emailId;
 	}
 
-	public void setEmailId(String emailId)
+	public final void setEmailId(String emailId)
 	{
 		this.emailId = emailId;
 	}
 
-	public String getContactNo()
+	public final String getContactNo()
 	{
 		return contactNo;
 	}
 
-	public void setContactNo(String contactNo)
+	public final void setContactNo(String contactNo)
 	{
 		this.contactNo = contactNo;
 	}
 
-	public String getPassword()
+	public final String getPassword()
 	{
 		return password;
 	}
 
-	public void setPassword(String password)
+	public final void setPassword(String password)
 	{
 		this.password = password;
 	}
 
-	public String getConfirmPassword()
+	public final String getConfirmPassword()
 	{
 		return confirmPassword;
 	}
 
-	public void setConfirmPassword(String confirmPassword)
+	public final void setConfirmPassword(String confirmPassword)
 	{
 		this.confirmPassword = confirmPassword;
 	}
 
-	public Date getDateOfBirth()
+	public final Date getDateOfBirth()
 	{
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth)
+	public final void setDateOfBirth(Date dateOfBirth)
 	{
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public String getGender()
+	public final String getGender()
 	{
 		return gender;
 	}
 
-	public void setGender(String gender)
+	public final void setGender(String gender)
 	{
 		this.gender = gender;
 	}
 
-	public String getAddress()
+	public final String getAddress()
 	{
 		return address;
 	}
 
-	public void setAddress(String address)
+	public final void setAddress(String address)
 	{
 		this.address = address;
 	}
 
-	public String getProvince()
+	public final String getProvince()
 	{
 		return province;
 	}
 
-	public void setProvince(String province)
+	public final void setProvince(String province)
 	{
 		this.province = province;
 	}
 
-	public String getCountry()
+	public final String getCountry()
 	{
 		return country;
 	}
 
-	public void setCountry(String country)
+	public final void setCountry(String country)
 	{
 		this.country = country;
 	}
 
-	public boolean isInternationalStockExchange()
+	public final boolean isInternationalStockExchange()
 	{
 		return internationalStockExchange;
 	}
 
-	public void setInternationalStockExchange(boolean internationalStockExchange)
+	public final void setInternationalStockExchange(boolean internationalStockExchange)
 	{
 		this.internationalStockExchange = internationalStockExchange;
 	}
 
-	public boolean isInternationalDerivativeExchange()
+	public final boolean isInternationalDerivativeExchange()
 	{
 		return internationalDerivativeExchange;
 	}
 
-	public void setInternationalDerivativeExchange(boolean internationalDerivativeExchange)
+	public final void setInternationalDerivativeExchange(boolean internationalDerivativeExchange)
 	{
 		this.internationalDerivativeExchange = internationalDerivativeExchange;
 	}
 
-	public boolean isInternationalCommodityExchange()
+	public final boolean isInternationalCommodityExchange()
 	{
 		return internationalCommodityExchange;
 	}
 
-	public void setInternationalCommodityExchange(boolean internationalCommodityExchange)
+	public final void setInternationalCommodityExchange(boolean internationalCommodityExchange)
 	{
 		this.internationalCommodityExchange = internationalCommodityExchange;
 	}
 
-	public boolean isForeignExchange()
+	public final boolean isForeignExchange()
 	{
 		return foreignExchange;
 	}
 
-	public void setForeignExchange(boolean foreignExchange)
+	public final void setForeignExchange(boolean foreignExchange)
 	{
 		this.foreignExchange = foreignExchange;
 	}
 
-	public double getFunds()
+	public final double getFunds()
 	{
 		return funds;
 	}
 
-	public void setFunds(double funds)
+	public final void setFunds(double funds)
 	{
 		this.funds = funds;
 	}
 
-	public String validate()
+	public final String validate()
 	{
 		EmailValidator eValidator = EmailValidator.getInstance();
 		if (!eValidator.isValid(this.getEmailId()))
