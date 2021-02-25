@@ -15,7 +15,7 @@ public class UserSignUpController
 {
 	@Autowired
 	UserDb userDb;
-	
+
 	@Autowired
 	UserSignUp userSignUp;
 
@@ -72,9 +72,16 @@ public class UserSignUpController
 			model.setViewName("signup");
 			return model;
 		}
-		
-		userSignUp.addUser(userDb, user);
-		
+
+		boolean isUserAdded = userSignUp.addUser(userDb, user);
+
+		if (!isUserAdded)
+		{
+			model.addObject("error", "Error in adding user. Please try again later.");
+			model.setViewName("signup");
+			return model;
+		}
+
 		model.setViewName("index");
 		return model;
 	}
