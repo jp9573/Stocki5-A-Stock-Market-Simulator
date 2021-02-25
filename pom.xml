@@ -56,6 +56,27 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.2.12.RELEASE</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
 	</dependencies>
 	<profiles>
 		<profile>
@@ -93,7 +114,7 @@
 				</includes>
 			</resource>
 		</resources>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -142,20 +163,6 @@
 					<testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>
 				</configuration>
 			</plugin>
-			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-help-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>show-profiles</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>active-profiles</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 		</plugins>
 	</build>
 

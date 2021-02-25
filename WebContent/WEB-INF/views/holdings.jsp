@@ -6,9 +6,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Stocki5</title>
+<link rel="stylesheet" href="resources/css/main.css">
 </head>
 <body>
-	<h2>${helloWorld.message}</h2>
-	<h4>Server date time is : ${helloWorld.dateTime}</h4>
+	<%@ include file="header.jsp"%>
+	<h2>Holdings</h2>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

@@ -18,15 +18,18 @@ import org.springframework.web.servlet.view.JstlView;
 @PropertySource(value = { "classpath:config.properties" })
 @Import({ Stocki5DbConnection.class })
 @ComponentScan(basePackages = { "com.csci5308.stocki5" })
-public class Stocki5AppConfig implements WebMvcConfigurer {
+public class Stocki5AppConfig implements WebMvcConfigurer
+{
 
 	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
+	{
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 
 	@Bean
-	public InternalResourceViewResolver resolver() {
+	public InternalResourceViewResolver resolver()
+	{
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/views/");
@@ -35,7 +38,8 @@ public class Stocki5AppConfig implements WebMvcConfigurer {
 	}
 
 	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
+	public void addViewControllers(ViewControllerRegistry registry)
+	{
 		registry.addViewController("/").setViewName("index");
 		registry.addViewController("/login").setViewName("index");
 		registry.addViewController("/signup").setViewName("signup");
@@ -48,7 +52,8 @@ public class Stocki5AppConfig implements WebMvcConfigurer {
 	}
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(ResourceHandlerRegistry registry)
+	{
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
