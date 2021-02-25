@@ -17,11 +17,11 @@ public class User
 	private String contactNo;
 
 	private String password;
-	
+
 	private String confirmPassword;
 
 	private Date dateOfBirth;
-	
+
 	private String gender;
 
 	private String address;
@@ -30,13 +30,13 @@ public class User
 
 	private String country;
 
-	private boolean internationalStockExchange;
+	private int internationalStockExchange;
 
-	private boolean internationalDerivativeExchange;
+	private int internationalDerivativeExchange;
 
-	private boolean internationalCommodityExchange;
+	private int internationalCommodityExchange;
 
-	private boolean foreignExchange;
+	private int foreignExchange;
 
 	private double funds;
 
@@ -160,42 +160,42 @@ public class User
 		this.country = country;
 	}
 
-	public final boolean isInternationalStockExchange()
+	public int getInternationalStockExchange()
 	{
 		return internationalStockExchange;
 	}
 
-	public final void setInternationalStockExchange(boolean internationalStockExchange)
+	public void setInternationalStockExchange(int internationalStockExchange)
 	{
 		this.internationalStockExchange = internationalStockExchange;
 	}
 
-	public final boolean isInternationalDerivativeExchange()
+	public int getInternationalDerivativeExchange()
 	{
 		return internationalDerivativeExchange;
 	}
 
-	public final void setInternationalDerivativeExchange(boolean internationalDerivativeExchange)
+	public void setInternationalDerivativeExchange(int internationalDerivativeExchange)
 	{
 		this.internationalDerivativeExchange = internationalDerivativeExchange;
 	}
 
-	public final boolean isInternationalCommodityExchange()
+	public int getInternationalCommodityExchange()
 	{
 		return internationalCommodityExchange;
 	}
 
-	public final void setInternationalCommodityExchange(boolean internationalCommodityExchange)
+	public void setInternationalCommodityExchange(int internationalCommodityExchange)
 	{
 		this.internationalCommodityExchange = internationalCommodityExchange;
 	}
 
-	public final boolean isForeignExchange()
+	public int getForeignExchange()
 	{
 		return foreignExchange;
 	}
 
-	public final void setForeignExchange(boolean foreignExchange)
+	public void setForeignExchange(int foreignExchange)
 	{
 		this.foreignExchange = foreignExchange;
 	}
@@ -233,7 +233,7 @@ public class User
 		{
 			return "Last name cannot be less than 3 characters or more than 20 characters.";
 		}
-		
+
 		if (this.getProvince().length() < 3 || this.getProvince().length() > 20)
 		{
 			return "State/Province cannot be less than 3 characters or more than 20 characters.";
@@ -243,7 +243,7 @@ public class User
 		{
 			return "Password cannot be less than 8 characters or more than 20 characters.";
 		}
-		
+
 		if (!this.getPassword().equals(this.getConfirmPassword()))
 		{
 			return "Password and confirm password missmatch.";
