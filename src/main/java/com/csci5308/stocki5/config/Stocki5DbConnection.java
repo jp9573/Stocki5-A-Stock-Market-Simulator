@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Stocki5DbConnection {
+public class Stocki5DbConnection
+{
 
 	@Value("${jdbc.driverClassName}")
 	private String driver;
@@ -22,27 +23,35 @@ public class Stocki5DbConnection {
 	@Value("${jdbc.password}")
 	private String password;
 
-	public Connection createConnection() {
-		System.out.println(driver+" "+database+" "+username+" "+password);
+	public Connection createConnection()
+	{
+		System.out.println(driver + " " + database + " " + username + " " + password);
 		Connection connection = null;
-		try {
-			try {
+		try
+		{
+			try
+			{
 				Class.forName(driver);
 				connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
 
-			} catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e)
+			{
 				e.printStackTrace();
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 		return connection;
 	}
 
-	public void closeConnection(Connection connection) {
-		try {
+	public void closeConnection(Connection connection)
+	{
+		try
+		{
 			connection.close();
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 		}
 	}
