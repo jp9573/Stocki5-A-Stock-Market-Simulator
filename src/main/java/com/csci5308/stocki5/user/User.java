@@ -1,6 +1,7 @@
 package com.csci5308.stocki5.user;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -249,6 +250,17 @@ public class User
 			return "Password and confirm password missmatch.";
 		}
 
+		Date date = new Date();
+		long diffInMilliSeconds = date.getTime() - this.getDateOfBirth().getTime();
+		long diff = TimeUnit.DAYS.convert(diffInMilliSeconds, TimeUnit.MILLISECONDS);
+		if(diff <= 0) {
+			return "Invalid Date of Birth.";
+		}
+		if(diff < 6570 )
+		{
+			return "Minimum age to sign up with STOCKI5 is 18 years or above.";
+		}
+		
 		return "valid";
 	}
 }
