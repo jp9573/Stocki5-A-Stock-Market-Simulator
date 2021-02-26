@@ -3,6 +3,7 @@ package com.csci5308.stocki5.user;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public class UserCode extends User
 {
 	public final void generateUserCode()
