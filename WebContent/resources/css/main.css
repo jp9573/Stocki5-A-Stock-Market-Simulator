@@ -57,7 +57,7 @@ body {
 	align-items: center;
 }
 
-.login-input {
+.form-group {
 	display: block;
 	height: 30px;
 	border: 2px solid #002366;
@@ -130,7 +130,7 @@ body {
 	text-decoration: none !important;
 }
 
-.signup-input {
+.form-control {
 	display: block;
 	height: 15px;
 	border: 2px solid #002366;
