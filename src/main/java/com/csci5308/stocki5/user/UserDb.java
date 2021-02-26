@@ -3,7 +3,9 @@ package com.csci5308.stocki5.user;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -73,8 +75,28 @@ public class UserDb implements UserDbInterface
 	@Override
 	public User getUser(String userCode)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = dbConnection.createConnection();
+
+		try
+		{
+			UserCode user = new UserCode();
+			Statement statement = connection.createStatement();
+			String selectUserSql = "SELECT * FROM user WHERE userCode='" + userCode + "'";
+			ResultSet resultSet = statement.executeQuery(selectUserSql);
+			while (resultSet.next())
+			{
+				user.setUserCode(resultSet.getString("userCode"));
+				user.setPassword(resultSet.getString("password"));
+			}
+			return user;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return null;
+		} finally
+		{
+			dbConnection.closeConnection(connection);
+		}
 	}
 
 }
