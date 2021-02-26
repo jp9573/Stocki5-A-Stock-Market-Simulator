@@ -14,7 +14,7 @@ public class UserDbMock implements UserDbInterface
 	public boolean updateUser(User user)
 	{
 		System.out.println(user.getUserCode());
-		return false;
+		return true;
 	}
 
 	@Override
