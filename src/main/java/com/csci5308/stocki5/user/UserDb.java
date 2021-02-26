@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -142,4 +144,38 @@ public class UserDb implements UserDbInterface {
         }
     }
 
+    @Override
+    public User getUserByEmail(String email){
+        Connection connection = dbConnection.createConnection();
+        try {
+            UserCode user = new UserCode();
+            Statement statement = connection.createStatement();
+            String selectSql = "SELECT * FROM user where emailid='" + email + "'";
+            ResultSet resultSet = statement.executeQuery(selectSql);
+            while (resultSet.next()) {
+                user.setUserCode(resultSet.getString("userCode"));
+                user.setPassword(resultSet.getString("password"));
+                user.setFirstName(resultSet.getString("firstName"));
+                user.setLastName(resultSet.getString("lastName"));
+                user.setEmailId(resultSet.getString("emailId"));
+                user.setContactNo(resultSet.getString("contactNo"));
+                user.setGender(resultSet.getString("gender"));
+                user.setCountry(resultSet.getString("country"));
+                user.setAddress(resultSet.getString("address"));
+                user.setProvince(resultSet.getString("province"));
+                user.setDateOfBirth(resultSet.getDate("dateOfBirth"));
+                user.setInternationalStockExchange(resultSet.getInt("internationalStockExchange"));
+                user.setInternationalDerivativeExchange(resultSet.getInt("internationalDerivativeExchange"));
+                user.setInternationalCommodityExchange(resultSet.getInt("internationalCommodityExchange"));
+                user.setForeignExchange(resultSet.getInt("foreignExchange"));
+            }
+            return user;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+        finally {
+            dbConnection.closeConnection(connection);
+        }
+    }
 }
