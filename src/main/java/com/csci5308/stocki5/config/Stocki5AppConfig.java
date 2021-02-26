@@ -40,8 +40,6 @@ public class Stocki5AppConfig implements WebMvcConfigurer
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry)
 	{
-		registry.addViewController("/").setViewName("index");
-		registry.addViewController("/login").setViewName("index");
 		registry.addViewController("/signup").setViewName("signup");
 		registry.addViewController("/stocks").setViewName("stocks");
 		registry.addViewController("/orders").setViewName("orders");

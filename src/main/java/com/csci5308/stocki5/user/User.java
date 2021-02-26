@@ -1,11 +1,16 @@
 package com.csci5308.stocki5.user;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User
+@SuppressWarnings("serial")
+public class User implements UserDetails
 {
 	private String userCode;
 
@@ -275,5 +280,41 @@ public class User
 		}
 
 		return "valid";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities()
+	{
+		return new HashSet<GrantedAuthority>();
+	}
+
+	@Override
+	public String getUsername()
+	{
+		return this.getUserCode();
+	}
+
+	@Override
+	public boolean isAccountNonExpired()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled()
+	{
+		return true;
 	}
 }

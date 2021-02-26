@@ -10,14 +10,15 @@
 </head>
 <body>
 	<div class="login-container">
-		<form class="login-form">
+		<form class="login-form" name="login" action="<c:url value='/login' />" method='POST'>
 		<div class="login-title">STOCKI5</div>
-			<input class="login-input" id="username" name="username" type="text" placeholder="User Code"/> <input
-				class="login-input login-last-input" id="password" name="password" type="password" placeholder="Password"/> <input
-				class="login-button" value="Log In" onclick="login()" />
-				<a class="signup-link" href="signup">
+			<input class="login-input" id="username" name="username" type="text" placeholder="User Code"/>
+			<input class="login-input login-last-input" id="password" name="password" type="password" placeholder="Password"/>
+			<input class="login-button" name="submit" type="submit" value="Log In" />
+			<a class="signup-link" href="signup">
 				<span>Sign Up</span>
-				</a>
+			</a>
+			<c:if test="${not empty error}"><div class="errormsg">${error}</div></c:if>
 		</form>
 	</div>
 </body>
