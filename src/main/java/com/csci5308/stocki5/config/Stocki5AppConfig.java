@@ -46,6 +46,7 @@ public class Stocki5AppConfig implements WebMvcConfigurer
 		registry.addViewController("/holdings").setViewName("holdings");
 		registry.addViewController("/prediction").setViewName("prediction");
 		registry.addViewController("/hello").setViewName("helloworld");
+		registry.addViewController("/forgotuser").setViewName("forgotuser");
 	}
 
 	@Override
