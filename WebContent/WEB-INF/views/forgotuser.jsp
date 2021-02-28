@@ -6,41 +6,44 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Stocki5</title>
-    <%--    <link rel="stylesheet" href="resources/css/main.css">--%>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container", style="border-style:solid ; padding: 5px ; margin-top: 5px">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <form name="login" action="<c:url value='forgotuser' />" method='POST'>
-            <h1 class="text-center">STOCKI5</h1>
-            <proc:if test="${not empty error}">
-            <div class="alert alert-danger"
-                 role="alert" ${not empty error ? '' : 'hidden="hidden"' }>${error}</div>
-            </proc:if>
-            <proc:if test="${not empty success}">
-            <div class="alert alert-success"
-                 role="alert"  ${not empty success ? '' : 'hidden="hidden"' }>${success}</div>
-            </proc:if>
-            <div class="form-group">
-                <input class="form-control" id="emailId" name="emailId" type="text" placeholder="Email Id"
-                       value="${emailId}"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" id="dob" name="dob" type="date" placeholder="Date of Birth"/>
-            </div>
-            <div class="form-group">
-                <!-- <input class="signup-input" id="gender" name="gender" type="text" placeholder="Gender"/>  -->
-                <button type="submit" class="btn btn-primary my-1" >Get UserCode</button>
-            </div>
-        <div class="col-sm-4">
-        </div>
-    </div>
+<div class="container" style="display: flex; align-items: center !important; justify-content: center; height: 100vh;">
+	<div class="row" style="text-align: center; -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); padding: 40px; border-radius: 5px;">
+		<div class="col-sm-12 col-md-12 col-lg-12">
+			<h1 style="color: #337ab7; margin-bottom: 20px;">STOCKI5 FORGOT USER CODE</h1>
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-12">
+			<form name="forgotusercode" action="<c:url value='forgotuser' />" method='POST'>
+			    <div class="input-group">
+			      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			      <input id="emailId" name="emailId" type="text" placeholder="Email Id" value="${emailId}" class="form-control input-lg">
+			    </div>
+			    <br>
+			    <div class="input-group">
+			      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			      <input id="dob" name="dob" type="date" placeholder="Date of Birth" class="form-control input-lg">
+			    </div>
+			    <br>
+			    <div class="input-group" style="display: flex; justify-content: center;">
+			    	<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+			    </div>
+			    <br>
+			    <h5>Go to&nbsp;<a href="login">Log&nbsp;In</a></h5>
+			    <proc:if test="${not empty error}">
+				    <div class="alert alert-danger" ${not empty error ? '' : 'hidden="hidden"' }>${error}</div>
+			    </proc:if>
+			    <proc:if test="${not empty success}">
+	            	<div class="alert alert-success" ${not empty success ? '' : 'hidden="hidden"' }>${success}</div>
+	            </proc:if>
+			</form>
+		</div>
+	</div>
 </div>
 </body>
 </html>
