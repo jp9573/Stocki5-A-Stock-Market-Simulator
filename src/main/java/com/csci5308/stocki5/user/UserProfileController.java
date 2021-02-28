@@ -94,7 +94,6 @@ public class UserProfileController {
         model.setViewName("profile");
 
         User user = new User();
-        String password = "12345678"; // TODO: this will be changed with the update/reset password feature
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setContactNo(contactNo);
@@ -108,8 +107,6 @@ public class UserProfileController {
         user.setInternationalDerivativeExchange(Integer.parseInt(internationalDerivativeExchange));
         user.setInternationalCommodityExchange(Integer.parseInt(internationalCommodityExchange));
         user.setForeignExchange(Integer.parseInt(foreignExchange));
-        user.setPassword(password);
-        user.setConfirmPassword(password);
 
         try {
             user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth));
@@ -119,7 +116,7 @@ public class UserProfileController {
             return model;
         }
 
-        String isValid = user.validate();
+        String isValid = user.validateUserProfileData();
 
         if (!isValid.equals("valid")) {
             model.addObject("error", isValid);
