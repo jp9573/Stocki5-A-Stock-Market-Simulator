@@ -16,7 +16,7 @@
 	<div class="container" style="display: flex; align-items: center !important; justify-content: center; height: 100vh;">
 		<div class="row" style="text-align: center; -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); padding: 40px; border-radius: 5px;">
 			<div class="col-sm-12 col-md-12 col-lg-12">
-				<h1 style="color: #337ab7; margin-bottom: 20px;">STOCKI5</h1>
+				<h1 style="color: #337ab7; margin-bottom: 20px;">STOCKI5 LOG IN</h1>
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<form name="login" action="<c:url value='/login' />" method='POST'>
@@ -34,7 +34,9 @@
 				    	<button type="submit" class="btn btn-primary btn-lg">Log In</button>
 				    </div>
 				    <br>
-				    <h5>Forgot&nbsp;<a href="forgotuser">User&nbsp;Code</a>&nbsp;/&nbsp;<a href="#">Password</a></h5>
+				    <h5>Forgot?&nbsp;<a href="forgotuser">User&nbsp;Code</a>&nbsp;/&nbsp;<a href="#">Password</a></h5>
+				    <br>
+				    <h5>Create account?&nbsp;<a href="signup">Sign&nbsp;Up</a></h5>
 				    <proc:if test="${not empty error}">
 					    <div class="alert alert-danger" ${not empty error ? '' : 'hidden="hidden"' }>${error}</div>
 				    </proc:if>
