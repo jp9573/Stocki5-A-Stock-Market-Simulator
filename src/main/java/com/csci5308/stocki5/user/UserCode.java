@@ -12,9 +12,14 @@ public class UserCode extends User
 		{
 			char firstNameFirstChar = super.getFirstName().charAt(0);
 			char lastNameFirstChar = super.getLastName().charAt(0);
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-			String date = simpleDateFormat.format(new Date());
-			String userCode = String.valueOf(firstNameFirstChar) + String.valueOf(lastNameFirstChar) + date;
+			SimpleDateFormat simpleDateFormatYearMonth = new SimpleDateFormat("yyyyMM");
+			SimpleDateFormat simpleDateFormatDay = new SimpleDateFormat("dd");
+			SimpleDateFormat simpleDateFormatHourMinuteSecs = new SimpleDateFormat("HHmmss");
+			long dateYearMonth = Long.parseLong(simpleDateFormatYearMonth.format(new Date()));
+			long dateDay = Long.parseLong(simpleDateFormatDay.format(new Date()));
+			long dateHourMinuteSecs = Long.parseLong(simpleDateFormatHourMinuteSecs.format(new Date()));
+			long code = dateYearMonth + dateDay + dateHourMinuteSecs;
+			String userCode = String.valueOf(firstNameFirstChar) + String.valueOf(lastNameFirstChar) + code;
 			super.setUserCode(userCode.toUpperCase());
 		}
 	}
