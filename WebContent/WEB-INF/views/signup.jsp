@@ -91,7 +91,6 @@
                 </div>
 
                 <div class="form-group">
-                    <!-- <input class="signup-input" id="gender" name="gender" type="text" placeholder="Gender"/>  -->
                     <button type="submit" class="btn btn-primary my-1">Sign up</button>
 				</div>
 
