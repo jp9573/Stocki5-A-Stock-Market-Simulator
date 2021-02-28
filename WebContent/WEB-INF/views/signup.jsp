@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body style="overflow-y: scroll;">
-<div class="container" style="margin:20px; width:calc(100% - 20px);">
+<div class="container" style="margin:40px; width:calc(100% - 80px);">
 	<div class="row" style="text-align: center; -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); padding: 20px; border-radius: 5px;">
 		<div class="col-sm-12 col-md-12 col-lg-12">
 			<div class="row">
@@ -73,29 +73,29 @@
 					<div class="input-group" style="width: 100%;">
 				      <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
 				      <select class="form-control" id="country" name="country">
-	                        <option value="India" selected>India</option>
-	                        <option value="Canada">Canada</option>
-	                        <option value="USA">USA</option>
-	                        <option value="Italy">Italy</option>
+	                        <option value="India" ${country == "India" ? 'selected="selected"' : '' } selected>India</option>
+	                        <option value="Canada" ${country == "Canada" ? 'selected="selected"' : '' }>Canada</option>
+	                        <option value="USA" ${country == "USA" ? 'selected="selected"' : '' }>USA</option>
+	                        <option value="Italy" ${country == "Italy" ? 'selected="selected"' : '' }>Italy</option>
 	                    </select>
 				    </div>
 				</div>
 				<div class="form-group col-sm-12 col-md-12 col-lg-12">
 					<div class="input-group" style="width: 100%;">
 				      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				      <input id="dob" name="dob" type="date" placeholder="Date of Birth" class="form-control"/>
+				      <input id="dob" name="dob" type="date" placeholder="Date of Birth" class="form-control" value="${dob}"/>
 				    </div>
 				</div>
 				<div class="form-group col-sm-12 col-md-12 col-lg-12">
 					<div class="input-group " style="display: flex; justify-content: center; width: 100%;">
 						<label class="radio-inline">
-						  <input type="radio" id="male" name="gender" value="male" checked>Male
+						  <input type="radio" id="male" name="gender" value="male" ${gender == "male" ? 'checked="checked"' : '' } checked>Male
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" id="female" name="gender" value="female">Female
+						  <input type="radio" id="female" name="gender" value="female" ${gender == "female" ? 'checked="checked"' : '' }>Female
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" id="other" name="gender" value="other">Other
+						  <input type="radio" id="other" name="gender" value="other" ${gender == "other" ? 'checked="checked"' : '' }>Other
 						</label>
 				    </div>
 				</div>

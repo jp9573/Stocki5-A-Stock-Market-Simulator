@@ -22,7 +22,7 @@
 				<form name="login" action="<c:url value='/login' />" method='POST'>
 				    <div class="input-group">
 				      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				      <input id="username" type="text" class="form-control input-lg" name="username" placeholder="User Code">
+				      <input id="username" type="text" class="form-control input-lg" name="username" value="${username}" placeholder="User Code">
 				    </div>
 				    <br>
 				    <div class="input-group">

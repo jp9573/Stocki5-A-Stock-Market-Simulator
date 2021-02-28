@@ -31,7 +31,7 @@
 			    </div>
 			    <br>
 			    <div class="input-group" style="display: flex; justify-content: center;">
-			    	<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+			    	<button type="submit" class="btn btn-primary btn-lg">Get Usercode</button>
 			    </div>
 			    <br>
 			    <h5>Go to&nbsp;<a href="login">Log&nbsp;In</a></h5>
