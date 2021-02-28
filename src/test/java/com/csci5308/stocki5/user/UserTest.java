@@ -190,4 +190,34 @@ public class UserTest
 		user.setConfirmPassword("12345678");
 		Assert.assertEquals("valid", user.validate());
 	}
+
+	@Test
+	public void validateUserProfileDataTest()
+	{
+		user.setEmailId("example@example.com");
+		user.setContactNo("19324678786");
+		user.setFirstName("John");
+		user.setLastName("Doe");
+		user.setProvince("halifax");
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -18);
+		cal.add(Calendar.DATE, -1);
+		Date date = cal.getTime();
+
+		user.setDateOfBirth(date);
+		Assert.assertEquals("valid", user.validateUserProfileData());
+	}
+
+	@Test
+	public void validateUserProfileInvalidDataTest()
+	{
+		user.setEmailId("@example.com");
+		user.setContactNo("19324678786");
+		user.setFirstName("John");
+		user.setLastName("Doe");
+		user.setProvince("halifax");
+
+		Assert.assertNotEquals("valid", user.validateUserProfileData());
+	}
 }
