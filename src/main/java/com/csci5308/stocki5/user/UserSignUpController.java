@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class UserSignUpController
-{
+public class UserSignUpController {
 	@Autowired
 	UserDb userDb;
 
@@ -30,8 +29,7 @@ public class UserSignUpController
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "confirmPassword", required = true) String confirmPassword,
 			@RequestParam(value = "dob", required = true) String dob,
-			@RequestParam(value = "gender", required = true) String gender)
-	{
+			@RequestParam(value = "gender", required = true) String gender) {
 		ModelAndView model = new ModelAndView();
 		model.addObject("firstName", firstName);
 		model.addObject("lastName", lastName);
@@ -41,6 +39,9 @@ public class UserSignUpController
 		model.addObject("province", province);
 		model.addObject("password", password);
 		model.addObject("confirmPassword", confirmPassword);
+		model.addObject("gender", gender);
+		model.addObject("country", country);
+		model.addObject("dob", dob);
 
 		UserCode user = new UserCode();
 		user.setFirstName(firstName);
@@ -53,11 +54,9 @@ public class UserSignUpController
 		user.setPassword(password);
 		user.setConfirmPassword(confirmPassword);
 		user.setGender(gender);
-		try
-		{
+		try {
 			user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
-		} catch (ParseException e)
-		{
+		} catch (ParseException e) {
 			e.printStackTrace();
 			model.addObject("error", "Invalid Date of Birth.");
 			model.setViewName("signup");
@@ -66,22 +65,21 @@ public class UserSignUpController
 
 		String isValid = user.validate();
 
-		if (!isValid.equals("valid"))
-		{
+		if (!isValid.equals("valid")) {
 			model.addObject("error", isValid);
 			model.setViewName("signup");
 			return model;
 		}
 
-		boolean isUserAdded = userSignUp.addUser(userDb, user);
+		String insertMessage = userSignUp.addUser(userDb, user);
 
-		if (!isUserAdded)
-		{
+		if (insertMessage.equals("error")) {
 			model.addObject("error", "Error in adding user. Please try again later.");
 			model.setViewName("signup");
 			return model;
 		}
 
+		model.addObject("username", insertMessage);
 		model.setViewName("index");
 		return model;
 	}

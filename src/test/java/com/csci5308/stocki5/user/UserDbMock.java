@@ -10,7 +10,6 @@ public class UserDbMock implements UserDbInterface
 	@Override
 	public boolean insertUser(User user)
 	{
-		System.out.println(user.getUserCode());
 		return true;
 	}
 
@@ -31,7 +30,6 @@ public class UserDbMock implements UserDbInterface
 	@Override
 	public User getUserByEmail(String email)
 	{
-		System.out.println(email);
 		if(email.equals("test@example.com")) {
 			User user = new User();
 			user.setEmailId(email);

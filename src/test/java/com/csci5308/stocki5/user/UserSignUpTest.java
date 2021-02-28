@@ -15,6 +15,6 @@ public class UserSignUpTest
 		user.setLastName("Doe");
 		user.generateUserCode();
 		UserDbMock userDbMock = new UserDbMock();
-		Assert.assertTrue(userSignUp.addUser(userDbMock, user));
+		Assert.assertNotEquals("error",userSignUp.addUser(userDbMock, user));
 	}
 }
