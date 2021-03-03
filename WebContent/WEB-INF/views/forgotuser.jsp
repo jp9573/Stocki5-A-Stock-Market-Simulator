@@ -19,7 +19,7 @@
 			<h1 style="color: #337ab7; margin-bottom: 20px;">STOCKI5 FORGOT USER CODE</h1>
 		</div>
 		<div class="col-sm-12 col-md-12 col-lg-12">
-			<form name="forgotusercode" action="<c:url value='forgotuser' />" method='POST'>
+			<form name="forgotusercode" action="<c:url value='forgotusercode' />" method='POST'>
 			    <div class="input-group">
 			      <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 			      <input id="emailId" name="emailId" type="text" placeholder="Email Id" value="${emailId}" class="form-control input-lg">

@@ -15,7 +15,7 @@ public class UserForgotCodeController {
     @Autowired
     UserForgotCodeInterface userForgotCodeInterface;
 
-    @RequestMapping(value = "/forgotuser", method = RequestMethod.POST)
+    @RequestMapping(value = "/forgotusercode", method = RequestMethod.POST)
     public ModelAndView userForgotCode(@RequestParam(value = "emailId", required = true) String email,
                                        @RequestParam(value = "dob", required = true) String dob){
         ModelAndView model = new ModelAndView();
@@ -28,14 +28,6 @@ public class UserForgotCodeController {
         } else {
             model.addObject("success", "Your UserCode  is - "+userCode);
         }
-        return model;
-    }
-
-    @RequestMapping(value = "/forgotuser", method = RequestMethod.GET)
-    public ModelAndView userForgotCode(){
-        ModelAndView model = new ModelAndView();
-        String userCode = null;
-        model.setViewName("forgotuser");
         return model;
     }
 
