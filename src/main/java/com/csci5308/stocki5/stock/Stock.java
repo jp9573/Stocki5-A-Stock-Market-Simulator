@@ -3,120 +3,129 @@ package com.csci5308.stocki5.stock;
 import java.util.Date;
 
 public class Stock {
-    private int stockId;
-    private String symbol;
-    private float open;
-    private float high;
-    private float low;
-    private float price;
-    private Date latestTradingDate;
-    private float previousClose;
-    private String segment;
 
-    public int getStockId() {
-        return stockId;
-    }
+	private int stockId;
 
-    public void setStockId(int stockId) {
-        this.stockId = stockId;
-    }
+	private String symbol;
 
-    public String getSymbol() {
-        return symbol;
-    }
+	private float open;
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+	private float high;
 
-    public float getOpen() {
-        return open;
-    }
+	private float low;
 
-    public void setOpen(float open) {
-        this.open = open;
-    }
+	private float price;
 
-    public float getHigh() {
-        return high;
-    }
+	private Date latestTradingDate;
 
-    public void setHigh(float high) {
-        this.high = high;
-    }
+	private float previousClose;
 
-    public float getLow() {
-        return low;
-    }
+	private String segment;
 
-    public void setLow(float low) {
-        this.low = low;
-    }
+	public int getStockId() {
+		return stockId;
+	}
 
-    public float getPrice() {
-        return price;
-    }
+	public void setStockId(int stockId) {
+		this.stockId = stockId;
+	}
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
+	public String getSymbol() {
+		return symbol;
+	}
 
-    public Date getLatestTradingDate() {
-        return latestTradingDate;
-    }
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
 
-    public void setLatestTradingDate(Date latestTradingDate) {
-        this.latestTradingDate = latestTradingDate;
-    }
+	public float getOpen() {
+		return open;
+	}
 
-    public float getPreviousClose() {
-        return previousClose;
-    }
+	public void setOpen(float open) {
+		this.open = open;
+	}
 
-    public void setPreviousClose(float previousClose) {
-        this.previousClose = previousClose;
-    }
+	public float getHigh() {
+		return high;
+	}
 
-    public String getSegment() {
-        return segment;
-    }
+	public void setHigh(float high) {
+		this.high = high;
+	}
 
-    public void setSegment(String segment) {
-        this.segment = segment;
-    }
+	public float getLow() {
+		return low;
+	}
 
-    public Stock(){
-        this.stockId = 0;
-        this.symbol = null;
-        this.open = 0;
-        this.high = 0;
-        this.low = 0;
-        this.price = 0;
-        this.latestTradingDate = null;
-        this.previousClose = 0;
-        this.segment = null;
-    }
+	public void setLow(float low) {
+		this.low = low;
+	}
 
-    public Stock(int stockId, StockDbInterface dbInterface){
-        Stock stock = dbInterface.getStockData(stockId);
-        this.stockId = stockId;
-        this.symbol = stock.getSymbol();
-        this.open = stock.getOpen();
-        this.high = stock.getHigh();
-        this.low = stock.getLow();
-        this.price = stock.getPrice();
-        this.latestTradingDate = stock.getLatestTradingDate();
-        this.previousClose = stock.getPreviousClose();
-        this.segment = stock.getSegment();
-    }
+	public float getPrice() {
+		return price;
+	}
 
-    public void calculateHighAndLow(float newPrice){
-        if(newPrice > this.high){
-            this.high = newPrice;
-        }
-        if(newPrice < this.low){
-            this.low = newPrice;
-        }
-    }
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public Date getLatestTradingDate() {
+		return latestTradingDate;
+	}
+
+	public void setLatestTradingDate(Date latestTradingDate) {
+		this.latestTradingDate = latestTradingDate;
+	}
+
+	public float getPreviousClose() {
+		return previousClose;
+	}
+
+	public void setPreviousClose(float previousClose) {
+		this.previousClose = previousClose;
+	}
+
+	public String getSegment() {
+		return segment;
+	}
+
+	public void setSegment(String segment) {
+		this.segment = segment;
+	}
+
+	public Stock() {
+		this.stockId = 0;
+		this.symbol = null;
+		this.open = 0;
+		this.high = 0;
+		this.low = 0;
+		this.price = 0;
+		this.latestTradingDate = null;
+		this.previousClose = 0;
+		this.segment = null;
+	}
+
+	public Stock(int stockId, StockDbInterface dbInterface) {
+		Stock stock = dbInterface.getStockData(stockId);
+		this.stockId = stockId;
+		this.symbol = stock.getSymbol();
+		this.open = stock.getOpen();
+		this.high = stock.getHigh();
+		this.low = stock.getLow();
+		this.price = stock.getPrice();
+		this.latestTradingDate = stock.getLatestTradingDate();
+		this.previousClose = stock.getPreviousClose();
+		this.segment = stock.getSegment();
+	}
+
+	public void calculateHighAndLow(float newPrice) {
+		if (newPrice > this.getHigh()) {
+			this.setHigh(newPrice);
+		}
+		if (newPrice < this.getLow()) {
+			this.setLow(newPrice);
+		}
+	}
 
 }
