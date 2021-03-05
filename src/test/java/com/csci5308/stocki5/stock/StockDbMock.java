@@ -56,4 +56,40 @@ public class StockDbMock implements StockDbInterface {
 		stocks.add(stock);
 		return stocks;
 	}
+
+	@Override
+	public boolean updateStockBulk(List<Stock> stocks) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Stock> getStocksBySegment(String segments) {
+		List<Stock> stocks = new ArrayList<Stock>();
+		Stock stock = new Stock();
+		stock.setSymbol("ABC");
+		stock.setOpen(10);
+		stock.setHigh(15);
+		stock.setLow(5);
+		stock.setPrice(13);
+		Date latestTradingDate = null;
+		try {
+			latestTradingDate = new SimpleDateFormat("yyyy-MM-dd").parse("2021-03-01");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		stock.setLatestTradingDate(latestTradingDate);
+		stock.setPreviousClose(8);
+		if (segments.contains("FOREX")) {
+			stock.setSegment("FOREX");
+		} else if (segments.contains("IDE")) {
+			stock.setSegment("IDE");
+		} else if (segments.contains("IDE")) {
+			stock.setSegment("IDE");
+		} else if (segments.contains("ISE")) {
+			stock.setSegment("ISE");
+		}
+		stocks.add(stock);
+		return stocks;
+	}
 }
