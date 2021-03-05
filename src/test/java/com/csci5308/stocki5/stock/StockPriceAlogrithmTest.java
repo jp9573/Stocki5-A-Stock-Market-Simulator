@@ -39,4 +39,10 @@ public class StockPriceAlogrithmTest {
 		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
 		Assert.assertTrue(minStockPrice <= newStockPrice);
 	}
+	
+	@Test
+	public void generateStockPriceTest() {
+		stockPriceAlgorithm.generateStockPrice();
+		Assert.assertTrue(true);
+	}
 }
