@@ -17,14 +17,11 @@ public class StockPriceAlgorithm {
 		float newPrice = 0.00f;
 		List<Stock> stocks = stockDbInterface.getStocks();
 		for (Stock stock : stocks) {
-			System.out
-					.println(stock.getSymbol() + " " + stock.getPrice() + " " + stock.getHigh() + " " + stock.getLow());
 			newPrice = stockPriceAlgorithm(stock.getPrice());
 			stock.setPrice(newPrice);
 			stock.calculateHighAndLow(newPrice);
-			System.out
-					.println(stock.getSymbol() + " " + stock.getPrice() + " " + stock.getHigh() + " " + stock.getLow());
 		}
+		stockDbInterface.updateStockBulk(stocks);
 	}
 
 	public float stockPriceAlgorithm(float currentPrice) {
