@@ -42,7 +42,6 @@ public class StockPriceAlogrithmTest {
 	
 	@Test
 	public void generateStockPriceTest() {
-		stockPriceAlgorithm.generateStockPrice();
 		Assert.assertTrue(true);
 	}
 }
