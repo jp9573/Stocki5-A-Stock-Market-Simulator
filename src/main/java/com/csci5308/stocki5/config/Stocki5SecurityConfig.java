@@ -16,8 +16,7 @@ import com.csci5308.stocki5.user.UserAuthentication;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class Stocki5SecurityConfig extends WebSecurityConfigurerAdapter
-{
+public class Stocki5SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	UserAuthentication userAuthentication;
@@ -26,25 +25,22 @@ public class Stocki5SecurityConfig extends WebSecurityConfigurerAdapter
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception
-	{
+	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
 		authenticationMgr.authenticationProvider(userAuthentication);
 	}
 
 	@Bean
-	public static NoOpPasswordEncoder passwordEncoder()
-	{
+	public static NoOpPasswordEncoder passwordEncoder() {
 		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 	}
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception
-	{
+	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/login").permitAll().antMatchers("/resources").permitAll()
 				.antMatchers("/stocks", "/orders", "/orders", "/prediction", "/profile").authenticated().and()
 				.formLogin().loginPage("/login").defaultSuccessUrl("/stocks").failureUrl("/login?error")
-				.usernameParameter("username").passwordParameter("password").and().logout()
-				.logoutSuccessUrl("/login?logout").permitAll().and().csrf().disable();
+				.usernameParameter("username").passwordParameter("password").and().logout().deleteCookies("JSESSIONID")
+				.invalidateHttpSession(true).logoutSuccessUrl("/login?logout").permitAll().and().csrf().disable();
 
 	}
 
