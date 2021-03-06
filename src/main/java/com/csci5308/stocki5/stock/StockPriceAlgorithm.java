@@ -4,21 +4,20 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StockPriceAlgorithm {
 
-	@Autowired
-	StockDbInterface stockDbInterface;
-
-	public void generateStockPrice() {
+	public void generateStockPrice(StockDbInterface stockDbInterface) {
 		float newPrice = 0.00f;
+		float percent = 0.00f;
 		List<Stock> stocks = stockDbInterface.getStocks();
 		for (Stock stock : stocks) {
 			newPrice = stockPriceAlgorithm(stock.getPrice());
+			percent = stockPricePercentIncreaseDecrease(newPrice, stock.getPreviousClose());
 			stock.setPrice(newPrice);
+			stock.setPercentIncreaseDecrease(percent);
 			stock.calculateHighAndLow(newPrice);
 		}
 		stockDbInterface.updateStockBulk(stocks);

@@ -15,7 +15,7 @@ import com.csci5308.stocki5.user.UserDb;
 
 @Controller
 public class StockController {
-
+	
 	@Autowired
 	StockFetch stockFetch;
 
@@ -30,7 +30,6 @@ public class StockController {
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 		List<Stock> stocks = stockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
-		System.out.println(stocks.size());
 		model.addObject("stocks", stocks);
 		model.setViewName("stocks");
 		return model;
