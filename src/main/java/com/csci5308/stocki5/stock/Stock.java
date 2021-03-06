@@ -19,6 +19,8 @@ public class Stock {
 	private Date latestTradingDate;
 
 	private float previousClose;
+	
+	private float percentIncreaseDecrease;
 
 	private String segment;
 
@@ -93,17 +95,26 @@ public class Stock {
 	public void setSegment(String segment) {
 		this.segment = segment;
 	}
+	
+	public float getPercentIncreaseDecrease() {
+		return percentIncreaseDecrease;
+	}
+
+	public void setPercentIncreaseDecrease(float percentIncreaseDecrease) {
+		this.percentIncreaseDecrease = percentIncreaseDecrease;
+	}
 
 	public Stock() {
-		this.stockId = 0;
+		this.stockId = 0.00f;
 		this.symbol = null;
-		this.open = 0;
-		this.high = 0;
-		this.low = 0;
-		this.price = 0;
+		this.open = 0.00f;
+		this.high = 0.00f;
+		this.low = 0.00f;
+		this.price = 0.00f;
 		this.latestTradingDate = null;
-		this.previousClose = 0;
+		this.previousClose = 0.00f;
 		this.segment = null;
+		this.percentIncreaseDecrease = 0.00f;
 	}
 
 	public Stock(int stockId, StockDbInterface dbInterface) {
@@ -117,6 +128,7 @@ public class Stock {
 		this.latestTradingDate = stock.getLatestTradingDate();
 		this.previousClose = stock.getPreviousClose();
 		this.segment = stock.getSegment();
+		this.percentIncreaseDecrease = stock.getPercentIncreaseDecrease();
 	}
 
 	public void calculateHighAndLow(float newPrice) {
