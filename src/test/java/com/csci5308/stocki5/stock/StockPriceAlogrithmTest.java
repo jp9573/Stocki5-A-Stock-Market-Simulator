@@ -41,6 +41,20 @@ public class StockPriceAlogrithmTest {
 	}
 	
 	@Test
+	public void stockPriceAlgorithmTestNegativeNumber() {
+		currentPrice = -25.00f;
+		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
+		Assert.assertTrue(newStockPrice > 0.00f);
+	}
+	
+	@Test
+	public void stockPriceAlgorithmTestZero() {
+		currentPrice = 0.00f;
+		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
+		Assert.assertTrue(newStockPrice > 0.00f);
+	}
+	
+	@Test
 	public void generateStockPriceTest() {
 		Assert.assertTrue(true);
 	}

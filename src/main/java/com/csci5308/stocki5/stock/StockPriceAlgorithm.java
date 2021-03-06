@@ -30,7 +30,10 @@ public class StockPriceAlgorithm {
 		float maxPriceRange = currentPrice + 10;
 		float minPriceRange = currentPrice - 10;
 		if (minPriceRange < 0.0f) {
-			minPriceRange = 0.0f;
+			minPriceRange = 0.00f;
+		}
+		if (maxPriceRange < 0.0f) {
+			maxPriceRange = 1.00f;
 		}
 		float newPrice = minPriceRange + random.nextFloat() * (maxPriceRange - minPriceRange);
 		float formatedNewPrice = Float.parseFloat(df.format(newPrice));
