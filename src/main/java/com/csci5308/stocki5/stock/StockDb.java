@@ -1,12 +1,18 @@
 package com.csci5308.stocki5.stock;
 
-import com.csci5308.stocki5.config.Stocki5DbConnection;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.csci5308.stocki5.config.Stocki5DbConnection;
 
 @Repository
 public class StockDb implements StockDbInterface {
@@ -31,6 +37,7 @@ public class StockDb implements StockDbInterface {
 				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
 				stock.setPreviousClose(resultSet.getFloat("previous_close"));
 				stock.setSegment(resultSet.getString("segment"));
+				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
 			}
 
 			return stock;
@@ -62,6 +69,7 @@ public class StockDb implements StockDbInterface {
 				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
 				stock.setPreviousClose(resultSet.getFloat("previous_close"));
 				stock.setSegment(resultSet.getString("segment"));
+				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
 				stocks.add(stock);
 			}
 			return stocks;
@@ -78,7 +86,8 @@ public class StockDb implements StockDbInterface {
 		Connection connection = dbConnection.createConnection();
 		try {
 			String updateStockSQL = "UPDATE stock_data SET " + "symbol=?," + "open=?," + "high=?," + "low=?,"
-					+ "price=?," + "latest_trading_date=?," + "previous_close=?," + "segment=?" + " WHERE stock_id = ?";
+					+ "price=?," + "latest_trading_date=?," + "previous_close=?," + "segment=?," + "percent=?"
+					+ " WHERE stock_id = ?";
 
 			PreparedStatement statement = connection.prepareStatement(updateStockSQL);
 			statement.setString(1, stock.getSymbol());
@@ -89,7 +98,8 @@ public class StockDb implements StockDbInterface {
 			statement.setDate(6, new Date(stock.getLatestTradingDate().getTime()));
 			statement.setFloat(7, stock.getPreviousClose());
 			statement.setString(8, stock.getSegment());
-			statement.setInt(9, stock.getStockId());
+			statement.setFloat(9, stock.getPercentIncreaseDecrease());
+			statement.setInt(10, stock.getStockId());
 			int result = statement.executeUpdate();
 			return result > 0;
 		} catch (SQLException e) {
@@ -120,6 +130,7 @@ public class StockDb implements StockDbInterface {
 				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
 				stock.setPreviousClose(resultSet.getFloat("previous_close"));
 				stock.setSegment(resultSet.getString("segment"));
+				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
 				stocks.add(stock);
 			}
 			return stocks;
@@ -140,7 +151,13 @@ public class StockDb implements StockDbInterface {
 				statement.addBatch("UPDATE stock_data SET " + "symbol='" + stock.getSymbol() + "'," + "open="
 						+ stock.getOpen() + "," + "high=" + stock.getHigh() + "," + "low=" + stock.getLow() + ","
 						+ "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + ","
-						+ "segment='" + stock.getSegment() + "' WHERE stock_id = " + stock.getStockId());
+						+ "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease()
+						+ " WHERE stock_id = " + stock.getStockId());
+				System.out.println("UPDATE stock_data SET " + "symbol='" + stock.getSymbol() + "'," + "open="
+						+ stock.getOpen() + "," + "high=" + stock.getHigh() + "," + "low=" + stock.getLow() + ","
+						+ "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + ","
+						+ "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease()
+						+ " WHERE stock_id = " + stock.getStockId());
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;

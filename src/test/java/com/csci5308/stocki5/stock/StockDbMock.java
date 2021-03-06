@@ -59,8 +59,7 @@ public class StockDbMock implements StockDbInterface {
 
 	@Override
 	public boolean updateStockBulk(List<Stock> stocks) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
