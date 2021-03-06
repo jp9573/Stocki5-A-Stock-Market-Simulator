@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container" style="display: flex; align-items: center !important; justify-content: center; height: 100vh;">
+	<div class="container" style="display: flex; align-items: center !important; justify-content: center; height: calc(100vh - 30px); margin: 15px; width: calc(100% - 30px);">
 		<div class="row" style="text-align: center; -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); box-shadow: 0 0 2px 2px rgba(0, 0, 0, .2); padding: 40px; border-radius: 5px;">
 			<div class="col-sm-12 col-md-12 col-lg-12">
 				<h1 style="color: #337ab7; margin-bottom: 20px;">STOCKI5 LOG IN</h1>
