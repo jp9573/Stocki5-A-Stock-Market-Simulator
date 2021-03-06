@@ -105,7 +105,7 @@ public class Stock {
 	}
 
 	public Stock() {
-		this.stockId = 0.00f;
+		this.stockId = 0;
 		this.symbol = null;
 		this.open = 0.00f;
 		this.high = 0.00f;
