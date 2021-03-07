@@ -40,6 +40,9 @@
 				    <proc:if test="${not empty error}">
 					    <div class="alert alert-danger" ${not empty error ? '' : 'hidden="hidden"' }>${error}</div>
 				    </proc:if>
+					<proc:if test="${not empty success}">
+						<div class="alert alert-success" ${not empty success ? '' : 'hidden="hidden"' }>${success}</div>
+					</proc:if>
 				</form>
 			</div>
 		</div>
