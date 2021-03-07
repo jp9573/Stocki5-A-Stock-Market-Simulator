@@ -82,6 +82,70 @@ public class StockDb implements StockDbInterface {
 	}
 
 	@Override
+	public List<Stock> getHighestPriceStocks(String segments, int limit) {
+		List<Stock> stocks = new ArrayList<Stock>();
+		Connection connection = dbConnection.createConnection();
+		try {
+			Statement statement = connection.createStatement();
+			String selectStockSql = "SELECT * FROM stock_data WHERE segment IN " + "(" + segments + ") ORDER BY percent DESC LIMIT " + limit;
+			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			Stock stock = null;
+			while (resultSet.next()) {
+				stock = new Stock();
+				stock.setStockId(resultSet.getInt("stock_id"));
+				stock.setSymbol(resultSet.getString("symbol"));
+				stock.setOpen(resultSet.getFloat("open"));
+				stock.setHigh(resultSet.getFloat("high"));
+				stock.setLow(resultSet.getFloat("low"));
+				stock.setPrice(resultSet.getFloat("price"));
+				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
+				stock.setPreviousClose(resultSet.getFloat("previous_close"));
+				stock.setSegment(resultSet.getString("segment"));
+				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
+				stocks.add(stock);
+			}
+			return stocks;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return stocks;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public List<Stock> getLowestPriceStocks(String segments, int limit) {
+		List<Stock> stocks = new ArrayList<Stock>();
+		Connection connection = dbConnection.createConnection();
+		try {
+			Statement statement = connection.createStatement();
+			String selectStockSql = "SELECT * FROM stock_data WHERE segment IN " + "(" + segments + ") ORDER BY percent LIMIT " + limit;
+			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			Stock stock = null;
+			while (resultSet.next()) {
+				stock = new Stock();
+				stock.setStockId(resultSet.getInt("stock_id"));
+				stock.setSymbol(resultSet.getString("symbol"));
+				stock.setOpen(resultSet.getFloat("open"));
+				stock.setHigh(resultSet.getFloat("high"));
+				stock.setLow(resultSet.getFloat("low"));
+				stock.setPrice(resultSet.getFloat("price"));
+				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
+				stock.setPreviousClose(resultSet.getFloat("previous_close"));
+				stock.setSegment(resultSet.getString("segment"));
+				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
+				stocks.add(stock);
+			}
+			return stocks;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return stocks;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
 	public boolean updateStockData(Stock stock) {
 		Connection connection = dbConnection.createConnection();
 		try {
