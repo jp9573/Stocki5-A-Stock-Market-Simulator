@@ -153,11 +153,6 @@ public class StockDb implements StockDbInterface {
 						+ "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + ","
 						+ "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease()
 						+ " WHERE stock_id = " + stock.getStockId());
-				System.out.println("UPDATE stock_data SET " + "symbol='" + stock.getSymbol() + "'," + "open="
-						+ stock.getOpen() + "," + "high=" + stock.getHigh() + "," + "low=" + stock.getLow() + ","
-						+ "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + ","
-						+ "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease()
-						+ " WHERE stock_id = " + stock.getStockId());
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;

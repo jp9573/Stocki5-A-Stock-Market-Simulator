@@ -8,8 +8,9 @@ public class StockDataUpdateTest extends TestCase {
 
     StockDbInterface dbInterface = new StockDbMock();
     StockDataUpdate stock = new StockDataUpdate(1, dbInterface);
+
     @Test
-    public void testUpdateStock() {
+    public void updateStockTest() {
         Assert.assertTrue(stock.updateStock(dbInterface));
     }
 }

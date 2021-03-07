@@ -28,6 +28,8 @@
 	                    <div class="alert alert-success"
 	                         role="alert"  ${not empty success ? '' : 'hidden="hidden"' }>${success}</div>
 	                </proc:if>
+
+					<input class="form-control" name="funds" type="number" value="${funds}" style="display: none"/>
 	
 	                <div class="form-group">
 	                    <input class="form-control" name="userCode" type="text" value="${userCode}" readonly/>
@@ -137,17 +139,23 @@
 	    </div>
 	    <div class="col-sm-12 col-md-12 col-lg-6">
 		    <div class="row">
-			    <div class="col-sm-12 col-md-12 col-lg-12" style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
+			    <div class="col-sm-12 col-md-12 col-lg-12" style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;" >
 			    <h4 class="text-center" style="margin: 0px 0px 10px 0px; padding: 0px; text-transform: uppercase;">Add Funds</h4>
-				    <form name="login" method='POST'>
+
+				    <form name="userFunds" method='POST' action="<c:url value='resetFunds' />" method='POST'>
+						<proc:if test="${not empty errorFunds}">
+							<div class="alert alert-danger"
+								 role="alert" ${not empty errorFunds ? '' : 'hidden="hidden"' }>${errorFunds}</div>
+						</proc:if>
+						<proc:if test="${not empty successFunds}">
+							<div class="alert alert-success"
+								 role="alert"  ${not empty successFunds ? '' : 'hidden="hidden"' }>${successFunds}</div>
+						</proc:if>
+
+						<input class="form-control" name="userCode" type="text" value="${userCode}" style="display: none"/>
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
-					      <input class="form-control" name="availablefunds" type="text" value="4000.00" readonly/>
-					    </div>
-					    <br>
-					    <div class="input-group">
-					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					      <input id="password" type="text" class="form-control" name="fund" placeholder="Enter Amount">
+					      <input class="form-control" name="funds" type="text" value=${funds} readonly/>
 					    </div>
 					    <br>
 					    <div class="input-group" style="display: flex; justify-content: center;">
