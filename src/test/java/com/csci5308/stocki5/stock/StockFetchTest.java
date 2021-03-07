@@ -79,4 +79,22 @@ public class StockFetchTest {
 		List<Stock> stocks = stockFetch.fetchUserStocks(stockDbMock, userDbMock, "AB123456");
 		Assert.assertEquals("FOREX", stocks.get(0).getSegment());
 	}
+
+	@Test
+	public void fetchTop5GainerStocksTest() {
+		user.setInternationalDerivativeExchange(0);
+		user.setInternationalCommodityExchange(0);
+		user.setInternationalStockExchange(0);
+		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDbMock, userDbMock, "AB123456");
+		Assert.assertEquals(5, top5GainersStocks.size());
+	}
+
+	@Test
+	public void fetchTop5LoserStocksTest() {
+		user.setInternationalDerivativeExchange(0);
+		user.setInternationalCommodityExchange(0);
+		user.setInternationalStockExchange(0);
+		List<Stock> top5LosersStocks = stockFetch.fetchTop5GainerStocks(stockDbMock, userDbMock, "AB123456");
+		Assert.assertEquals(5, top5LosersStocks.size());
+	}
 }
