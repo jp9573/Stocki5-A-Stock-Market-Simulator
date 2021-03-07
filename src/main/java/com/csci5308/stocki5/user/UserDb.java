@@ -178,4 +178,31 @@ public class UserDb implements UserDbInterface {
             dbConnection.closeConnection(connection);
         }
     }
+
+    @Override
+    public boolean updateUserPassword(User user) {
+        Connection connection = dbConnection.createConnection();
+
+        try {
+            String updateUserSQL = "UPDATE user SET password=?, confirmPassword=? WHERE userCode=?";
+            PreparedStatement statement = connection.prepareStatement(updateUserSQL);
+
+            statement.setString(1, user.getPassword());
+            statement.setString(2, user.getConfirmPassword());
+            statement.setString(3,user.getUserCode());
+            int result = statement.executeUpdate();
+            if(result > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+        finally {
+            dbConnection.closeConnection(connection);
+        }
+    }
 }

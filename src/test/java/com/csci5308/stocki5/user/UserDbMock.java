@@ -48,4 +48,8 @@ public class UserDbMock implements UserDbInterface
 		}
 	}
 
+	@Override
+	public boolean updateUserPassword(User user) {
+		return true;
+	}
 }
