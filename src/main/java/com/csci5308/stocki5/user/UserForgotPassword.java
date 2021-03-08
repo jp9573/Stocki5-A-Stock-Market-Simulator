@@ -18,12 +18,12 @@ public class UserForgotPassword {
         return true;
     }
 
-    public boolean generateUserOtp(String userCode,
+    public int generateUserOtp(String userCode,
                                    UserOtpDbInterface userOtpDb){
         UserOtp userOtp = new UserOtp();
         userOtp.generateOtpForUser(userCode);
         userOtpDb.insertOtp(userOtp);
-        return true;
+        return userOtp.getOtp();
     }
 
     public String verifyOtp(String userCode,
@@ -31,7 +31,6 @@ public class UserForgotPassword {
                             UserOtpDbInterface userOtpDb){
         UserOtp userOtp = userOtpDb.getOtp(otp);
         if(userOtp == null){
-            System.out.println("null get");
             return "Invalid OTP";
         }else{
             if( (userCode.equals(userOtp.getUserCode())) && (otp == userOtp.getOtp())){

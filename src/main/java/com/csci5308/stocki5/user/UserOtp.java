@@ -44,7 +44,6 @@ public class UserOtp {
         long newDateTimeMS = currentDateTimeMS + 3600000;
 
         Date newDateTime = new Date(newDateTimeMS);
-        System.out.println(newDateTime);
         this.validity = dateFormater.format(newDateTime);
         this.otp = (int) (Math.random()*(10000-999+1)+999);
     }

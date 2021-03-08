@@ -36,10 +36,6 @@ public class UserOtpDb implements UserOtpDbInterface {
         Connection connection = dbConnection.createConnection();
         String insertUserOtpSql = "INSERT INTO user_otp VALUES (?,?,?)";
 
-        System.out.println(userOtp.getOtp());
-        System.out.println(userOtp.getUserCode());
-        System.out.println(userOtp.getValidity());
-
         try {
             PreparedStatement statement = connection.prepareStatement(insertUserOtpSql);
             statement.setString(1, userOtp.getUserCode());
@@ -47,7 +43,6 @@ public class UserOtpDb implements UserOtpDbInterface {
             statement.setTimestamp(3, Timestamp.valueOf(userOtp.getValidity()));
             int otpCount = statement.executeUpdate();
             if (otpCount > 0) {
-                System.out.println(otpCount);
                 return true;
             } else {
                 return false;

@@ -32,9 +32,9 @@ public class UserForgotPasswordController {
         ModelAndView model = new ModelAndView();
         boolean validUserCode = userForgotPassword.validateUserCode(userCode, userDb);
         if (validUserCode) {
-            userForgotPassword.generateUserOtp(userCode, userOtpDb);
+            int OTP = userForgotPassword.generateUserOtp(userCode, userOtpDb);
             model.addObject("userCode", userCode);
-            model.addObject("success","Email with otp sent.");
+            model.addObject("success","OTP - "+String.valueOf(OTP));
             model.setViewName("verifyotp");
         }
         else{
