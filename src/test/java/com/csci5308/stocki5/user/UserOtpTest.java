@@ -5,12 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UserOtpTest {
-    UserOtp userOtp;
-
-    @Before
-    public void init() {
-        UserOtp userOtp = new UserOtp();
-    }
+    UserOtp userOtp = new UserOtp();
 
     @Test
     public void generateOtpForUserTest() {
