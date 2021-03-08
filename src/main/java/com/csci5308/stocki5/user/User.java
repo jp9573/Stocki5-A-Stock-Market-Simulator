@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @SuppressWarnings("serial")
 public class User implements UserDetails {
+	
     private String userCode;
 
     private String firstName;
@@ -47,99 +48,99 @@ public class User implements UserDetails {
 
     private String role;
 
-    public final String getUserCode() {
+    public String getUserCode() {
         return userCode;
     }
 
-    public final void setUserCode(String userCode) {
+    public void setUserCode(String userCode) {
         this.userCode = userCode;
     }
 
-    public final String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public final void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public final String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public final void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public final String getEmailId() {
+    public String getEmailId() {
         return emailId;
     }
 
-    public final void setEmailId(String emailId) {
+    public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
 
-    public final String getContactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public final void setContactNo(String contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
-    public final String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public final void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public final String getConfirmPassword() {
+    public String getConfirmPassword() {
         return confirmPassword;
     }
 
-    public final void setConfirmPassword(String confirmPassword) {
+    public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
-    public final Date getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public final void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public final String getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public final void setGender(String gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public final String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public final void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    public final String getProvince() {
+    public String getProvince() {
         return province;
     }
 
-    public final void setProvince(String province) {
+    public void setProvince(String province) {
         this.province = province;
     }
 
-    public final String getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public final void setCountry(String country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -175,11 +176,11 @@ public class User implements UserDetails {
         this.foreignExchange = foreignExchange;
     }
 
-    public final double getFunds() {
+    public double getFunds() {
         return funds;
     }
 
-    public final void setFunds(double funds) {
+    public void setFunds(double funds) {
         this.funds = funds;
     }
 
@@ -191,7 +192,7 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public final String validate() {
+    public String validate() {
         EmailValidator eValidator = EmailValidator.getInstance();
         if (!eValidator.isValid(this.getEmailId())) {
             return "Invalid Email Id";
@@ -235,7 +236,7 @@ public class User implements UserDetails {
         return "valid";
     }
 
-    public final String validateUserProfileData() {
+    public String validateUserProfileData() {
         EmailValidator eValidator = EmailValidator.getInstance();
         if (!eValidator.isValid(this.getEmailId())) {
             return "Invalid Email Id";
