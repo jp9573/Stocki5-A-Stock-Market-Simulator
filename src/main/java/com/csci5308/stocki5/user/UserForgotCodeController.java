@@ -13,7 +13,7 @@ public class UserForgotCodeController {
     UserDb userDb;
 
     @Autowired
-    UserForgotCodeInterface userForgotCodeInterface;
+    UserForgotCode userForgotCode;
 
     @RequestMapping(value = "/forgotusercode", method = RequestMethod.POST)
     public ModelAndView userForgotCode(@RequestParam(value = "emailId", required = true) String email,
@@ -21,7 +21,7 @@ public class UserForgotCodeController {
         ModelAndView model = new ModelAndView();
         String userCode = null;
         model.setViewName("forgotuser");
-        userCode = userForgotCodeInterface.getUserCode(email, dob, userDb);
+        userCode = userForgotCode.getUserCode(email, dob, userDb);
         if (userCode == null) {
             model.addObject("error", "Invalid email or date of birth.");
             return model;

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
-public class UserForgotCode implements UserForgotCodeInterface {
+public class UserForgotCode {
 
     public String getUserCode(String email, String dob, UserDbInterface userDb){
         String result = null;
