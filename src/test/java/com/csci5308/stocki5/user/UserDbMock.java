@@ -23,8 +23,26 @@ public class UserDbMock implements UserDbInterface
 	@Override
 	public User getUser(String userCode)
 	{
-		System.out.println(userCode);
-		return null;
+		if(userCode.equals("AB123456")) {
+			User user = new User();
+			user.setEmailId("test@test.com");
+			user.setUserCode("AB123456");
+			user.setInternationalDerivativeExchange(1);
+			user.setInternationalCommodityExchange(1);
+			user.setInternationalStockExchange(1);
+			user.setForeignExchange(1);
+			Date dob = null;
+			try {
+				dob = new SimpleDateFormat("yyyy-MM-dd").parse("2000-10-12");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			user.setDateOfBirth(dob);
+			return user;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
