@@ -2,7 +2,6 @@ package com.csci5308.stocki5.user;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class UserDbMock implements UserDbInterface
@@ -77,4 +76,15 @@ public class UserDbMock implements UserDbInterface
 	public boolean updateUserPassword(User user) {
 		return true;
 	}
+
+	@Override
+	public double getUserFunds(String userCode) {
+		return 0;
+	}
+
+	@Override
+	public boolean updateUserFunds(String userCode, double amount) {
+		return false;
+	}
+
 }
