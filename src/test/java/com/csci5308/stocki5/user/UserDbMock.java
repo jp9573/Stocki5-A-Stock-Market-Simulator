@@ -66,4 +66,14 @@ public class UserDbMock implements UserDbInterface
 		}
 	}
 
+	@Override
+	public double getUserFunds(String userCode) {
+		return 0;
+	}
+
+	@Override
+	public boolean updateUserFunds(String userCode, double amount) {
+		return false;
+	}
+
 }
