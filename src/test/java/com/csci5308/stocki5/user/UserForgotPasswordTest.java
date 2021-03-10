@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.user;
 
+import com.csci5308.stocki5.Email.EmailMock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,12 +9,14 @@ public class UserForgotPasswordTest {
     UserForgotPassword userForgotPassword;
     UserDbMock userDbMock;
     UserOtpDbMock userOtpDbMock;
+    EmailMock emailMock;
 
     @Before
     public void init(){
         this.userForgotPassword = new UserForgotPassword();
         this.userDbMock = new UserDbMock();
         this.userOtpDbMock = new UserOtpDbMock();
+        this.emailMock = new EmailMock();
     }
 
     @Test
@@ -32,8 +35,7 @@ public class UserForgotPasswordTest {
     @Test
     public void generateUserOtpTest() {
         String userCode = "AB123456";
-        int OTP = userForgotPassword.generateUserOtp(userCode, userOtpDbMock);
-        Assert.assertTrue(OTP < 10000 && OTP > 999);
+        Assert.assertTrue(userForgotPassword.generateUserOtp(userCode, userOtpDbMock, userDbMock, emailMock));
     }
 
     @Test

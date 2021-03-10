@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.user;
 
+import com.csci5308.stocki5.Email.EmailInterface;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -18,12 +19,21 @@ public class UserForgotPassword {
         return true;
     }
 
-    public int generateUserOtp(String userCode,
-                                   UserOtpDbInterface userOtpDb){
+    public boolean generateUserOtp(String userCode,
+                                   UserOtpDbInterface userOtpDb,
+                                   UserDbInterface userDb,
+                                   EmailInterface email){
         UserOtp userOtp = new UserOtp();
+        User user = userDb.getUser(userCode);
+
         userOtp.generateOtpForUser(userCode);
         userOtpDb.insertOtp(userOtp);
-        return userOtp.getOtp();
+
+        String toEmail = user.getEmailId();
+        String subject = "Stocki5: OTP TO RESET PASSWORD";
+        String text = "The OTP to reset you password is - "+String.valueOf(userOtp.getOtp());
+        email.sendEmail(toEmail, subject, text);
+        return true;
     }
 
     public String verifyOtp(String userCode,
