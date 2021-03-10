@@ -157,7 +157,7 @@
 			    </div>
 			    <div class="col-sm-12 col-md-12 col-lg-12" style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
 			    <h4 class="text-center" style="margin: 0px 0px 10px 0px; padding: 0px; text-transform: uppercase;">Change Password</h4>
-				    <form name="login" method='POST'>
+				    <form name="login"  action="<c:url value='changePassword' />" method='POST'>
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 					      <input id="password" type="password" class="form-control" name="password" placeholder="Current Password">

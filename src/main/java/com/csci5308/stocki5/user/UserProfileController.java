@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.method.annotation.ModelFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ public class UserProfileController {
 
     @Autowired
     UserProfile userProfile;
+
+    @Autowired
+    UserChangePassword userChangePassword;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView userProfile(HttpServletRequest request) {
@@ -132,6 +136,30 @@ public class UserProfileController {
             model.addObject("success", "User information updated succesfully.");
         }
 
+        return model;
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public ModelAndView changePassword(@RequestParam(value = "userCode", required = true) String userCode,
+                                       @RequestParam(value = "currentPassword", required = true) String currentPassword,
+                                       @RequestParam(value = "newPassowrd", required = true) String newPassword,
+                                       @RequestParam(value = "confirmNewPassword", required = true) String confirmNewPassword){
+
+        ModelAndView model = new ModelAndView();
+        boolean currentPasswordIsValid = userChangePassword.validateCurrentPassword(userCode, currentPassword, userDb);
+        if(currentPasswordIsValid) {
+            String result = userChangePassword.changePassword(newPassword, confirmNewPassword, userDb);
+            if(result.equals("valid")){
+                model.addObject("success","Password changed.");
+            }
+            else{
+                model.addObject("error", result);
+            }
+        }
+        else{
+            model.addObject("error","Invalid Current Password");
+        }
+        model.setViewName("profile");
         return model;
     }
 }
