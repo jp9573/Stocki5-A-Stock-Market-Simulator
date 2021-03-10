@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.user;
 
+import com.csci5308.stocki5.Email.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ public class UserForgotPasswordController {
     @Autowired
     UserForgotPassword userForgotPassword;
 
+    @Autowired
+    Email email;
 
     @RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
     public ModelAndView userForgotPassword(){
@@ -32,9 +35,9 @@ public class UserForgotPasswordController {
         ModelAndView model = new ModelAndView();
         boolean validUserCode = userForgotPassword.validateUserCode(userCode, userDb);
         if (validUserCode) {
-            int OTP = userForgotPassword.generateUserOtp(userCode, userOtpDb);
+            userForgotPassword.generateUserOtp(userCode, userOtpDb, userDb, email);
             model.addObject("userCode", userCode);
-            model.addObject("success","OTP - "+String.valueOf(OTP));
+            model.addObject("success","OTP sent to registered email.");
             model.setViewName("verifyotp");
         }
         else{
