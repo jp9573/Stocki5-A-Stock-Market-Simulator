@@ -14,4 +14,9 @@ public interface UserDbInterface
 	public User getUserByEmail(String email);
 
 	public boolean updateUserPassword(User user);
+
+	public double getUserFunds(String userCode);
+
+	public boolean updateUserFunds(String userCode, double amount);
+
 }
