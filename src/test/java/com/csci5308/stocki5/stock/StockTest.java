@@ -14,4 +14,5 @@ public class StockTest extends TestCase {
         stock.calculateHighAndLow(16);
         Assert.assertEquals(16, stock.getHigh(),0);
     }
+
 }
