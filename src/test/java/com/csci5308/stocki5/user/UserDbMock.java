@@ -31,6 +31,7 @@ public class UserDbMock implements UserDbInterface
 			user.setInternationalCommodityExchange(1);
 			user.setInternationalStockExchange(1);
 			user.setForeignExchange(1);
+			user.setFunds(50000);
 			Date dob = null;
 			try {
 				dob = new SimpleDateFormat("yyyy-MM-dd").parse("2000-10-12");
