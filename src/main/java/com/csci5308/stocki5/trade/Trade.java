@@ -111,15 +111,7 @@ public class Trade {
 		return userDbInterface;
 	}
 
-	public void generateOrderCode() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-		Date date = new Date();
-		String timestamp = simpleDateFormat.format(date);
-		this.orderCode = this.getUserCode() + this.getSymbol() + timestamp;
-		System.out.println(this.getOrderCode());
-	}
-
-	public void addOrderDetails() {
+	public void addTradeDetails() {
 		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
@@ -133,6 +125,13 @@ public class Trade {
 		}
 
 		this.profitLoss = this.getSellPrice() - this.getBuyPrice();
+	}
+	
+	public void generateOrderCode() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date date = new Date();
+		String timestamp = simpleDateFormat.format(date);
+		this.orderCode = this.getUserCode() + this.getSymbol() + timestamp;
 	}
 
 	public boolean isSufficientFunds() {
