@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.trade;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,7 +19,9 @@ enum TradeStatus {
 
 public class Trade {
 
-	private String orderCode;
+	DecimalFormat df = new DecimalFormat("##.00");
+	
+	private String tradeNumber;
 	private String userCode;
 	private int stockId;
 	private String symbol;
@@ -32,8 +35,13 @@ public class Trade {
 	private TradeStatus status;
 	private boolean isHolding;
 	private double profitLoss;
+	private Date tradeDate;
 	private StockDbInterface stockDbInterface;
 	private UserDbInterface userDbInterface;
+	
+	public Trade() {
+		
+	}
 
 	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, boolean isHolding,
 			StockDbInterface stockDbInterface, UserDbInterface userDbInterface) {
@@ -46,72 +54,144 @@ public class Trade {
 		this.stockDbInterface = stockDbInterface;
 		this.userDbInterface = userDbInterface;
 	}
+	
+	public String getTradeNumber() {
+		return tradeNumber;
+	}
 
-	public String getOrderCode() {
-		return orderCode;
+	public void setTradeNumber(String tradeNumber) {
+		this.tradeNumber = tradeNumber;
 	}
 
 	public String getUserCode() {
 		return userCode;
 	}
 
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+
 	public int getStockId() {
 		return stockId;
+	}
+
+	public void setStockId(int stockId) {
+		this.stockId = stockId;
 	}
 
 	public String getSymbol() {
 		return symbol;
 	}
 
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
+	}
+
 	public String getSegment() {
 		return segment;
+	}
+
+	public void setSegment(String segment) {
+		this.segment = segment;
 	}
 
 	public TradeType getBuySell() {
 		return buySell;
 	}
 
+	public void setBuySell(TradeType buySell) {
+		this.buySell = buySell;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}
 
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
 	public float getBuyPrice() {
-		return buyPrice;
+		return Float.parseFloat(df.format(buyPrice));
+	}
+
+	public void setBuyPrice(float buyPrice) {
+		this.buyPrice = buyPrice;
 	}
 
 	public float getSellPrice() {
-		return sellPrice;
+		return Float.parseFloat(df.format(sellPrice));
+	}
+
+	public void setSellPrice(float sellPrice) {
+		this.sellPrice = sellPrice;
 	}
 
 	public double getTotalBuyPrice() {
-		return totalBuyPrice;
+		return Double.parseDouble(df.format(totalBuyPrice));
+	}
+
+	public void setTotalBuyPrice(double totalBuyPrice) {
+		this.totalBuyPrice = totalBuyPrice;
 	}
 
 	public double getTotalSellPrice() {
-		return totalSellPrice;
+		return Double.parseDouble(df.format(totalSellPrice));
+	}
+
+	public void setTotalSellPrice(double totalSellPrice) {
+		this.totalSellPrice = totalSellPrice;
 	}
 
 	public TradeStatus getStatus() {
 		return status;
 	}
 
+	public void setStatus(TradeStatus status) {
+		this.status = status;
+	}
+
 	public boolean isHolding() {
 		return isHolding;
 	}
 
+	public void setHolding(boolean isHolding) {
+		this.isHolding = isHolding;
+	}
+
 	public double getProfitLoss() {
-		return profitLoss;
+		return Double.parseDouble(df.format(profitLoss));
+	}
+
+	public void setProfitLoss(double profitLoss) {
+		this.profitLoss = profitLoss;
+	}
+
+	public Date getTradeDate() {
+		return tradeDate;
+	}
+
+	public void setTradeDate(Date tradeDate) {
+		this.tradeDate = tradeDate;
 	}
 
 	public StockDbInterface getStockDbInterface() {
 		return stockDbInterface;
 	}
 
+	public void setStockDbInterface(StockDbInterface stockDbInterface) {
+		this.stockDbInterface = stockDbInterface;
+	}
+
 	public UserDbInterface getUserDbInterface() {
 		return userDbInterface;
 	}
 
-	public void addTradeDetails() {
+	public void setUserDbInterface(UserDbInterface userDbInterface) {
+		this.userDbInterface = userDbInterface;
+	}
+
+	public void createTradeDetails() {
 		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
@@ -124,19 +204,24 @@ public class Trade {
 			this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 		}
 
-		this.profitLoss = this.getSellPrice() - this.getBuyPrice();
+		this.profitLoss = this.getTotalSellPrice() - this.getTotalBuyPrice();
 	}
 	
-	public void generateOrderCode() {
+	public boolean isFundSufficient() {
+		User user = this.getUserDbInterface().getUser(this.userCode);
+		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
+		if(isSufficient) {
+			double updatedFunds = user.getFunds() - this.getTotalBuyPrice();
+			this.getUserDbInterface().updateUserFunds(user.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+		}
+		return isSufficient;
+	}
+	
+	public void generateTradeNumber() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		Date date = new Date();
 		String timestamp = simpleDateFormat.format(date);
-		this.orderCode = this.getUserCode() + this.getSymbol() + timestamp;
-	}
-
-	public boolean isSufficientFunds() {
-		User user = this.getUserDbInterface().getUser(this.userCode);
-		return user.getFunds() >= this.getTotalBuyPrice();
+		this.tradeNumber = this.getUserCode() + this.getSymbol() + timestamp;
 	}
 
 }
