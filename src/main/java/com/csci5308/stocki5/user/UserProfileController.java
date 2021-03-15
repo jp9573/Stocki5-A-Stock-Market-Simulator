@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
