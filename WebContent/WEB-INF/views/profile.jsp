@@ -166,19 +166,28 @@
 			    <div class="col-sm-12 col-md-12 col-lg-12" style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
 			    <h4 class="text-center" style="margin: 0px 0px 10px 0px; padding: 0px; text-transform: uppercase;">Change Password</h4>
 				    <form name="login"  action="<c:url value='changePassword' />" method='POST'>
+						<proc:if test="${not empty errorChangePassword}">
+							<div class="alert alert-danger"
+								 role="alert" ${not empty errorChangePassword ? '' : 'hidden="hidden"' }>${errorChangePassword}</div>
+						</proc:if>
+						<proc:if test="${not empty successChangePassword}">
+							<div class="alert alert-success"
+								 role="alert"  ${not empty successChangePassword ? '' : 'hidden="hidden"' }>${successChangePassword}</div>
+						</proc:if>
+						<input type="hidden" id="userCode" name="userCode" type="text" placeholder="User Code" value="${userCode}" class="form-control input-lg">
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					      <input id="password" type="password" class="form-control" name="password" placeholder="Current Password">
+					      <input id="currentPassword" type="password" class="form-control" name="currentPassword" placeholder="Current Password">
 					    </div>
 					    <br>
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					      <input id="password" type="password" class="form-control" name="password" placeholder="New Password">
+					      <input id="newPassword" type="password" class="form-control" name="newPassword" placeholder="New Password">
 					    </div>
 					    <br>
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					      <input id="password" type="password" class="form-control" name="password" placeholder="Confirm New Password">
+					      <input id="confirmNewPassword" type="password" class="form-control" name="confirmNewPassword" placeholder="Confirm New Password">
 					    </div>
 					    <br>
 					    <div class="input-group" style="display: flex; justify-content: center;">
