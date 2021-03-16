@@ -2,8 +2,6 @@ package com.csci5308.stocki5.user;
 
 import org.springframework.stereotype.Service;
 
-import javax.swing.table.TableRowSorter;
-
 @Service
 public class UserChangePassword {
 

@@ -2,7 +2,6 @@ package com.csci5308.stocki5.user;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 public class UserChangePasswordTest{
 
