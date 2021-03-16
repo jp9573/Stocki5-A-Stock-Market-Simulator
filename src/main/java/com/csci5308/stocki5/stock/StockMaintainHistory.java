@@ -28,7 +28,7 @@ public class StockMaintainHistory {
 
         int milliSecondsToSubtract = (2000/1000) * noOfVersions * 60000;
         long olderHistoryId = historyId - milliSecondsToSubtract;
-        
+
         stockHistoryDb.deleteStockHistoryLesserThanHistoryId(olderHistoryId);
 
         stockHistoryDb.insertStocksHistoryBulk(stocksHistory);
