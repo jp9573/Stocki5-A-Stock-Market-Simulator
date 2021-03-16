@@ -134,6 +134,7 @@ public class UserDb implements UserDbInterface {
                 user.setInternationalDerivativeExchange(resultSet.getInt("internationalDerivativeExchange"));
                 user.setInternationalCommodityExchange(resultSet.getInt("internationalCommodityExchange"));
                 user.setForeignExchange(resultSet.getInt("foreignExchange"));
+                user.setFunds(resultSet.getDouble("funds"));
             }
             return user;
         } catch (SQLException e) {
@@ -175,6 +176,51 @@ public class UserDb implements UserDbInterface {
             return null;
         }
         finally {
+            dbConnection.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public double getUserFunds(String userCode) {
+        Connection connection = dbConnection.createConnection();
+
+        try {
+            double userFunds = 0;
+            Statement statement = connection.createStatement();
+            String selectUserFundsSql = "SELECT funds FROM user WHERE userCode='" + userCode + "'";
+            ResultSet resultSet = statement.executeQuery(selectUserFundsSql);
+            while (resultSet.next()) {
+                userFunds = resultSet.getDouble("funds");
+            }
+            return userFunds;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            dbConnection.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public boolean updateUserFunds(String userCode, double amount) {
+        Connection connection = dbConnection.createConnection();
+
+        try {
+            String updateUserFundsSQL = "UPDATE user SET " +
+                    "funds=? " +
+                    "WHERE userCode=?";
+
+            PreparedStatement statement = connection.prepareStatement(updateUserFundsSQL);
+
+            statement.setDouble(1, amount);
+            statement.setString(2, userCode);
+
+            int result = statement.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
             dbConnection.closeConnection(connection);
         }
     }
