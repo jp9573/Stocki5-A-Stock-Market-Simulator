@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
-public class UserForgotPassword {
+public class UserForgotPassword extends UserChangePassword{
 
     public boolean validateUserCode(String userCode,
                                     UserDbInterface userDb){
@@ -69,15 +69,13 @@ public class UserForgotPassword {
                                  UserDbInterface userDb,
                                  UserOtpDbInterface userOtpDb){
         User user = userDb.getUser(userCode);
-        user.setPassword(password);
-        user.setConfirmPassword(confirmPassword);
-        String result = user.validate();
-        if (!result.equals("valid")) {
-            return result;
+        String result = super.changePassword(user, password, confirmPassword,userDb);
+        if (result.equals("valid")) {
+            userDb.updateUserPassword(user);
+            userOtpDb.deleteOtpByUserCode(userCode);
+            return "Success";
         }
-        userDb.updateUserPassword(user);
-        userOtpDb.deleteOtpByUserCode(userCode);
-        return "Success";
+        return result;
     }
 
 }
