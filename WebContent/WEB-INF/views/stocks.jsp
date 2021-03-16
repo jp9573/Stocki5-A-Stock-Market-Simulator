@@ -14,10 +14,25 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function getStockId(stockid,symbol,segment){
+		$("#buystocksymbol").val(symbol);
+		$("#buystockseg").val(segment);
+		$("#buyModal").modal();
+		$("#buystockid").val(stockid);
+	}
+</script>
 </head>
 <body>
 	<%@ include file="header.jsp"%>
 	<div class="container" style="margin-top: 70px; margin-bottom: 40px;">
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12">
+				<proc:if test="${not empty error}">
+					<div class="alert alert-danger" role="alert" ${not empty error ? '' : 'hidden="hidden"' }>${error}</div>
+				</proc:if>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-6"
 				style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff; height: calc(100vh - 110px); overflow-y: scroll; ">
@@ -25,7 +40,7 @@
 					<input class="form-control" id="searchtext" name="searchtext"
 						type="text" placeholder="Search Stocks" />
 				</div>
-				<c:forEach items="${stocks}" var="stock">
+				<c:forEach items="${stocks}" var="stock" varStatus="loop">
 					<div style="margin-bottom: 15px; border: 1px solid #337ab7; border-radius: 4px; padding: 8px;">
 						<table style="width:100%; table-layout: fixed; font-size: 16px; border-collapse: separate; border-spacing: 5px;">
 							<tr>
@@ -51,10 +66,10 @@
 									<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
 										<div style="display: inline-flex; padding: 4px;">
 											<input class="form-control input-sm" id="buyprice" name="buyprice" type="number" placeholder="Buy Price" />
-											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Set Buy Price</button>
+											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" >Set Buy Price</button>
 										</div>
 										<div style="display: inline-flex; padding: 4px;">
-											<button type="submit" class="btn btn-primary my-1 btn-sm">Buy</button>
+											<button type="submit" class="btn btn-primary my-1 btn-sm" onclick="getStockId('${stock.stockId}','${stock.symbol}','${stock.segment}')" >Buy</button>
 											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Sell</button>
 										</div>
 									</div>
@@ -96,5 +111,44 @@
 
 	</div>
 	<%@ include file="footer.jsp"%>
+	<div class="modal fade" id="buyModal" role="dialog">
+	   <div class="modal-dialog">
+	   
+	     <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Buy Stock</h4>
+	      </div>
+	      <div class="modal-body">
+			<form class="profile-form" action="<c:url value='buystock' />" method='POST'>
+				<input style="display: none" class="form-control" id="buystockid" name="buystockid" type="text" readonly/>
+				<div class="input-group">
+				  <span class="input-group-addon">Symbol</span>
+				  <input class="form-control" id="buystocksymbol" name="buystocksymbol" type="text" readonly/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Segment</span>
+				  <input class="form-control" id="buystockseg" name="buystockseg" type="text" readonly/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Quantity</span>
+				  <input class="form-control" min="1" max="5000" id="quantity" name="quantity" type="number"/>
+				</div>
+				<br>
+				<div class="input-group" style="display: flex; justify-content: center;">
+					<button type="submit" class="btn btn-primary">Buy Stock</button>
+				</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	    
+	  </div>
+	</div>
 </body>
 </html>

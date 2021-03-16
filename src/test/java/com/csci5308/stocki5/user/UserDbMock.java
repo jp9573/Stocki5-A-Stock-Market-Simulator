@@ -37,6 +37,7 @@ public class UserDbMock implements UserDbInterface
 			user.setInternationalCommodityExchange(1);
 			user.setInternationalStockExchange(1);
 			user.setForeignExchange(1);
+			user.setFunds(50000);
 			Date dob = null;
 			try {
 				dob = new SimpleDateFormat("yyyy-MM-dd").parse("2000-10-12");
@@ -46,7 +47,23 @@ public class UserDbMock implements UserDbInterface
 			user.setDateOfBirth(dob);
 			return user;
 		}
-		else {
+		else if(userCode.equals("AB1234567")) {
+			user.setEmailId("test@test.com");
+			user.setUserCode("AB123456");
+			user.setInternationalDerivativeExchange(1);
+			user.setInternationalCommodityExchange(1);
+			user.setInternationalStockExchange(1);
+			user.setForeignExchange(1);
+			user.setFunds(5000);
+			Date dob = null;
+			try {
+				dob = new SimpleDateFormat("yyyy-MM-dd").parse("2000-10-12");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			user.setDateOfBirth(dob);
+			return user;
+		} else  {
 			return user;
 		}
 	}
@@ -79,12 +96,17 @@ public class UserDbMock implements UserDbInterface
 
 	@Override
 	public double getUserFunds(String userCode) {
-		return 0;
+		if(userCode.equals("AB123456")){
+			return 5000;
+		} else {
+			return 50000;
+		}
 	}
 
 	@Override
 	public boolean updateUserFunds(String userCode, double amount) {
-		return false;
+		System.out.println("Updated User "+userCode+". Value: "+amount+".");
+		return  true;
 	}
 
 }
