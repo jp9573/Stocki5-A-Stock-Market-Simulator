@@ -22,7 +22,7 @@ public class StockHistoryDb implements StockHistoryDbInterface{
             ResultSet resultSet = statement.executeQuery(selectStockSql);
             StockHistory tempStockHistory = new StockHistory();
             while (resultSet.next()) {
-                tempStockHistory.setHistoryId(resultSet.getInt("history_id"));
+                tempStockHistory.setHistoryId(resultSet.getLong("history_id"));
                 tempStockHistory.setStockId(resultSet.getInt("stock_id"));
                 tempStockHistory.setSymbol(resultSet.getString("symbol"));
                 tempStockHistory.setOpen(resultSet.getFloat("open"));
