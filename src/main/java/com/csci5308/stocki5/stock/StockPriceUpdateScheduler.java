@@ -12,7 +12,7 @@ public class StockPriceUpdateScheduler extends StockPriceAlgorithm {
 	@Autowired
 	StockDb stockDb;
 
-	@Scheduled(fixedDelay = 5000)
+	@Scheduled(fixedDelay = 2000)
 	public void scheduleGenerateStockPrice() {
 		super.generateStockPrice(stockDb);
 	}
