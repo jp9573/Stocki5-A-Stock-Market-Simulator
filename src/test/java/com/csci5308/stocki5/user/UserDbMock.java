@@ -23,10 +23,16 @@ public class UserDbMock implements UserDbInterface
 	@Override
 	public User getUser(String userCode)
 	{
+		User user = new User();
 		if(userCode.equals("AB123456")) {
-			User user = new User();
 			user.setEmailId("test@test.com");
 			user.setUserCode("AB123456");
+			user.setContactNo("19324678786");
+			user.setFirstName("John");
+			user.setLastName("Doe");
+			user.setProvince("halifax");
+			user.setPassword("password");
+			user.setConfirmPassword("password");
 			user.setInternationalDerivativeExchange(1);
 			user.setInternationalCommodityExchange(1);
 			user.setInternationalStockExchange(1);
@@ -42,7 +48,6 @@ public class UserDbMock implements UserDbInterface
 			return user;
 		}
 		else if(userCode.equals("AB1234567")) {
-			User user = new User();
 			user.setEmailId("test@test.com");
 			user.setUserCode("AB123456");
 			user.setInternationalDerivativeExchange(1);
@@ -59,7 +64,7 @@ public class UserDbMock implements UserDbInterface
 			user.setDateOfBirth(dob);
 			return user;
 		} else  {
-			return null;
+			return user;
 		}
 	}
 
@@ -82,6 +87,11 @@ public class UserDbMock implements UserDbInterface
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public boolean updateUserPassword(User user) {
+		return true;
 	}
 
 	@Override
