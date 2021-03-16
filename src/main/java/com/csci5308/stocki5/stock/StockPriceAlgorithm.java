@@ -16,6 +16,9 @@ public class StockPriceAlgorithm {
 	@Value("${history.noOfVersions}")
 	private int noOfVersions;
 
+	@Autowired
+	StockHistoryDb stockHistoryDb;
+
 	public void generateStockPrice(StockDbInterface stockDbInterface) {
 		float newPrice = 0.00f;
 		float percent = 0.00f;
@@ -28,7 +31,7 @@ public class StockPriceAlgorithm {
 			stock.calculateHighAndLow(newPrice);
 		}
 		stockDbInterface.updateStockBulk(stocks);
-		stockMaintainHistory.maintainStocksHistory(stocks, noOfVersions);
+		stockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
 	}
 
 	public float stockPriceAlgorithm(float currentPrice) {

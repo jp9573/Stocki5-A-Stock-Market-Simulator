@@ -10,10 +10,8 @@ import java.util.List;
 
 @Service
 public class StockMaintainHistory {
-    @Autowired
-    StockHistoryDb stockHistoryDb;
 
-    public void maintainStocksHistory(List<Stock> stocks, int noOfVersions){
+    public void maintainStocksHistory(List<Stock> stocks, int noOfVersions, StockHistoryDbInterface stockHistoryDb){
         Date date = new Date();
         String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         SimpleDateFormat dateFormatter = new SimpleDateFormat(dateTimeFormat);
