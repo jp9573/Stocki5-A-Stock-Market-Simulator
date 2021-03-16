@@ -46,6 +46,7 @@ public class UserProfileController {
         model.addObject("internationalDerivativeExchange", String.valueOf(user.getInternationalDerivativeExchange()));
         model.addObject("internationalCommodityExchange", String.valueOf(user.getInternationalCommodityExchange()));
         model.addObject("foreignExchange", String.valueOf(user.getForeignExchange()));
+        model.addObject("funds", user.getFunds());
 
         model.setViewName("profile");
         return model;
@@ -61,6 +62,7 @@ public class UserProfileController {
                                     @RequestParam(value = "country", required = true) String country,
                                     @RequestParam(value = "dateOfBirth", required = true) String dateOfBirth,
                                     @RequestParam(value = "gender", required = true) String gender,
+                                    @RequestParam(value = "funds", required = true) double funds,
                                     @RequestParam(value = "internationalStockExchange", required = false) String internationalStockExchange,
                                     @RequestParam(value = "internationalDerivativeExchange", required = false) String internationalDerivativeExchange,
                                     @RequestParam(value = "internationalCommodityExchange", required = false) String internationalCommodityExchange,
@@ -95,6 +97,7 @@ public class UserProfileController {
         model.addObject("internationalDerivativeExchange", internationalDerivativeExchange);
         model.addObject("internationalCommodityExchange", internationalCommodityExchange);
         model.addObject("foreignExchange", foreignExchange);
+        model.addObject("funds", funds);
         model.setViewName("profile");
 
         User user = new User();
@@ -159,6 +162,42 @@ public class UserProfileController {
         else{
             model.addObject("error","Invalid Current Password");
         }
+        model.setViewName("profile");
+        return model;
+    }
+
+    @RequestMapping(value = "/resetFunds", method = RequestMethod.POST)
+    public ModelAndView resetFunds(@RequestParam(value = "userCode", required = true) String userCode) {
+
+        User user = userDb.getUser(userCode);
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("userCode", user.getUserCode());
+        model.addObject("firstName", user.getFirstName());
+        model.addObject("lastName", user.getLastName());
+        model.addObject("emailId", user.getEmailId());
+        model.addObject("contactNo", user.getContactNo());
+        model.addObject("address", user.getAddress());
+        model.addObject("province", user.getProvince());
+        model.addObject("country", user.getCountry());
+        model.addObject("gender", user.getGender());
+        model.addObject("dateOfBirth", user.getDateOfBirth());
+        model.addObject("internationalStockExchange", String.valueOf(user.getInternationalStockExchange()));
+        model.addObject("internationalDerivativeExchange", String.valueOf(user.getInternationalDerivativeExchange()));
+        model.addObject("internationalCommodityExchange", String.valueOf(user.getInternationalCommodityExchange()));
+        model.addObject("foreignExchange", String.valueOf(user.getForeignExchange()));
+
+        UserFunds userFunds = new UserFunds(userCode, userDb);
+        boolean isUserFundsUpdated = userFunds.resetFunds(user, userDb);
+
+        if (!isUserFundsUpdated) {
+            model.addObject("funds", user.getFunds());
+            model.addObject("errorFunds", "Error adding user Funds. Current balance should be less than 10000.");
+        } else {
+            model.addObject("funds", userFunds.getFunds());
+            model.addObject("successFunds", "User funds added succesfully.");
+        }
+
         model.setViewName("profile");
         return model;
     }
