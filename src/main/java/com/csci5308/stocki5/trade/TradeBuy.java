@@ -11,14 +11,14 @@ public class TradeBuy {
 	public boolean buyStock(String userCode, int stockId, int quantity, StockDbInterface stockDbInterface,
 			UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface) {
 		
-		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, true,
+		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED,
 				stockDbInterface, userDbInterface);
 		trade.createTradeDetails();
 
 		boolean isFundSufficient = trade.isFundSufficient();
 		if (isFundSufficient) {
 			trade.generateTradeNumber();
-			tradeDbInterface.insertTrade(trade);
+			tradeDbInterface.insertTrade(trade, true);
 		}
 
 		return isFundSufficient;

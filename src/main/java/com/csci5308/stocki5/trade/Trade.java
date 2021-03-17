@@ -29,28 +29,25 @@ public class Trade {
 	private TradeType buySell;
 	private int quantity;
 	private float buyPrice;
-	private float sellPrice;
+	protected float sellPrice;
 	private double totalBuyPrice;
-	private double totalSellPrice;
+	protected double totalSellPrice;
 	private TradeStatus status;
-	private boolean isHolding;
-	private double profitLoss;
 	private Date tradeDate;
-	private StockDbInterface stockDbInterface;
-	private UserDbInterface userDbInterface;
+	protected StockDbInterface stockDbInterface;
+	protected UserDbInterface userDbInterface;
 	
 	public Trade() {
 		
 	}
 
-	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, boolean isHolding,
+	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status,
 			StockDbInterface stockDbInterface, UserDbInterface userDbInterface) {
 		this.userCode = userCode;
 		this.stockId = stockId;
 		this.buySell = buySell;
 		this.quantity = quantity;
 		this.status = status;
-		this.isHolding = isHolding;
 		this.stockDbInterface = stockDbInterface;
 		this.userDbInterface = userDbInterface;
 	}
@@ -95,14 +92,6 @@ public class Trade {
 		this.segment = segment;
 	}
 
-	public TradeType getBuySell() {
-		return buySell;
-	}
-
-	public void setBuySell(TradeType buySell) {
-		this.buySell = buySell;
-	}
-
 	public int getQuantity() {
 		return quantity;
 	}
@@ -125,6 +114,14 @@ public class Trade {
 
 	public void setSellPrice(float sellPrice) {
 		this.sellPrice = sellPrice;
+	}
+
+	public TradeType getBuySell() {
+		return buySell;
+	}
+
+	public void setBuySell(TradeType buySell) {
+		this.buySell = buySell;
 	}
 
 	public double getTotalBuyPrice() {
@@ -151,22 +148,6 @@ public class Trade {
 		this.status = status;
 	}
 
-	public boolean isHolding() {
-		return isHolding;
-	}
-
-	public void setHolding(boolean isHolding) {
-		this.isHolding = isHolding;
-	}
-
-	public double getProfitLoss() {
-		return Double.parseDouble(df.format(profitLoss));
-	}
-
-	public void setProfitLoss(double profitLoss) {
-		this.profitLoss = profitLoss;
-	}
-
 	public Date getTradeDate() {
 		return tradeDate;
 	}
@@ -190,6 +171,16 @@ public class Trade {
 	public void setUserDbInterface(UserDbInterface userDbInterface) {
 		this.userDbInterface = userDbInterface;
 	}
+	
+	public boolean isFundSufficient() {
+		User user = this.getUserDbInterface().getUser(this.userCode);
+		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
+		if(isSufficient) {
+			double updatedFunds = user.getFunds() - this.getTotalBuyPrice();
+			this.getUserDbInterface().updateUserFunds(user.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+		}
+		return isSufficient;
+	}
 
 	public void createTradeDetails() {
 		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
@@ -203,18 +194,6 @@ public class Trade {
 			this.sellPrice = stock.getPrice();
 			this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 		}
-
-		this.profitLoss = this.getTotalSellPrice() - this.getTotalBuyPrice();
-	}
-	
-	public boolean isFundSufficient() {
-		User user = this.getUserDbInterface().getUser(this.userCode);
-		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
-		if(isSufficient) {
-			double updatedFunds = user.getFunds() - this.getTotalBuyPrice();
-			this.getUserDbInterface().updateUserFunds(user.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
-		}
-		return isSufficient;
 	}
 	
 	public void generateTradeNumber() {
