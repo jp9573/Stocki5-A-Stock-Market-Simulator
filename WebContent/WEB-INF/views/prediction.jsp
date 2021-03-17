@@ -17,12 +17,12 @@
 <div class="container" style="margin-top: 70px; margin-bottom: 40px;">
     <div class="row">
         <h2 class="text-center">Prediction</h2>
-        <form action="<c:url value='/prediction' />" method='POST'
+        <form action="<c:url value='/predict' />" method='POST'
               style="display: flex; align-items: flex-end; justify-content: center;">
             <div class="form-group" style="width: 40%; margin: 0;">
                 <label for="exampleInputEmail1">Search stock to predict</label>
-                <input type="text" class="form-control" id="exampleInputEmail1"
-                       placeholder="Stock symbol">
+                <input type="text" class="form-control" name="stockName" id="exampleInputEmail1"
+                       placeholder="Stock name">
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
