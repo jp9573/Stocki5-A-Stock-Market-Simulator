@@ -34,12 +34,15 @@
 				    	<button type="submit" class="btn btn-primary btn-lg">Log In</button>
 				    </div>
 				    <br>
-				    <h5>Forgot?&nbsp;<a href="forgotuser">User&nbsp;Code</a>&nbsp;/&nbsp;<a href="#">Password</a></h5>
+				    <h5>Forgot?&nbsp;<a href="forgotuser">User&nbsp;Code</a>&nbsp;/&nbsp;<a href="forgotpassword">Password</a></h5>
 				    <br>
 				    <h5>Create account?&nbsp;<a href="signup">Sign&nbsp;Up</a></h5>
 				    <proc:if test="${not empty error}">
 					    <div class="alert alert-danger" ${not empty error ? '' : 'hidden="hidden"' }>${error}</div>
 				    </proc:if>
+					<proc:if test="${not empty success}">
+						<div class="alert alert-success" ${not empty success ? '' : 'hidden="hidden"' }>${success}</div>
+					</proc:if>
 				</form>
 			</div>
 		</div>

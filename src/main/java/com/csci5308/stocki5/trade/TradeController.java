@@ -50,8 +50,20 @@ public class TradeController {
 		return model;
 	}
 
+	@RequestMapping(value = { "/holdings" }, method = RequestMethod.GET)
+	public ModelAndView getHoldings(HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		ModelAndView model = new ModelAndView();
+
+		List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
+		model.addObject("orders", orders);
+		model.setViewName("orders");
+
+		return model;
+	}
+
 	@RequestMapping(value = "/buystock", method = RequestMethod.POST)
-	public ModelAndView signUpUser(HttpServletRequest request, @RequestParam(value = "buystockid") int stockId,
+	public ModelAndView buyStock(HttpServletRequest request, @RequestParam(value = "buystockid") int stockId,
 			@RequestParam(value = "quantity") int quantity) {
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();

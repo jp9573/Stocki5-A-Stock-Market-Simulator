@@ -20,6 +20,30 @@ public class UserProfileController {
     @Autowired
     UserProfile userProfile;
 
+    @Autowired
+    UserChangePassword userChangePassword;
+
+    private ModelAndView getUserModel(User user){
+        ModelAndView model = new ModelAndView();
+        model.addObject("userCode", user.getUserCode());
+        model.addObject("firstName", user.getFirstName());
+        model.addObject("lastName", user.getLastName());
+        model.addObject("emailId", user.getEmailId());
+        model.addObject("contactNo", user.getContactNo());
+        model.addObject("address", user.getAddress());
+        model.addObject("province", user.getProvince());
+        model.addObject("country", user.getCountry());
+        model.addObject("gender", user.getGender());
+        model.addObject("dateOfBirth", user.getDateOfBirth());
+        model.addObject("internationalStockExchange", String.valueOf(user.getInternationalStockExchange()));
+        model.addObject("internationalDerivativeExchange", String.valueOf(user.getInternationalDerivativeExchange()));
+        model.addObject("internationalCommodityExchange", String.valueOf(user.getInternationalCommodityExchange()));
+        model.addObject("foreignExchange", String.valueOf(user.getForeignExchange()));
+        model.addObject("funds", user.getFunds());
+
+        return model;
+    }
+
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView userProfile(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
@@ -137,6 +161,31 @@ public class UserProfileController {
         return model;
     }
 
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public ModelAndView changePassword(@RequestParam(value = "userCode", required = true) String userCode,
+                                       @RequestParam(value = "currentPassword", required = true) String currentPassword,
+                                       @RequestParam(value = "newPassword", required = true) String newPassword,
+                                       @RequestParam(value = "confirmNewPassword", required = true) String confirmNewPassword){
+
+        User user = userDb.getUser(userCode);
+        ModelAndView model= getUserModel(user);
+        boolean currentPasswordIsValid = userChangePassword.validateCurrentPassword(user, currentPassword);
+        if(currentPasswordIsValid) {
+            String result = userChangePassword.changePassword(user, newPassword, confirmNewPassword, userDb);
+            if(result.equals("valid")){
+                model.addObject("successChangePassword","Password changed.");
+            }
+            else{
+                model.addObject("errorChangePassword", result);
+            }
+        }
+        else{
+            model.addObject("errorChangePassword","Invalid Current Password");
+        }
+        model.setViewName("profile");
+        return model;
+    }
+
     @RequestMapping(value = "/resetFunds", method = RequestMethod.POST)
     public ModelAndView resetFunds(@RequestParam(value = "userCode", required = true) String userCode) {
 
@@ -170,7 +219,6 @@ public class UserProfileController {
         }
 
         model.setViewName("profile");
-
         return model;
     }
 }
