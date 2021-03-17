@@ -4,10 +4,20 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StockPriceAlgorithm {
+	@Autowired
+	StockMaintainHistory stockMaintainHistory;
+
+	@Value("${history.noOfVersions}")
+	private int noOfVersions;
+
+	@Autowired
+	StockHistoryDb stockHistoryDb;
 
 	public void generateStockPrice(StockDbInterface stockDbInterface) {
 		float newPrice = 0.00f;
@@ -21,6 +31,7 @@ public class StockPriceAlgorithm {
 			stock.calculateHighAndLow(newPrice);
 		}
 		stockDbInterface.updateStockBulk(stocks);
+		stockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
 	}
 
 	public float stockPriceAlgorithm(float currentPrice) {

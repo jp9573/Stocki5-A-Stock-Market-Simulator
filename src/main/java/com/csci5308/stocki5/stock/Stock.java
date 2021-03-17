@@ -131,6 +131,19 @@ public class Stock {
 		this.percentIncreaseDecrease = stock.getPercentIncreaseDecrease();
 	}
 
+	public Stock(Stock stock){
+		this.stockId = stock.stockId;
+		this.symbol = stock.getSymbol();
+		this.open = stock.getOpen();
+		this.high = stock.getHigh();
+		this.low = stock.getLow();
+		this.price = stock.getPrice();
+		this.latestTradingDate = stock.getLatestTradingDate();
+		this.previousClose = stock.getPreviousClose();
+		this.segment = stock.getSegment();
+		this.percentIncreaseDecrease = stock.getPercentIncreaseDecrease();
+	}
+
 	public void calculateHighAndLow(float newPrice) {
 		if (newPrice > this.getHigh()) {
 			this.setHigh(newPrice);
