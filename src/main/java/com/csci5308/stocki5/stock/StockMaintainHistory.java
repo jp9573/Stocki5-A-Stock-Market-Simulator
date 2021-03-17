@@ -23,9 +23,10 @@ public class StockMaintainHistory {
             stocksHistory.add(new StockHistory(historyId, insertTimestamp, stock));
         }
         
-        int milliSecondsToSubtract = 600000;
+        long milliSecondsToSubtract = 600000;
         long olderHistoryId = historyId - milliSecondsToSubtract;
-
+        System.out.println("old id "+String.valueOf(olderHistoryId));
+        System.out.println("new id "+String.valueOf(historyId));
         stockHistoryDb.deleteStockHistoryLesserThanHistoryId(olderHistoryId);
 
         stockHistoryDb.insertStocksHistoryBulk(stocksHistory);
