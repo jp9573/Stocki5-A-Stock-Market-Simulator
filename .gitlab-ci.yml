@@ -1,0 +1,49 @@
+variables:
+  MAVEN_CLI_OPTS: "clean"
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+  tags:
+    - ugrad
+
+test:
+  stage: test
+  script:
+    - mvn verify
+  artifacts:
+    when: always
+    paths:
+      - target/surefire-reports/TEST-*.xml
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+  tags:
+    - ugrad
+
+deploy_develop:
+  stage: deploy
+  image: ruby:2.6
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+  only:
+    - develop
+  tags:
+    - dalfcs_docker_kvm
+    
+deploy_release:
+  stage: deploy
+  image: ruby:2.6
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PROD --api-key=$HEROKU_API_KEY_PROD
+  only:
+    - release/0.2.0
+  tags:
+    - dalfcs_docker_kvm
