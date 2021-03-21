@@ -14,4 +14,8 @@ public interface StockHistoryDbInterface {
 
     public boolean deleteStockHistoryLesserThanHistoryId(long historyId);
 
+    public int getStocksHistoryCount();
+
+    public long getNthOldestStockHistoryId(int n);
+
 }
