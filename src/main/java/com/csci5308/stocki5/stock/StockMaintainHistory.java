@@ -22,13 +22,18 @@ public class StockMaintainHistory {
         for(Stock stock : stocks){
             stocksHistory.add(new StockHistory(historyId, insertTimestamp, stock));
         }
-        
-        long milliSecondsToSubtract = 60000;
-        long olderHistoryId = historyId - milliSecondsToSubtract;
-        System.out.println("old id "+String.valueOf(olderHistoryId));
-        System.out.println("new id "+String.valueOf(historyId));
-        stockHistoryDb.deleteStockHistoryLesserThanHistoryId(olderHistoryId);
 
+        int noOfStocks = stocks.size();
+        int currentNoOfStockHistory = stockHistoryDb.getStocksHistoryCount();
+        int currentNoOfVersions = (int) Math.floor(currentNoOfStockHistory / noOfStocks);
+
+        if(currentNoOfVersions >= noOfVersions){
+            int extraVersions = currentNoOfVersions - noOfVersions;
+            int nthVersion = extraVersions;
+            long oldHistoryId = stockHistoryDb.getNthOldestStockHistoryId(nthVersion);
+            oldHistoryId = oldHistoryId + 1;
+            stockHistoryDb.deleteStockHistoryLesserThanHistoryId(oldHistoryId);
+        }
         stockHistoryDb.insertStocksHistoryBulk(stocksHistory);
     }
 }
