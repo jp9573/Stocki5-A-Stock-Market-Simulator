@@ -23,4 +23,14 @@ public class StockHistoryDbMock implements StockHistoryDbInterface{
     public boolean deleteStockHistoryLesserThanHistoryId(long historyId) {
         return true;
     }
+
+    @Override
+    public int getStocksHistoryCount() {
+        return 0;
+    }
+
+    @Override
+    public long getNthOldestStockHistoryId(int n) {
+        return 0;
+    }
 }
