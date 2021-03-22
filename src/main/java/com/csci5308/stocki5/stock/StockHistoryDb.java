@@ -110,4 +110,46 @@ public class StockHistoryDb implements StockHistoryDbInterface{
             dbConnection.closeConnection(connection);
         }
     }
+
+    @Override
+    public int getStocksHistoryCount() {
+        Connection connection = dbConnection.createConnection();
+        int count = -1;
+        try{
+            String getQuery = "SELECT COUNT(*) FROM stock_data_history";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(getQuery);
+            resultSet.next();
+            count = resultSet.getInt("COUNT(*)");
+            return count;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+        finally {
+            dbConnection.closeConnection(connection);
+        }
+    }
+
+    @Override
+    public long getNthOldestStockHistoryId(int n) {
+        Connection connection = dbConnection.createConnection();
+        long historyId = -1;
+        try{
+            String getQuery = "SELECT history_id FROM stock_data_history GROUP BY history_id ORDER BY history_id ASC LIMIT 1 OFFSET " + String.valueOf(n) +";";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(getQuery);
+            resultSet.next();
+            historyId = resultSet.getLong("history_id");
+            return historyId;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+        finally {
+            dbConnection.closeConnection(connection);
+        }
+    }
 }
