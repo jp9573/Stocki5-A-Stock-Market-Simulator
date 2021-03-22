@@ -7,7 +7,7 @@ import java.util.List;
 @Service
 public class StockPrediction {
 
-    public List<Stock> predictStockValue(StockDbInterface stockDbInterface, String stock) {
+    public List<Stock> predictStockValue(StockHistoryDb stockDbInterface, String stock) {
         return null;
     }
 }
