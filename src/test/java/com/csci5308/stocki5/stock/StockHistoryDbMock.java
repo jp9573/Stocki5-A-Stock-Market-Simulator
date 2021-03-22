@@ -5,7 +5,7 @@ import java.util.List;
 public class StockHistoryDbMock implements StockHistoryDbInterface{
 
     @Override
-    public List<StockHistory> getStockHistory(int stockId) {
+    public List<StockHistory> getStockHistory(String stockSymbol) {
         return null;
     }
 

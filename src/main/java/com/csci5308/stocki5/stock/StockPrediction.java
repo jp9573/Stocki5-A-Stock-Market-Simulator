@@ -8,6 +8,7 @@ import java.util.List;
 public class StockPrediction {
 
     public List<Stock> predictStockValue(StockHistoryDb stockDbInterface, String stock) {
+        List<StockHistory> stockHistories = stockDbInterface.getStockHistory(stock);
         return null;
     }
 }
