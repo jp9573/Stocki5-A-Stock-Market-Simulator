@@ -15,7 +15,7 @@ import java.util.List;
 public class StockPredictionController {
 
     @Autowired
-    StockDb stockDb;
+    StockHistoryDb stockHistoryDb;
 
     @Autowired
     StockPrediction stockPrediction;
@@ -25,7 +25,7 @@ public class StockPredictionController {
                                    @RequestParam(value = "stockName", required = true) String stockName) {
         Principal principal = request.getUserPrincipal();
         ModelAndView model = new ModelAndView();
-        List<Stock> predictionList = stockPrediction.predictStockValue(stockDb, stockName);
+        List<Stock> predictionList = stockPrediction.predictStockValue(stockHistoryDb, stockName);
         model.addObject("predictionList", predictionList);
         model.setViewName("prediction");
         return model;
