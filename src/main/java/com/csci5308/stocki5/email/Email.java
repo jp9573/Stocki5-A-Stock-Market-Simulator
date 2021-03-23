@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.Email;
+package com.csci5308.stocki5.email;
 
 import com.csci5308.stocki5.config.Stocki5AppEmailConfig;
 import org.springframework.beans.factory.annotation.Autowired;
