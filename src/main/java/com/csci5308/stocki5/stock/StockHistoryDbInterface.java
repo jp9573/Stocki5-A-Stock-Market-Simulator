@@ -6,7 +6,7 @@ import java.util.List;
 
 @Repository
 public interface StockHistoryDbInterface {
-    public List<StockHistory> getStockHistory(int stockId);
+    public List<StockHistory> getStockHistory(String stockSymbol);
 
     public List<StockHistory> getAllStocksHistory();
 
