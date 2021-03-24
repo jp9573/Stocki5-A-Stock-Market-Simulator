@@ -21,6 +21,13 @@
 		$("#buyModal").modal();
 		$("#buystockid").val(stockid);
 	}
+	
+	function getStockIdBuyPrice(stockid,symbol,segment){
+		$("#setbuystocksymbol").val(symbol);
+		$("#setbuystockseg").val(segment);
+		$("#buyPriceModal").modal();
+		$("#setbuystockid").val(stockid);
+	}
 </script>
 </head>
 <body>
@@ -65,12 +72,12 @@
 								<td colspan="4">
 									<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
 										<div style="display: inline-flex; padding: 4px;">
-											<input class="form-control input-sm" id="buyprice" name="buyprice" type="number" placeholder="Buy Price" />
-											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" >Set Buy Price</button>
+											<!-- <input class="form-control input-sm" id="buyprice" name="buyprice" type="number" placeholder="Buy Price" /> -->
+											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" onclick="getStockIdBuyPrice('${stock.stockId}','${stock.symbol}','${stock.segment}')">Set Buy Price</button>
 										</div>
 										<div style="display: inline-flex; padding: 4px;">
 											<button type="submit" class="btn btn-primary my-1 btn-sm" onclick="getStockId('${stock.stockId}','${stock.symbol}','${stock.segment}')" >Buy</button>
-											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Sell</button>
+											<!-- <button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Sell</button> -->
 										</div>
 									</div>
 								</td>
@@ -140,6 +147,50 @@
 				<br>
 				<div class="input-group" style="display: flex; justify-content: center;">
 					<button type="submit" class="btn btn-primary">Buy Stock</button>
+				</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	    
+	  </div>
+	</div>
+	<div class="modal fade" id="buyPriceModal" role="dialog">
+	   <div class="modal-dialog">
+	   
+	     <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Set Buy Price</h4>
+	      </div>
+	      <div class="modal-body">
+			<form class="profile-form" action="<c:url value='setbuystock' />" method='POST'>
+				<input style="display: none" class="form-control" id="setbuystockid" name="setbuystockid" type="text" readonly/>
+				<div class="input-group">
+				  <span class="input-group-addon">Symbol</span>
+				  <input class="form-control" id="setbuystocksymbol" name="setbuystocksymbol" type="text" readonly/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Segment</span>
+				  <input class="form-control" id="setbuystockseg" name="setbuystockseg" type="text" readonly/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Quantity</span>
+				  <input class="form-control" min="1" max="5000" id="setquantity" name="setquantity" type="number"/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Buy Price</span>
+				  <input class="form-control" id="setbuyprice" name="setbuyprice" type="number"/>
+				</div>
+				<br>
+				<div class="input-group" style="display: flex; justify-content: center;">
+					<button type="submit" class="btn btn-primary">Set Buy Price</button>
 				</div>
 			</form>
 	      </div>

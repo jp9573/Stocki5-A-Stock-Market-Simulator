@@ -7,8 +7,17 @@ public class TradeBuyTest {
 
 	@Test
 	public void buyStockTest() {
-		int add = 4 + 3;
-		Assert.assertEquals(add,7);
+		Assert.assertTrue(true);
+	}
+	
+	@Test
+	public void setBuyPriceTest() {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void buyPendingTradesTest() {
+		Assert.assertTrue(true);
 	}
 	
 }
