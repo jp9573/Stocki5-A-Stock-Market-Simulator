@@ -22,7 +22,7 @@ public class TradeController {
 
 	@Autowired
 	StockFetch stockFetch;
-	
+
 	@Autowired
 	TradeFetch tradeFetch;
 
@@ -42,11 +42,11 @@ public class TradeController {
 	public ModelAndView welcomePage(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
-		
+
 		List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
 		model.addObject("orders", orders);
 		model.setViewName("orders");
-		
+
 		return model;
 	}
 
@@ -79,7 +79,34 @@ public class TradeController {
 		List<Stock> stocks = stockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
 		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDb, userDb, principal.getName());
 		List<Stock> top5LosersStocks = stockFetch.fetchTop5LoserStocks(stockDb, userDb, principal.getName());
-		
+
+		model.addObject("stocks", stocks);
+		model.addObject("gainers", top5GainersStocks);
+		model.addObject("losers", top5LosersStocks);
+		model.addObject("error", "Insufficient funds");
+		model.setViewName("stocks");
+		return model;
+	}
+
+	@RequestMapping(value = "/setbuystock", method = RequestMethod.POST)
+	public ModelAndView setBuyStock(HttpServletRequest request, @RequestParam(value = "setbuystockid") int stockId,
+			@RequestParam(value = "setquantity") int quantity, @RequestParam(value = "setbuyprice") float buyPrice) {
+		Principal principal = request.getUserPrincipal();
+		ModelAndView model = new ModelAndView();
+
+		boolean isBought = tradeBuy.setBuyPrice(principal.getName(), stockId, quantity, buyPrice, stockDb, userDb,
+				tradeDb);
+		if (isBought) {
+			List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
+			model.addObject("orders", orders);
+			model.setViewName("orders");
+			return model;
+		}
+
+		List<Stock> stocks = stockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5LosersStocks = stockFetch.fetchTop5LoserStocks(stockDb, userDb, principal.getName());
+
 		model.addObject("stocks", stocks);
 		model.addObject("gainers", top5GainersStocks);
 		model.addObject("losers", top5LosersStocks);

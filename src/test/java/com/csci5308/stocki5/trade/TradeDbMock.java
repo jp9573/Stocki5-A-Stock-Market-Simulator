@@ -27,4 +27,22 @@ public class TradeDbMock implements TradeDbInterface {
 		return null;
 	}
 
+	@Override
+	public List<Trade> getPendingTrades(TradeType tradeType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean updateBuyTrade(Trade trade, boolean isHolding) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateBulkTradeStatus(List<Trade> trades) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
