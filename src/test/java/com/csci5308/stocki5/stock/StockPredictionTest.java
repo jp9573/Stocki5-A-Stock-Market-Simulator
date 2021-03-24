@@ -1,25 +1,66 @@
 package com.csci5308.stocki5.stock;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class StockPredictionTest {
 
-    private StockDbMock stockDbMock = null;
+    private StockHistoryDbMock stockHistoryDbMock = null;
 
     @Before
     public void createObjects() {
-        stockDbMock = new StockDbMock();
+        stockHistoryDbMock = new StockHistoryDbMock();
     }
 
     @After
     public void destroyObjects() {
-        stockDbMock = null;
+        stockHistoryDbMock = null;
     }
 
     @Test
     public void predictStockValueTest() {
+        final String stockSymbol = "ABC";
+
+        List<StockHistory> stockHistories = stockHistoryDbMock.getStockHistory(stockSymbol);
+
+        int totalCount = stockHistories.size();
+        List<Stock> stocks = new ArrayList<>();
+        float sum = 0.00f;
+
+        if (totalCount > 0) {
+
+            for (StockHistory stockHistory : stockHistories) {
+                sum += stockHistory.getPrice();
+            }
+
+            float mean = sum / totalCount;
+            StockHistory lastHistoryStock = stockHistories.get(totalCount - 1);
+            Stock predictedStock = new Stock();
+            float changeInPercent = mean / lastHistoryStock.getPrice();
+
+            predictedStock.setStockId(lastHistoryStock.getStockId());
+            predictedStock.setSymbol(lastHistoryStock.getSymbol());
+            predictedStock.setOpen(lastHistoryStock.getOpen());
+            predictedStock.setHigh(lastHistoryStock.getHigh());
+            predictedStock.setLow(lastHistoryStock.getLow());
+            predictedStock.setPrice(mean);
+            predictedStock.setLatestTradingDate(new Date());
+            predictedStock.setPreviousClose(lastHistoryStock.getPreviousClose());
+            predictedStock.setSegment(lastHistoryStock.getSegment());
+            predictedStock.setPercentIncreaseDecrease(changeInPercent);
+
+            stocks.add(predictedStock);
+        }
+
+        Assert.assertEquals(1, totalCount);
+        Assert.assertEquals(1, stocks.size());
+        Assert.assertEquals(13.0f, sum, 0.5);
 
     }
 }
