@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.csci5308.stocki5.trade.TradeBuyInterface;
+import com.csci5308.stocki5.trade.TradeDb;
+import com.csci5308.stocki5.user.UserDb;
+
 @Service
 public class StockPriceAlgorithm {
 	@Autowired
@@ -19,7 +23,14 @@ public class StockPriceAlgorithm {
 	@Autowired
 	StockHistoryDb stockHistoryDb;
 
-	public void generateStockPrice(StockDbInterface stockDbInterface) {
+	@Autowired
+	UserDb userDb;
+
+	@Autowired
+	TradeDb tradeDb;
+
+	public void generateStockPrice(StockDbInterface stockDbInterface, TradeBuyInterface tradeBuyInterface) {
+		System.out.println("Generate price called");
 		float newPrice = 0.00f;
 		float percent = 0.00f;
 		List<Stock> stocks = stockDbInterface.getStocks();
@@ -31,6 +42,7 @@ public class StockPriceAlgorithm {
 			stock.calculateHighAndLow(newPrice);
 		}
 		stockDbInterface.updateStockBulk(stocks);
+		tradeBuyInterface.buyPendingTrades(tradeDb, userDb, stocks);
 		stockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
 	}
 
