@@ -26,6 +26,22 @@
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
+
+        <c:if test="${empty predictionList}">
+            Find prediction with the stock symbol.
+        </c:if>
+        <c:forEach items="${predictionList}" var="predictionList">
+            <div class="mt-2"
+                    style="display: flex; align-items: center; justify-content: space-between; width: 50%; margin: auto;">
+                <div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Symbol&nbsp;</span><span
+                        class="label label-info"><c:out value="${predictionList.symbol}"/></span></div>
+                <div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Price&nbsp;</span><span
+                        class="label label-info"><c:out value="${predictionList.price}"/></span></div>
+                <span class="${predictionList.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}"><c:out
+                        value="${predictionList.percentIncreaseDecrease}"/>%&nbsp;<span
+                        class="${predictionList.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span>
+            </div>
+        </c:forEach>
     </div>
 </div>
 <%@ include file="footer.jsp" %>
