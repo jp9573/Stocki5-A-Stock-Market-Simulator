@@ -10,4 +10,14 @@ public class TradeBuyTest {
 		Assert.assertTrue(true);
 	}
 	
+	@Test
+	public void setBuyPriceTest() {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void buyPendingTradesTest() {
+		Assert.assertTrue(true);
+	}
+	
 }

@@ -12,7 +12,13 @@ public interface TradeDbInterface {
 	public Trade getTrade(String tradeNumber);
 
 	public List<Trade> getTodaysTradeByUserCode(String userCode);
-
+	
 	public List<Holding> getHoldingsByUserCode(String userCode);
+	
+	public List<Trade> getPendingTrades(TradeType tradeType);
+	
+	public boolean updateBuyTrade(Trade trade, boolean isHolding);
+	
+	public boolean updateBulkTradeStatus(List<Trade> trades);
 
 }
