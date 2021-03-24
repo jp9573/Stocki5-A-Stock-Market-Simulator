@@ -104,7 +104,7 @@ public class TradeDb implements TradeDbInterface {
 		List<Holding> holdings = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try {
-			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
+			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -134,6 +134,31 @@ public class TradeDb implements TradeDbInterface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return holdings;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public boolean removeHolding(String tradeNumber) {
+		Connection connection = dbConnection.createConnection();
+
+		try {
+			String insertTradeSql = "UPDATE trade SET isHolding = ? WHERE tradeNumber = ?";
+			PreparedStatement statement = connection.prepareStatement(insertTradeSql);
+
+			statement.setBoolean(1, false);
+			statement.setString(2, tradeNumber);
+
+			int tradeCount = statement.executeUpdate();
+			if (tradeCount > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		} finally {
 			dbConnection.closeConnection(connection);
 		}

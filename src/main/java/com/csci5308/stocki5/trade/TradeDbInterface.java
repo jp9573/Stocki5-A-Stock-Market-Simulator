@@ -15,4 +15,6 @@ public interface TradeDbInterface {
 
 	public List<Holding> getHoldingsByUserCode(String userCode);
 
+	public boolean removeHolding(String tradeNumber);
+
 }

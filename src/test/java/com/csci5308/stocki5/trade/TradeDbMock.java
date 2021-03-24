@@ -27,4 +27,9 @@ public class TradeDbMock implements TradeDbInterface {
 		return null;
 	}
 
+	@Override
+	public boolean removeHolding(String tradeNumber) {
+		return false;
+	}
+
 }

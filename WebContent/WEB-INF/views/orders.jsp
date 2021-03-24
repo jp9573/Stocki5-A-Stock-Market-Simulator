@@ -26,8 +26,9 @@
 							<th>STOCK</th>
 							<th>SEGMENT</th>
 							<th>QUANTITY</th>
-							<th>BUY PRICE</th>
-							<th>TOTAL BUY PRICE</th>
+							<th>STOCK PRICE</th>
+							<th>TOTAL ORDER AMOUNT</th>
+							<th>ORDER TYPE</th>
 							<th>STATUS</th>
 						</tr>
 					</thead>
@@ -37,8 +38,9 @@
 								<td><c:out value="${order.symbol}" /></td>
 								<td><c:out value="${order.segment}" /></td>
 								<td><c:out value="${order.quantity}" /></td>
-								<td><c:out value="${order.buyPrice}" /></td>
-								<td><c:out value="${order.totalBuyPrice}" /></td>
+								<td><c:out value="${String.valueOf(order.getBuySell()) == 'BUY' ? order.buyPrice : order.sellPrice}" /></td>
+								<td><c:out value="${String.valueOf(order.getBuySell()) == 'BUY' ? order.totalBuyPrice : order.totalSellPrice}" /></td>
+								<td><c:out value="${String.valueOf(order.buySell)}" /></td>
 								<td><c:out value="${order.status}" /></td>
 							</tr>
 						</c:forEach>

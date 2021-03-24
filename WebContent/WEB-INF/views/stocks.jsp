@@ -70,7 +70,6 @@
 										</div>
 										<div style="display: inline-flex; padding: 4px;">
 											<button type="submit" class="btn btn-primary my-1 btn-sm" onclick="getStockId('${stock.stockId}','${stock.symbol}','${stock.segment}')" >Buy</button>
-											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Sell</button>
 										</div>
 									</div>
 								</td>
