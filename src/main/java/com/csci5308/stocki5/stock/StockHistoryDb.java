@@ -47,8 +47,8 @@ public class StockHistoryDb implements StockHistoryDbInterface{
     }
 
     @Override
-    public List<StockHistory> getStockHistory(int stockId) {
-        String getQuery = "SELECT * FROM stock_data_history WHERE stock_id = "+ String.valueOf(stockId);
+    public List<StockHistory> getStockHistory(String stockSymbol) {
+        String getQuery = "SELECT * FROM stock_data_history WHERE symbol = \""+ stockSymbol + "\"";
         List<StockHistory> stockHistory = executeGetQuery(getQuery);
         return  stockHistory;
     }
