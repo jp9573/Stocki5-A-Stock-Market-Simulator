@@ -175,10 +175,6 @@ public class Trade {
 	public boolean isFundSufficient() {
 		User user = this.getUserDbInterface().getUser(this.userCode);
 		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
-		if(isSufficient) {
-			double updatedFunds = user.getFunds() - this.getTotalBuyPrice();
-			this.getUserDbInterface().updateUserFunds(user.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
-		}
 		return isSufficient;
 	}
 
