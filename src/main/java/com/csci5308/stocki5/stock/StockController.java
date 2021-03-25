@@ -24,7 +24,7 @@ public class StockController {
 
     @Autowired
     UserDb userDb;
-
+    
     @RequestMapping(value = {"/stocks"}, method = RequestMethod.GET)
     public ModelAndView stocksPage(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();

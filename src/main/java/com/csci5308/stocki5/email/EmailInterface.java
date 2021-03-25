@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.Email;
+package com.csci5308.stocki5.email;
 
 public interface EmailInterface {
     public boolean sendEmail(String toEmail, String subject, String content);

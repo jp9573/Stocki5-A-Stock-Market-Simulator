@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +105,7 @@ public class TradeDb implements TradeDbInterface {
 		List<Holding> holdings = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try {
-			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
+			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -156,6 +157,89 @@ public class TradeDb implements TradeDbInterface {
 			} else {
 				return false;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public List<Trade> getPendingTrades(TradeType tradeType) {
+		List<Trade> trades = new ArrayList<>();
+		Connection connection = dbConnection.createConnection();
+		try {
+			String selectTradeSql = "SELECT * FROM trade WHERE status='PENDING' AND buySell=?";
+			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
+
+			statement.setString(1, String.valueOf(tradeType));
+			ResultSet resultSet = statement.executeQuery();
+
+			Trade trade = null;
+			while (resultSet.next()) {
+				trade = new Trade();
+				trade.setTradeNumber(resultSet.getString("tradeNumber"));
+				trade.setUserCode(resultSet.getString("userCode"));
+				trade.setStockId(resultSet.getInt("stockId"));
+				trade.setBuySell(TradeType.valueOf(resultSet.getString("buySell")));
+				trade.setSymbol(resultSet.getString("symbol"));
+				trade.setSegment(resultSet.getString("segment"));
+				trade.setQuantity(resultSet.getInt("quantity"));
+				trade.setBuyPrice(resultSet.getFloat("buyPrice"));
+				trade.setSellPrice(resultSet.getFloat("sellPrice"));
+				trade.setTotalBuyPrice(resultSet.getDouble("totalBuyPrice"));
+				trade.setTotalSellPrice(resultSet.getDouble("totalSellPrice"));
+				trade.setStatus(TradeStatus.valueOf(resultSet.getString("status")));
+				trade.setTradeDate(resultSet.getDate("tradeDate"));
+				trades.add(trade);
+			}
+			return trades;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return trades;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public boolean updateBuyTrade(Trade trade, boolean isHolding) {
+		Connection connection = dbConnection.createConnection();
+
+		try {
+			String updateUserSQL = "UPDATE trade SET buyPrice=?, totalBuyPrice=?, isHolding=?, status=? WHERE tradeNumber=?";
+			PreparedStatement statement = connection.prepareStatement(updateUserSQL);
+
+			statement.setFloat(1, trade.getBuyPrice());
+			statement.setDouble(2, trade.getTotalBuyPrice());
+			statement.setBoolean(3, isHolding);
+			statement.setString(4, String.valueOf(trade.getStatus()));
+			statement.setString(5, trade.getTradeNumber());
+			int result = statement.executeUpdate();
+			if (result > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+			return false;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public boolean updateBulkTradeStatus(List<Trade> trades) {
+		Connection connection = dbConnection.createConnection();
+		try {
+			Statement statement = connection.createStatement();
+			for (Trade trade : trades) {
+				statement.addBatch("UPDATE trade SET status = '" + trade.getStatus() + "' WHERE tradeNumber = '" + trade.getTradeNumber()+"'");
+			}
+			int[] result = statement.executeBatch();
+			return result.length > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

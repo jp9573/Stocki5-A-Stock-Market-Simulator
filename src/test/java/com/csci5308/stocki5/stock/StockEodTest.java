@@ -3,10 +3,10 @@ package com.csci5308.stocki5.stock;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StockPriceUpdateSchedulerTest {
+public class StockEodTest {
 	
 	@Test
-	public void scheduleGenerateStockPriceTest() {
+	public void setStockClosingPriceTest() {
 		Assert.assertTrue(true);
 	}
 
