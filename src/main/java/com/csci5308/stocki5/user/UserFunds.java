@@ -4,9 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class UserFunds{
 
-    @Value("${user.resetFundAmount}")
-    private String resetFundAmount;
-
     private double funds;
 
     public UserFunds(String userCode, UserDbInterface userDb){

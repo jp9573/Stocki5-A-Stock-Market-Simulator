@@ -27,7 +27,13 @@ public class TradeController {
 	TradeFetch tradeFetch;
 
 	@Autowired
+	HoldingFetch holdingFetch;
+
+	@Autowired
 	TradeBuy tradeBuy;
+
+	@Autowired
+	TradeSell tradeSell;
 
 	@Autowired
 	StockDb stockDb;
@@ -55,21 +61,47 @@ public class TradeController {
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
-		List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
+		List<Holding> orders = holdingFetch.fetchUserHoldings(principal.getName(), tradeDb, stockDb);
 		model.addObject("orders", orders);
-		model.setViewName("orders");
+		model.setViewName("holdings");
 
 		return model;
 	}
 
 	@RequestMapping(value = "/buystock", method = RequestMethod.POST)
 	public ModelAndView buyStock(HttpServletRequest request, @RequestParam(value = "buystockid") int stockId,
-			@RequestParam(value = "quantity") int quantity) {
+								 @RequestParam(value = "quantity") int quantity) {
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
 		boolean isBought = tradeBuy.buyStock(principal.getName(), stockId, quantity, stockDb, userDb, tradeDb);
 		if (isBought) {
+			List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
+			model.addObject("orders", orders);
+			model.setViewName("orders");
+			return model;
+		}
+
+		List<Stock> stocks = stockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5LosersStocks = stockFetch.fetchTop5LoserStocks(stockDb, userDb, principal.getName());
+
+		model.addObject("stocks", stocks);
+		model.addObject("gainers", top5GainersStocks);
+		model.addObject("losers", top5LosersStocks);
+		model.addObject("error", "Insufficient funds");
+		model.setViewName("stocks");
+		return model;
+	}
+
+	@RequestMapping(value = "/sellstock", method = RequestMethod.POST)
+	public ModelAndView sellStock(HttpServletRequest request, @RequestParam(value = "sellstockid") int stockId,
+								  @RequestParam(value = "quantity") int quantity, @RequestParam(value = "tradeBuyNumber") String tradeBuyNumber) {
+		Principal principal = request.getUserPrincipal();
+		ModelAndView model = new ModelAndView();
+
+		boolean isSold = tradeSell.sellStock(principal.getName(), stockId, quantity, stockDb, userDb, tradeDb, tradeBuyNumber);
+		if (isSold) {
 			List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
 			model.addObject("orders", orders);
 			model.setViewName("orders");
