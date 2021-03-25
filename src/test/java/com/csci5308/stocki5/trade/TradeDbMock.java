@@ -45,6 +45,11 @@ public class TradeDbMock implements TradeDbInterface {
 	}
 
 	@Override
+	public boolean updateSellTrade(Trade trade, boolean isHolding) {
+		return false;
+	}
+
+	@Override
 	public boolean updateBulkTradeStatus(List<Trade> trades) {
 		// TODO Auto-generated method stub
 		return false;

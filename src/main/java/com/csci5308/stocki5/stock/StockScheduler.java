@@ -2,6 +2,7 @@ package com.csci5308.stocki5.stock;
 
 import java.util.Date;
 
+import com.csci5308.stocki5.trade.TradeSell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,12 +26,15 @@ public class StockScheduler {
 	@Autowired
 	TradeBuy tradeBuy;
 
+	@Autowired
+	TradeSell tradeSell;
+
 	private static boolean isMarketHours = true;
 
 	@Scheduled(fixedDelay = 5000)
 	public void scheduleGenerateStockPrice() {
 		if (isMarketHours) {
-			stockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy);
+			stockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell);
 		}
 	}
 	

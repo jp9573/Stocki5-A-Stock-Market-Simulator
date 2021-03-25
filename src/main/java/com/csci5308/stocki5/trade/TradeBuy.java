@@ -16,10 +16,10 @@ import java.text.DecimalFormat;
 @Service
 public class TradeBuy implements TradeBuyInterface {
 
+	private DecimalFormat df = new DecimalFormat("##.00");
+
 	public boolean buyStock(String userCode, int stockId, int quantity, StockDbInterface stockDbInterface,
 			UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface) {
-
-		DecimalFormat df = new DecimalFormat("##.00");
 
 		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, stockDbInterface,
 				userDbInterface);
@@ -47,6 +47,9 @@ public class TradeBuy implements TradeBuyInterface {
 		boolean isFundSufficient = trade.isSetBuyPriceFundSufficient(userDbInterface);
 		if (isFundSufficient) {
 			trade.generateTradeNumber();
+			User user = userDbInterface.getUser(userCode);
+			double updatedFunds = user.getFunds() - trade.getTotalBuyPrice();
+			userDbInterface.updateUserFunds(userCode, Double.parseDouble(df.format(updatedFunds)));
 			tradeDbInterface.insertTrade(trade, false);
 		}
 
@@ -57,20 +60,12 @@ public class TradeBuy implements TradeBuyInterface {
 		List<Trade> trades = dbInterface.getPendingTrades(TradeType.BUY);
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(Stock::getSymbol, Stock::getPrice));
 
-		boolean isFundSufficient = false;
-
 		for (Trade trade : trades) {
 			if (trade.getBuyPrice() >= stocksMap.get(trade.getSymbol())) {
 				trade.setBuyPrice(stocksMap.get(trade.getSymbol()));
 				trade.setTotalBuyPrice(trade.getQuantity() * trade.getBuyPrice());
-				isFundSufficient = trade.isFundSufficient(userDbInterface);
-				if (isFundSufficient) {
-					trade.setStatus(TradeStatus.EXECUTED);
-					dbInterface.updateBuyTrade(trade, true);
-				} else {
-					trade.setStatus(TradeStatus.FAILED);
-					dbInterface.updateBuyTrade(trade, false);
-				}
+				trade.setStatus(TradeStatus.EXECUTED);
+				dbInterface.updateBuyTrade(trade, true);
 			}
 		}
 	}

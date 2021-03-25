@@ -18,6 +18,8 @@ public interface TradeDbInterface {
 	public List<Trade> getPendingTrades(TradeType tradeType);
 	
 	public boolean updateBuyTrade(Trade trade, boolean isHolding);
+
+	public boolean updateSellTrade(Trade trade, boolean isHolding);
 	
 	public boolean updateBulkTradeStatus(List<Trade> trades);
 
