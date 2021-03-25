@@ -21,4 +21,6 @@ public interface TradeDbInterface {
 	
 	public boolean updateBulkTradeStatus(List<Trade> trades);
 
+	public boolean removeHolding(String tradeNumber);
+
 }

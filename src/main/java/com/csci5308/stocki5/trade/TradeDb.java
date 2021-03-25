@@ -141,6 +141,31 @@ public class TradeDb implements TradeDbInterface {
 	}
 
 	@Override
+	public boolean removeHolding(String tradeNumber) {
+		Connection connection = dbConnection.createConnection();
+
+		try {
+			String insertTradeSql = "UPDATE trade SET isHolding = ? WHERE tradeNumber = ?";
+			PreparedStatement statement = connection.prepareStatement(insertTradeSql);
+
+			statement.setBoolean(1, false);
+			statement.setString(2, tradeNumber);
+
+			int tradeCount = statement.executeUpdate();
+			if (tradeCount > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
 	public List<Trade> getPendingTrades(TradeType tradeType) {
 		List<Trade> trades = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();

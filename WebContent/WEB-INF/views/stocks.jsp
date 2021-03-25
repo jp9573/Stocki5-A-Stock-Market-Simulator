@@ -21,7 +21,7 @@
 		$("#buyModal").modal();
 		$("#buystockid").val(stockid);
 	}
-	
+
 	function getStockIdBuyPrice(stockid,symbol,segment){
 		$("#setbuystocksymbol").val(symbol);
 		$("#setbuystockseg").val(segment);
@@ -77,7 +77,6 @@
 										</div>
 										<div style="display: inline-flex; padding: 4px;">
 											<button type="submit" class="btn btn-primary my-1 btn-sm" onclick="getStockId('${stock.stockId}','${stock.symbol}','${stock.segment}')" >Buy</button>
-											<!-- <button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Sell</button> -->
 										</div>
 									</div>
 								</td>
@@ -154,12 +153,12 @@
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
-	    
+
 	  </div>
 	</div>
 	<div class="modal fade" id="buyPriceModal" role="dialog">
 	   <div class="modal-dialog">
-	   
+
 	     <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -198,7 +197,7 @@
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
-	    
+
 	  </div>
 	</div>
 </body>
