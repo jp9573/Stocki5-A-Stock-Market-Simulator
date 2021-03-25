@@ -209,6 +209,15 @@ public class Trade {
 		this.totalBuyPrice = this.getQuantity() * this.getBuyPrice();
 	}
 
+	public void createSetSellPriceTradeDetails(float sellPrice) {
+		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		this.symbol = stock.getSymbol();
+		this.segment = stock.getSegment();
+
+		this.sellPrice = sellPrice;
+		this.totalSellPrice = this.getQuantity() * this.getSellPrice();
+	}
+
 	public void generateTradeNumber() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		Date date = new Date();

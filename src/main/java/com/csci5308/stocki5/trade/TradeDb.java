@@ -231,6 +231,33 @@ public class TradeDb implements TradeDbInterface {
 	}
 
 	@Override
+	public boolean updateSellTrade(Trade trade, boolean isHolding) {
+		Connection connection = dbConnection.createConnection();
+
+		try {
+			String updateUserSQL = "UPDATE trade SET sellPrice=?, totalSellPrice=?, isHolding=?, status=? WHERE tradeNumber=?";
+			PreparedStatement statement = connection.prepareStatement(updateUserSQL);
+
+			statement.setFloat(1, trade.getSellPrice());
+			statement.setDouble(2, trade.getTotalSellPrice());
+			statement.setBoolean(3, isHolding);
+			statement.setString(4, String.valueOf(trade.getStatus()));
+			statement.setString(5, trade.getTradeNumber());
+			int result = statement.executeUpdate();
+			if (result > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+			return false;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
 	public boolean updateBulkTradeStatus(List<Trade> trades) {
 		Connection connection = dbConnection.createConnection();
 		try {

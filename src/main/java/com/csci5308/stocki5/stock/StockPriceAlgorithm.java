@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
+import com.csci5308.stocki5.trade.TradeSellInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class StockPriceAlgorithm {
 	@Autowired
 	TradeDb tradeDb;
 
-	public void generateStockPrice(StockDbInterface stockDbInterface, TradeBuyInterface tradeBuyInterface) {
+	public void generateStockPrice(StockDbInterface stockDbInterface, TradeBuyInterface tradeBuyInterface, TradeSellInterface tradeSellInterface) {
 		System.out.println("Generate price called");
 		float newPrice = 0.00f;
 		float percent = 0.00f;
@@ -43,6 +44,7 @@ public class StockPriceAlgorithm {
 		}
 		stockDbInterface.updateStockBulk(stocks);
 		tradeBuyInterface.buyPendingTrades(tradeDb, userDb, stocks);
+		tradeSellInterface.sellPendingTrades(tradeDb, userDb, stocks);
 		stockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
 	}
 

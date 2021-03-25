@@ -16,11 +16,17 @@ public class TradeScheduler {
 	
 	@Autowired
 	TradeDb tradeDb;
-	
+
 	@Scheduled(cron = "0 5 18 * * ?")
 	public void scheduleFailedBuyOrder() {
 		System.out.println("Fail orders called at " + new Date(System.currentTimeMillis()));
 		tradeEod.markFailedBuyOrder(tradeDb);
+	}
+
+	@Scheduled(cron = "0 5 18 * * ?")
+	public void scheduleFailedSellOrder() {
+		System.out.println("Fail orders called at " + new Date(System.currentTimeMillis()));
+		tradeEod.markFailedSellOrder(tradeDb);
 	}
 
 }

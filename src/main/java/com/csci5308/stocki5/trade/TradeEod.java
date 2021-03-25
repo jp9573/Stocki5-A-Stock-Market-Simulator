@@ -15,4 +15,12 @@ public class TradeEod {
 		dbInterface.updateBulkTradeStatus(trades);
 	}
 
+	public void markFailedSellOrder(TradeDbInterface dbInterface) {
+		List<Trade> trades = dbInterface.getPendingTrades(TradeType.SELL);
+		for (Trade trade : trades) {
+			trade.setStatus(TradeStatus.FAILED);
+		}
+		dbInterface.updateBulkTradeStatus(trades);
+	}
+
 }
