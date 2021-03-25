@@ -1,7 +1,8 @@
 package com.csci5308.stocki5.user;
 
-import com.csci5308.stocki5.Email.EmailInterface;
 import org.springframework.stereotype.Service;
+
+import com.csci5308.stocki5.email.EmailInterface;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

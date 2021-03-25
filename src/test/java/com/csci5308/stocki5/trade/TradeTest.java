@@ -11,7 +11,17 @@ public class TradeTest {
 	}
 	
 	@Test
+	public void createSetBuyPriceTradeDetailsTest() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test
 	public void isFundSufficientTest() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test
+	public void isSetBuyPriceFundSufficientTest() {
 		Assert.assertTrue(true);
 	}
 	

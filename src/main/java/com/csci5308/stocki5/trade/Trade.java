@@ -14,13 +14,13 @@ enum TradeType {
 }
 
 enum TradeStatus {
-	PENDING, EXECUTED
+	PENDING, EXECUTED, FAILED
 }
 
 public class Trade {
 
 	DecimalFormat df = new DecimalFormat("##.00");
-	
+
 	private String tradeNumber;
 	private String userCode;
 	private int stockId;
@@ -36,9 +36,9 @@ public class Trade {
 	private Date tradeDate;
 	protected StockDbInterface stockDbInterface;
 	protected UserDbInterface userDbInterface;
-	
+
 	public Trade() {
-		
+
 	}
 
 	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status,
@@ -51,7 +51,7 @@ public class Trade {
 		this.stockDbInterface = stockDbInterface;
 		this.userDbInterface = userDbInterface;
 	}
-	
+
 	public String getTradeNumber() {
 		return tradeNumber;
 	}
@@ -171,8 +171,16 @@ public class Trade {
 	public void setUserDbInterface(UserDbInterface userDbInterface) {
 		this.userDbInterface = userDbInterface;
 	}
-	
-	public boolean isFundSufficient() {
+
+	public boolean isFundSufficient(UserDbInterface userDbInterface) {
+		this.userDbInterface = userDbInterface;
+		User user = this.getUserDbInterface().getUser(this.userCode);
+		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
+		return isSufficient;
+	}
+
+	public boolean isSetBuyPriceFundSufficient(UserDbInterface userDbInterface) {
+		this.userDbInterface = userDbInterface;
 		User user = this.getUserDbInterface().getUser(this.userCode);
 		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
 		return isSufficient;
@@ -191,7 +199,16 @@ public class Trade {
 			this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 		}
 	}
-	
+
+	public void createSetBuyPriceTradeDetails(float buyPrice) {
+		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		this.symbol = stock.getSymbol();
+		this.segment = stock.getSegment();
+
+		this.buyPrice = buyPrice;
+		this.totalBuyPrice = this.getQuantity() * this.getBuyPrice();
+	}
+
 	public void generateTradeNumber() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		Date date = new Date();
