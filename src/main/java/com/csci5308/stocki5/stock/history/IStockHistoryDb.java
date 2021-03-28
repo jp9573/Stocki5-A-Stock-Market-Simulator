@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StockHistoryDbInterface
+public interface IStockHistoryDb
 {
 	public List<StockHistory> getStockHistory(String stockSymbol);
 
