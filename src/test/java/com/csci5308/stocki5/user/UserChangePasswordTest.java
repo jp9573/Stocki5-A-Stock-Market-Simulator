@@ -1,8 +1,9 @@
 package com.csci5308.stocki5.user;
 
-import com.csci5308.stocki5.user.updatepassword.UserChangePassword;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.csci5308.stocki5.user.password.UserChangePassword;
 
 public class UserChangePasswordTest{
 
@@ -28,15 +29,15 @@ public class UserChangePasswordTest{
     public void changePasswordTestValid() {
         String newpassword = "newpassword";
         String confirmNewPassword = "newpassword";
-        Assert.assertEquals("valid",userChangePassword.changePassword(user, newpassword, confirmNewPassword, userDbMock));
+        Assert.assertEquals("Valid",userChangePassword.changePassword(user, newpassword, confirmNewPassword, userDbMock));
 
     }
 
     @Test
     public void changePasswordTestInvalid() {
         String newpassword = "new";
-        String confirmNewPassword = "new";
-        Assert.assertNotEquals("valid",userChangePassword.changePassword(user, newpassword, confirmNewPassword, userDbMock));
+        String confirmNewPassword = "new1";
+        Assert.assertNotEquals("Valid",userChangePassword.changePassword(user, newpassword, confirmNewPassword, userDbMock));
 
     }
 }

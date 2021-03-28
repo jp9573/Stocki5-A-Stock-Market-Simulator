@@ -206,7 +206,7 @@ public class UserTest
 		Date date = cal.getTime();
 
 		user.setDateOfBirth(date);
-		Assert.assertEquals("valid", user.validateUserProfileData());
+		Assert.assertEquals("valid", user.validate());
 	}
 
 	@Test
@@ -218,6 +218,22 @@ public class UserTest
 		user.setLastName("Doe");
 		user.setProvince("halifax");
 
-		Assert.assertNotEquals("valid", user.validateUserProfileData());
+		Assert.assertNotEquals("valid", user.validate());
+	}
+	
+	@Test
+	public void generateUserCodeTestNegative()
+	{
+		user.generateUserCode();
+		Assert.assertNull(user.getUserCode());
+	}
+
+	@Test
+	public void generateUserCodeTest()
+	{
+		user.setFirstName("John");
+		user.setLastName("Doe");
+		user.generateUserCode();
+		Assert.assertNotNull(user.getUserCode());
 	}
 }

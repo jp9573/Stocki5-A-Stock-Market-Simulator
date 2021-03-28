@@ -8,40 +8,48 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Stocki5DbConnection {
+public class Stocki5DbConnection
+{
 
-    @Value("${jdbc.driverClassName}")
-    private String driver;
+	@Value("${jdbc.driverClassName}")
+	private String driver;
 
-    @Value("${jdbc.url}")
-    private String database;
+	@Value("${jdbc.url}")
+	private String database;
 
-    @Value("${jdbc.username}")
-    private String username;
+	@Value("${jdbc.username}")
+	private String username;
 
-    @Value("${jdbc.password}")
-    private String password;
+	@Value("${jdbc.password}")
+	private String password;
 
-    public Connection createConnection() {
-        Connection connection = null;
-        try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
+	public Connection createConnection()
+	{
+		Connection connection = null;
+		try
+		{
+			Class.forName(driver);
+			connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return connection;
-    }
+		} catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return connection;
+	}
 
-    public void closeConnection(Connection connection) {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	public void closeConnection(Connection connection)
+	{
+		try
+		{
+			connection.close();
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 }

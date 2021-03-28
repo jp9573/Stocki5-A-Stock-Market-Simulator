@@ -1,12 +1,11 @@
 package com.csci5308.stocki5.stock;
 
-import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StockTest extends TestCase {
+public class StockTest {
 
-    StockDbInterface dbInterface = new StockDbMock();
+    IStockDb dbInterface = new StockDbMock();
     Stock stock = new Stock(1, dbInterface);
 
     @Test

@@ -1,25 +1,24 @@
 package com.csci5308.stocki5.stock.price;
 
-import java.util.Date;
-
-import com.csci5308.stocki5.stock.StockDb;
-import com.csci5308.stocki5.trade.sell.TradeSell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.csci5308.stocki5.stock.StockDb;
+import com.csci5308.stocki5.stock.history.StockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
+import com.csci5308.stocki5.trade.sell.TradeSell;
 
 @Service
 @EnableScheduling
-public class StockScheduler {
-
+public class StockScheduler
+{
 	@Autowired
 	StockPriceAlgorithm stockPriceAlgorithm;
 
 	@Autowired
-	StockEod stockEod;
+	IStockPriceEod iStockPriceEod;
 
 	@Autowired
 	StockDb stockDb;
@@ -29,26 +28,33 @@ public class StockScheduler {
 
 	@Autowired
 	TradeSell tradeSell;
+	
+	@Autowired
+	StockMaintainHistory stockMaintainHistory;
+
 
 	private static boolean isMarketHours = true;
 
 	@Scheduled(fixedDelay = 5000)
-	public void scheduleGenerateStockPrice() {
-		if (isMarketHours) {
-			stockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell);
+	public void scheduleGenerateStockPrice()
+	{
+		if (isMarketHours)
+		{
+			stockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell, stockMaintainHistory);
 		}
 	}
-	
+
 	@Scheduled(cron = "0 0 9 * * ?")
-	public void scheduleStockBod() {
+	public void scheduleStockBod()
+	{
 		StockScheduler.isMarketHours = true;
 	}
-	
+
 	@Scheduled(cron = "0 0 18 * * ?")
-	public void scheduleStockEod() {
-		System.out.println("Eod process called at " + new Date(System.currentTimeMillis()));
+	public void scheduleStockEod()
+	{
 		StockScheduler.isMarketHours = false;
-		stockEod.setStockClosingPrice(stockDb);
+		iStockPriceEod.setStockClosingPrice(stockDb);
 	}
 
 }

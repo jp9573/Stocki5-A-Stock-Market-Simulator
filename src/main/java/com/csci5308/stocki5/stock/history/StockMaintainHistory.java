@@ -9,32 +9,36 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class StockMaintainHistory {
+public class StockMaintainHistory implements IStockMaintainHistory
+{
 
-    public void maintainStocksHistory(List<Stock> stocks, int noOfVersions, StockHistoryDbInterface stockHistoryDb){
-        Date date = new Date();
-        String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(dateTimeFormat);
+	public void maintainStocksHistory(List<Stock> stocks, int noOfVersions, StockHistoryDbInterface stockHistoryDb)
+	{
+		Date date = new Date();
+		String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(dateTimeFormat);
 
-        long historyId = date.getTime();
-        String insertTimestamp = dateFormatter.format(date);
+		long historyId = date.getTime();
+		String insertTimestamp = dateFormatter.format(date);
 
-        List<StockHistory> stocksHistory = new ArrayList<>();
-        for(Stock stock : stocks){
-            stocksHistory.add(new StockHistory(historyId, insertTimestamp, stock));
-        }
+		List<StockHistory> stocksHistory = new ArrayList<>();
+		for (Stock stock : stocks)
+		{
+			stocksHistory.add(new StockHistory(historyId, insertTimestamp, stock));
+		}
 
-        int noOfStocks = stocks.size();
-        int currentNoOfStockHistory = stockHistoryDb.getStocksHistoryCount();
-        int currentNoOfVersions = (int) Math.floor(currentNoOfStockHistory / noOfStocks);
+		int noOfStocks = stocks.size();
+		int currentNoOfStockHistory = stockHistoryDb.getStocksHistoryCount();
+		int currentNoOfVersions = (int) Math.floor(currentNoOfStockHistory / noOfStocks);
 
-        if(currentNoOfVersions >= noOfVersions){
-            int extraVersions = currentNoOfVersions - noOfVersions;
-            int nthVersion = extraVersions;
-            long oldHistoryId = stockHistoryDb.getNthOldestStockHistoryId(nthVersion);
-            oldHistoryId = oldHistoryId + 1;
-            stockHistoryDb.deleteStockHistoryLesserThanHistoryId(oldHistoryId);
-        }
-        stockHistoryDb.insertStocksHistoryBulk(stocksHistory);
-    }
+		if (currentNoOfVersions >= noOfVersions)
+		{
+			int extraVersions = currentNoOfVersions - noOfVersions;
+			int nthVersion = extraVersions;
+			long oldHistoryId = stockHistoryDb.getNthOldestStockHistoryId(nthVersion);
+			oldHistoryId = oldHistoryId + 1;
+			stockHistoryDb.deleteStockHistoryLesserThanHistoryId(oldHistoryId);
+		}
+		stockHistoryDb.insertStocksHistoryBulk(stocksHistory);
+	}
 }
