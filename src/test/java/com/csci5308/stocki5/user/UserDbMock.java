@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserDbMock implements UserDbInterface
+public class UserDbMock implements IUserDb
 {
 
 	@Override

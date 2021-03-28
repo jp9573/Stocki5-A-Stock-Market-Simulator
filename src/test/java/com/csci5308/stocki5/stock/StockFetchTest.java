@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.csci5308.stocki5.stock.fetch.StockFetch;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.UserDbMock;
 
@@ -38,20 +39,20 @@ public class StockFetchTest {
 
 	@Test
 	public void getUserSegmentsTest() {
-		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.getUserSegments(user));
+		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
 	public void getUserSegmentsTestThreeSegments() {
 		user.setForeignExchange(0);
-		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.getUserSegments(user));
+		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
 	public void getUserSegmentsTestTwoSegments() {
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
-		Assert.assertEquals("'ICE','ISE'", stockFetch.getUserSegments(user));
+		Assert.assertEquals("'ICE','ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
@@ -59,7 +60,7 @@ public class StockFetchTest {
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
-		Assert.assertEquals("'ISE'", stockFetch.getUserSegments(user));
+		Assert.assertEquals("'ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
@@ -68,7 +69,7 @@ public class StockFetchTest {
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		Assert.assertEquals("", stockFetch.getUserSegments(user));
+		Assert.assertEquals("", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test

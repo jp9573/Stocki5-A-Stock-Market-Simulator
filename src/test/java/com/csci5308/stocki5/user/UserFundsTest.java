@@ -1,13 +1,14 @@
 package com.csci5308.stocki5.user;
 
-import com.csci5308.stocki5.user.profile.UserFunds;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.csci5308.stocki5.user.funds.UserFunds;
+
 public class UserFundsTest {
 
-    UserDbInterface userDbMock = new UserDbMock();
-    UserFunds userFunds = new UserFunds("AB123456", userDbMock);
+    IUserDb userDbMock = new UserDbMock();
+    UserFunds userFunds = new UserFunds();
 
     @Test
     public void resetFundsTest() {

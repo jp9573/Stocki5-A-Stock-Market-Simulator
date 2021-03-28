@@ -1,13 +1,13 @@
 package com.csci5308.stocki5.trade.sell;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.StockDbInterface;
+import com.csci5308.stocki5.stock.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.TradeDbInterface;
+import com.csci5308.stocki5.trade.ITradeDb;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDbInterface;
+import com.csci5308.stocki5.user.IUserDb;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -16,18 +16,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class TradeSell implements TradeSellInterface{
+public class TradeSell implements ITradeSell
+{
 
 	DecimalFormat df = new DecimalFormat("##.00");
 
 	@Override
-	public boolean sellStock(String userCode, int stockId, int quantity, StockDbInterface stockDbInterface,
-							 UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface, String tradeBuyNumber) {
+	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface,
+			IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
+	{
 
 		tradeDbInterface.removeHolding(tradeBuyNumber);
 
-		Trade trade = new Trade(userCode, stockId, TradeType.SELL, quantity, TradeStatus.EXECUTED,
-				stockDbInterface, userDbInterface);
+		Trade trade = new Trade(userCode, stockId, TradeType.SELL, quantity, TradeStatus.EXECUTED, stockDbInterface,
+				userDbInterface);
 		trade.createTradeDetails();
 
 		trade.generateTradeNumber();
@@ -39,7 +41,9 @@ public class TradeSell implements TradeSellInterface{
 	}
 
 	@Override
-	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, StockDbInterface stockDbInterface, UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface, String tradeBuyNumber) {
+	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb stockDbInterface,
+			IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
+	{
 
 		tradeDbInterface.removeHolding(tradeBuyNumber);
 
@@ -52,12 +56,15 @@ public class TradeSell implements TradeSellInterface{
 	}
 
 	@Override
-	public void sellPendingTrades(TradeDbInterface dbInterface, UserDbInterface userDbInterface, List<Stock> stocks) {
+	public void sellPendingTrades(ITradeDb dbInterface, IUserDb userDbInterface, List<Stock> stocks)
+	{
 		List<Trade> trades = dbInterface.getPendingTrades(TradeType.SELL);
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(Stock::getSymbol, Stock::getPrice));
 
-		for (Trade trade : trades) {
-			if (trade.getSellPrice() <= stocksMap.get(trade.getSymbol())) {
+		for (Trade trade : trades)
+		{
+			if (trade.getSellPrice() <= stocksMap.get(trade.getSymbol()))
+			{
 				dbInterface.removeHoldingForAutoSell(trade.getUserCode(), trade.getStockId(), trade.getQuantity());
 				trade.setSellPrice(stocksMap.get(trade.getSymbol()));
 				trade.setTotalSellPrice(trade.getQuantity() * trade.getBuyPrice());

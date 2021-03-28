@@ -16,16 +16,19 @@ import org.springframework.stereotype.Repository;
 import com.csci5308.stocki5.config.Stocki5DbConnection;
 
 @Repository
-public class TradeDb implements TradeDbInterface {
+public class TradeDb implements ITradeDb
+{
 
 	@Autowired
 	Stocki5DbConnection dbConnection;
 
 	@Override
-	public boolean insertTrade(Trade trade, boolean isHolding) {
+	public boolean insertTrade(Trade trade, boolean isHolding)
+	{
 		Connection connection = dbConnection.createConnection();
 
-		try {
+		try
+		{
 			String insertTradeSql = "INSERT INTO trade VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(insertTradeSql);
 
@@ -44,29 +47,36 @@ public class TradeDb implements TradeDbInterface {
 			statement.setBoolean(13, isHolding);
 			statement.setDate(14, new Date(System.currentTimeMillis()));
 			int tradeCount = statement.executeUpdate();
-			if (tradeCount > 0) {
+			if (tradeCount > 0)
+			{
 				return true;
-			} else {
+			} else
+			{
 				return false;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return false;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public Trade getTrade(String tradeNumber) {
+	public Trade getTrade(String tradeNumber)
+	{
 		return null;
 	}
 
 	@Override
-	public List<Trade> getTodaysTradeByUserCode(String userCode) {
+	public List<Trade> getTodaysTradeByUserCode(String userCode)
+	{
 		List<Trade> trades = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
-		try {
+		try
+		{
 			String selectTradeSql = "SELECT * FROM trade WHERE userCode=? AND tradeDate=? ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
@@ -75,7 +85,8 @@ public class TradeDb implements TradeDbInterface {
 			ResultSet resultSet = statement.executeQuery();
 
 			Trade trade = null;
-			while (resultSet.next()) {
+			while (resultSet.next())
+			{
 				trade = new Trade();
 				trade.setTradeNumber(resultSet.getString("tradeNumber"));
 				trade.setUserCode(resultSet.getString("userCode"));
@@ -93,19 +104,23 @@ public class TradeDb implements TradeDbInterface {
 				trades.add(trade);
 			}
 			return trades;
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return trades;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public List<Holding> getHoldingsByUserCode(String userCode) {
+	public List<Holding> getHoldingsByUserCode(String userCode)
+	{
 		List<Holding> holdings = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
-		try {
+		try
+		{
 			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
@@ -114,7 +129,8 @@ public class TradeDb implements TradeDbInterface {
 			ResultSet resultSet = statement.executeQuery();
 
 			Holding holding = null;
-			while (resultSet.next()) {
+			while (resultSet.next())
+			{
 				holding = new Holding();
 				holding.setTradeNumber(resultSet.getString("tradeNumber"));
 				holding.setUserCode(resultSet.getString("userCode"));
@@ -133,19 +149,23 @@ public class TradeDb implements TradeDbInterface {
 				holdings.add(holding);
 			}
 			return holdings;
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return holdings;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public boolean removeHolding(String tradeNumber) {
+	public boolean removeHolding(String tradeNumber)
+	{
 		Connection connection = dbConnection.createConnection();
 
-		try {
+		try
+		{
 			String removeHoldingSql = "UPDATE trade SET isHolding = ? WHERE tradeNumber = ?";
 			PreparedStatement statement = connection.prepareStatement(removeHoldingSql);
 
@@ -153,27 +173,33 @@ public class TradeDb implements TradeDbInterface {
 			statement.setString(2, tradeNumber);
 
 			int tradeCount = statement.executeUpdate();
-			if (tradeCount > 0) {
+			if (tradeCount > 0)
+			{
 				return true;
-			} else {
+			} else
+			{
 				return false;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return false;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public boolean removeHoldingForAutoSell(String userCode, int stockId, int quantity) {
+	public boolean removeHoldingForAutoSell(String userCode, int stockId, int quantity)
+	{
 		Connection connection = dbConnection.createConnection();
 
-		try {
-			String removeHoldingSql = "UPDATE trade SET isHolding = ? " +
-					"WHERE tradeNumber = (SELECT tradeNumber FROM trade " +
-					"WHERE userCode = ? AND stockId = ? AND quantity = ? AND isHolding = ?)";
+		try
+		{
+			String removeHoldingSql = "UPDATE trade SET isHolding = ? "
+					+ "WHERE tradeNumber = (SELECT tradeNumber FROM trade "
+					+ "WHERE userCode = ? AND stockId = ? AND quantity = ? AND isHolding = ?)";
 			PreparedStatement statement = connection.prepareStatement(removeHoldingSql);
 
 			statement.setBoolean(1, false);
@@ -182,24 +208,30 @@ public class TradeDb implements TradeDbInterface {
 			statement.setInt(4, quantity);
 
 			int tradeCount = statement.executeUpdate();
-			if (tradeCount > 0) {
+			if (tradeCount > 0)
+			{
 				return true;
-			} else {
+			} else
+			{
 				return false;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return false;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public List<Trade> getPendingTrades(TradeType tradeType) {
+	public List<Trade> getPendingTrades(TradeType tradeType)
+	{
 		List<Trade> trades = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
-		try {
+		try
+		{
 			String selectTradeSql = "SELECT * FROM trade WHERE status='PENDING' AND buySell=?";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
@@ -207,7 +239,8 @@ public class TradeDb implements TradeDbInterface {
 			ResultSet resultSet = statement.executeQuery();
 
 			Trade trade = null;
-			while (resultSet.next()) {
+			while (resultSet.next())
+			{
 				trade = new Trade();
 				trade.setTradeNumber(resultSet.getString("tradeNumber"));
 				trade.setUserCode(resultSet.getString("userCode"));
@@ -225,19 +258,23 @@ public class TradeDb implements TradeDbInterface {
 				trades.add(trade);
 			}
 			return trades;
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return trades;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public boolean updateBuyTrade(Trade trade, boolean isHolding) {
+	public boolean updateBuyTrade(Trade trade, boolean isHolding)
+	{
 		Connection connection = dbConnection.createConnection();
 
-		try {
+		try
+		{
 			String updateUserSQL = "UPDATE trade SET buyPrice=?, totalBuyPrice=?, isHolding=?, status=? WHERE tradeNumber=?";
 			PreparedStatement statement = connection.prepareStatement(updateUserSQL);
 
@@ -247,24 +284,30 @@ public class TradeDb implements TradeDbInterface {
 			statement.setString(4, String.valueOf(trade.getStatus()));
 			statement.setString(5, trade.getTradeNumber());
 			int result = statement.executeUpdate();
-			if (result > 0) {
+			if (result > 0)
+			{
 				return true;
-			} else {
+			} else
+			{
 				return false;
 			}
-		} catch (SQLException throwables) {
+		} catch (SQLException throwables)
+		{
 			throwables.printStackTrace();
 			return false;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public boolean updateSellTrade(Trade trade, boolean isHolding) {
+	public boolean updateSellTrade(Trade trade, boolean isHolding)
+	{
 		Connection connection = dbConnection.createConnection();
 
-		try {
+		try
+		{
 			String updateSellTradeSQL = "UPDATE trade SET sellPrice=?, totalSellPrice=?, isHolding=?, status=? WHERE tradeNumber=?";
 			PreparedStatement statement = connection.prepareStatement(updateSellTradeSQL);
 
@@ -274,33 +317,43 @@ public class TradeDb implements TradeDbInterface {
 			statement.setString(4, String.valueOf(trade.getStatus()));
 			statement.setString(5, trade.getTradeNumber());
 			int result = statement.executeUpdate();
-			if (result > 0) {
+			if (result > 0)
+			{
 				return true;
-			} else {
+			} else
+			{
 				return false;
 			}
-		} catch (SQLException throwables) {
+		} catch (SQLException throwables)
+		{
 			throwables.printStackTrace();
 			return false;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}
 
 	@Override
-	public boolean updateBulkTradeStatus(List<Trade> trades) {
+	public boolean updateBulkTradeStatus(List<Trade> trades)
+	{
 		Connection connection = dbConnection.createConnection();
-		try {
+		try
+		{
 			Statement statement = connection.createStatement();
-			for (Trade trade : trades) {
-				statement.addBatch("UPDATE trade SET status = '" + trade.getStatus() + "' WHERE tradeNumber = '" + trade.getTradeNumber()+"'");
+			for (Trade trade : trades)
+			{
+				statement.addBatch("UPDATE trade SET status = '" + trade.getStatus() + "' WHERE tradeNumber = '"
+						+ trade.getTradeNumber() + "'");
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
 			return false;
-		} finally {
+		} finally
+		{
 			dbConnection.closeConnection(connection);
 		}
 	}

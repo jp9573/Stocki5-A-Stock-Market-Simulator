@@ -1,12 +1,12 @@
 package com.csci5308.stocki5.user;
 
-import com.csci5308.stocki5.user.updatepassword.UserOtp;
-import com.csci5308.stocki5.user.updatepassword.UserOtpDbInterface;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserOtpDbMock  implements UserOtpDbInterface {
+import com.csci5308.stocki5.user.password.IUserOtpDb;
+import com.csci5308.stocki5.user.password.UserOtp;
+
+public class UserOtpDbMock  implements IUserOtpDb {
 
     @Override
     public boolean insertOtp(UserOtp userOtp) {

@@ -1,10 +1,5 @@
 package com.csci5308.stocki5.user.signup;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import com.csci5308.stocki5.user.UserCode;
-import com.csci5308.stocki5.user.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,13 +7,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.UserDb;
+
 @Controller
-public class UserSignUpController {
+public class UserSignUpController
+{
 	@Autowired
 	UserDb userDb;
 
 	@Autowired
-	UserSignUp userSignUp;
+	IUserSignUp iUserSignUp;
 
 	@RequestMapping(value = "/signupuser", method = RequestMethod.POST)
 	public ModelAndView signUpUser(@RequestParam(value = "firstName", required = true) String firstName,
@@ -31,7 +30,8 @@ public class UserSignUpController {
 			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value = "confirmPassword", required = true) String confirmPassword,
 			@RequestParam(value = "dob", required = true) String dob,
-			@RequestParam(value = "gender", required = true) String gender) {
+			@RequestParam(value = "gender", required = true) String gender)
+	{
 		ModelAndView model = new ModelAndView();
 		model.addObject("firstName", firstName);
 		model.addObject("lastName", lastName);
@@ -45,7 +45,7 @@ public class UserSignUpController {
 		model.addObject("country", country);
 		model.addObject("dob", dob);
 
-		UserCode user = new UserCode();
+		User user = new User();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setContactNo(contactNumber);
@@ -56,33 +56,16 @@ public class UserSignUpController {
 		user.setPassword(password);
 		user.setConfirmPassword(confirmPassword);
 		user.setGender(gender);
-		try {
-			user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(dob));
-		} catch (ParseException e) {
-			e.printStackTrace();
-			model.addObject("error", "Invalid Date of Birth.");
-			model.setViewName("signup");
+
+		boolean isUserAdded = iUserSignUp.addUser(userDb, user, dob);
+		if (isUserAdded)
+		{
+			model.addObject("username", user.getUserCode());
+			model.setViewName("index");
 			return model;
 		}
-
-		String isValid = user.validate();
-
-		if (!isValid.equals("valid")) {
-			model.addObject("error", isValid);
-			model.setViewName("signup");
-			return model;
-		}
-
-		String insertMessage = userSignUp.addUser(userDb, user);
-
-		if (insertMessage.equals("error")) {
-			model.addObject("error", "Error in adding user. Please try again later.");
-			model.setViewName("signup");
-			return model;
-		}
-
-		model.addObject("username", insertMessage);
-		model.setViewName("index");
+		model.addObject("error", user.getValidityMessage());
+		model.setViewName("signup");
 		return model;
 	}
 }

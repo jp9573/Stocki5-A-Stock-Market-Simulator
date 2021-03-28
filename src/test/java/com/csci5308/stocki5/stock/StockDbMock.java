@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class StockDbMock implements StockDbInterface {
+public class StockDbMock implements IStockDb {
     @Override
     public Stock getStockData(int stockId) {
         Stock stock = new Stock();

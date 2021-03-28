@@ -1,8 +1,9 @@
 package com.csci5308.stocki5.user;
 
-import com.csci5308.stocki5.user.updatepassword.UserOtp;
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.csci5308.stocki5.user.password.UserOtp;
 
 public class UserOtpTest {
     UserOtp userOtp = new UserOtp();

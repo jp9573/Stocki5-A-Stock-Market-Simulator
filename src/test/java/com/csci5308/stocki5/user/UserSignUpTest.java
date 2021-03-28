@@ -11,11 +11,16 @@ public class UserSignUpTest
 	@Test
 	public void addUserTest()
 	{
-		UserCode user = new UserCode();
+		User user = new User();
 		user.setFirstName("John");
 		user.setLastName("Doe");
+		user.setPassword("12345678");
+		user.setConfirmPassword("12345678");
+		user.setEmailId("test@best.com");
+		user.setContactNo("19876543210");
+		user.setProvince("Toronto");
 		user.generateUserCode();
 		UserDbMock userDbMock = new UserDbMock();
-		Assert.assertNotEquals("error",userSignUp.addUser(userDbMock, user));
+		Assert.assertNotEquals("error",userSignUp.addUser(userDbMock, user, "1994-09-28"));
 	}
 }

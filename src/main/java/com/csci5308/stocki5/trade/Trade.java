@@ -5,11 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.StockDbInterface;
+import com.csci5308.stocki5.stock.IStockDb;
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDbInterface;
+import com.csci5308.stocki5.user.IUserDb;
 
-public class Trade {
+public class Trade
+{
 
 	DecimalFormat df = new DecimalFormat("##.00");
 
@@ -26,15 +27,17 @@ public class Trade {
 	protected double totalSellPrice;
 	private TradeStatus status;
 	private Date tradeDate;
-	protected StockDbInterface stockDbInterface;
-	protected UserDbInterface userDbInterface;
+	protected IStockDb stockDbInterface;
+	protected IUserDb userDbInterface;
 
-	public Trade() {
+	public Trade()
+	{
 
 	}
 
 	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status,
-			StockDbInterface stockDbInterface, UserDbInterface userDbInterface) {
+			IStockDb stockDbInterface, IUserDb userDbInterface)
+	{
 		this.userCode = userCode;
 		this.stockId = stockId;
 		this.buySell = buySell;
@@ -44,155 +47,191 @@ public class Trade {
 		this.userDbInterface = userDbInterface;
 	}
 
-	public String getTradeNumber() {
+	public String getTradeNumber()
+	{
 		return tradeNumber;
 	}
 
-	public void setTradeNumber(String tradeNumber) {
+	public void setTradeNumber(String tradeNumber)
+	{
 		this.tradeNumber = tradeNumber;
 	}
 
-	public String getUserCode() {
+	public String getUserCode()
+	{
 		return userCode;
 	}
 
-	public void setUserCode(String userCode) {
+	public void setUserCode(String userCode)
+	{
 		this.userCode = userCode;
 	}
 
-	public int getStockId() {
+	public int getStockId()
+	{
 		return stockId;
 	}
 
-	public void setStockId(int stockId) {
+	public void setStockId(int stockId)
+	{
 		this.stockId = stockId;
 	}
 
-	public String getSymbol() {
+	public String getSymbol()
+	{
 		return symbol;
 	}
 
-	public void setSymbol(String symbol) {
+	public void setSymbol(String symbol)
+	{
 		this.symbol = symbol;
 	}
 
-	public String getSegment() {
+	public String getSegment()
+	{
 		return segment;
 	}
 
-	public void setSegment(String segment) {
+	public void setSegment(String segment)
+	{
 		this.segment = segment;
 	}
 
-	public int getQuantity() {
+	public int getQuantity()
+	{
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(int quantity)
+	{
 		this.quantity = quantity;
 	}
 
-	public float getBuyPrice() {
+	public float getBuyPrice()
+	{
 		return Float.parseFloat(df.format(buyPrice));
 	}
 
-	public void setBuyPrice(float buyPrice) {
+	public void setBuyPrice(float buyPrice)
+	{
 		this.buyPrice = buyPrice;
 	}
 
-	public float getSellPrice() {
+	public float getSellPrice()
+	{
 		return Float.parseFloat(df.format(sellPrice));
 	}
 
-	public void setSellPrice(float sellPrice) {
+	public void setSellPrice(float sellPrice)
+	{
 		this.sellPrice = sellPrice;
 	}
 
-	public TradeType getBuySell() {
+	public TradeType getBuySell()
+	{
 		return buySell;
 	}
 
-	public void setBuySell(TradeType buySell) {
+	public void setBuySell(TradeType buySell)
+	{
 		this.buySell = buySell;
 	}
 
-	public double getTotalBuyPrice() {
+	public double getTotalBuyPrice()
+	{
 		return Double.parseDouble(df.format(totalBuyPrice));
 	}
 
-	public void setTotalBuyPrice(double totalBuyPrice) {
+	public void setTotalBuyPrice(double totalBuyPrice)
+	{
 		this.totalBuyPrice = totalBuyPrice;
 	}
 
-	public double getTotalSellPrice() {
+	public double getTotalSellPrice()
+	{
 		return Double.parseDouble(df.format(totalSellPrice));
 	}
 
-	public void setTotalSellPrice(double totalSellPrice) {
+	public void setTotalSellPrice(double totalSellPrice)
+	{
 		this.totalSellPrice = totalSellPrice;
 	}
 
-	public TradeStatus getStatus() {
+	public TradeStatus getStatus()
+	{
 		return status;
 	}
 
-	public void setStatus(TradeStatus status) {
+	public void setStatus(TradeStatus status)
+	{
 		this.status = status;
 	}
 
-	public Date getTradeDate() {
+	public Date getTradeDate()
+	{
 		return tradeDate;
 	}
 
-	public void setTradeDate(Date tradeDate) {
+	public void setTradeDate(Date tradeDate)
+	{
 		this.tradeDate = tradeDate;
 	}
 
-	public StockDbInterface getStockDbInterface() {
+	public IStockDb getStockDbInterface()
+	{
 		return stockDbInterface;
 	}
 
-	public void setStockDbInterface(StockDbInterface stockDbInterface) {
+	public void setStockDbInterface(IStockDb stockDbInterface)
+	{
 		this.stockDbInterface = stockDbInterface;
 	}
 
-	public UserDbInterface getUserDbInterface() {
+	public IUserDb getUserDbInterface()
+	{
 		return userDbInterface;
 	}
 
-	public void setUserDbInterface(UserDbInterface userDbInterface) {
+	public void setUserDbInterface(IUserDb userDbInterface)
+	{
 		this.userDbInterface = userDbInterface;
 	}
 
-	public boolean isFundSufficient(UserDbInterface userDbInterface) {
-		this.userDbInterface = userDbInterface;
-		User user = this.getUserDbInterface().getUser(this.userCode);
-		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
-		return isSufficient;
-	}
-
-	public boolean isSetBuyPriceFundSufficient(UserDbInterface userDbInterface) {
+	public boolean isFundSufficient(IUserDb userDbInterface)
+	{
 		this.userDbInterface = userDbInterface;
 		User user = this.getUserDbInterface().getUser(this.userCode);
 		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
 		return isSufficient;
 	}
 
-	public void createTradeDetails() {
+	public boolean isSetBuyPriceFundSufficient(IUserDb userDbInterface)
+	{
+		this.userDbInterface = userDbInterface;
+		User user = this.getUserDbInterface().getUser(this.userCode);
+		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
+		return isSufficient;
+	}
+
+	public void createTradeDetails()
+	{
 		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
 
-		if (TradeType.BUY == this.getBuySell()) {
+		if (TradeType.BUY == this.getBuySell())
+		{
 			this.buyPrice = stock.getPrice();
 			this.totalBuyPrice = this.getQuantity() * this.getBuyPrice();
-		} else if (TradeType.SELL == this.getBuySell()) {
+		} else if (TradeType.SELL == this.getBuySell())
+		{
 			this.sellPrice = stock.getPrice();
 			this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 		}
 	}
 
-	public void createSetBuyPriceTradeDetails(float buyPrice) {
+	public void createSetBuyPriceTradeDetails(float buyPrice)
+	{
 		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
@@ -201,7 +240,8 @@ public class Trade {
 		this.totalBuyPrice = this.getQuantity() * this.getBuyPrice();
 	}
 
-	public void createSetSellPriceTradeDetails(float sellPrice) {
+	public void createSetSellPriceTradeDetails(float sellPrice)
+	{
 		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
@@ -210,7 +250,8 @@ public class Trade {
 		this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 	}
 
-	public void generateTradeNumber() {
+	public void generateTradeNumber()
+	{
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		Date date = new Date();
 		String timestamp = simpleDateFormat.format(date);
