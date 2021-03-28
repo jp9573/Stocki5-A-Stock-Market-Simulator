@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.stock;
 
+import com.csci5308.stocki5.stock.price.StockPriceAlgorithm;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

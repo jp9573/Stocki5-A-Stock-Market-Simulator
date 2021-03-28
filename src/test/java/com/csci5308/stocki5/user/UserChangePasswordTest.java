@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.user;
 
+import com.csci5308.stocki5.user.updatepassword.UserChangePassword;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -5,6 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.csci5308.stocki5.trade.buy.TradeBuy;
+import com.csci5308.stocki5.trade.holding.Holding;
+import com.csci5308.stocki5.trade.holding.HoldingFetch;
+import com.csci5308.stocki5.trade.order.TradeFetch;
+import com.csci5308.stocki5.trade.sell.TradeSell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
