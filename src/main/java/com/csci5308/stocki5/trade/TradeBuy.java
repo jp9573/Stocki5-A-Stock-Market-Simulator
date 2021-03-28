@@ -47,9 +47,6 @@ public class TradeBuy implements TradeBuyInterface {
 		boolean isFundSufficient = trade.isSetBuyPriceFundSufficient(userDbInterface);
 		if (isFundSufficient) {
 			trade.generateTradeNumber();
-			User user = userDbInterface.getUser(userCode);
-			double updatedFunds = user.getFunds() - trade.getTotalBuyPrice();
-			userDbInterface.updateUserFunds(userCode, Double.parseDouble(df.format(updatedFunds)));
 			tradeDbInterface.insertTrade(trade, false);
 		}
 
@@ -66,6 +63,9 @@ public class TradeBuy implements TradeBuyInterface {
 				trade.setTotalBuyPrice(trade.getQuantity() * trade.getBuyPrice());
 				trade.setStatus(TradeStatus.EXECUTED);
 				dbInterface.updateBuyTrade(trade, true);
+				User user = userDbInterface.getUser(trade.getUserCode());
+				double updatedFunds = user.getFunds() - (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
+				userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
 			}
 		}
 	}

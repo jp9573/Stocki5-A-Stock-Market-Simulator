@@ -33,6 +33,11 @@ public class TradeDbMock implements TradeDbInterface {
 	}
 
 	@Override
+	public boolean removeHoldingForAutoSell(String userCode, int stockId, int quantity) {
+		return false;
+	}
+
+	@Override
 	public List<Trade> getPendingTrades(TradeType tradeType) {
 		// TODO Auto-generated method stub
 		return null;

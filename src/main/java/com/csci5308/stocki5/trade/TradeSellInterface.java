@@ -14,7 +14,7 @@ public interface TradeSellInterface {
 			UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface, String tradeBuyNumber);
 	
 	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice,
-			StockDbInterface stockDbInterface, UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface);
+			StockDbInterface stockDbInterface, UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface, String tradeBuyNumber);
 	
 	public void sellPendingTrades(TradeDbInterface dbInterface, UserDbInterface userDbInterface, List<Stock> stocks);
 }
