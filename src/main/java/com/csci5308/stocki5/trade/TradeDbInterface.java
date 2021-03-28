@@ -2,6 +2,7 @@ package com.csci5308.stocki5.trade;
 
 import java.util.List;
 
+import com.csci5308.stocki5.trade.holding.Holding;
 import org.springframework.stereotype.Repository;
 
 @Repository

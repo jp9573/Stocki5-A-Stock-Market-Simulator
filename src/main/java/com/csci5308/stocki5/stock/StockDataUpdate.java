@@ -9,4 +9,5 @@ public class StockDataUpdate extends Stock {
     public boolean updateStock(StockDbInterface dbInterface){
         return dbInterface.updateStockData(this);
     }
+
 }

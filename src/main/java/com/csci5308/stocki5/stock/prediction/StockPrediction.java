@@ -1,40 +1,23 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.prediction;
 
+import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.history.StockHistory;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.csci5308.stocki5.stock.history.StockHistoryDb;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class StockPredictionTest {
+@Service
+public class StockPrediction {
 
-    private StockHistoryDbMock stockHistoryDbMock = null;
-
-    @Before
-    public void createObjects() {
-        stockHistoryDbMock = new StockHistoryDbMock();
-    }
-
-    @After
-    public void destroyObjects() {
-        stockHistoryDbMock = null;
-    }
-
-    @Test
-    public void predictStockValueTest() {
-        final String stockSymbol = "ABC";
-
-        List<StockHistory> stockHistories = stockHistoryDbMock.getStockHistory(stockSymbol);
+    public List<Stock> predictStockValue(StockHistoryDb stockDbInterface, String stock) {
+        List<StockHistory> stockHistories = stockDbInterface.getStockHistory(stock);
 
         int totalCount = stockHistories.size();
-        List<Stock> stocks = new ArrayList<>();
-        float sum = 0.00f;
-
         if (totalCount > 0) {
+            float sum = 0.00f;
 
             for (StockHistory stockHistory : stockHistories) {
                 sum += stockHistory.getPrice();
@@ -56,12 +39,12 @@ public class StockPredictionTest {
             predictedStock.setSegment(lastHistoryStock.getSegment());
             predictedStock.setPercentIncreaseDecrease(changeInPercent);
 
+            List<Stock> stocks = new ArrayList<>();
             stocks.add(predictedStock);
+
+            return stocks;
+        } else {
+            return null;
         }
-
-        Assert.assertEquals(1, totalCount);
-        Assert.assertEquals(1, stocks.size());
-        Assert.assertEquals(13.0f, sum, 0.5);
-
     }
 }

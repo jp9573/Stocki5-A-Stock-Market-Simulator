@@ -1,5 +1,7 @@
 package com.csci5308.stocki5.trade;
 
+import com.csci5308.stocki5.trade.holding.Holding;
+
 import java.util.List;
 
 public class TradeDbMock implements TradeDbInterface {

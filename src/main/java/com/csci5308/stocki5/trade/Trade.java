@@ -9,14 +9,6 @@ import com.csci5308.stocki5.stock.StockDbInterface;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.UserDbInterface;
 
-enum TradeType {
-	BUY, SELL
-}
-
-enum TradeStatus {
-	PENDING, EXECUTED, FAILED
-}
-
 public class Trade {
 
 	DecimalFormat df = new DecimalFormat("##.00");
