@@ -14,7 +14,8 @@ public class UserTest
 	public void validateEmailTest()
 	{
 		user.setEmailId("example");
-		Assert.assertEquals("Invalid Email Id", user.validate());
+		user.validate();
+		Assert.assertEquals("Invalid Email Id", user.getValidityMessage());
 	}
 	
 	@Test
@@ -22,7 +23,8 @@ public class UserTest
 	{
 		user.setEmailId("example@example.com");
 		user.setContactNo("1234567");
-		Assert.assertEquals("Invalid Contact Number", user.validate());
+		user.validate();
+		Assert.assertEquals("Invalid Contact Number", user.getValidityMessage());
 	}
 	
 	@Test
@@ -31,7 +33,8 @@ public class UserTest
 		user.setEmailId("example@example.com");
 		user.setContactNo("19324678786");
 		user.setFirstName("Jo");
-		Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.validate());
+		user.validate();
+		Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -40,7 +43,8 @@ public class UserTest
 		user.setEmailId("example@example.com");
 		user.setContactNo("19324678786");
 		user.setFirstName("Joxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.validate());
+		user.validate();
+		Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -50,7 +54,8 @@ public class UserTest
 		user.setContactNo("19324678786");
 		user.setFirstName("John");
 		user.setLastName("Do");
-		Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.validate());
+		user.validate();
+		Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -60,7 +65,8 @@ public class UserTest
 		user.setContactNo("19324678786");
 		user.setFirstName("John");
 		user.setLastName("Doxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.validate());
+		user.validate();
+		Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -71,7 +77,8 @@ public class UserTest
 		user.setFirstName("John");
 		user.setLastName("Doe");
 		user.setProvince("ha");
-		Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.validate());
+		user.validate();
+		Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -82,7 +89,8 @@ public class UserTest
 		user.setFirstName("John");
 		user.setLastName("Doe");
 		user.setProvince("halifaxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.validate());
+		user.validate();
+		Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -93,7 +101,8 @@ public class UserTest
 		user.setLastName("Doe");
 		user.setProvince("halifax");
 		user.setDateOfBirth(new Date());
-		Assert.assertEquals("Invalid Date of Birth.", user.validate());
+		user.validateDateOfBirth("19940928");
+		Assert.assertEquals("Invalid Date of Birth.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -110,7 +119,8 @@ public class UserTest
 		Date date = cal.getTime();
 		
 		user.setDateOfBirth(date);
-		Assert.assertEquals("Minimum age to sign up with STOCKI5 is 18 years or above.", user.validate());
+		user.validateDateOfBirth("2009-09-28");
+		Assert.assertEquals("Minimum age to sign up with STOCKI5 is 18 years or above.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -129,7 +139,8 @@ public class UserTest
 		
 		user.setDateOfBirth(date);
 		user.setPassword("1234567");
-		Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.validate());
+		user.validatePassword();
+		Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -148,7 +159,8 @@ public class UserTest
 		
 		user.setDateOfBirth(date);
 		user.setPassword("1234567123334135788eus2rdf3");
-		Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.validate());
+		user.validatePassword();
+		Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -168,7 +180,8 @@ public class UserTest
 		user.setDateOfBirth(date);
 		user.setPassword("12345678");
 		user.setConfirmPassword("123456789");
-		Assert.assertEquals("Password and confirm password missmatch.", user.validate());
+		user.validatePassword();
+		Assert.assertEquals("Password and confirm password missmatch.", user.getValidityMessage());
 	}
 	
 	@Test
@@ -188,39 +201,12 @@ public class UserTest
 		user.setDateOfBirth(date);
 		user.setPassword("12345678");
 		user.setConfirmPassword("12345678");
-		Assert.assertEquals("valid", user.validate());
+		user.validateDateOfBirth("1994-09-28");
+		user.validatePassword();
+		user.validate();
+		Assert.assertEquals("Valid", user.getValidityMessage());
 	}
 
-	@Test
-	public void validateUserProfileDataTest()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -18);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
-
-		user.setDateOfBirth(date);
-		Assert.assertEquals("valid", user.validate());
-	}
-
-	@Test
-	public void validateUserProfileInvalidDataTest()
-	{
-		user.setEmailId("@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-
-		Assert.assertNotEquals("valid", user.validate());
-	}
-	
 	@Test
 	public void generateUserCodeTestNegative()
 	{
