@@ -14,6 +14,18 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
             src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+        function getStockIdSellPrice(stockid,symbol,segment, buyTradeNumber, setquantity){
+            $("#setsellstocksymbol").val(symbol);
+            $("#setsellstockseg").val(segment);
+            $("#sellPriceModal").modal();
+            $("#setsellstockid").val(stockid);
+            $("#setbuyTradeNumber").val(buyTradeNumber);
+            $("#setquantity").val(setquantity);
+        }
+    </script>
 </head>
 <body>
 <%@ include file="header.jsp"%>
@@ -50,12 +62,55 @@
                                 <input name="tradeBuyNumber" value="${order.tradeNumber}" hidden>
                                 <button type="submit" class="btn btn-primary">Sell Stock</button>
                             </form>
+                            <br>
+                            <button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" onclick="getStockIdSellPrice('${order.stockId}','${order.symbol}','${order.segment}', '${order.tradeNumber}', '${order.quantity}')">Set Sell Price</button>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+<div class="modal fade" id="sellPriceModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Set Sell Price</h4>
+            </div>
+            <div class="modal-body">
+                <form class="profile-form" action="<c:url value='setsellstock' />" method='POST'>
+                    <input style="display: none" class="form-control" id="setsellstockid" name="setsellstockid" type="text" readonly/>
+                    <div class="input-group">
+                        <span class="input-group-addon">Symbol</span>
+                        <input class="form-control" id="setsellstocksymbol" name="setsellstocksymbol" type="text" readonly/>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Segment</span>
+                        <input class="form-control" id="setsellstockseg" name="setsellstockseg" type="text" readonly/>
+                    </div>
+                    <input class="form-control" min="1" max="5000" id="setquantity" name="setquantity" type="hidden" />
+                    <input class="form-control" id="setbuyTradeNumber" name="tradeBuyNumber" type="hidden" />
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Sell Price</span>
+                        <input class="form-control" id="setsellprice" name="setsellprice" type="number"/>
+                    </div>
+                    <br>
+                    <div class="input-group" style="display: flex; justify-content: center;">
+                        <button type="submit" class="btn btn-primary">Set Sell Price</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>
 <%@ include file="footer.jsp"%>

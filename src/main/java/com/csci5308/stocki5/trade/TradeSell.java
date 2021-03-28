@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 @Service
 public class TradeSell implements TradeSellInterface{
 
+	DecimalFormat df = new DecimalFormat("##.00");
+
 	@Override
 	public boolean sellStock(String userCode, int stockId, int quantity, StockDbInterface stockDbInterface,
 			UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface, String tradeBuyNumber) {
-
-		DecimalFormat df = new DecimalFormat("##.00");
 
 		tradeDbInterface.removeHolding(tradeBuyNumber);
 
@@ -35,7 +35,9 @@ public class TradeSell implements TradeSellInterface{
 	}
 
 	@Override
-	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, StockDbInterface stockDbInterface, UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface) {
+	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, StockDbInterface stockDbInterface, UserDbInterface userDbInterface, TradeDbInterface tradeDbInterface, String tradeBuyNumber) {
+
+		tradeDbInterface.removeHolding(tradeBuyNumber);
 
 		Trade trade = new Trade(userCode, stockId, TradeType.SELL, quantity, TradeStatus.PENDING, stockDbInterface,
 				userDbInterface);
@@ -51,11 +53,15 @@ public class TradeSell implements TradeSellInterface{
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(Stock::getSymbol, Stock::getPrice));
 
 		for (Trade trade : trades) {
-			if (trade.getSellPrice() >= stocksMap.get(trade.getSymbol())) {
+			if (trade.getSellPrice() <= stocksMap.get(trade.getSymbol())) {
+				dbInterface.removeHoldingForAutoSell(trade.getUserCode(), trade.getStockId(), trade.getQuantity());
 				trade.setSellPrice(stocksMap.get(trade.getSymbol()));
 				trade.setTotalSellPrice(trade.getQuantity() * trade.getBuyPrice());
 				trade.setStatus(TradeStatus.EXECUTED);
 				dbInterface.updateSellTrade(trade, false);
+				User user = userDbInterface.getUser(trade.getUserCode());
+				double updatedFunds = user.getFunds() + (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
+				userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
 			}
 		}
 	}

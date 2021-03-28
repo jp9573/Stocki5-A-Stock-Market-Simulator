@@ -105,7 +105,7 @@ public class TradeDb implements TradeDbInterface {
 		List<Holding> holdings = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try {
-			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
+			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -145,11 +145,40 @@ public class TradeDb implements TradeDbInterface {
 		Connection connection = dbConnection.createConnection();
 
 		try {
-			String insertTradeSql = "UPDATE trade SET isHolding = ? WHERE tradeNumber = ?";
-			PreparedStatement statement = connection.prepareStatement(insertTradeSql);
+			String removeHoldingSql = "UPDATE trade SET isHolding = ? WHERE tradeNumber = ?";
+			PreparedStatement statement = connection.prepareStatement(removeHoldingSql);
 
 			statement.setBoolean(1, false);
 			statement.setString(2, tradeNumber);
+
+			int tradeCount = statement.executeUpdate();
+			if (tradeCount > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			dbConnection.closeConnection(connection);
+		}
+	}
+
+	@Override
+	public boolean removeHoldingForAutoSell(String userCode, int stockId, int quantity) {
+		Connection connection = dbConnection.createConnection();
+
+		try {
+			String removeHoldingSql = "UPDATE trade SET isHolding = ? " +
+					"WHERE tradeNumber = (SELECT tradeNumber FROM trade " +
+					"WHERE userCode = ? AND stockId = ? AND quantity = ? AND isHolding = ?)";
+			PreparedStatement statement = connection.prepareStatement(removeHoldingSql);
+
+			statement.setBoolean(1, false);
+			statement.setString(2, userCode);
+			statement.setInt(3, stockId);
+			statement.setInt(4, quantity);
 
 			int tradeCount = statement.executeUpdate();
 			if (tradeCount > 0) {
@@ -235,8 +264,8 @@ public class TradeDb implements TradeDbInterface {
 		Connection connection = dbConnection.createConnection();
 
 		try {
-			String updateUserSQL = "UPDATE trade SET sellPrice=?, totalSellPrice=?, isHolding=?, status=? WHERE tradeNumber=?";
-			PreparedStatement statement = connection.prepareStatement(updateUserSQL);
+			String updateSellTradeSQL = "UPDATE trade SET sellPrice=?, totalSellPrice=?, isHolding=?, status=? WHERE tradeNumber=?";
+			PreparedStatement statement = connection.prepareStatement(updateSellTradeSQL);
 
 			statement.setFloat(1, trade.getSellPrice());
 			statement.setDouble(2, trade.getTotalSellPrice());

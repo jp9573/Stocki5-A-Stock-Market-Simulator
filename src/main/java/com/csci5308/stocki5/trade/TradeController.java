@@ -122,13 +122,40 @@ public class TradeController {
 
 	@RequestMapping(value = "/setbuystock", method = RequestMethod.POST)
 	public ModelAndView setBuyStock(HttpServletRequest request, @RequestParam(value = "setbuystockid") int stockId,
-			@RequestParam(value = "setquantity") int quantity, @RequestParam(value = "setbuyprice") float buyPrice) {
+									@RequestParam(value = "setquantity") int quantity, @RequestParam(value = "setbuyprice") float buyPrice) {
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
 		boolean isBought = tradeBuy.setBuyPrice(principal.getName(), stockId, quantity, buyPrice, stockDb, userDb,
 				tradeDb);
 		if (isBought) {
+			List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
+			model.addObject("orders", orders);
+			model.setViewName("orders");
+			return model;
+		}
+
+		List<Stock> stocks = stockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5LosersStocks = stockFetch.fetchTop5LoserStocks(stockDb, userDb, principal.getName());
+
+		model.addObject("stocks", stocks);
+		model.addObject("gainers", top5GainersStocks);
+		model.addObject("losers", top5LosersStocks);
+		model.addObject("error", "Insufficient funds");
+		model.setViewName("stocks");
+		return model;
+	}
+
+	@RequestMapping(value = "/setsellstock", method = RequestMethod.POST)
+	public ModelAndView setBwllStock(HttpServletRequest request, @RequestParam(value = "setsellstockid") int stockId,
+									@RequestParam(value = "setquantity") int quantity, @RequestParam(value = "setsellprice") float sellPrice, @RequestParam(value = "tradeBuyNumber") String tradeBuyNumber) {
+		Principal principal = request.getUserPrincipal();
+		ModelAndView model = new ModelAndView();
+
+		boolean isSold = tradeSell.setSellPrice(principal.getName(), stockId, quantity, sellPrice, stockDb, userDb,
+				tradeDb, tradeBuyNumber);
+		if (isSold) {
 			List<Trade> orders = tradeFetch.fetchUserOrders(principal.getName(), tradeDb);
 			model.addObject("orders", orders);
 			model.setViewName("orders");

@@ -25,4 +25,6 @@ public interface TradeDbInterface {
 
 	public boolean removeHolding(String tradeNumber);
 
+	public boolean removeHoldingForAutoSell(String userCode, int stockId, int quantity);
+
 }
