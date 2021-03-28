@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.stock;
 
 import com.csci5308.stocki5.stock.history.StockHistory;
-import com.csci5308.stocki5.stock.history.StockHistoryDbInterface;
+import com.csci5308.stocki5.stock.history.IStockHistoryDb;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class StockHistoryDbMock implements StockHistoryDbInterface {
+public class StockHistoryDbMock implements IStockHistoryDb {
 
     @Override
     public List<StockHistory> getStockHistory(String stockSymbol) {

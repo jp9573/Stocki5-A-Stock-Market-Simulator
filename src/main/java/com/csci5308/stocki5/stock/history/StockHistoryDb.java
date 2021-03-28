@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class StockHistoryDb implements StockHistoryDbInterface
+public class StockHistoryDb implements IStockHistoryDb
 {
 	@Autowired
 	Stocki5DbConnection dbConnection;

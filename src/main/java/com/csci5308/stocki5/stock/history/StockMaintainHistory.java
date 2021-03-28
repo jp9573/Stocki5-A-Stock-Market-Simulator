@@ -12,7 +12,7 @@ import java.util.List;
 public class StockMaintainHistory implements IStockMaintainHistory
 {
 
-	public void maintainStocksHistory(List<Stock> stocks, int noOfVersions, StockHistoryDbInterface stockHistoryDb)
+	public void maintainStocksHistory(List<Stock> stocks, int noOfVersions, IStockHistoryDb stockHistoryDb)
 	{
 		Date date = new Date();
 		String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
