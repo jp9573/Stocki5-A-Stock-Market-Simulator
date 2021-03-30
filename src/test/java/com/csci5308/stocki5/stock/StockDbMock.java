@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StockDbMock implements IStockDb {
     @Override
-    public Stock getStockData(int stockId) {
+    public Stock getStock(int stockId) {
         Stock stock = new Stock();
         if (stockId == 1) {
             stock.setSymbol("ABC");
