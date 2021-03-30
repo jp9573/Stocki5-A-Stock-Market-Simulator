@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.stock.IStockDb;
+import com.csci5308.stocki5.stock.IStockDbHighestLowest;
 import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.user.IUserDb;
 
@@ -22,19 +23,19 @@ public class StockFetch implements IStockFetch
 		return stocks;
 	}
 
-	public List<Stock> fetchTop5GainerStocks(IStockDb stockDbInterface, IUserDb userDbInterface, String userCode)
+	public List<Stock> fetchTop5GainerStocks(IStockDbHighestLowest iStockDbHighestLowest, IUserDb userDbInterface, String userCode)
 	{
 		User user = userDbInterface.getUser(userCode);
 		String segments = getUserStockSegments(user);
-		List<Stock> top5Stocks = stockDbInterface.getHighestPriceStocks(segments, 5);
+		List<Stock> top5Stocks = iStockDbHighestLowest.getHighestPriceStocks(segments, 5);
 		return top5Stocks;
 	}
 
-	public List<Stock> fetchTop5LoserStocks(IStockDb stockDbInterface, IUserDb userDbInterface, String userCode)
+	public List<Stock> fetchTop5LoserStocks(IStockDbHighestLowest iStockDbHighestLowest, IUserDb userDbInterface, String userCode)
 	{
 		User user = userDbInterface.getUser(userCode);
 		String segments = getUserStockSegments(user);
-		List<Stock> bottom5Stocks = stockDbInterface.getLowestPriceStocks(segments, 5);
+		List<Stock> bottom5Stocks = iStockDbHighestLowest.getLowestPriceStocks(segments, 5);
 		return bottom5Stocks;
 	}
 

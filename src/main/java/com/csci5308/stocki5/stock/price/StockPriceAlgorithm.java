@@ -46,7 +46,7 @@ public class StockPriceAlgorithm
 			stock.setPercentIncreaseDecrease(percent);
 			stock.calculateHighAndLow(newPrice);
 		}
-		stockDbInterface.updateStockBulk(stocks);
+		stockDbInterface.updateStocks(stocks);
 		tradeBuyInterface.buyPendingTrades(tradeDb, userDb, stocks);
 		tradeSellInterface.sellPendingTrades(tradeDb, userDb, stocks);
 		iStockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);

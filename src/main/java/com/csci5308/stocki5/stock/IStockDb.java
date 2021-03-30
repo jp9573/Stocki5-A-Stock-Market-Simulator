@@ -11,14 +11,8 @@ public interface IStockDb
 
 	public List<Stock> getStocksBySegment(String segments);
 
-	public List<Stock> getHighestPriceStocks(String segments, int limit);
-
-	public List<Stock> getLowestPriceStocks(String segments, int limit);
-
 	public Stock getStock(int stockId);
 
-	public boolean updateStockData(Stock stock);
-
-	public boolean updateStockBulk(List<Stock> stocks);
+	public boolean updateStocks(List<Stock> stocks);
 
 }

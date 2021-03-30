@@ -16,6 +16,6 @@ public class StockPriceEod implements IStockPriceEod
 		{
 			stock.setPreviousClose(stock.getPrice());
 		}
-		stockDbInterface.updateStockBulk(stocks);
+		stockDbInterface.updateStocks(stocks);
 	}
 }

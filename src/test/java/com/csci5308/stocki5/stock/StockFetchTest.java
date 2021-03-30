@@ -15,6 +15,8 @@ public class StockFetchTest {
 
 	private UserDbMock userDbMock = null;
 
+	private StockDbHighestLowest stockDbHighestLowest = null;
+	
 	private StockDbMock stockDbMock = null;
 
 	private StockFetch stockFetch = null;
@@ -24,6 +26,7 @@ public class StockFetchTest {
 	@Before
 	public void createObjects() {
 		userDbMock = new UserDbMock();
+		stockDbHighestLowest =  new StockDbHighestLowest();
 		stockDbMock = new StockDbMock();
 		stockFetch = new StockFetch();
 		user = userDbMock.getUser("AB123456");
@@ -32,6 +35,7 @@ public class StockFetchTest {
 	@After
 	public void destroyObjects() {
 		userDbMock = null;
+		stockDbHighestLowest = null;
 		stockDbMock = null;
 		stockFetch = null;
 		user = null;
@@ -86,7 +90,7 @@ public class StockFetchTest {
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDbMock, userDbMock, "AB123456");
+		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDbHighestLowest, userDbMock, "AB123456");
 		Assert.assertEquals(5, top5GainersStocks.size());
 	}
 
@@ -95,7 +99,7 @@ public class StockFetchTest {
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> top5LosersStocks = stockFetch.fetchTop5GainerStocks(stockDbMock, userDbMock, "AB123456");
+		List<Stock> top5LosersStocks = stockFetch.fetchTop5GainerStocks(stockDbHighestLowest, userDbMock, "AB123456");
 		Assert.assertEquals(5, top5LosersStocks.size());
 	}
 }
