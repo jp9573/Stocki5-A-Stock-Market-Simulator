@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.StockDb;
+import com.csci5308.stocki5.stock.StockDbHighestLowest;
 import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeDb;
@@ -31,6 +32,9 @@ public class TradeSellController
 
 	@Autowired
 	ITradeSell iTradeSell;
+	
+	@Autowired
+	StockDbHighestLowest stockDbHighestLowest;
 
 	@Autowired
 	StockDb stockDb;
@@ -60,8 +64,8 @@ public class TradeSellController
 		}
 
 		List<Stock> stocks = iStockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
-		List<Stock> top5GainersStocks = iStockFetch.fetchTop5GainerStocks(stockDb, userDb, principal.getName());
-		List<Stock> top5LosersStocks = iStockFetch.fetchTop5LoserStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5GainersStocks = iStockFetch.fetchTop5GainerStocks(stockDbHighestLowest, userDb, principal.getName());
+		List<Stock> top5LosersStocks = iStockFetch.fetchTop5LoserStocks(stockDbHighestLowest, userDb, principal.getName());
 
 		model.addObject("stocks", stocks);
 		model.addObject("gainers", top5GainersStocks);
@@ -90,8 +94,8 @@ public class TradeSellController
 		}
 
 		List<Stock> stocks = iStockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
-		List<Stock> top5GainersStocks = iStockFetch.fetchTop5GainerStocks(stockDb, userDb, principal.getName());
-		List<Stock> top5LosersStocks = iStockFetch.fetchTop5LoserStocks(stockDb, userDb, principal.getName());
+		List<Stock> top5GainersStocks = iStockFetch.fetchTop5GainerStocks(stockDbHighestLowest, userDb, principal.getName());
+		List<Stock> top5LosersStocks = iStockFetch.fetchTop5LoserStocks(stockDbHighestLowest, userDb, principal.getName());
 
 		model.addObject("stocks", stocks);
 		model.addObject("gainers", top5GainersStocks);
