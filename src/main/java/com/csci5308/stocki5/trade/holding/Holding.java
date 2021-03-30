@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.trade.holding;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
@@ -51,7 +51,7 @@ public class Holding extends Trade
 
 	public void calculateProfitLoss()
 	{
-		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		Stock stock = this.getStockDbInterface().getStock(this.getStockId());
 		float price = stock.getPrice();
 		this.setSellPrice(price);
 		float totalSellPrice = this.getQuantity() * this.getSellPrice();

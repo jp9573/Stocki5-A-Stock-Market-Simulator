@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.StockDb;
+import com.csci5308.stocki5.stock.db.StockDb;
 import com.csci5308.stocki5.stock.history.StockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
 import com.csci5308.stocki5.trade.sell.TradeSell;
@@ -15,7 +15,7 @@ import com.csci5308.stocki5.trade.sell.TradeSell;
 public class StockScheduler
 {
 	@Autowired
-	StockPriceAlgorithm stockPriceAlgorithm;
+	IStockPriceAlgorithm iStockPriceAlgorithm;
 
 	@Autowired
 	IStockPriceEod iStockPriceEod;
@@ -28,19 +28,18 @@ public class StockScheduler
 
 	@Autowired
 	TradeSell tradeSell;
-	
+
 	@Autowired
 	StockMaintainHistory stockMaintainHistory;
 
+	static boolean isMarketHours = true;
 
-	private static boolean isMarketHours = true;
-
-	@Scheduled(fixedDelay = 5000)
+	@Scheduled(fixedDelayString = "${stock.delay}")
 	public void scheduleGenerateStockPrice()
 	{
 		if (isMarketHours)
 		{
-			stockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell, stockMaintainHistory);
+			iStockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell, stockMaintainHistory);
 		}
 	}
 
@@ -54,7 +53,11 @@ public class StockScheduler
 	public void scheduleStockEod()
 	{
 		StockScheduler.isMarketHours = false;
-		iStockPriceEod.setStockClosingPrice(stockDb);
 	}
 
+	@Scheduled(cron = "0 5 18 * * ?")
+	public void scheduleStockClosingPrice()
+	{
+		iStockPriceEod.setStockClosingPrice(stockDb);
+	}
 }

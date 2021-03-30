@@ -17,7 +17,6 @@ import com.csci5308.stocki5.stock.history.StockHistoryDb;
 @Controller
 public class StockPredictionController
 {
-
 	@Autowired
 	StockHistoryDb stockHistoryDb;
 
@@ -25,8 +24,7 @@ public class StockPredictionController
 	IStockPrediction iStockPrediction;
 
 	@RequestMapping(value = { "/predict" }, method = RequestMethod.POST)
-	public ModelAndView stocksPage(HttpServletRequest request,
-			@RequestParam(value = "stockName", required = true) String stockName)
+	public ModelAndView stocksPage(HttpServletRequest request, @RequestParam(value = "stockName", required = true) String stockName)
 	{
 		ModelAndView model = new ModelAndView();
 		List<Stock> predictionList = iStockPrediction.predictStockValue(stockHistoryDb, stockName);

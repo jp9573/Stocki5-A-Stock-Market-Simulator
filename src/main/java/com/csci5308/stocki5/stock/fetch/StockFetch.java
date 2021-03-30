@@ -5,42 +5,44 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.stock.IStockDb;
 import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.User;
 
 @Service
 public class StockFetch implements IStockFetch
 {
-
-	public List<Stock> fetchUserStocks(IStockDb stockDbInterface, IUserDb userDbInterface, String userCode)
+	private final int LIMIT = 5;
+	
+	public List<Stock> fetchUserStocks(IStockDb iStockDb, IUserDb iUserDb, String userCode)
 	{
-		User user = userDbInterface.getUser(userCode);
+		User user = iUserDb.getUser(userCode);
 		String segments = getUserStockSegments(user);
-		List<Stock> stocks = stockDbInterface.getStocksBySegment(segments);
+		List<Stock> stocks = iStockDb.getStocksBySegment(segments);
 		return stocks;
 	}
 
-	public List<Stock> fetchTop5GainerStocks(IStockDb stockDbInterface, IUserDb userDbInterface, String userCode)
+	public List<Stock> fetchTopGainerStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode)
 	{
-		User user = userDbInterface.getUser(userCode);
+		User user = iUserDb.getUser(userCode);
 		String segments = getUserStockSegments(user);
-		List<Stock> top5Stocks = stockDbInterface.getHighestPriceStocks(segments, 5);
-		return top5Stocks;
+		List<Stock> topStocks = iStockDbGainersLosers.getHighestPriceStocks(segments, LIMIT);
+		return topStocks;
 	}
 
-	public List<Stock> fetchTop5LoserStocks(IStockDb stockDbInterface, IUserDb userDbInterface, String userCode)
+	public List<Stock> fetchTopLoserStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode)
 	{
-		User user = userDbInterface.getUser(userCode);
+		User user = iUserDb.getUser(userCode);
 		String segments = getUserStockSegments(user);
-		List<Stock> bottom5Stocks = stockDbInterface.getLowestPriceStocks(segments, 5);
-		return bottom5Stocks;
+		List<Stock> bottomStocks = iStockDbGainersLosers.getLowestPriceStocks(segments, LIMIT);
+		return bottomStocks;
 	}
-
+	
 	public String getUserStockSegments(User user)
 	{
-		List<String> segmentsList = new ArrayList<String>();
+		List<String> segmentsList = new ArrayList<>();
 		if (user.getForeignExchange() == 1)
 		{
 			segmentsList.add("FOREX");
@@ -71,5 +73,4 @@ public class StockFetch implements IStockFetch
 		}
 		return segments;
 	}
-
 }
