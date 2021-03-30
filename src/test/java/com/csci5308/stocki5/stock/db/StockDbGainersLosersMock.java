@@ -7,11 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 
 public class StockDbGainersLosersMock implements IStockDbGainersLosers
 {
-
 	@Override
 	public List<Stock> getHighestPriceStocks(String segments, int limit)
 	{

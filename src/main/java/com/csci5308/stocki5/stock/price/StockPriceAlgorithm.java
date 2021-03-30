@@ -38,27 +38,34 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 	@Autowired
 	TradeDb tradeDb;
 
-	public void generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory)
+	public boolean generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory)
 	{
-		System.out.println("Called price algo");
-		float newPrice = 0.00f;
-		float percent = 0.00f;
-		List<Stock> stocks = iStockDb.getStocks();
-		Iterator<Stock> stocksIterator = stocks.iterator();
-		Stock stock;
-		while (stocksIterator.hasNext())
+		try
 		{
-			stock = stocksIterator.next();
-			newPrice = stockPriceAlgorithm(stock.getPrice());
-			percent = stockPricePercentIncreaseDecrease(newPrice, stock.getPreviousClose());
-			stock.setPrice(newPrice);
-			stock.setPercentIncreaseDecrease(percent);
-			stock.calculateHighAndLow(newPrice);
+			float newPrice = 0.00f;
+			float percent = 0.00f;
+			List<Stock> stocks = iStockDb.getStocks();
+			Iterator<Stock> stocksIterator = stocks.iterator();
+			Stock stock;
+			while (stocksIterator.hasNext())
+			{
+				stock = stocksIterator.next();
+				newPrice = stockPriceAlgorithm(stock.getPrice());
+				percent = stockPricePercentIncreaseDecrease(newPrice, stock.getPreviousClose());
+				stock.setPrice(newPrice);
+				stock.setPercentIncreaseDecrease(percent);
+				stock.calculateHighAndLow(newPrice);
+			}
+			iStockDb.updateStocks(stocks);
+			iTradeBuy.buyPendingTrades(tradeDb, userDb, stocks);
+			iTradeSell.sellPendingTrades(tradeDb, userDb, stocks);
+			iStockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
+			return true;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
 		}
-		iStockDb.updateStocks(stocks);
-		iTradeBuy.buyPendingTrades(tradeDb, userDb, stocks);
-		iTradeSell.sellPendingTrades(tradeDb, userDb, stocks);
-		iStockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
 	}
 
 	public float stockPriceAlgorithm(float currentPrice)
@@ -95,5 +102,4 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 		}
 		return formatedPercent;
 	}
-
 }

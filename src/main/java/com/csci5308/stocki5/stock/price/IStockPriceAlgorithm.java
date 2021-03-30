@@ -10,7 +10,7 @@ import com.csci5308.stocki5.trade.sell.ITradeSell;
 @Service
 public interface IStockPriceAlgorithm
 {
-	public void generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory);
+	public boolean generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory);
 
 	public float stockPriceAlgorithm(float currentPrice);
 

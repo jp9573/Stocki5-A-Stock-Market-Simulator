@@ -49,5 +49,4 @@ public class StockHistory extends Stock
 	{
 		this.insertTimestamp = insertTimestamp;
 	}
-
 }

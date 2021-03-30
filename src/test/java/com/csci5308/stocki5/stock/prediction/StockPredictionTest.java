@@ -1,70 +1,63 @@
 package com.csci5308.stocki5.stock.prediction;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.history.StockHistory;
-import com.csci5308.stocki5.stock.history.StockHistoryDbMock;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.history.StockHistoryDbMock;
 
-public class StockPredictionTest {
+public class StockPredictionTest
+{
+	private StockHistoryDbMock stockHistoryDbMock = null;
+	private StockPrediction stockPrediction = null;
+	private List<Stock> stocks = null;
 
-    private StockHistoryDbMock stockHistoryDbMock = null;
+	@Before
+	public void createObjects()
+	{
+		stockHistoryDbMock = new StockHistoryDbMock();
+		stockPrediction = new StockPrediction();
+	}
 
-    @Before
-    public void createObjects() {
-        stockHistoryDbMock = new StockHistoryDbMock();
-    }
+	@After
+	public void destroyObjects()
+	{
+		stockHistoryDbMock = null;
+		stockPrediction = null;
+		stocks = null;
+	}
 
-    @After
-    public void destroyObjects() {
-        stockHistoryDbMock = null;
-    }
+	@Test
+	public void predictStockValueTest()
+	{
+		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "ABC");
+		Assert.assertEquals(13, stocks.get(0).getPrice(), 0);
+	}
 
-    @Test
-    public void predictStockValueTest() {
-        final String stockSymbol = "ABC";
+	@Test
+	public void predictStockValueTestNull()
+	{
+		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "DEF");
+		Assert.assertNull(stocks);
+	}
 
-        List<StockHistory> stockHistories = stockHistoryDbMock.getStockHistoryBySymbol(stockSymbol);
+	@Test
+	public void predictStockValueTestNegative()
+	{
+		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "ABC");
+		stocks.get(0).setPrice(-13);
+		Assert.assertEquals(-13, stocks.get(0).getPrice(), 0);
+	}
 
-        int totalCount = stockHistories.size();
-        List<Stock> stocks = new ArrayList<>();
-        float sum = 0.00f;
-
-        if (totalCount > 0) {
-
-            for (StockHistory stockHistory : stockHistories) {
-                sum += stockHistory.getPrice();
-            }
-
-            float mean = sum / totalCount;
-            StockHistory lastHistoryStock = stockHistories.get(totalCount - 1);
-            Stock predictedStock = new Stock();
-            float changeInPercent = mean / lastHistoryStock.getPrice();
-
-            predictedStock.setStockId(lastHistoryStock.getStockId());
-            predictedStock.setSymbol(lastHistoryStock.getSymbol());
-            predictedStock.setOpen(lastHistoryStock.getOpen());
-            predictedStock.setHigh(lastHistoryStock.getHigh());
-            predictedStock.setLow(lastHistoryStock.getLow());
-            predictedStock.setPrice(mean);
-            predictedStock.setLatestTradingDate(new Date());
-            predictedStock.setPreviousClose(lastHistoryStock.getPreviousClose());
-            predictedStock.setSegment(lastHistoryStock.getSegment());
-            predictedStock.setPercentIncreaseDecrease(changeInPercent);
-
-            stocks.add(predictedStock);
-        }
-
-        Assert.assertEquals(1, totalCount);
-        Assert.assertEquals(1, stocks.size());
-        Assert.assertEquals(13.0f, sum, 0.5);
-
-    }
+	@Test
+	public void predictStockValueTestZero()
+	{
+		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "ABC");
+		stocks.get(0).setPrice(0);
+		Assert.assertEquals(0, stocks.get(0).getPrice(), 0);
+	}
 }

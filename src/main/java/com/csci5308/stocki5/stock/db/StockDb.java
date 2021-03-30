@@ -30,8 +30,8 @@ public class StockDb implements IStockDb
 		{
 			Stock stock = new Stock();
 			Statement statement = connection.createStatement();
-			String selectStockSql = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE stock_id=" + stockId;
-			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE stock_id=" + stockId;
+			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next())
 			{
 				stock.setStockId(resultSet.getInt("stock_id"));
@@ -64,8 +64,8 @@ public class StockDb implements IStockDb
 		try
 		{
 			Statement statement = connection.createStatement();
-			String selectStockSql = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ")";
-			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ")";
+			ResultSet resultSet = statement.executeQuery(query);
 			Stock stock = null;
 			while (resultSet.next())
 			{
@@ -96,13 +96,13 @@ public class StockDb implements IStockDb
 	@Override
 	public List<Stock> getStocks()
 	{
-		List<Stock> stocks = new ArrayList<Stock>();
+		List<Stock> stocks = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Statement statement = connection.createStatement();
-			String selectStockSql = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data";
-			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data";
+			ResultSet resultSet = statement.executeQuery(query);
 			Stock stock = null;
 			while (resultSet.next())
 			{
@@ -155,5 +155,4 @@ public class StockDb implements IStockDb
 			dbConnection.closeConnection(connection);
 		}
 	}
-
 }

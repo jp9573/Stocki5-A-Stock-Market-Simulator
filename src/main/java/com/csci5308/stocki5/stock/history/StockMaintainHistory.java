@@ -15,7 +15,7 @@ public class StockMaintainHistory implements IStockMaintainHistory
 {
 	static final String  MAINTAIN_HISTORY_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
-	public void maintainStocksHistory(List<Stock> stocks, int noOfVersions, IStockHistoryDb iStockHistoryDb)
+	public boolean maintainStocksHistory(List<Stock> stocks, int noOfVersions, IStockHistoryDb iStockHistoryDb)
 	{
 		Date date = new Date();
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(MAINTAIN_HISTORY_TIMESTAMP_FORMAT);
@@ -42,6 +42,6 @@ public class StockMaintainHistory implements IStockMaintainHistory
 			oldHistoryId = oldHistoryId + 1;
 			iStockHistoryDb.deleteStockHistoryLesserThanHistoryId(oldHistoryId);
 		}
-		iStockHistoryDb.insertStocksHistory(stocksHistorys);
+		return iStockHistoryDb.insertStocksHistory(stocksHistorys);
 	}
 }

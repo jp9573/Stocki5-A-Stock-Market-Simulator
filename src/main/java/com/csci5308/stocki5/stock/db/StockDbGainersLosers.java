@@ -27,8 +27,8 @@ public class StockDbGainersLosers extends StockDb implements IStockDbGainersLose
 		try
 		{
 			Statement statement = connection.createStatement();
-			String selectStockSql = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ") ORDER BY percent DESC LIMIT " + limit;
-			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ") ORDER BY percent DESC LIMIT " + limit;
+			ResultSet resultSet = statement.executeQuery(query);
 			Stock stock = null;
 			while (resultSet.next())
 			{
@@ -64,8 +64,8 @@ public class StockDbGainersLosers extends StockDb implements IStockDbGainersLose
 		try
 		{
 			Statement statement = connection.createStatement();
-			String selectStockSql = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ") ORDER BY percent LIMIT " + limit;
-			ResultSet resultSet = statement.executeQuery(selectStockSql);
+			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ") ORDER BY percent LIMIT " + limit;
+			ResultSet resultSet = statement.executeQuery(query);
 			Stock stock = null;
 			while (resultSet.next())
 			{

@@ -15,11 +15,11 @@ import com.csci5308.stocki5.user.UserDbMock;
 
 public class StockFetchTest
 {
-	private UserDbMock userDbMock;
-	private StockDbGainersLosersMock gainersLosersMock;
-	private StockDbMock stockDbMock;
-	private StockFetch stockFetch;
-	private User user;
+	private UserDbMock userDbMock = null;
+	private StockDbGainersLosersMock gainersLosersMock = null;
+	private StockDbMock stockDbMock = null;
+	private StockFetch stockFetch = null;
+	private User user = null;
 
 	@Before
 	public void createObjects()
@@ -97,8 +97,8 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> top5GainersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
-		Assert.assertEquals(5, top5GainersStocks.size());
+		List<Stock> topGainersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
+		Assert.assertEquals(5, topGainersStocks.size());
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> top5LosersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
-		Assert.assertEquals(5, top5LosersStocks.size());
+		List<Stock> topLosersStocks = stockFetch.fetchTopLoserStocks(gainersLosersMock, userDbMock, "AB123456");
+		Assert.assertEquals(5, topLosersStocks.size());
 	}
 }
