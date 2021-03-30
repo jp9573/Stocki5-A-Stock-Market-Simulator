@@ -131,7 +131,7 @@ public class Stock
 
 	public Stock(int stockId, IStockDb dbInterface)
 	{
-		Stock stock = dbInterface.getStockData(stockId);
+		Stock stock = dbInterface.getStock(stockId);
 		this.stockId = stockId;
 		this.symbol = stock.getSymbol();
 		this.open = stock.getOpen();

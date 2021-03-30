@@ -51,7 +51,7 @@ public class Holding extends Trade
 
 	public void calculateProfitLoss()
 	{
-		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		Stock stock = this.getStockDbInterface().getStock(this.getStockId());
 		float price = stock.getPrice();
 		this.setSellPrice(price);
 		float totalSellPrice = this.getQuantity() * this.getSellPrice();
