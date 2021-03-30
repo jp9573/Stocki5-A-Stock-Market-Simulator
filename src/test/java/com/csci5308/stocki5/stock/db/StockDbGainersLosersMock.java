@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.db;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.db.IStockDbHighestLowest;
+import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 
-public class StockDbHighestLowestMock implements IStockDbHighestLowest
+public class StockDbGainersLosersMock implements IStockDbGainersLosers
 {
 
 	@Override

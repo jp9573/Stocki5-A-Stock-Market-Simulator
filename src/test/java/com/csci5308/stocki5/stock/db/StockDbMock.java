@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.db;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.Stock;
 
 public class StockDbMock implements IStockDb {
+	
     @Override
     public Stock getStock(int stockId) {
         Stock stock = new Stock();

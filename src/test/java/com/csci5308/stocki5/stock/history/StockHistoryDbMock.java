@@ -1,7 +1,4 @@
-package com.csci5308.stocki5.stock;
-
-import com.csci5308.stocki5.stock.history.StockHistory;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
+package com.csci5308.stocki5.stock.history;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +9,7 @@ import java.util.List;
 public class StockHistoryDbMock implements IStockHistoryDb {
 
     @Override
-    public List<StockHistory> getStockHistory(String stockSymbol) {
+    public List<StockHistory> getStockHistoryBySymbol(String stockSymbol) {
         List<StockHistory> stockHistories = new ArrayList<>();
         StockHistory stock = new StockHistory();
         if (stockSymbol.equals("ABC")) {
@@ -38,12 +35,7 @@ public class StockHistoryDbMock implements IStockHistoryDb {
     }
 
     @Override
-    public List<StockHistory> getAllStocksHistory() {
-        return null;
-    }
-
-    @Override
-    public boolean insertStocksHistoryBulk(List<StockHistory> stocksHistory) {
+    public boolean insertStocksHistory(List<StockHistory> stocksHistory) {
         return true;
     }
 
@@ -58,7 +50,7 @@ public class StockHistoryDbMock implements IStockHistoryDb {
     }
 
     @Override
-    public long getNthOldestStockHistoryId(int n) {
+    public long getNthStockHistoryId(int n) {
         return 0;
     }
 }

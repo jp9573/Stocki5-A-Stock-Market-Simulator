@@ -14,11 +14,11 @@ import com.csci5308.stocki5.config.Stocki5DbConnection;
 import com.csci5308.stocki5.stock.Stock;
 
 @Repository
-public class StockDbHighestLowest extends StockDb implements IStockDbHighestLowest
+public class StockDbGainersLosers extends StockDb implements IStockDbGainersLosers
 {
 	@Autowired
 	Stocki5DbConnection dbConnection;
-
+	
 	@Override
 	public List<Stock> getHighestPriceStocks(String segments, int limit)
 	{

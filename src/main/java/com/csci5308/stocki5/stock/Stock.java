@@ -131,9 +131,9 @@ public class Stock
 		this.percentIncreaseDecrease = 0.00f;
 	}
 
-	public Stock(int stockId, IStockDb dbInterface)
+	public Stock(int stockId, IStockDb iStockDb)
 	{
-		Stock stock = dbInterface.getStock(stockId);
+		Stock stock = iStockDb.getStock(stockId);
 		this.stockId = stockId;
 		this.symbol = stock.getSymbol();
 		this.open = stock.getOpen();

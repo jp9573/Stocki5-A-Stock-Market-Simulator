@@ -18,15 +18,15 @@ public class StockHistory extends Stock
 		insertTimestamp = null;
 	}
 
-	public StockHistory(int stockId, IStockDb dbInterface)
+	public StockHistory(int stockId, IStockDb iStockDb)
 	{
-		super(stockId, dbInterface);
+		super(stockId, iStockDb);
 	}
 
-	public StockHistory(long historyIdId, String insertTimestamp, Stock stock)
+	public StockHistory(long historyId, String insertTimestamp, Stock stock)
 	{
 		super(stock);
-		this.historyId = historyIdId;
+		this.historyId = historyId;
 		this.insertTimestamp = insertTimestamp;
 	}
 

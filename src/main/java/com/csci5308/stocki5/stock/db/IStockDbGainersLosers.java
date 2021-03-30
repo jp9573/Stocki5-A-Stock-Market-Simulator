@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.csci5308.stocki5.stock.Stock;
 
 @Repository
-public interface IStockDbHighestLowest
+public interface IStockDbGainersLosers
 {
 	public List<Stock> getHighestPriceStocks(String segments, int limit);
 

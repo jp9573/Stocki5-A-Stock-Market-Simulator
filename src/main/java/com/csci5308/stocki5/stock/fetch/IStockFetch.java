@@ -6,18 +6,18 @@ import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.IStockDbHighestLowest;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.user.IUserDb;
 import com.csci5308.stocki5.user.User;
 
 @Service
 public interface IStockFetch
 {
-	public List<Stock> fetchUserStocks(IStockDb stockDbInterface, IUserDb userDbInterface, String userCode);
+	public List<Stock> fetchUserStocks(IStockDb iStockDb, IUserDb iUserDb, String userCode);
 
-	public List<Stock> fetchTop5GainerStocks(IStockDbHighestLowest iStockDbHighestLowest, IUserDb userDbInterface, String userCode);
+	public List<Stock> fetchTopGainerStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode);
 
-	public List<Stock> fetchTop5LoserStocks(IStockDbHighestLowest iStockDbHighestLowest, IUserDb userDbInterface, String userCode);
+	public List<Stock> fetchTopLoserStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode);
 
 	public String getUserStockSegments(User user);
 }
