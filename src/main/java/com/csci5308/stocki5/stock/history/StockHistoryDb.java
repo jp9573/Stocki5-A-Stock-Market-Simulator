@@ -107,8 +107,8 @@ public class StockHistoryDb implements IStockHistoryDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String deleteSQL = "DELETE FROM stock_data_history WHERE history_id < " + String.valueOf(historyId);
-			PreparedStatement statement = connection.prepareStatement(deleteSQL);
+			String query = "DELETE FROM stock_data_history WHERE history_id < " + String.valueOf(historyId);
+			PreparedStatement statement = connection.prepareStatement(query);
 			int result = statement.executeUpdate();
 			return result > 0;
 		} catch (SQLException e)
@@ -128,9 +128,9 @@ public class StockHistoryDb implements IStockHistoryDb
 		int count = -1;
 		try
 		{
-			String getQuery = "SELECT COUNT(*) FROM stock_data_history";
+			String query = "SELECT COUNT(*) FROM stock_data_history";
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(getQuery);
+			ResultSet resultSet = statement.executeQuery(query);
 			resultSet.next();
 			count = resultSet.getInt("COUNT(*)");
 			return count;
@@ -152,9 +152,9 @@ public class StockHistoryDb implements IStockHistoryDb
 		long historyId = -1;
 		try
 		{
-			String getQuery = "SELECT history_id FROM stock_data_history GROUP BY history_id ORDER BY history_id ASC LIMIT 1 OFFSET " + String.valueOf(n) + ";";
+			String query = "SELECT history_id FROM stock_data_history GROUP BY history_id ORDER BY history_id ASC LIMIT 1 OFFSET " + String.valueOf(n) + ";";
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(getQuery);
+			ResultSet resultSet = statement.executeQuery(query);
 			resultSet.next();
 			historyId = resultSet.getLong("history_id");
 			return historyId;

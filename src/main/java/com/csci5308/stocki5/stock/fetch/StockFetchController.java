@@ -19,7 +19,6 @@ import com.csci5308.stocki5.user.UserDb;
 @Controller
 public class StockFetchController
 {
-
 	@Autowired
 	IStockFetch iStockFetch;
 
@@ -46,5 +45,4 @@ public class StockFetchController
 		model.setViewName("stocks");
 		return model;
 	}
-
 }

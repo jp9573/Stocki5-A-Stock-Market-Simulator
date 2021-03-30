@@ -13,16 +13,13 @@ import com.csci5308.stocki5.stock.history.StockHistory;
 @Service
 public class StockPrediction implements IStockPrediction
 {
-
-	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String stock)
+	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
 	{
-		List<StockHistory> stockHistorys = iStockHistoryDb.getStockHistoryBySymbol(stock);
-
+		List<StockHistory> stockHistorys = iStockHistoryDb.getStockHistoryBySymbol(symbol);
 		int totalCount = stockHistorys.size();
 		if (totalCount > 0)
 		{
 			float sum = 0.00f;
-
 			for (StockHistory stockHistory : stockHistorys)
 			{
 				sum += stockHistory.getPrice();
@@ -43,10 +40,8 @@ public class StockPrediction implements IStockPrediction
 			predictedStock.setPreviousClose(lastHistoryStock.getPreviousClose());
 			predictedStock.setSegment(lastHistoryStock.getSegment());
 			predictedStock.setPercentIncreaseDecrease(changeInPercent);
-
 			List<Stock> stocks = new ArrayList<>();
 			stocks.add(predictedStock);
-
 			return stocks;
 		} else
 		{

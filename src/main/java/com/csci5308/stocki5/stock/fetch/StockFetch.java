@@ -73,5 +73,4 @@ public class StockFetch implements IStockFetch
 		}
 		return segments;
 	}
-
 }

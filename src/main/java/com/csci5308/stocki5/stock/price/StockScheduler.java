@@ -32,7 +32,7 @@ public class StockScheduler
 	@Autowired
 	StockMaintainHistory stockMaintainHistory;
 
-	private static boolean isMarketHours = true;
+	static boolean isMarketHours = true;
 
 	@Scheduled(fixedDelayString = "${stock.delay}")
 	public void scheduleGenerateStockPrice()
@@ -53,7 +53,11 @@ public class StockScheduler
 	public void scheduleStockEod()
 	{
 		StockScheduler.isMarketHours = false;
-		iStockPriceEod.setStockClosingPrice(stockDb);
 	}
 
+	@Scheduled(cron = "0 5 18 * * ?")
+	public void scheduleStockClosingPrice()
+	{
+		iStockPriceEod.setStockClosingPrice(stockDb);
+	}
 }

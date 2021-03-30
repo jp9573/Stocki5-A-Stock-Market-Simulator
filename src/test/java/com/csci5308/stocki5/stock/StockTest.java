@@ -9,8 +9,8 @@ import com.csci5308.stocki5.stock.db.StockDbMock;
 
 public class StockTest
 {
-	private StockDbMock stockDbMock;
-	private Stock stock;
+	private StockDbMock stockDbMock = null;
+	private Stock stock = null;
 
 	@Before
 	public void createObjects()
@@ -49,5 +49,4 @@ public class StockTest
 		stock.calculateHighAndLow(0);
 		Assert.assertEquals(0, stock.getLow(), 0);
 	}
-
 }

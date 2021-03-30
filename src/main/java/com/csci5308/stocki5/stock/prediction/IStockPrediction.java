@@ -10,5 +10,5 @@ import com.csci5308.stocki5.stock.history.IStockHistoryDb;
 @Service
 public interface IStockPrediction
 {
-	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String stock);
+	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol);
 }

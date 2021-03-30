@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class StockPriceEod implements IStockPriceEod
 {
-	public void setStockClosingPrice(IStockDb iStockDb)
+	public boolean setStockClosingPrice(IStockDb iStockDb)
 	{
 		List<Stock> stocks = iStockDb.getStocks();
 		Iterator<Stock> stocksIterator = stocks.iterator();
@@ -21,6 +21,6 @@ public class StockPriceEod implements IStockPriceEod
 			stock = stocksIterator.next();
 			stock.setPreviousClose(stock.getPrice());
 		}
-		iStockDb.updateStocks(stocks);
+		return iStockDb.updateStocks(stocks);
 	}
 }

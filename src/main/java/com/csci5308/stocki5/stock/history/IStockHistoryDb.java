@@ -7,7 +7,7 @@ import java.util.List;
 @Repository
 public interface IStockHistoryDb
 {
-	public List<StockHistory> getStockHistoryBySymbol(String stockSymbol);
+	public List<StockHistory> getStockHistoryBySymbol(String symbol);
 
 	public boolean insertStocksHistory(List<StockHistory> stocksHistory);
 
