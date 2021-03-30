@@ -1,21 +1,20 @@
 package com.csci5308.stocki5.trade.buy;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.ITradeDb;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.user.IUserDb;
 import com.csci5308.stocki5.user.User;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.user.IUserDb;
-
 import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TradeBuy implements ITradeBuy
@@ -67,8 +66,10 @@ public class TradeBuy implements ITradeBuy
 		List<Trade> trades = dbInterface.getPendingTrades(TradeType.BUY);
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(Stock::getSymbol, Stock::getPrice));
 
-		for (Trade trade : trades)
+		Iterator<Trade> tradesIterator = trades.iterator();
+		while (tradesIterator.hasNext())
 		{
+			Trade trade = tradesIterator.next();
 			if (trade.getBuyPrice() >= stocksMap.get(trade.getSymbol()))
 			{
 				trade.setBuyPrice(stocksMap.get(trade.getSymbol()));

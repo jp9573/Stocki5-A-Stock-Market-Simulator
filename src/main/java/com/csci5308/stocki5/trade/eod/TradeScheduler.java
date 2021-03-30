@@ -1,11 +1,10 @@
 package com.csci5308.stocki5.trade.eod;
 
+import com.csci5308.stocki5.trade.db.TradeDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.csci5308.stocki5.trade.TradeDb;
 
 @Service
 @EnableScheduling

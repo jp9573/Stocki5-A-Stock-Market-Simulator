@@ -1,13 +1,13 @@
 package com.csci5308.stocki5.trade;
 
+import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.User;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.IUserDb;
 
 public class Trade
 {
@@ -167,11 +167,6 @@ public class Trade
 		this.status = status;
 	}
 
-	public Date getTradeDate()
-	{
-		return tradeDate;
-	}
-
 	public void setTradeDate(Date tradeDate)
 	{
 		this.tradeDate = tradeDate;
@@ -190,11 +185,6 @@ public class Trade
 	public IUserDb getUserDbInterface()
 	{
 		return userDbInterface;
-	}
-
-	public void setUserDbInterface(IUserDb userDbInterface)
-	{
-		this.userDbInterface = userDbInterface;
 	}
 
 	public boolean isFundSufficient(IUserDb userDbInterface)
