@@ -21,14 +21,15 @@ public class StockDb implements IStockDb
 	Stocki5DbConnection dbConnection;
 
 	@Override
-	public Stock getStockData(int stockId)
+	public Stock getStock(int stockId)
 	{
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Stock stock = new Stock();
 			Statement statement = connection.createStatement();
-			String selectStockSql = "SELECT * FROM stock_data WHERE stock_id=" + stockId;
+			String selectStockSql = "SELECT stock_id,symbol,open,high,low,price,latest_trading_date,previous_close,segment,percent FROM stock_data WHERE stock_id="
+					+ stockId;
 			ResultSet resultSet = statement.executeQuery(selectStockSql);
 			while (resultSet.next())
 			{
@@ -43,7 +44,6 @@ public class StockDb implements IStockDb
 				stock.setSegment(resultSet.getString("segment"));
 				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
 			}
-
 			return stock;
 		} catch (SQLException e)
 		{

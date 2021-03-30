@@ -15,7 +15,7 @@ public interface IStockDb
 
 	public List<Stock> getLowestPriceStocks(String segments, int limit);
 
-	public Stock getStockData(int stockId);
+	public Stock getStock(int stockId);
 
 	public boolean updateStockData(Stock stock);
 
