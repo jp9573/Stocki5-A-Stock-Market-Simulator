@@ -1,6 +1,5 @@
 package com.csci5308.stocki5.stock.price;
 
-import com.csci5308.stocki5.stock.price.StockPriceAlgorithm;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,14 +48,14 @@ public class StockPriceAlogrithmTest {
 	public void stockPriceAlgorithmTestNegativeNumber() {
 		currentPrice = -25.00f;
 		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
-		Assert.assertTrue(newStockPrice > 0.00f);
+		Assert.assertTrue(newStockPrice >= 0.00f);
 	}
 
 	@Test
 	public void stockPriceAlgorithmTestZero() {
 		currentPrice = 0.00f;
 		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
-		Assert.assertTrue(newStockPrice > 0.00f);
+		Assert.assertTrue(newStockPrice >= 0.00f);
 	}
 
 	@Test
