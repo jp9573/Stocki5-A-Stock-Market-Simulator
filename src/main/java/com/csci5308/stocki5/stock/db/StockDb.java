@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,9 +137,10 @@ public class StockDb implements IStockDb
 		try
 		{
 			Statement statement = connection.createStatement();
-			for (Stock stock : stocks)
+			Iterator<Stock> stocksIterator = stocks.iterator();
+			while (stocksIterator.hasNext())
 			{
-				statement.addBatch("UPDATE stock_data SET " + "symbol='" + stock.getSymbol() + "'," + "open=" + stock.getOpen() + "," + "high=" + stock.getHigh() + "," + "low=" + stock.getLow() + "," + "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + "," + "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease() + " WHERE stock_id = " + stock.getStockId());
+				statement.addBatch("UPDATE stock_data SET " + "symbol='" + stocksIterator.next().getSymbol() + "'," + "open=" + stocksIterator.next().getOpen() + "," + "high=" + stocksIterator.next().getHigh() + "," + "low=" + stocksIterator.next().getLow() + "," + "price=" + stocksIterator.next().getPrice() + "," + "previous_close=" + stocksIterator.next().getPreviousClose() + "," + "segment='" + stocksIterator.next().getSegment() + "'," + "percent=" + stocksIterator.next().getPercentIncreaseDecrease() + " WHERE stock_id = " + stocksIterator.next().getStockId());
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;
