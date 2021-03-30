@@ -1,11 +1,7 @@
 package com.csci5308.stocki5.trade.holding;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.TradeStatus;
-import com.csci5308.stocki5.trade.TradeType;
-import com.csci5308.stocki5.user.IUserDb;
 
 import java.text.DecimalFormat;
 
@@ -20,18 +16,6 @@ public class Holding extends Trade
 	public Holding()
 	{
 		super();
-	}
-
-	public Holding(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status,
-			IStockDb stockDbInterface, IUserDb userDbInterface, boolean isHolding)
-	{
-		super(userCode, stockId, buySell, quantity, status, stockDbInterface, userDbInterface);
-		this.isHolding = isHolding;
-	}
-
-	public boolean getIsHolding()
-	{
-		return isHolding;
 	}
 
 	public void setIsHolding(boolean isHolding)

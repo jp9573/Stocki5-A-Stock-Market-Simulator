@@ -3,14 +3,15 @@ package com.csci5308.stocki5.trade.sell;
 import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.ITradeDb;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.User;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,8 +62,10 @@ public class TradeSell implements ITradeSell
 		List<Trade> trades = dbInterface.getPendingTrades(TradeType.SELL);
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(Stock::getSymbol, Stock::getPrice));
 
-		for (Trade trade : trades)
+		Iterator<Trade> tradesIterator = trades.iterator();
+		while (tradesIterator.hasNext())
 		{
+			Trade trade = tradesIterator.next();
 			if (trade.getSellPrice() <= stocksMap.get(trade.getSymbol()))
 			{
 				dbInterface.removeHoldingForAutoSell(trade.getUserCode(), trade.getStockId(), trade.getQuantity());
