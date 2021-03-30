@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.csci5308.stocki5.config.Stocki5DbConnection;
+import com.csci5308.stocki5.stock.Stock;
 
 @Repository
 public class StockDbHighestLowest extends StockDb implements IStockDbHighestLowest

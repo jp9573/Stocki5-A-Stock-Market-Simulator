@@ -2,6 +2,8 @@ package com.csci5308.stocki5.stock;
 
 import java.util.Date;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+
 public class Stock
 {
 	private int stockId;

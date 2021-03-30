@@ -3,6 +3,8 @@ package com.csci5308.stocki5.stock;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+
 public class StockTest {
 
     IStockDb dbInterface = new StockDbMock();

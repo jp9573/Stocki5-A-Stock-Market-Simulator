@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.csci5308.stocki5.stock.db.IStockDbHighestLowest;
+
 public class StockDbHighestLowestMock implements IStockDbHighestLowest
 {
 

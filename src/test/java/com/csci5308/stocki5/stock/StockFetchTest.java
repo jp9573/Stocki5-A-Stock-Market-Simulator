@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.csci5308.stocki5.stock.db.StockDbHighestLowest;
 import com.csci5308.stocki5.stock.fetch.StockFetch;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.UserDbMock;

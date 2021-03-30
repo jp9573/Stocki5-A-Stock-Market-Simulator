@@ -1,8 +1,10 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.db;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+
+import com.csci5308.stocki5.stock.Stock;
 
 @Repository
 public interface IStockDb
