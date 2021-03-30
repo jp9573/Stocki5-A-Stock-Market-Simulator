@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.fetch;
 
 import java.util.List;
 
@@ -7,61 +7,64 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.db.StockDbHighestLowest;
-import com.csci5308.stocki5.stock.fetch.StockFetch;
+import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.StockDbGainersLosersMock;
+import com.csci5308.stocki5.stock.db.StockDbMock;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.UserDbMock;
 
-public class StockFetchTest {
-
-	private UserDbMock userDbMock = null;
-
-	private StockDbHighestLowestMock stockDbHighestLowestMock = null;
-	
-	private StockDbMock stockDbMock = null;
-
-	private StockFetch stockFetch = null;
-
-	private User user = null;
+public class StockFetchTest
+{
+	private UserDbMock userDbMock;
+	private StockDbGainersLosersMock gainersLosersMock;
+	private StockDbMock stockDbMock;
+	private StockFetch stockFetch;
+	private User user;
 
 	@Before
-	public void createObjects() {
+	public void createObjects()
+	{
 		userDbMock = new UserDbMock();
-		stockDbHighestLowestMock =  new StockDbHighestLowestMock();
+		gainersLosersMock = new StockDbGainersLosersMock();
 		stockDbMock = new StockDbMock();
 		stockFetch = new StockFetch();
 		user = userDbMock.getUser("AB123456");
 	}
 
 	@After
-	public void destroyObjects() {
+	public void destroyObjects()
+	{
 		userDbMock = null;
-		stockDbHighestLowestMock = null;
+		gainersLosersMock = null;
 		stockDbMock = null;
 		stockFetch = null;
 		user = null;
 	}
 
 	@Test
-	public void getUserSegmentsTest() {
+	public void getUserSegmentsTest()
+	{
 		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
-	public void getUserSegmentsTestThreeSegments() {
+	public void getUserSegmentsTestThreeSegments()
+	{
 		user.setForeignExchange(0);
 		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
-	public void getUserSegmentsTestTwoSegments() {
+	public void getUserSegmentsTestTwoSegments()
+	{
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
 		Assert.assertEquals("'ICE','ISE'", stockFetch.getUserStockSegments(user));
 	}
 
 	@Test
-	public void getUserSegmentsTestOneSegment() {
+	public void getUserSegmentsTestOneSegment()
+	{
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
@@ -69,7 +72,8 @@ public class StockFetchTest {
 	}
 
 	@Test
-	public void getUserSegmentsTestZeroSegment() {
+	public void getUserSegmentsTestZeroSegment()
+	{
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
@@ -78,7 +82,8 @@ public class StockFetchTest {
 	}
 
 	@Test
-	public void fetchUserStocksTest() {
+	public void fetchUserStocksTest()
+	{
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
@@ -87,20 +92,22 @@ public class StockFetchTest {
 	}
 
 	@Test
-	public void fetchTop5GainerStocksTest() {
+	public void fetchTopGainerStocksTest()
+	{
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> top5GainersStocks = stockFetch.fetchTop5GainerStocks(stockDbHighestLowestMock, userDbMock, "AB123456");
+		List<Stock> top5GainersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
 		Assert.assertEquals(5, top5GainersStocks.size());
 	}
 
 	@Test
-	public void fetchTop5LoserStocksTest() {
+	public void fetchTopLoserStocksTest()
+	{
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> top5LosersStocks = stockFetch.fetchTop5GainerStocks(stockDbHighestLowestMock, userDbMock, "AB123456");
+		List<Stock> top5LosersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
 		Assert.assertEquals(5, top5LosersStocks.size());
 	}
 }

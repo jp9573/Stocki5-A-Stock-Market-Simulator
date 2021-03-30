@@ -17,11 +17,11 @@ import com.csci5308.stocki5.stock.Stock;
 @Repository
 public class StockDb implements IStockDb
 {
-	@Autowired
-	Stocki5DbConnection dbConnection;
-
 	final String STOCK_ATTRIBUTES = "stock_id,symbol,open,high,low,price,latest_trading_date,previous_close,segment,percent";
 
+	@Autowired
+	Stocki5DbConnection dbConnection;
+	
 	@Override
 	public Stock getStock(int stockId)
 	{
@@ -138,9 +138,11 @@ public class StockDb implements IStockDb
 		{
 			Statement statement = connection.createStatement();
 			Iterator<Stock> stocksIterator = stocks.iterator();
+			Stock stock;
 			while (stocksIterator.hasNext())
 			{
-				statement.addBatch("UPDATE stock_data SET " + "symbol='" + stocksIterator.next().getSymbol() + "'," + "open=" + stocksIterator.next().getOpen() + "," + "high=" + stocksIterator.next().getHigh() + "," + "low=" + stocksIterator.next().getLow() + "," + "price=" + stocksIterator.next().getPrice() + "," + "previous_close=" + stocksIterator.next().getPreviousClose() + "," + "segment='" + stocksIterator.next().getSegment() + "'," + "percent=" + stocksIterator.next().getPercentIncreaseDecrease() + " WHERE stock_id = " + stocksIterator.next().getStockId());
+				stock = stocksIterator.next();
+				statement.addBatch("UPDATE stock_data SET " + "symbol='" + stock.getSymbol() + "'," + "open=" + stock.getOpen() + "," + "high=" + stock.getHigh() + "," + "low=" + stock.getLow() + "," + "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + "," + "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease() + " WHERE stock_id = " + stock.getStockId());
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;

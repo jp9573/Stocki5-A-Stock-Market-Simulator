@@ -1,6 +1,9 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.prediction;
 
+import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.history.StockHistory;
+import com.csci5308.stocki5.stock.history.StockHistoryDbMock;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +31,7 @@ public class StockPredictionTest {
     public void predictStockValueTest() {
         final String stockSymbol = "ABC";
 
-        List<StockHistory> stockHistories = stockHistoryDbMock.getStockHistory(stockSymbol);
+        List<StockHistory> stockHistories = stockHistoryDbMock.getStockHistoryBySymbol(stockSymbol);
 
         int totalCount = stockHistories.size();
         List<Stock> stocks = new ArrayList<>();

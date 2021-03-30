@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.stock;
+package com.csci5308.stocki5.stock.price;
 
 import com.csci5308.stocki5.stock.price.StockPriceAlgorithm;
 import org.junit.After;

@@ -1,6 +1,7 @@
 package com.csci5308.stocki5.stock.price;
 
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -18,10 +19,15 @@ import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.user.UserDb;
 
 @Service
-public class StockPriceAlgorithm
+public class StockPriceAlgorithm implements IStockPriceAlgorithm
 {
-	@Value("${history.noOfVersions}")
+	static final String STOCK_PRICE_DECIMAL_FORMAT = "##.00";
+
+	@Value("${history.noofversions}")
 	private int noOfVersions;
+
+	@Value("${stock.pricelimit}")
+	private int priceChangeLimit;
 
 	@Autowired
 	StockHistoryDb stockHistoryDb;
@@ -32,32 +38,35 @@ public class StockPriceAlgorithm
 	@Autowired
 	TradeDb tradeDb;
 
-	public void generateStockPrice(IStockDb stockDbInterface, ITradeBuy tradeBuyInterface,
-			ITradeSell tradeSellInterface, IStockMaintainHistory iStockMaintainHistory)
+	public void generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory)
 	{
+		System.out.println("Called price algo");
 		float newPrice = 0.00f;
 		float percent = 0.00f;
-		List<Stock> stocks = stockDbInterface.getStocks();
-		for (Stock stock : stocks)
+		List<Stock> stocks = iStockDb.getStocks();
+		Iterator<Stock> stocksIterator = stocks.iterator();
+		Stock stock;
+		while (stocksIterator.hasNext())
 		{
+			stock = stocksIterator.next();
 			newPrice = stockPriceAlgorithm(stock.getPrice());
 			percent = stockPricePercentIncreaseDecrease(newPrice, stock.getPreviousClose());
 			stock.setPrice(newPrice);
 			stock.setPercentIncreaseDecrease(percent);
 			stock.calculateHighAndLow(newPrice);
 		}
-		stockDbInterface.updateStocks(stocks);
-		tradeBuyInterface.buyPendingTrades(tradeDb, userDb, stocks);
-		tradeSellInterface.sellPendingTrades(tradeDb, userDb, stocks);
+		iStockDb.updateStocks(stocks);
+		iTradeBuy.buyPendingTrades(tradeDb, userDb, stocks);
+		iTradeSell.sellPendingTrades(tradeDb, userDb, stocks);
 		iStockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
 	}
 
 	public float stockPriceAlgorithm(float currentPrice)
 	{
-		DecimalFormat df = new DecimalFormat("##.00");
+		DecimalFormat df = new DecimalFormat(STOCK_PRICE_DECIMAL_FORMAT);
 		Random random = new Random();
-		float maxPriceRange = currentPrice + 10;
-		float minPriceRange = currentPrice - 10;
+		float maxPriceRange = currentPrice + priceChangeLimit;
+		float minPriceRange = currentPrice - priceChangeLimit;
 		if (minPriceRange < 0.00f)
 		{
 			minPriceRange = 0.00f;
@@ -73,7 +82,7 @@ public class StockPriceAlgorithm
 
 	public float stockPricePercentIncreaseDecrease(float currentPrice, float previousClose)
 	{
-		DecimalFormat df = new DecimalFormat("##.00");
+		DecimalFormat df = new DecimalFormat(STOCK_PRICE_DECIMAL_FORMAT);
 		float percent = 0.00f;
 		float formatedPercent = 0.00f;
 		if (previousClose <= 0.00f)

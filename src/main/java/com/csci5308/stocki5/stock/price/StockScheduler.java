@@ -15,7 +15,7 @@ import com.csci5308.stocki5.trade.sell.TradeSell;
 public class StockScheduler
 {
 	@Autowired
-	StockPriceAlgorithm stockPriceAlgorithm;
+	IStockPriceAlgorithm iStockPriceAlgorithm;
 
 	@Autowired
 	IStockPriceEod iStockPriceEod;
@@ -28,19 +28,18 @@ public class StockScheduler
 
 	@Autowired
 	TradeSell tradeSell;
-	
+
 	@Autowired
 	StockMaintainHistory stockMaintainHistory;
 
-
 	private static boolean isMarketHours = true;
 
-	@Scheduled(fixedDelay = 5000)
+	@Scheduled(fixedDelayString = "${stock.delay}")
 	public void scheduleGenerateStockPrice()
 	{
 		if (isMarketHours)
 		{
-			stockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell, stockMaintainHistory);
+			iStockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell, stockMaintainHistory);
 		}
 	}
 
