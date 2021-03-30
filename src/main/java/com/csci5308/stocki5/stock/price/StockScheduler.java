@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.StockDb;
+import com.csci5308.stocki5.stock.db.StockDb;
 import com.csci5308.stocki5.stock.history.StockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
 import com.csci5308.stocki5.trade.sell.TradeSell;

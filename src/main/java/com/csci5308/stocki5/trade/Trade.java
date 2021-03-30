@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.IUserDb;
 

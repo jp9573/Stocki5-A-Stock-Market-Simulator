@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.stock.IStockDb;
-import com.csci5308.stocki5.stock.IStockDbHighestLowest;
 import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbHighestLowest;
 import com.csci5308.stocki5.user.IUserDb;
 
 @Service

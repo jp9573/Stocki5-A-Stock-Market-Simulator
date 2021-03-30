@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.IStockDb;
 import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.stock.history.StockHistoryDb;
 import com.csci5308.stocki5.trade.TradeDb;
