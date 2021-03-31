@@ -1,7 +1,6 @@
 package com.csci5308.stocki5.user.profile;
 
 import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,124 +9,133 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.UserDb;
 
 @Controller
-public class UserProfileController
-{
-	@Autowired
-	UserDb userDb;
+public class UserProfileController {
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
+    public static final String EMAIL_ID = "emailId";
+    public static final String CONTACT_NUMBER = "contactNumber";
+    public static final String ADDRESS = "address";
+    public static final String PROVINCE = "province";
+    public static final String COUNTRY = "country";
+    public static final String DATE_OF_BIRTH = "dateOfBirth";
+    public static final String GENDER = "gender";
+    public static final String USER_CODE = "userCode";
+    public static final String INTERNATIONAL_STOCK_EXCHANGE = "internationalStockExchange";
+    public static final String INTERNATIONAL_DERIVATIVE_EXCHANGE = "internationalDerivativeExchange";
+    public static final String INTERNATIONAL_COMMODITY_EXCHANGE = "internationalCommodityExchange";
+    public static final String FOREIGN_EXCHANGE = "foreignExchange";
+    public static final String FUNDS = "funds";
+    public static final String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User information updated successfully.";
+    public static final String SECTOR_DEFAULT_VALUE = "0";
 
-	@Autowired
-	IUserProfile iUserProfile;
+    @Autowired
+    UserDb userDb;
 
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public ModelAndView userProfile(HttpServletRequest request)
-	{
-		Principal principal = request.getUserPrincipal();
+    @Autowired
+    IUserProfile iUserProfile;
 
-		User user = userDb.getUser(principal.getName());
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView userProfile(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
 
-		ModelAndView model = new ModelAndView();
-		model.addObject("userCode", user.getUserCode());
-		model.addObject("firstName", user.getFirstName());
-		model.addObject("lastName", user.getLastName());
-		model.addObject("emailId", user.getEmailId());
-		model.addObject("contactNo", user.getContactNo());
-		model.addObject("address", user.getAddress());
-		model.addObject("province", user.getProvince());
-		model.addObject("country", user.getCountry());
-		model.addObject("gender", user.getGender());
-		model.addObject("dateOfBirth", user.getDateOfBirth());
-		model.addObject("internationalStockExchange", String.valueOf(user.getInternationalStockExchange()));
-		model.addObject("internationalDerivativeExchange", String.valueOf(user.getInternationalDerivativeExchange()));
-		model.addObject("internationalCommodityExchange", String.valueOf(user.getInternationalCommodityExchange()));
-		model.addObject("foreignExchange", String.valueOf(user.getForeignExchange()));
-		model.addObject("funds", user.getFunds());
+        User user = userDb.getUser(principal.getName());
 
-		model.setViewName("profile");
-		return model;
-	}
+        ModelAndView model = new ModelAndView();
+        model.addObject(USER_CODE, user.getUserCode());
+        model.addObject(FIRST_NAME, user.getFirstName());
+        model.addObject(LAST_NAME, user.getLastName());
+        model.addObject(EMAIL_ID, user.getEmailId());
+        model.addObject(CONTACT_NUMBER, user.getContactNo());
+        model.addObject(ADDRESS, user.getAddress());
+        model.addObject(PROVINCE, user.getProvince());
+        model.addObject(COUNTRY, user.getCountry());
+        model.addObject(GENDER, user.getGender());
+        model.addObject(DATE_OF_BIRTH, user.getDateOfBirth());
+        model.addObject(INTERNATIONAL_STOCK_EXCHANGE, String.valueOf(user.getInternationalStockExchange()));
+        model.addObject(INTERNATIONAL_DERIVATIVE_EXCHANGE, String.valueOf(user.getInternationalDerivativeExchange()));
+        model.addObject(INTERNATIONAL_COMMODITY_EXCHANGE, String.valueOf(user.getInternationalCommodityExchange()));
+        model.addObject(FOREIGN_EXCHANGE, String.valueOf(user.getForeignExchange()));
+        model.addObject(FUNDS, user.getFunds());
 
-	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
-	public ModelAndView userProfile(@RequestParam(value = "firstName", required = true) String firstName,
-			@RequestParam(value = "lastName", required = true) String lastName,
-			@RequestParam(value = "emailId", required = true) String emailId,
-			@RequestParam(value = "contactNo", required = true) String contactNo,
-			@RequestParam(value = "address", required = true) String address,
-			@RequestParam(value = "province", required = true) String province,
-			@RequestParam(value = "country", required = true) String country,
-			@RequestParam(value = "dateOfBirth", required = true) String dateOfBirth,
-			@RequestParam(value = "gender", required = true) String gender,
-			@RequestParam(value = "funds", required = true) double funds,
-			@RequestParam(value = "internationalStockExchange", required = false) String internationalStockExchange,
-			@RequestParam(value = "internationalDerivativeExchange", required = false) String internationalDerivativeExchange,
-			@RequestParam(value = "internationalCommodityExchange", required = false) String internationalCommodityExchange,
-			@RequestParam(value = "foreignExchange", required = false) String foreignExchange,
-			@RequestParam(value = "userCode", required = true) String userCode)
-	{
+        model.setViewName("profile");
+        return model;
+    }
 
-		if (internationalStockExchange == null)
-		{
-			internationalStockExchange = "0";
-		}
-		if (internationalDerivativeExchange == null)
-		{
-			internationalDerivativeExchange = "0";
-		}
-		if (internationalCommodityExchange == null)
-		{
-			internationalCommodityExchange = "0";
-		}
-		if (foreignExchange == null)
-		{
-			foreignExchange = "0";
-		}
+    @RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
+    public ModelAndView userProfile(@RequestParam(value = FIRST_NAME) String firstName,
+                                    @RequestParam(value = LAST_NAME) String lastName,
+                                    @RequestParam(value = EMAIL_ID) String emailId,
+                                    @RequestParam(value = CONTACT_NUMBER) String contactNo,
+                                    @RequestParam(value = ADDRESS) String address,
+                                    @RequestParam(value = PROVINCE) String province,
+                                    @RequestParam(value = COUNTRY) String country,
+                                    @RequestParam(value = DATE_OF_BIRTH) String dateOfBirth,
+                                    @RequestParam(value = GENDER) String gender,
+                                    @RequestParam(value = FUNDS) double funds,
+                                    @RequestParam(value = INTERNATIONAL_STOCK_EXCHANGE, required = false) String internationalStockExchange,
+                                    @RequestParam(value = INTERNATIONAL_DERIVATIVE_EXCHANGE, required = false) String internationalDerivativeExchange,
+                                    @RequestParam(value = INTERNATIONAL_COMMODITY_EXCHANGE, required = false) String internationalCommodityExchange,
+                                    @RequestParam(value = FOREIGN_EXCHANGE, required = false) String foreignExchange,
+                                    @RequestParam(value = USER_CODE) String userCode) {
 
-		ModelAndView model = new ModelAndView();
-		model.addObject("firstName", firstName);
-		model.addObject("lastName", lastName);
-		model.addObject("emailId", emailId);
-		model.addObject("contactNo", contactNo);
-		model.addObject("address", address);
-		model.addObject("province", province);
-		model.addObject("country", country);
-		model.addObject("dateOfBirth", dateOfBirth);
-		model.addObject("gender", gender);
-		model.addObject("userCode", userCode);
-		model.addObject("internationalStockExchange", internationalStockExchange);
-		model.addObject("internationalDerivativeExchange", internationalDerivativeExchange);
-		model.addObject("internationalCommodityExchange", internationalCommodityExchange);
-		model.addObject("foreignExchange", foreignExchange);
-		model.addObject("funds", funds);
+        if (null == internationalStockExchange) {
+            internationalStockExchange = SECTOR_DEFAULT_VALUE;
+        }
+        if (null == internationalDerivativeExchange) {
+            internationalDerivativeExchange = SECTOR_DEFAULT_VALUE;
+        }
+        if (null == internationalCommodityExchange) {
+            internationalCommodityExchange = SECTOR_DEFAULT_VALUE;
+        }
+        if (null == foreignExchange) {
+            foreignExchange = SECTOR_DEFAULT_VALUE;
+        }
 
-		User user = new User();
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setContactNo(contactNo);
-		user.setEmailId(emailId);
-		user.setAddress(address);
-		user.setProvince(province);
-		user.setCountry(country);
-		user.setGender(gender);
-		user.setUserCode(userCode);
-		user.setInternationalStockExchange(Integer.parseInt(internationalStockExchange));
-		user.setInternationalDerivativeExchange(Integer.parseInt(internationalDerivativeExchange));
-		user.setInternationalCommodityExchange(Integer.parseInt(internationalCommodityExchange));
-		user.setForeignExchange(Integer.parseInt(foreignExchange));
+        ModelAndView model = new ModelAndView();
+        model.addObject(FIRST_NAME, firstName);
+        model.addObject(LAST_NAME, lastName);
+        model.addObject(EMAIL_ID, emailId);
+        model.addObject(CONTACT_NUMBER, contactNo);
+        model.addObject(ADDRESS, address);
+        model.addObject(PROVINCE, province);
+        model.addObject(COUNTRY, country);
+        model.addObject(DATE_OF_BIRTH, dateOfBirth);
+        model.addObject(GENDER, gender);
+        model.addObject(USER_CODE, userCode);
+        model.addObject(INTERNATIONAL_STOCK_EXCHANGE, internationalStockExchange);
+        model.addObject(INTERNATIONAL_DERIVATIVE_EXCHANGE, internationalDerivativeExchange);
+        model.addObject(INTERNATIONAL_COMMODITY_EXCHANGE, internationalCommodityExchange);
+        model.addObject(FOREIGN_EXCHANGE, foreignExchange);
+        model.addObject(FUNDS, funds);
 
-		boolean isUserUpdated = iUserProfile.updateUser(userDb, user, dateOfBirth);
-		if (isUserUpdated)
-		{
-			model.addObject("success", "User information updated succesfully.");
-		}
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setContactNo(contactNo);
+        user.setEmailId(emailId);
+        user.setAddress(address);
+        user.setProvince(province);
+        user.setCountry(country);
+        user.setGender(gender);
+        user.setUserCode(userCode);
+        user.setInternationalStockExchange(Integer.parseInt(internationalStockExchange));
+        user.setInternationalDerivativeExchange(Integer.parseInt(internationalDerivativeExchange));
+        user.setInternationalCommodityExchange(Integer.parseInt(internationalCommodityExchange));
+        user.setForeignExchange(Integer.parseInt(foreignExchange));
 
-		model.addObject("error", user.getValidityMessage());
-		model.setViewName("profile");
-		return model;
+        boolean isUserUpdated = iUserProfile.updateUser(userDb, user, dateOfBirth);
+        if (isUserUpdated) {
+            model.addObject("success", USER_PROFILE_UPDATE_SUCCESS_MESSAGE);
+        }
 
-	}
+        model.addObject("error", user.getValidityMessage());
+        model.setViewName("profile");
+        return model;
+
+    }
 
 }
