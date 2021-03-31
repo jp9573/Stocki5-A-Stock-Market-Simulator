@@ -15,6 +15,8 @@ import java.util.List;
 @Controller
 public class TradeOrderController
 {
+	public static final String ORDERS = "orders";
+
 	@Autowired
 	ITradeOrder iTradeOrder;
 	
@@ -27,7 +29,7 @@ public class TradeOrderController
 		ModelAndView model = new ModelAndView();
 
 		List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
-		model.addObject("orders", orders);
+		model.addObject(ORDERS, orders);
 		model.setViewName("orders");
 
 		return model;
