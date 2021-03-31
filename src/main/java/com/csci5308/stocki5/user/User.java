@@ -205,19 +205,17 @@ public class User implements UserDetails {
     }
 
     public void generateUserCode() {
-        if (null != this.getFirstName() && null != this.getLastName()) {
-            char firstNameFirstChar = this.getFirstName().charAt(0);
-            char lastNameFirstChar = this.getLastName().charAt(0);
-            SimpleDateFormat simpleDateFormatYearMonth = new SimpleDateFormat(YEAR_MONTH_PATTERN);
-            SimpleDateFormat simpleDateFormatDay = new SimpleDateFormat(DAY_PATTERN);
-            SimpleDateFormat simpleDateFormatHourMinuteSecs = new SimpleDateFormat(HOUR_MINUTE_SECOND_PATTERN);
-            long dateYearMonth = Long.parseLong(simpleDateFormatYearMonth.format(new Date()));
-            long dateDay = Long.parseLong(simpleDateFormatDay.format(new Date()));
-            long dateHourMinuteSecs = Long.parseLong(simpleDateFormatHourMinuteSecs.format(new Date()));
-            long code = dateYearMonth + dateDay + dateHourMinuteSecs;
-            String userCode = String.valueOf(firstNameFirstChar) + lastNameFirstChar + code;
-            this.userCode = userCode.toUpperCase();
-        }
+        char firstNameFirstChar = this.getFirstName().charAt(0);
+        char lastNameFirstChar = this.getLastName().charAt(0);
+        SimpleDateFormat simpleDateFormatYearMonth = new SimpleDateFormat(YEAR_MONTH_PATTERN);
+        SimpleDateFormat simpleDateFormatDay = new SimpleDateFormat(DAY_PATTERN);
+        SimpleDateFormat simpleDateFormatHourMinuteSecs = new SimpleDateFormat(HOUR_MINUTE_SECOND_PATTERN);
+        long dateYearMonth = Long.parseLong(simpleDateFormatYearMonth.format(new Date()));
+        long dateDay = Long.parseLong(simpleDateFormatDay.format(new Date()));
+        long dateHourMinuteSecs = Long.parseLong(simpleDateFormatHourMinuteSecs.format(new Date()));
+        long code = dateYearMonth + dateDay + dateHourMinuteSecs;
+        String userCode = String.valueOf(firstNameFirstChar) + lastNameFirstChar + code;
+        this.userCode = userCode.toUpperCase();
     }
 
     public boolean validateDateOfBirth(String dob) {
