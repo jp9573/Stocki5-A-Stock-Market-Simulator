@@ -18,6 +18,7 @@ public class UserFundsTest {
     {
         userDbMock = new UserDbMock();
         userFunds = new UserFunds();
+        userFunds.setResetFundAmount(10000);
     }
 
     @After
