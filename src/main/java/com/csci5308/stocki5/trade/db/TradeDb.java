@@ -1,19 +1,16 @@
-package com.csci5308.stocki5.trade;
+package com.csci5308.stocki5.trade.db;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.csci5308.stocki5.config.Stocki5DbConnection;
+import com.csci5308.stocki5.trade.Trade;
+import com.csci5308.stocki5.trade.TradeStatus;
+import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.holding.Holding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.csci5308.stocki5.config.Stocki5DbConnection;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class TradeDb implements ITradeDb
@@ -65,19 +62,14 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public Trade getTrade(String tradeNumber)
-	{
-		return null;
-	}
-
-	@Override
 	public List<Trade> getTodaysTradeByUserCode(String userCode)
 	{
 		List<Trade> trades = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String selectTradeSql = "SELECT * FROM trade WHERE userCode=? AND tradeDate=? ORDER BY tradeDate DESC";
+			final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
+			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade WHERE userCode=? AND tradeDate=? ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -121,7 +113,8 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String selectTradeSql = "SELECT * FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
+			final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySel,symbol,segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
+			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -232,7 +225,8 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String selectTradeSql = "SELECT * FROM trade WHERE status='PENDING' AND buySell=?";
+			final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
+			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade WHERE status='PENDING' AND buySell=?";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, String.valueOf(tradeType));

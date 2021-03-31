@@ -23,15 +23,9 @@ public class Holding extends Trade
 	}
 
 	public Holding(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status,
-			IStockDb stockDbInterface, IUserDb userDbInterface, boolean isHolding)
-	{
+				   IStockDb stockDbInterface, IUserDb userDbInterface, boolean isHolding){
 		super(userCode, stockId, buySell, quantity, status, stockDbInterface, userDbInterface);
 		this.isHolding = isHolding;
-	}
-
-	public boolean getIsHolding()
-	{
-		return isHolding;
 	}
 
 	public void setIsHolding(boolean isHolding)
