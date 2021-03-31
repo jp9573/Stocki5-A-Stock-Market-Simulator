@@ -38,7 +38,7 @@ public class UserOtpDb implements IUserOtpDb
 	}
 
 	@Override
-	public boolean insertOtp(UserOtp userOtp)
+	public boolean insertOtp(IUserOtp userOtp)
 	{
 		Connection connection = dbConnection.createConnection();
 		String insertUserOtpSql = "INSERT INTO user_otp VALUES (?,?,?)";
@@ -65,12 +65,6 @@ public class UserOtpDb implements IUserOtpDb
 		{
 			dbConnection.closeConnection(connection);
 		}
-	}
-
-	@Override
-	public boolean updateOtp(UserOtp userOtp)
-	{
-		return false;
 	}
 
 	@Override

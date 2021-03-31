@@ -22,16 +22,15 @@ public class UserForgotCodeController
 			@RequestParam(value = "dob", required = true) String dob)
 	{
 		ModelAndView model = new ModelAndView();
-		String userCode = null;
 		model.setViewName("forgotuser");
-		userCode = iUserForgotCode.getUserCode(email, dob, userDb);
-		if (userCode == null)
+		String result = iUserForgotCode.getUserCode(email, dob, userDb);
+		if (null == result)
 		{
 			model.addObject("error", "Invalid email or date of birth.");
 			return model;
 		} else
 		{
-			model.addObject("success", "Your UserCode  is - " + userCode);
+			model.addObject("success", "Your UserCode  is - " + result);
 		}
 		return model;
 	}
