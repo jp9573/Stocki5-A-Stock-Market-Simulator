@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.IUserDb;
 
@@ -215,7 +215,7 @@ public class Trade
 
 	public void createTradeDetails()
 	{
-		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		Stock stock = this.getStockDbInterface().getStock(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
 
@@ -232,7 +232,7 @@ public class Trade
 
 	public void createSetBuyPriceTradeDetails(float buyPrice)
 	{
-		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		Stock stock = this.getStockDbInterface().getStock(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
 
@@ -242,7 +242,7 @@ public class Trade
 
 	public void createSetSellPriceTradeDetails(float sellPrice)
 	{
-		Stock stock = this.getStockDbInterface().getStockData(this.getStockId());
+		Stock stock = this.getStockDbInterface().getStock(this.getStockId());
 		this.symbol = stock.getSymbol();
 		this.segment = stock.getSegment();
 

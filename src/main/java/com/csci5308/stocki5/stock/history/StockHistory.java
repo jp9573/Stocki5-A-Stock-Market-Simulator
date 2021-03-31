@@ -1,7 +1,8 @@
 package com.csci5308.stocki5.stock.history;
 
 import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDb;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,15 +18,15 @@ public class StockHistory extends Stock
 		insertTimestamp = null;
 	}
 
-	public StockHistory(int stockId, IStockDb dbInterface)
+	public StockHistory(int stockId, IStockDb iStockDb)
 	{
-		super(stockId, dbInterface);
+		super(stockId, iStockDb);
 	}
 
-	public StockHistory(long historyIdId, String insertTimestamp, Stock stock)
+	public StockHistory(long historyId, String insertTimestamp, Stock stock)
 	{
 		super(stock);
-		this.historyId = historyIdId;
+		this.historyId = historyId;
 		this.insertTimestamp = insertTimestamp;
 	}
 
@@ -48,5 +49,4 @@ public class StockHistory extends Stock
 	{
 		this.insertTimestamp = insertTimestamp;
 	}
-
 }
