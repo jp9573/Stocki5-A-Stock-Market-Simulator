@@ -12,6 +12,11 @@ import java.util.Date;
 public class UserForgotPassword implements IUserForgotPassword
 {
 	private static final String EMAIL_OTP_SUBJECT = "Stocki5: OTP TO RESET PASSWORD";
+	private static final String EMAIL_OTP_TEXT = "The OTP to reset you password is - ";
+	private static final String OTP_INVALID_MESSAGE = "Invalid OTP";
+	private static final String OTP_EXPIRED_MESSAGE = "OTP Expired";
+	private static final String OTP_ERROR_MESSAGE = "Error. Please try again later.";
+	private static final String OTP_VALID_MESSAGE = "Valid";
 	private static final String SIMPLE_DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
 	private String otpValidityMessage;
@@ -56,7 +61,7 @@ public class UserForgotPassword implements IUserForgotPassword
 		userOtpDb.insertOtp(userOtp);
 
 		String toEmail = user.getEmailId();
-		String text = "The OTP to reset you password is - " + String.valueOf(userOtp.getOtp());
+		String text = EMAIL_OTP_TEXT + String.valueOf(userOtp.getOtp());
 		email.sendEmail(toEmail, EMAIL_OTP_SUBJECT, text);
 		return true;
 	}
@@ -67,7 +72,7 @@ public class UserForgotPassword implements IUserForgotPassword
 		UserOtp userOtp = userOtpDb.getOtp(otp);
 		if (null == userOtp)
 		{
-			setOtpValidityMessage("Invalid OTP");
+			setOtpValidityMessage(OTP_INVALID_MESSAGE);
 			return false;
 		} else
 		{
@@ -80,22 +85,22 @@ public class UserForgotPassword implements IUserForgotPassword
 					if (currentDateTime.compareTo(validityDateTime) > 0)
 					{
 						userOtpDb.deleteOtp(otp);
-						setOtpValidityMessage("OTP Expired");
+						setOtpValidityMessage(OTP_EXPIRED_MESSAGE);
 						return false;
 
 					} else
 					{
-						setOtpValidityMessage("Valid");
+						setOtpValidityMessage(OTP_VALID_MESSAGE);
 						return true;
 					}
 				} catch (ParseException e)
 				{
 					e.printStackTrace();
-					setOtpValidityMessage("Error. Please try again later.");
+					setOtpValidityMessage(OTP_ERROR_MESSAGE);
 					return false;
 				}
 			}
-			setOtpValidityMessage("Invalid OTP");
+			setOtpValidityMessage(OTP_INVALID_MESSAGE);
 			return false;
 		}
 	}
