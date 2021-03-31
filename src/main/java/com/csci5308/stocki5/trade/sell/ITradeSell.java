@@ -2,7 +2,7 @@ package com.csci5308.stocki5.trade.sell;
 
 import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.trade.ITradeDb;
+import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.user.IUserDb;
 import org.springframework.stereotype.Service;
 
