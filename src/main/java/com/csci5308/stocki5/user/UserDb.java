@@ -19,11 +19,9 @@ public class UserDb implements IUserDb {
     @Override
     public boolean insertUser(User user) {
         Connection connection = dbConnection.createConnection();
-
         try {
-            String insertUserSql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String insertUserSql = String.format("INSERT INTO %s VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", userTable);
             PreparedStatement statement = connection.prepareStatement(insertUserSql);
-
             statement.setString(1, user.getUserCode());
             statement.setString(2, user.getFirstName());
             statement.setString(3, user.getLastName());
@@ -43,12 +41,7 @@ public class UserDb implements IUserDb {
             statement.setDouble(17, user.getFunds());
             statement.setString(18, user.getRole());
             int userCount = statement.executeUpdate();
-            if (userCount > 0) {
-                System.out.println(userCount);
-                return true;
-            } else {
-                return false;
-            }
+            return userCount > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -60,15 +53,12 @@ public class UserDb implements IUserDb {
     @Override
     public boolean updateUser(User user) {
         Connection connection = dbConnection.createConnection();
-
         try {
-            String updateUserSQL = "UPDATE user SET " + "firstName=?," + "lastName=?," + "emailId=?," + "contactNo=?,"
-                    + "dateOfBirth=?," + "gender=?," + "address=?," + "province=?," + "country=?,"
-                    + "internationalStockExchange=?," + "internationalDerivativeExchange=?,"
-                    + "internationalCommodityExchange=?," + "foreignExchange=? " + "WHERE userCode=?";
-
+            String updateUserSQL = String.format("UPDATE %s SET %s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=? WHERE %s=?",
+                    userTable, firstNameColumn, lastNameColumn, emailIdColumn, contactNoColumn, dateOfBirthColumn, genderColumn, addressColumn, provinceColumn, countryColumn,
+                    internationalStockExchangeColumn, internationalDerivativeExchangeColumn,
+                    internationalCommodityExchangeColumn, foreignExchangeColumn, userCodeColumn);
             PreparedStatement statement = connection.prepareStatement(updateUserSQL);
-
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setString(3, user.getEmailId());
@@ -83,7 +73,6 @@ public class UserDb implements IUserDb {
             statement.setInt(12, user.getInternationalCommodityExchange());
             statement.setInt(13, user.getForeignExchange());
             statement.setString(14, user.getUserCode());
-
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -97,30 +86,13 @@ public class UserDb implements IUserDb {
     @Override
     public User getUser(String userCode) {
         Connection connection = dbConnection.createConnection();
-
         try {
             User user = new User();
             Statement statement = connection.createStatement();
-            String selectUserSql = "SELECT * FROM user WHERE userCode='" + userCode + "'";
+            String selectUserSql = String.format("SELECT * FROM %s WHERE %s='%s'", userTable, userCodeColumn, userCode);
             ResultSet resultSet = statement.executeQuery(selectUserSql);
             while (resultSet.next()) {
-                user.setUserCode(resultSet.getString("userCode"));
-                user.setPassword(resultSet.getString("password"));
-                user.setFirstName(resultSet.getString("firstName"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setEmailId(resultSet.getString("emailId"));
-                user.setContactNo(resultSet.getString("contactNo"));
-                user.setGender(resultSet.getString("gender"));
-                user.setCountry(resultSet.getString("country"));
-                user.setAddress(resultSet.getString("address"));
-                user.setProvince(resultSet.getString("province"));
-                user.setDateOfBirth(resultSet.getDate("dateOfBirth"));
-
-                user.setInternationalStockExchange(resultSet.getInt("internationalStockExchange"));
-                user.setInternationalDerivativeExchange(resultSet.getInt("internationalDerivativeExchange"));
-                user.setInternationalCommodityExchange(resultSet.getInt("internationalCommodityExchange"));
-                user.setForeignExchange(resultSet.getInt("foreignExchange"));
-                user.setFunds(resultSet.getDouble("funds"));
+                setUserValueFromResultSet(user, resultSet);
             }
             return user;
         } catch (SQLException e) {
@@ -137,24 +109,10 @@ public class UserDb implements IUserDb {
         try {
             User user = new User();
             Statement statement = connection.createStatement();
-            String selectSql = "SELECT * FROM user where emailid='" + email + "'";
+            String selectSql = String.format("SELECT * FROM %s where %s='%s'", userTable, emailIdColumn, email);
             ResultSet resultSet = statement.executeQuery(selectSql);
             while (resultSet.next()) {
-                user.setUserCode(resultSet.getString("userCode"));
-                user.setPassword(resultSet.getString("password"));
-                user.setFirstName(resultSet.getString("firstName"));
-                user.setLastName(resultSet.getString("lastName"));
-                user.setEmailId(resultSet.getString("emailId"));
-                user.setContactNo(resultSet.getString("contactNo"));
-                user.setGender(resultSet.getString("gender"));
-                user.setCountry(resultSet.getString("country"));
-                user.setAddress(resultSet.getString("address"));
-                user.setProvince(resultSet.getString("province"));
-                user.setDateOfBirth(resultSet.getDate("dateOfBirth"));
-                user.setInternationalStockExchange(resultSet.getInt("internationalStockExchange"));
-                user.setInternationalDerivativeExchange(resultSet.getInt("internationalDerivativeExchange"));
-                user.setInternationalCommodityExchange(resultSet.getInt("internationalCommodityExchange"));
-                user.setForeignExchange(resultSet.getInt("foreignExchange"));
+                setUserValueFromResultSet(user, resultSet);
             }
             return user;
         } catch (SQLException throwables) {
@@ -168,20 +126,14 @@ public class UserDb implements IUserDb {
     @Override
     public boolean updateUserPassword(User user) {
         Connection connection = dbConnection.createConnection();
-
         try {
-            String updateUserSQL = "UPDATE user SET password=?, confirmPassword=? WHERE userCode=?";
+            String updateUserSQL = String.format("UPDATE %s SET %s=?, %s=? WHERE %s=?", userTable, passwordColumn, confirmPasswordColumn, userCodeColumn);
             PreparedStatement statement = connection.prepareStatement(updateUserSQL);
-
             statement.setString(1, user.getPassword());
             statement.setString(2, user.getConfirmPassword());
             statement.setString(3, user.getUserCode());
             int result = statement.executeUpdate();
-            if (result > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return result > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
@@ -193,14 +145,13 @@ public class UserDb implements IUserDb {
     @Override
     public double getUserFunds(String userCode) {
         Connection connection = dbConnection.createConnection();
-
         try {
             double userFunds = 0;
             Statement statement = connection.createStatement();
-            String selectUserFundsSql = "SELECT funds FROM user WHERE userCode='" + userCode + "'";
+            String selectUserFundsSql = String.format("SELECT %s FROM %s WHERE %s='%s'", fundsColumn, userTable, userCodeColumn, userCode);
             ResultSet resultSet = statement.executeQuery(selectUserFundsSql);
             while (resultSet.next()) {
-                userFunds = resultSet.getDouble("funds");
+                userFunds = resultSet.getDouble(fundsColumn);
             }
             return userFunds;
         } catch (SQLException e) {
@@ -214,15 +165,11 @@ public class UserDb implements IUserDb {
     @Override
     public boolean updateUserFunds(String userCode, double amount) {
         Connection connection = dbConnection.createConnection();
-
         try {
-            String updateUserFundsSQL = "UPDATE user SET " + "funds=? " + "WHERE userCode=?";
-
+            String updateUserFundsSQL = String.format("UPDATE %s SET %s=? WHERE %s=?", userTable, fundsColumn, userCodeColumn);
             PreparedStatement statement = connection.prepareStatement(updateUserFundsSQL);
-
             statement.setDouble(1, amount);
             statement.setString(2, userCode);
-
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -231,5 +178,23 @@ public class UserDb implements IUserDb {
         } finally {
             dbConnection.closeConnection(connection);
         }
+    }
+
+    private void setUserValueFromResultSet(User user, ResultSet resultSet) throws SQLException {
+        user.setUserCode(resultSet.getString(userCodeColumn));
+        user.setPassword(resultSet.getString(passwordColumn));
+        user.setFirstName(resultSet.getString(firstNameColumn));
+        user.setLastName(resultSet.getString(lastNameColumn));
+        user.setEmailId(resultSet.getString(emailIdColumn));
+        user.setContactNo(resultSet.getString(contactNoColumn));
+        user.setGender(resultSet.getString(genderColumn));
+        user.setCountry(resultSet.getString(countryColumn));
+        user.setAddress(resultSet.getString(addressColumn));
+        user.setProvince(resultSet.getString(provinceColumn));
+        user.setDateOfBirth(resultSet.getDate(dateOfBirthColumn));
+        user.setInternationalStockExchange(resultSet.getInt(internationalStockExchangeColumn));
+        user.setInternationalDerivativeExchange(resultSet.getInt(internationalDerivativeExchangeColumn));
+        user.setInternationalCommodityExchange(resultSet.getInt(internationalCommodityExchangeColumn));
+        user.setForeignExchange(resultSet.getInt(foreignExchangeColumn));
     }
 }

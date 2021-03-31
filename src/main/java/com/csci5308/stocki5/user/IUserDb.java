@@ -3,20 +3,38 @@ package com.csci5308.stocki5.user;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IUserDb
-{
-	public boolean insertUser(User user);
+public interface IUserDb {
+    String userTable = "user";
+    String firstNameColumn = "firstName";
+    String lastNameColumn = "lastName";
+    String passwordColumn = "password";
+    String confirmPasswordColumn = "confirmPassword";
+    String emailIdColumn = "emailId";
+    String contactNoColumn = "contactNo";
+    String dateOfBirthColumn = "dateOfBirth";
+    String genderColumn = "gender";
+    String addressColumn = "address";
+    String provinceColumn = "province";
+    String countryColumn = "country";
+    String internationalStockExchangeColumn = "internationalStockExchange";
+    String internationalDerivativeExchangeColumn = "internationalDerivativeExchange";
+    String internationalCommodityExchangeColumn = "internationalCommodityExchange";
+    String foreignExchangeColumn = "foreignExchange";
+    String userCodeColumn = "userCode";
+    String fundsColumn = "funds";
 
-	public boolean updateUser(User user);
+    boolean insertUser(User user);
 
-	public User getUser(String userCode);
+    boolean updateUser(User user);
 
-	public User getUserByEmail(String email);
+    User getUser(String userCode);
 
-	public boolean updateUserPassword(User user);
+    User getUserByEmail(String email);
 
-	public double getUserFunds(String userCode);
+    boolean updateUserPassword(User user);
 
-	public boolean updateUserFunds(String userCode, double amount);
+    double getUserFunds(String userCode);
+
+    boolean updateUserFunds(String userCode, double amount);
 
 }
