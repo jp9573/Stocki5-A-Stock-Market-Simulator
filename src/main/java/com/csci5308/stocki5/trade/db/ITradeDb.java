@@ -1,17 +1,16 @@
-package com.csci5308.stocki5.trade;
+package com.csci5308.stocki5.trade.db;
 
-import java.util.List;
-
+import com.csci5308.stocki5.trade.Trade;
+import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.holding.Holding;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
 @Repository
 public interface ITradeDb
 {
 
 	public boolean insertTrade(Trade trade, boolean isHolding);
-
-	public Trade getTrade(String tradeNumber);
 
 	public List<Trade> getTodaysTradeByUserCode(String userCode);
 
