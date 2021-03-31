@@ -109,7 +109,7 @@ public class UserForgotPassword implements IUserForgotPassword
 		if (isChanged)
 		{
 			userOtpDb.deleteOtpByUserCode(userCode);
-			return true;
+			return isChanged;
 		}
 		return isChanged;
 	}
