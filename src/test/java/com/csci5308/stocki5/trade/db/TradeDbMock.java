@@ -80,7 +80,10 @@ public class TradeDbMock implements ITradeDb{
 
     @Override
     public boolean removeHolding(String tradeNumber) {
-        return true;
+        if(tradeNumber == "ABC123"){
+            return true;
+        }
+        return false;
     }
 
     @Override
