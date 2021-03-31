@@ -11,6 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserForgotCodeController
 {
+	public static final String FORGOT_USER_VIEW_NAME = "forgotuser";
+	public static final String EMAIL_ID = "emailId";
+	public static final String DOB = "dob";
+	public static final String ERROR_MESSAGE = "Invalid email or date of birth.";
+	public static final String SUCCESS_MESSAGE = "Your UserCode  is - ";
+
 	@Autowired
 	UserDb userDb;
 
@@ -18,19 +24,19 @@ public class UserForgotCodeController
 	IUserForgotCode iUserForgotCode;
 
 	@RequestMapping(value = "/forgotuser", method = RequestMethod.POST)
-	public ModelAndView userForgotCode(@RequestParam(value = "emailId", required = true) String email,
-			@RequestParam(value = "dob", required = true) String dob)
+	public ModelAndView userForgotCode(@RequestParam(value = EMAIL_ID, required = true) String email,
+			@RequestParam(value = DOB, required = true) String dob)
 	{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("forgotuser");
 		String result = iUserForgotCode.getUserCode(email, dob, userDb);
 		if (null == result)
 		{
-			model.addObject("error", "Invalid email or date of birth.");
+			model.addObject("error", ERROR_MESSAGE);
 			return model;
 		} else
 		{
-			model.addObject("success", "Your UserCode  is - " + result);
+			model.addObject("success", SUCCESS_MESSAGE + result);
 		}
 		return model;
 	}
