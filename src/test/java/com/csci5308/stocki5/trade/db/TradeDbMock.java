@@ -9,7 +9,8 @@ import com.csci5308.stocki5.trade.holding.Holding;
 import com.csci5308.stocki5.user.IUserDb;
 import com.csci5308.stocki5.user.UserDbMock;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TradeDbMock implements ITradeDb{
     @Override

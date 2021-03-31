@@ -4,7 +4,6 @@ import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.holding.Holding;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
