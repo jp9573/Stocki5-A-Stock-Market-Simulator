@@ -2,11 +2,8 @@ package com.csci5308.stocki5.trade.holding;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.trade.TradeStatus;
-import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
