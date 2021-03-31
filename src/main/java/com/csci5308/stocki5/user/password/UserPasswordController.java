@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.csci5308.stocki5.email.Email;
 
 @Controller
@@ -148,8 +147,8 @@ public class UserPasswordController
 		boolean currentPasswordIsValid = userChangePassword.validateCurrentPassword(user, currentPassword);
 		if (currentPasswordIsValid)
 		{
-			boolean result = userChangePassword.changePassword(user, newPassword, confirmNewPassword, userDb);
-			if (result)
+			boolean isChanged = userChangePassword.changePassword(user, newPassword, confirmNewPassword, userDb);
+			if (isChanged)
 			{
 				model.addObject("successChangePassword", "Password changed.");
 			} else

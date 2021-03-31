@@ -10,6 +10,14 @@ public class UserFunds implements IUserFunds
 {
 	@Value("${user.resetfundamount}")
 	private int resetFundAmount;
+
+
+	@Override
+	public void setResetFundAmount(int resetFundAmount) {
+		this.resetFundAmount = resetFundAmount;
+	}
+
+	@Override
 	public boolean resetFunds(User user, IUserDb userDb)
 	{
 		if (user.getFunds() < resetFundAmount)
