@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class TradeSell implements ITradeSell
 {
-	DecimalFormat df = new DecimalFormat("##.00");
+	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
 
 	@Override
 	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface,
@@ -34,7 +34,7 @@ public class TradeSell implements ITradeSell
 			double updatedFunds = user.getFunds() + trade.getTotalSellPrice();
 			boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
 			if(isHoldingRemoved){
-				userDbInterface.updateUserFunds(userCode, Double.parseDouble(df.format(updatedFunds)));
+				userDbInterface.updateUserFunds(userCode, Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				return tradeDbInterface.insertTrade(trade, false);
 			}
 			return false;
@@ -77,7 +77,7 @@ public class TradeSell implements ITradeSell
 				if(isTradeUpdated){
 					User user = userDbInterface.getUser(trade.getUserCode());
 					double updatedFunds = user.getFunds() + (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
-					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}
 			}
 		}

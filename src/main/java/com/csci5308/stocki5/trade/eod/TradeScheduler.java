@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @EnableScheduling
 public class TradeScheduler
 {
+	private final String CRON_TIMING = "0 5 18 * * ?";
 
 	@Autowired
 	ITradeEod iTradeEod;
@@ -17,13 +18,13 @@ public class TradeScheduler
 	@Autowired
 	TradeDb tradeDb;
 
-	@Scheduled(cron = "0 5 18 * * ?")
+	@Scheduled(cron = CRON_TIMING)
 	public void scheduleFailedBuyOrder()
 	{
 		iTradeEod.markFailedBuyOrder(tradeDb);
 	}
 
-	@Scheduled(cron = "0 5 18 * * ?")
+	@Scheduled(cron = CRON_TIMING)
 	public void scheduleFailedSellOrder()
 	{
 		iTradeEod.markFailedSellOrder(tradeDb);
