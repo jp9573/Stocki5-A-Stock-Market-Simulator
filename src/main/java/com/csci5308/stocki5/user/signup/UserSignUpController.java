@@ -29,7 +29,7 @@ public class UserSignUpController {
     UserDb userDb;
 
     @Autowired
-    IUserSignUp IUserSignUp;
+    IUserSignUp iUserSignUp;
 
     @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
     public ModelAndView signUpUser(@RequestParam(value = FIRST_NAME) String firstName,
@@ -68,7 +68,7 @@ public class UserSignUpController {
         user.setCountry(country);
         user.setGender(gender);
 
-        boolean isUserAdded = IUserSignUp.addUser(userDb, user, dob);
+        boolean isUserAdded = iUserSignUp.addUser(userDb, user, dob);
         if (isUserAdded) {
             model.addObject(USERNAME, user.getUserCode());
             model.setViewName("index");
