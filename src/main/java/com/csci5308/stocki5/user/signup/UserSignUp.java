@@ -11,7 +11,6 @@ public class UserSignUp implements IUserSignUp {
     private static final String USER_ROLE = "ROLE_USER";
     private static final String ADD_USER_ERROR_MESSAGE = "Error in adding user. Please try again later.";
 
-
     public boolean addUser(IUserDb dbInterface, User user, String dob) {
         boolean isDobValid = user.validateDateOfBirth(dob);
         boolean isPasswordValid = user.validatePassword();
