@@ -14,23 +14,23 @@ import com.csci5308.stocki5.user.UserDb;
 
 @Controller
 public class UserProfileController {
-    public static final String FIRST_NAME = "firstName";
-    public static final String LAST_NAME = "lastName";
-    public static final String EMAIL_ID = "emailId";
-    public static final String CONTACT_NUMBER = "contactNumber";
-    public static final String ADDRESS = "address";
-    public static final String PROVINCE = "province";
-    public static final String COUNTRY = "country";
-    public static final String DATE_OF_BIRTH = "dateOfBirth";
-    public static final String GENDER = "gender";
-    public static final String USER_CODE = "userCode";
-    public static final String INTERNATIONAL_STOCK_EXCHANGE = "internationalStockExchange";
-    public static final String INTERNATIONAL_DERIVATIVE_EXCHANGE = "internationalDerivativeExchange";
-    public static final String INTERNATIONAL_COMMODITY_EXCHANGE = "internationalCommodityExchange";
-    public static final String FOREIGN_EXCHANGE = "foreignExchange";
-    public static final String FUNDS = "funds";
-    public static final String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User information updated successfully.";
-    public static final String SECTOR_DEFAULT_VALUE = "0";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
+    private static final String EMAIL_ID = "emailId";
+    private static final String CONTACT_NUMBER = "contactNumber";
+    private static final String ADDRESS = "address";
+    private static final String PROVINCE = "province";
+    private static final String COUNTRY = "country";
+    private static final String DATE_OF_BIRTH = "dateOfBirth";
+    private static final String GENDER = "gender";
+    private static final String USER_CODE = "userCode";
+    private static final String INTERNATIONAL_STOCK_EXCHANGE = "internationalStockExchange";
+    private static final String INTERNATIONAL_DERIVATIVE_EXCHANGE = "internationalDerivativeExchange";
+    private static final String INTERNATIONAL_COMMODITY_EXCHANGE = "internationalCommodityExchange";
+    private static final String FOREIGN_EXCHANGE = "foreignExchange";
+    private static final String FUNDS = "funds";
+    private static final String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User information updated successfully.";
+    private static final String SECTOR_DEFAULT_VALUE = "0";
 
     @Autowired
     UserDb userDb;
