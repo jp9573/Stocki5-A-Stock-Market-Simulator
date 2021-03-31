@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUserOtpDb
 {
-	public boolean insertOtp(UserOtp userOtp);
-
-	public boolean updateOtp(UserOtp userOtp);
+	public boolean insertOtp(IUserOtp userOtp);
 
 	public UserOtp getOtp(int otp);
 

@@ -1,49 +1,74 @@
 package com.csci5308.stocki5.user.password;
 
-import com.csci5308.stocki5.user.*;
+import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.User;
 import org.springframework.stereotype.Service;
-
 import com.csci5308.stocki5.email.IEmail;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
-public class UserForgotPassword extends UserChangePassword
+public class UserForgotPassword implements IUserForgotPassword
 {
+	private static final String EMAIL_OTP_SUBJECT = "Stocki5: OTP TO RESET PASSWORD";
+	private static final String SIMPLE_DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+	private String otpValidityMessage;
+	private String passwordValidityMessage;
+
+
+	@Override
+	public String getOtpValidityMessage() {
+		return otpValidityMessage;
+	}
+
+	public void setOtpValidityMessage(String otpValidityMessage) {
+		this.otpValidityMessage = otpValidityMessage;
+	}
+
+	@Override
+	public String getPasswordValidityMessage() {
+		return passwordValidityMessage;
+	}
+
+	public void setPasswordValidityMessage(String passwordValidityMessage) {
+		this.passwordValidityMessage = passwordValidityMessage;
+	}
+
+	@Override
 	public boolean validateUserCode(String userCode, IUserDb userDb)
 	{
 		User user = userDb.getUser(userCode);
-		if (user.getUserCode() == null)
+		if (null == user.getUserCode())
 		{
 			return false;
 		}
 		return true;
 	}
 
-	public boolean generateUserOtp(String userCode, IUserOtpDb userOtpDb, IUserDb userDb, IEmail email)
+	@Override
+	public boolean generateUserOtp(String userCode, IUserOtp userOtp, IUserOtpDb userOtpDb, IUserDb userDb, IEmail email)
 	{
-		UserOtp userOtp = new UserOtp();
 		User user = userDb.getUser(userCode);
 
 		userOtp.generateOtpForUser(userCode);
 		userOtpDb.insertOtp(userOtp);
 
 		String toEmail = user.getEmailId();
-		String subject = "Stocki5: OTP TO RESET PASSWORD";
 		String text = "The OTP to reset you password is - " + String.valueOf(userOtp.getOtp());
-		email.sendEmail(toEmail, subject, text);
+		email.sendEmail(toEmail, EMAIL_OTP_SUBJECT, text);
 		return true;
 	}
 
-	public String verifyOtp(String userCode, int otp, IUserOtpDb userOtpDb)
+	@Override
+	public boolean verifyOtp(String userCode, int otp, IUserOtpDb userOtpDb)
 	{
 		UserOtp userOtp = userOtpDb.getOtp(otp);
-		if (userOtp == null)
+		if (null == userOtp)
 		{
-			return "Invalid OTP";
+			setOtpValidityMessage("Invalid OTP");
+			return false;
 		} else
 		{
 			if ((userCode.equals(userOtp.getUserCode())) && (otp == userOtp.getOtp()))
@@ -51,37 +76,42 @@ public class UserForgotPassword extends UserChangePassword
 				try
 				{
 					Date currentDateTime = new Date();
-					Date validityDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(userOtp.getValidity());
+					Date validityDateTime = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(userOtp.getValidity());
 					if (currentDateTime.compareTo(validityDateTime) > 0)
 					{
 						userOtpDb.deleteOtp(otp);
-						return "OTP Expired";
+						setOtpValidityMessage("OTP Expired");
+						return false;
+
 					} else
 					{
-						return "Valid";
+						setOtpValidityMessage("Valid");
+						return true;
 					}
 				} catch (ParseException e)
 				{
 					e.printStackTrace();
-					return "Error. Please try again later.";
+					setOtpValidityMessage("Error. Please try again later.");
+					return false;
 				}
 			}
-			return "Invalid OTP";
+			setOtpValidityMessage("Invalid OTP");
+			return false;
 		}
 	}
 
-	public String resetPassword(String userCode, String password, String confirmPassword, IUserDb userDb,
-			IUserOtpDb userOtpDb)
+	@Override
+	public boolean resetPassword(String userCode, String password, String confirmPassword, IUserDb userDb, IUserOtpDb userOtpDb, IUserChangePassword userChangePassword)
 	{
 		User user = userDb.getUser(userCode);
-		String result = super.changePassword(user, password, confirmPassword, userDb);
-		if (result.equals("Valid"))
+		boolean isChanged = userChangePassword.changePassword(user, password, confirmPassword, userDb);
+		setPasswordValidityMessage(userChangePassword.getPasswordValidityMessage());
+		if (isChanged)
 		{
-			userDb.updateUserPassword(user);
 			userOtpDb.deleteOtpByUserCode(userCode);
-			return "Success";
+			return isChanged;
 		}
-		return result;
+		return isChanged;
 	}
 
 }

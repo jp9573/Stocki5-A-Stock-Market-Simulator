@@ -9,4 +9,7 @@ import com.csci5308.stocki5.user.User;
 public interface IUserFunds
 {
 	public boolean resetFunds(User user, IUserDb userDb);
+
+	public void setResetFundAmount(int resetFundAmount);
+
 }

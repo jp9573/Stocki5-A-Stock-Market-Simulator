@@ -3,8 +3,12 @@ package com.csci5308.stocki5.user.password;
 import com.csci5308.stocki5.config.Stocki5DbConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.ResultSet;
 
-import java.sql.*;
 
 @Repository
 public class UserOtpDb implements IUserOtpDb
@@ -38,7 +42,7 @@ public class UserOtpDb implements IUserOtpDb
 	}
 
 	@Override
-	public boolean insertOtp(UserOtp userOtp)
+	public boolean insertOtp(IUserOtp userOtp)
 	{
 		Connection connection = dbConnection.createConnection();
 		String insertUserOtpSql = "INSERT INTO user_otp VALUES (?,?,?)";
@@ -65,12 +69,6 @@ public class UserOtpDb implements IUserOtpDb
 		{
 			dbConnection.closeConnection(connection);
 		}
-	}
-
-	@Override
-	public boolean updateOtp(UserOtp userOtp)
-	{
-		return false;
 	}
 
 	@Override

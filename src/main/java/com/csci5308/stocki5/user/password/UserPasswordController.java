@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.csci5308.stocki5.email.Email;
 
 @Controller
@@ -19,13 +18,16 @@ public class UserPasswordController
 	UserDb userDb;
 
 	@Autowired
-	UserOtpDb userOtpDb;
+	IUserOtpDb userOtpDb;
 
 	@Autowired
-	UserForgotPassword userForgotPassword;
+	IUserOtp userOtp;
 
 	@Autowired
-	UserChangePassword userChangePassword;
+	IUserForgotPassword userForgotPassword;
+
+	@Autowired
+	IUserChangePassword userChangePassword;
 
 	@Autowired
 	Email email;
@@ -67,7 +69,7 @@ public class UserPasswordController
 		boolean validUserCode = userForgotPassword.validateUserCode(userCode, userDb);
 		if (validUserCode)
 		{
-			userForgotPassword.generateUserOtp(userCode, userOtpDb, userDb, email);
+			userForgotPassword.generateUserOtp(userCode, userOtp, userOtpDb, userDb, email);
 			model.addObject("userCode", userCode);
 			model.addObject("success", "OTP sent to registered email.");
 			model.setViewName("verifyotp");
@@ -93,14 +95,14 @@ public class UserPasswordController
 	{
 		ModelAndView model = new ModelAndView();
 		model.addObject("userCode", userCode);
-		String result = userForgotPassword.verifyOtp(userCode, otp, userOtpDb);
-		if (result.equals("Valid"))
+		boolean isValidOtp = userForgotPassword.verifyOtp(userCode, otp, userOtpDb);
+		if (isValidOtp)
 		{
 			model.addObject("success", "Verified! Please reset your password.");
 			model.setViewName("resetpassword");
 		} else
 		{
-			model.addObject("error", result);
+			model.addObject("error", userForgotPassword.getOtpValidityMessage());
 			model.setViewName("verifyotp");
 		}
 		return model;
@@ -120,14 +122,14 @@ public class UserPasswordController
 			@RequestParam(value = "userCode", required = true) String userCode)
 	{
 		ModelAndView model = new ModelAndView();
-		String result = userForgotPassword.resetPassword(userCode, password, confirmPassword, userDb, userOtpDb);
-		if (result.equals("Success"))
+		boolean isResset = userForgotPassword.resetPassword(userCode, password, confirmPassword, userDb, userOtpDb, userChangePassword);
+		if (isResset)
 		{
 			model.addObject("success", "Password reset successful.");
 			model.setViewName("index");
 		} else
 		{
-			model.addObject("error", "Password reset successful.");
+			model.addObject("error", userForgotPassword.getPasswordValidityMessage());
 			model.setViewName("resetpassword");
 		}
 		return model;
@@ -145,13 +147,13 @@ public class UserPasswordController
 		boolean currentPasswordIsValid = userChangePassword.validateCurrentPassword(user, currentPassword);
 		if (currentPasswordIsValid)
 		{
-			String result = userChangePassword.changePassword(user, newPassword, confirmNewPassword, userDb);
-			if (result.equals("Valid"))
+			boolean isChanged = userChangePassword.changePassword(user, newPassword, confirmNewPassword, userDb);
+			if (isChanged)
 			{
 				model.addObject("successChangePassword", "Password changed.");
 			} else
 			{
-				model.addObject("errorChangePassword", result);
+				model.addObject("errorChangePassword", userChangePassword.getPasswordValidityMessage());
 			}
 		} else
 		{
