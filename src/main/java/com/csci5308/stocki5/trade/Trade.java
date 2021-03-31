@@ -11,7 +11,8 @@ import java.util.Date;
 public class Trade
 {
 
-	DecimalFormat df = new DecimalFormat("##.00");
+	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
+	private final String DATE_FORMAT = "ddMMyyyyHHmmss";
 
 	private String tradeNumber;
 	private String userCode;
@@ -108,7 +109,7 @@ public class Trade
 
 	public float getBuyPrice()
 	{
-		return Float.parseFloat(df.format(buyPrice));
+		return Float.parseFloat(DECIMAL_FORMAT.format(buyPrice));
 	}
 
 	public void setBuyPrice(float buyPrice)
@@ -118,7 +119,7 @@ public class Trade
 
 	public float getSellPrice()
 	{
-		return Float.parseFloat(df.format(sellPrice));
+		return Float.parseFloat(DECIMAL_FORMAT.format(sellPrice));
 	}
 
 	public void setSellPrice(float sellPrice)
@@ -138,7 +139,7 @@ public class Trade
 
 	public double getTotalBuyPrice()
 	{
-		return Double.parseDouble(df.format(totalBuyPrice));
+		return Double.parseDouble(DECIMAL_FORMAT.format(totalBuyPrice));
 	}
 
 	public void setTotalBuyPrice(double totalBuyPrice)
@@ -148,7 +149,7 @@ public class Trade
 
 	public double getTotalSellPrice()
 	{
-		return Double.parseDouble(df.format(totalSellPrice));
+		return Double.parseDouble(DECIMAL_FORMAT.format(totalSellPrice));
 	}
 
 	public void setTotalSellPrice(double totalSellPrice)
@@ -249,7 +250,7 @@ public class Trade
 	public boolean generateTradeNumber()
 	{
 		try{
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
 			Date date = new Date();
 			String timestamp = simpleDateFormat.format(date);
 			this.tradeNumber = this.getUserCode() + this.getSymbol() + timestamp;

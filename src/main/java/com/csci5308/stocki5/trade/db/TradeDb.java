@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public class TradeDb implements ITradeDb
 {
+	final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
+	final String HOLDING_ATTRIBUTES = "tradeNumber,userCode,stockId,buySel,symbol,segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
 
 	@Autowired
 	Stocki5DbConnection dbConnection;
@@ -68,7 +70,6 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
 			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade WHERE userCode=? AND tradeDate=? ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
@@ -113,8 +114,7 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySel,symbol,segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
-			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
+			String selectTradeSql = "SELECT "+HOLDING_ATTRIBUTES+" FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -225,7 +225,6 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
 			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade WHERE status='PENDING' AND buySell=?";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 

@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 public class Holding extends Trade
 {
 
-	private DecimalFormat df = new DecimalFormat("##.00");
+	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
 
 	private boolean isHolding;
 	private double profitLoss;
@@ -35,7 +35,7 @@ public class Holding extends Trade
 
 	public double getProfitLoss()
 	{
-		return Double.parseDouble(df.format(profitLoss));
+		return Double.parseDouble(DECIMAL_FORMAT.format(profitLoss));
 	}
 
 	public void setProfitLoss(double profitLoss)
