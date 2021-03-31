@@ -7,27 +7,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class UserAuthenticationController
-{
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public ModelAndView welcomePage()
-	{
-		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
-		return model;
-	}
+public class UserAuthenticationController {
+    private static final String INVALID_CREDENTIALS_MESSAGE = "Invalid Credentials.";
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView loginPage(@RequestParam(value = "error", required = false) String error)
-	{
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    public ModelAndView welcomePage() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("index");
+        return model;
+    }
 
-		ModelAndView model = new ModelAndView();
-		if (error != null)
-		{
-			model.addObject("error", "Invalid Credentials.");
-		}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView loginPage(@RequestParam(value = "error", required = false) String error) {
+        ModelAndView model = new ModelAndView();
+        if (null == error) {
+            model.setViewName("index");
+        } else {
+            model.addObject("error", INVALID_CREDENTIALS_MESSAGE);
+            model.setViewName("index");
+        }
 
-		model.setViewName("index");
-		return model;
-	}
+        return model;
+    }
 }
