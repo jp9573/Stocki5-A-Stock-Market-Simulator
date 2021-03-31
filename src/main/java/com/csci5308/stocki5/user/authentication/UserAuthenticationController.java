@@ -26,7 +26,6 @@ public class UserAuthenticationController {
             model.addObject("error", INVALID_CREDENTIALS_MESSAGE);
             model.setViewName("index");
         }
-
         return model;
     }
 }
