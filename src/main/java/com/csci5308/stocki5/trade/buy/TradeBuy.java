@@ -28,19 +28,17 @@ public class TradeBuy implements ITradeBuy
 
 		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, stockDbInterface,
 				userDbInterface);
-		trade.createTradeDetails();
-
+		boolean isTradeDetailsCreated = trade.createTradeDetails();
 		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
-		if (isFundSufficient)
+		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		if (isFundSufficient && isTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			trade.generateTradeNumber();
 			User user = userDbInterface.getUser(userCode);
 			double updatedFunds = user.getFunds() - trade.getTotalBuyPrice();
 			userDbInterface.updateUserFunds(userCode, Double.parseDouble(df.format(updatedFunds)));
-			tradeDbInterface.insertTrade(trade, true);
+			return tradeDbInterface.insertTrade(trade, true);
 		}
-
-		return isFundSufficient;
+		return false;
 	}
 
 	public boolean setBuyPrice(String userCode, int stockId, int quantity, float buyPrice, IStockDb stockDbInterface,
@@ -49,16 +47,14 @@ public class TradeBuy implements ITradeBuy
 
 		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.PENDING, stockDbInterface,
 				userDbInterface);
-		trade.createSetBuyPriceTradeDetails(buyPrice);
-
-		boolean isFundSufficient = trade.isSetBuyPriceFundSufficient(userDbInterface);
-		if (isFundSufficient)
+		boolean isTradeSetBuyPriceTradeDetailsCreated = trade.createSetBuyPriceTradeDetails(buyPrice);
+		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
+		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		if (isFundSufficient && isTradeSetBuyPriceTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			trade.generateTradeNumber();
-			tradeDbInterface.insertTrade(trade, false);
+			return tradeDbInterface.insertTrade(trade, false);
 		}
-
-		return isFundSufficient;
+		return false;
 	}
 
 	public void buyPendingTrades(ITradeDb dbInterface, IUserDb userDbInterface, List<Stock> stocks)
@@ -75,10 +71,12 @@ public class TradeBuy implements ITradeBuy
 				trade.setBuyPrice(stocksMap.get(trade.getSymbol()));
 				trade.setTotalBuyPrice(trade.getQuantity() * trade.getBuyPrice());
 				trade.setStatus(TradeStatus.EXECUTED);
-				dbInterface.updateBuyTrade(trade, true);
-				User user = userDbInterface.getUser(trade.getUserCode());
-				double updatedFunds = user.getFunds() - (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
-				userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+				boolean isTradeUpdated = dbInterface.updateBuyTrade(trade, true);
+				if(isTradeUpdated){
+					User user = userDbInterface.getUser(trade.getUserCode());
+					double updatedFunds = user.getFunds() - (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
+					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+				}
 			}
 		}
 	}

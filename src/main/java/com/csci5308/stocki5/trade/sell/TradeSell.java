@@ -19,41 +19,42 @@ import java.util.stream.Collectors;
 @Service
 public class TradeSell implements ITradeSell
 {
-
 	DecimalFormat df = new DecimalFormat("##.00");
 
 	@Override
 	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface,
 			IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
 	{
-
-		tradeDbInterface.removeHolding(tradeBuyNumber);
-
 		Trade trade = new Trade(userCode, stockId, TradeType.SELL, quantity, TradeStatus.EXECUTED, stockDbInterface,
 				userDbInterface);
-		trade.createTradeDetails();
-
-		trade.generateTradeNumber();
-		User user = userDbInterface.getUser(userCode);
-		double updatedFunds = user.getFunds() + trade.getTotalSellPrice();
-		userDbInterface.updateUserFunds(userCode, Double.parseDouble(df.format(updatedFunds)));
-
-		return tradeDbInterface.insertTrade(trade, false);
+		boolean isTradeDetailsCreated = trade.createTradeDetails();
+		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		if(isTradeDetailsCreated && isTradeNumberGenerated){
+			User user = userDbInterface.getUser(userCode);
+			double updatedFunds = user.getFunds() + trade.getTotalSellPrice();
+			boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
+			if(isHoldingRemoved){
+				userDbInterface.updateUserFunds(userCode, Double.parseDouble(df.format(updatedFunds)));
+				return tradeDbInterface.insertTrade(trade, false);
+			}
+			return false;
+		}
+		return false;
 	}
 
 	@Override
 	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb stockDbInterface,
 			IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
 	{
-
-		tradeDbInterface.removeHolding(tradeBuyNumber);
-
 		Trade trade = new Trade(userCode, stockId, TradeType.SELL, quantity, TradeStatus.PENDING, stockDbInterface,
 				userDbInterface);
-		trade.createSetSellPriceTradeDetails(sellPrice);
-
-		trade.generateTradeNumber();
-		return tradeDbInterface.insertTrade(trade, false);
+		boolean isSetSellPriceTradeDetailsCreated = trade.createSetSellPriceTradeDetails(sellPrice);
+		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
+		if(isSetSellPriceTradeDetailsCreated && isTradeNumberGenerated && isHoldingRemoved){
+			return tradeDbInterface.insertTrade(trade, false);
+		}
+		return false;
 	}
 
 	@Override
@@ -72,10 +73,12 @@ public class TradeSell implements ITradeSell
 				trade.setSellPrice(stocksMap.get(trade.getSymbol()));
 				trade.setTotalSellPrice(trade.getQuantity() * trade.getBuyPrice());
 				trade.setStatus(TradeStatus.EXECUTED);
-				dbInterface.updateSellTrade(trade, false);
-				User user = userDbInterface.getUser(trade.getUserCode());
-				double updatedFunds = user.getFunds() + (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
-				userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+				boolean isTradeUpdated = dbInterface.updateSellTrade(trade, false);
+				if(isTradeUpdated){
+					User user = userDbInterface.getUser(trade.getUserCode());
+					double updatedFunds = user.getFunds() + (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
+					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(df.format(updatedFunds)));
+				}
 			}
 		}
 	}
