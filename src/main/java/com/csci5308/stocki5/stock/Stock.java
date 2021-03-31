@@ -2,6 +2,8 @@ package com.csci5308.stocki5.stock;
 
 import java.util.Date;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+
 public class Stock
 {
 	private int stockId;
@@ -129,9 +131,9 @@ public class Stock
 		this.percentIncreaseDecrease = 0.00f;
 	}
 
-	public Stock(int stockId, IStockDb dbInterface)
+	public Stock(int stockId, IStockDb iStockDb)
 	{
-		Stock stock = dbInterface.getStockData(stockId);
+		Stock stock = iStockDb.getStock(stockId);
 		this.stockId = stockId;
 		this.symbol = stock.getSymbol();
 		this.open = stock.getOpen();

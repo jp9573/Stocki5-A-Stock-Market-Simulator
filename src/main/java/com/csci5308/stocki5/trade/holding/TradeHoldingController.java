@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csci5308.stocki5.stock.StockDb;
+import com.csci5308.stocki5.stock.db.StockDb;
 import com.csci5308.stocki5.trade.TradeDb;
 
 @Controller

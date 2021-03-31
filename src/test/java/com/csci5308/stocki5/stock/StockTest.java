@@ -1,17 +1,52 @@
 package com.csci5308.stocki5.stock;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-public class StockTest {
+import com.csci5308.stocki5.stock.db.StockDbMock;
 
-    IStockDb dbInterface = new StockDbMock();
-    Stock stock = new Stock(1, dbInterface);
+public class StockTest
+{
+	private StockDbMock stockDbMock = null;
+	private Stock stock = null;
 
-    @Test
-    public void testCalculateHighAndLow() {
-        stock.calculateHighAndLow(16);
-        Assert.assertEquals(16, stock.getHigh(),0);
-    }
+	@Before
+	public void createObjects()
+	{
+		stockDbMock = new StockDbMock();
+		stock = new Stock(1, stockDbMock);
+	}
 
+	@After
+	public void destroyObjects()
+	{
+		stockDbMock = null;
+		stock = null;
+	}
+
+	@Test
+	public void testCalculateHighAndLow()
+	{
+		stock.calculateHighAndLow(16);
+		stock.calculateHighAndLow(40);
+		Assert.assertEquals(40, stock.getHigh(), 0);
+	}
+
+	@Test
+	public void testCalculateHighAndLowNegative()
+	{
+		stock.calculateHighAndLow(30);
+		stock.calculateHighAndLow(-40);
+		Assert.assertEquals(-40, stock.getLow(), 0);
+	}
+
+	@Test
+	public void testCalculateHighAndLowZero()
+	{
+		stock.calculateHighAndLow(30);
+		stock.calculateHighAndLow(0);
+		Assert.assertEquals(0, stock.getLow(), 0);
+	}
 }
