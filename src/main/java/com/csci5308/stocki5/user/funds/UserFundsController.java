@@ -42,14 +42,13 @@ public class UserFundsController
 		model.addObject("foreignExchange", String.valueOf(user.getForeignExchange()));
 
 		boolean isUserFundsUpdated = iUserFunds.resetFunds(user, userDb);
-		if (!isUserFundsUpdated)
+		model.addObject("funds", user.getFunds());
+		if (isUserFundsUpdated)
 		{
-			model.addObject("funds", user.getFunds());
-			model.addObject("errorFunds", "Error adding user Funds. Current balance should be less than 10000.");
+			model.addObject("successFunds", "User funds added successfully.");
 		} else
 		{
-			model.addObject("funds", user.getFunds());
-			model.addObject("successFunds", "User funds added succesfully.");
+			model.addObject("errorFunds", "Error adding user Funds. Current balance should be less than 10000.");
 		}
 
 		model.setViewName("profile");
