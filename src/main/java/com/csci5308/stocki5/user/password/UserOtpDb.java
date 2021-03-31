@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 @Repository
 public class UserOtpDb implements IUserOtpDb
 {
+	final String USER_OTP_ATTRIBUTES = "userCode,otp,validity";
 
 	@Autowired
 	Stocki5DbConnection dbConnection;
@@ -79,7 +80,7 @@ public class UserOtpDb implements IUserOtpDb
 		try
 		{
 			UserOtp userOtp = new UserOtp();
-			String selectUserSql = "SELECT * FROM user_otp WHERE otp='" + String.valueOf(otp) + "'";
+			String selectUserSql = "SELECT "+USER_OTP_ATTRIBUTES+" FROM user_otp WHERE otp='" + String.valueOf(otp) + "'";
 			PreparedStatement statement = connection.prepareStatement(selectUserSql);
 			ResultSet resultSet = statement.executeQuery(selectUserSql);
 			while (resultSet.next())
