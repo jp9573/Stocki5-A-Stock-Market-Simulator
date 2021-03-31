@@ -28,11 +28,12 @@ public class UserAuthentication implements AuthenticationProvider {
         if (null == user.getUserCode()) {
             throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
         }
-        if (!password.equals(user.getPassword())) {
+        if (password.equals(user.getPassword())) {
+            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
+            return authenticationToken;
+        } else {
             throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
         }
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
-        return authenticationToken;
     }
 
     @Override
