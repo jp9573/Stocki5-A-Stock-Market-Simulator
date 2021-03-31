@@ -181,7 +181,7 @@ public class UserTest
 		user.setPassword("12345678");
 		user.setConfirmPassword("123456789");
 		user.validatePassword();
-		Assert.assertEquals("Password and confirm password missmatch.", user.getValidityMessage());
+		Assert.assertEquals("Password and confirm password mismatch.", user.getValidityMessage());
 	}
 	
 	@Test
