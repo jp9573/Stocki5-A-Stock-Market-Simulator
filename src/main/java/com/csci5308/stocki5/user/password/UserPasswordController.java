@@ -13,6 +13,31 @@ import com.csci5308.stocki5.email.Email;
 @Controller
 public class UserPasswordController
 {
+	private static final String FIRST_NAME = "firstName";
+	private static final String LAST_NAME = "lastName";
+	private static final String EMAIL_ID = "emailId";
+	private static final String CONTACT_NUMBER = "contactNumber";
+	private static final String ADDRESS = "address";
+	private static final String PROVINCE = "province";
+	private static final String COUNTRY = "country";
+	private static final String DATE_OF_BIRTH = "dateOfBirth";
+	private static final String GENDER = "gender";
+	private static final String USER_CODE = "userCode";
+	private static final String INTERNATIONAL_STOCK_EXCHANGE = "internationalStockExchange";
+	private static final String INTERNATIONAL_DERIVATIVE_EXCHANGE = "internationalDerivativeExchange";
+	private static final String INTERNATIONAL_COMMODITY_EXCHANGE = "internationalCommodityExchange";
+	private static final String FOREIGN_EXCHANGE = "foreignExchange";
+	private static final String FUNDS = "funds";
+	private static final String OTP_SENT_MESSAGE = "OTP sent to registered email.";
+	private static final String INVALID_USER_CODE_ERROR_MESSAGE = "Invalid Usercode";
+	private static final String USER_OTP = "userOtp";
+	private static final String OTP_VERIFIED_SUCCESS_MESSAGE = "Verified! Please reset your password.";
+	private static final String PASSWORD = "password";
+	private static final String CONFIRM_PASSWORD = "confirmPassword";
+	private static final String NEW_PASSWORD = "newPassword";
+	private static final String PASSWORD_RESSET_SUCCESS_MESSAGE = "Password reset successful.";
+	private static final String PASSWORD_CHANGE_SUCCESS_MESSAGE = "Password changed.";
+	private static final String INVALID_CURRENT_PASSWORD_ERROR_MESSAGE = "Invalid Current Password";
 
 	@Autowired
 	UserDb userDb;
@@ -35,21 +60,21 @@ public class UserPasswordController
 	private ModelAndView getUserModel(User user)
 	{
 		ModelAndView model = new ModelAndView();
-		model.addObject("userCode", user.getUserCode());
-		model.addObject("firstName", user.getFirstName());
-		model.addObject("lastName", user.getLastName());
-		model.addObject("emailId", user.getEmailId());
-		model.addObject("contactNo", user.getContactNo());
-		model.addObject("address", user.getAddress());
-		model.addObject("province", user.getProvince());
-		model.addObject("country", user.getCountry());
-		model.addObject("gender", user.getGender());
-		model.addObject("dateOfBirth", user.getDateOfBirth());
-		model.addObject("internationalStockExchange", String.valueOf(user.getInternationalStockExchange()));
-		model.addObject("internationalDerivativeExchange", String.valueOf(user.getInternationalDerivativeExchange()));
-		model.addObject("internationalCommodityExchange", String.valueOf(user.getInternationalCommodityExchange()));
-		model.addObject("foreignExchange", String.valueOf(user.getForeignExchange()));
-		model.addObject("funds", user.getFunds());
+		model.addObject(USER_CODE, user.getUserCode());
+		model.addObject(FIRST_NAME, user.getFirstName());
+		model.addObject(LAST_NAME, user.getLastName());
+		model.addObject(EMAIL_ID, user.getEmailId());
+		model.addObject(CONTACT_NUMBER, user.getContactNo());
+		model.addObject(ADDRESS, user.getAddress());
+		model.addObject(PROVINCE, user.getProvince());
+		model.addObject(COUNTRY, user.getCountry());
+		model.addObject(GENDER, user.getGender());
+		model.addObject(DATE_OF_BIRTH, user.getDateOfBirth());
+		model.addObject(INTERNATIONAL_STOCK_EXCHANGE, String.valueOf(user.getInternationalStockExchange()));
+		model.addObject(INTERNATIONAL_DERIVATIVE_EXCHANGE, String.valueOf(user.getInternationalDerivativeExchange()));
+		model.addObject(INTERNATIONAL_COMMODITY_EXCHANGE, String.valueOf(user.getInternationalCommodityExchange()));
+		model.addObject(FOREIGN_EXCHANGE, String.valueOf(user.getForeignExchange()));
+		model.addObject(FUNDS, user.getFunds());
 
 		return model;
 	}
@@ -63,19 +88,19 @@ public class UserPasswordController
 	}
 
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
-	public ModelAndView userForgotPassword(@RequestParam(value = "userCode", required = true) String userCode)
+	public ModelAndView userForgotPassword(@RequestParam(value = USER_CODE, required = true) String userCode)
 	{
 		ModelAndView model = new ModelAndView();
 		boolean validUserCode = userForgotPassword.validateUserCode(userCode, userDb);
 		if (validUserCode)
 		{
 			userForgotPassword.generateUserOtp(userCode, userOtp, userOtpDb, userDb, email);
-			model.addObject("userCode", userCode);
-			model.addObject("success", "OTP sent to registered email.");
+			model.addObject(USER_CODE, userCode);
+			model.addObject("success", OTP_SENT_MESSAGE);
 			model.setViewName("verifyotp");
 		} else
 		{
-			model.addObject("error", "Invalid Usercode");
+			model.addObject("error", INVALID_USER_CODE_ERROR_MESSAGE);
 			model.setViewName("forgotpassword");
 		}
 		return model;
@@ -90,15 +115,15 @@ public class UserPasswordController
 	}
 
 	@RequestMapping(value = "/verifyotp", method = RequestMethod.POST)
-	public ModelAndView verifyOtp(@RequestParam(value = "userOtp", required = true) int otp,
-			@RequestParam(value = "userCode", required = true) String userCode)
+	public ModelAndView verifyOtp(@RequestParam(value = USER_OTP, required = true) int otp,
+			@RequestParam(value = USER_CODE, required = true) String userCode)
 	{
 		ModelAndView model = new ModelAndView();
-		model.addObject("userCode", userCode);
+		model.addObject(USER_CODE, userCode);
 		boolean isValidOtp = userForgotPassword.verifyOtp(userCode, otp, userOtpDb);
 		if (isValidOtp)
 		{
-			model.addObject("success", "Verified! Please reset your password.");
+			model.addObject("success", OTP_VERIFIED_SUCCESS_MESSAGE);
 			model.setViewName("resetpassword");
 		} else
 		{
@@ -117,15 +142,15 @@ public class UserPasswordController
 	}
 
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
-	public ModelAndView resetPassword(@RequestParam(value = "password", required = true) String password,
-			@RequestParam(value = "confirmPassword", required = true) String confirmPassword,
-			@RequestParam(value = "userCode", required = true) String userCode)
+	public ModelAndView resetPassword(@RequestParam(value = PASSWORD, required = true) String password,
+			@RequestParam(value = CONFIRM_PASSWORD, required = true) String confirmPassword,
+			@RequestParam(value = USER_CODE, required = true) String userCode)
 	{
 		ModelAndView model = new ModelAndView();
 		boolean isResset = userForgotPassword.resetPassword(userCode, password, confirmPassword, userDb, userOtpDb, userChangePassword);
 		if (isResset)
 		{
-			model.addObject("success", "Password reset successful.");
+			model.addObject("success", PASSWORD_RESSET_SUCCESS_MESSAGE);
 			model.setViewName("index");
 		} else
 		{
@@ -137,9 +162,9 @@ public class UserPasswordController
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
 	public ModelAndView changePassword(@RequestParam(value = "userCode", required = true) String userCode,
-			@RequestParam(value = "currentPassword", required = true) String currentPassword,
-			@RequestParam(value = "newPassword", required = true) String newPassword,
-			@RequestParam(value = "confirmNewPassword", required = true) String confirmNewPassword)
+			@RequestParam(value = PASSWORD, required = true) String currentPassword,
+			@RequestParam(value = NEW_PASSWORD, required = true) String newPassword,
+			@RequestParam(value = CONFIRM_PASSWORD, required = true) String confirmNewPassword)
 	{
 
 		User user = userDb.getUser(userCode);
@@ -150,14 +175,14 @@ public class UserPasswordController
 			boolean isChanged = userChangePassword.changePassword(user, newPassword, confirmNewPassword, userDb);
 			if (isChanged)
 			{
-				model.addObject("successChangePassword", "Password changed.");
+				model.addObject("successChangePassword", PASSWORD_CHANGE_SUCCESS_MESSAGE);
 			} else
 			{
 				model.addObject("errorChangePassword", userChangePassword.getPasswordValidityMessage());
 			}
 		} else
 		{
-			model.addObject("errorChangePassword", "Invalid Current Password");
+			model.addObject("errorChangePassword", INVALID_CURRENT_PASSWORD_ERROR_MESSAGE);
 		}
 		model.setViewName("profile");
 		return model;
