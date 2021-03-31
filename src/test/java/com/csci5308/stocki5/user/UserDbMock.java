@@ -63,6 +63,22 @@ public class UserDbMock implements IUserDb
 			}
 			user.setDateOfBirth(dob);
 			return user;
+		} else if(userCode.equals("AB12345678")) {
+			user.setEmailId("test@test.com");
+			user.setUserCode("AB123456");
+			user.setInternationalDerivativeExchange(1);
+			user.setInternationalCommodityExchange(1);
+			user.setInternationalStockExchange(1);
+			user.setForeignExchange(1);
+			user.setFunds(0);
+			Date dob = null;
+			try {
+				dob = new SimpleDateFormat("yyyy-MM-dd").parse("2000-10-12");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			user.setDateOfBirth(dob);
+			return user;
 		} else  {
 			return user;
 		}
@@ -105,7 +121,6 @@ public class UserDbMock implements IUserDb
 
 	@Override
 	public boolean updateUserFunds(String userCode, double amount) {
-		System.out.println("Updated User "+userCode+". Value: "+amount+".");
 		return  true;
 	}
 

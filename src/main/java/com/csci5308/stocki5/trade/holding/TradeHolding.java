@@ -1,10 +1,11 @@
 package com.csci5308.stocki5.trade.holding;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.trade.ITradeDb;
+import com.csci5308.stocki5.trade.db.ITradeDb;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.ListIterator;
 
 @Service
 public class TradeHolding implements ITradeHolding
@@ -14,13 +15,13 @@ public class TradeHolding implements ITradeHolding
 			IStockDb stockDbInterface)
 	{
 		List<Holding> holdingList = tradeDbInterface.getHoldingsByUserCode(userCode);
-		System.out.println(holdingList.size());
-		for (int i = 0; i < holdingList.size(); i++)
+		ListIterator<Holding> holdingListIterator = holdingList.listIterator();
+		while (holdingListIterator.hasNext())
 		{
-			Holding holding = holdingList.get(i);
+			Holding holding = holdingListIterator.next();
 			holding.setStockDbInterface(stockDbInterface);
 			holding.calculateProfitLoss();
-			holdingList.set(i, holding);
+			holdingListIterator.set(holding);
 		}
 		return holdingList;
 	}
