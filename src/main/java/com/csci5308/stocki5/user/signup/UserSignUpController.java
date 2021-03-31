@@ -32,17 +32,17 @@ public class UserSignUpController {
     IUserSignUp IUserSignUp;
 
     @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
-    public ModelAndView signUpUser(@RequestParam(value = FIRST_NAME, required = true) String firstName,
-                                   @RequestParam(value = LAST_NAME, required = true) String lastName,
-                                   @RequestParam(value = EMAIL_ID, required = true) String emailId,
-                                   @RequestParam(value = CONTACT_NUMBER, required = true) String contactNumber,
-                                   @RequestParam(value = ADDRESS, required = true) String address,
-                                   @RequestParam(value = PROVINCE, required = true) String province,
-                                   @RequestParam(value = COUNTRY, required = true) String country,
-                                   @RequestParam(value = PASSWORD, required = true) String password,
-                                   @RequestParam(value = CONFIRM_PASSWORD, required = true) String confirmPassword,
-                                   @RequestParam(value = DOB, required = true) String dob,
-                                   @RequestParam(value = GENDER, required = true) String gender) {
+    public ModelAndView signUpUser(@RequestParam(value = FIRST_NAME) String firstName,
+                                   @RequestParam(value = LAST_NAME) String lastName,
+                                   @RequestParam(value = EMAIL_ID) String emailId,
+                                   @RequestParam(value = CONTACT_NUMBER) String contactNumber,
+                                   @RequestParam(value = ADDRESS) String address,
+                                   @RequestParam(value = PROVINCE) String province,
+                                   @RequestParam(value = COUNTRY) String country,
+                                   @RequestParam(value = PASSWORD) String password,
+                                   @RequestParam(value = CONFIRM_PASSWORD) String confirmPassword,
+                                   @RequestParam(value = DOB) String dob,
+                                   @RequestParam(value = GENDER) String gender) {
         ModelAndView model = new ModelAndView();
         model.addObject(FIRST_NAME, firstName);
         model.addObject(LAST_NAME, lastName);
