@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private static final String INVALID_DOB_MESSAGE = "Invalid Date of Birth.";
     private static final String INVALID_AGE_MESSAGE = "Minimum age to sign up with STOCKI5 is 18 years or above.";
     private static final String INVALID_PASSWORD_LENGTH_MESSAGE = String.format("Password cannot be less than %d characters or more than %d characters.", MINIMUM_CHARACTERS_LIMIT_FOR_PASSWORD, MAXIMUM_CHARACTERS_LIMIT_FOR_PASSWORD);
-    private static final String INVALID_CONFIRM_PASSWORD_MESSAGE = "Password and confirm password missmatch.";
+    private static final String INVALID_CONFIRM_PASSWORD_MESSAGE = "Password and confirm password mismatch.";
     private static final String INVALID_EMAIL_MESSAGE = "Invalid Email Id";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
     private static final String INVALID_FIRST_NAME_LENGTH_MESSAGE = String.format("First name cannot be less than %d characters or more than %d characters.", MINIMUM_CHARACTERS_LIMIT_FOR_NAME, MAXIMUM_CHARACTERS_LIMIT_FOR_NAME);
