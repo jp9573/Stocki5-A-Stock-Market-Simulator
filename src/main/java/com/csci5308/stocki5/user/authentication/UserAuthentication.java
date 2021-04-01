@@ -11,39 +11,33 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserAuthentication implements AuthenticationProvider
-{
+public class UserAuthentication implements AuthenticationProvider {
+    private static final String INVALID_CREDENTIALS_MESSAGE = "Invalid Credentials.";
 
-	@Autowired
+    @Autowired
     UserDb userDb;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException
-	{
-		String username = authentication.getName();
-		String password = (String) authentication.getCredentials();
-		if (null == username || null == password)
-		{
-			throw new BadCredentialsException("Invalid Credentials.");
-		}
-		User user = userDb.getUser(username);
-		if (null == user.getUserCode())
-		{
-			throw new BadCredentialsException("Invalid Credentials.");
-		}
-		if (!password.equals(user.getPassword()))
-		{
-			throw new BadCredentialsException("Invalid Credentials.");
-		}
-		Authentication auth = new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
-		return auth;
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String username = authentication.getName();
+        String password = (String) authentication.getCredentials();
+        if (null == username || null == password) {
+            throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
+        }
+        User user = userDb.getUser(username);
+        if (null == user.getUserCode()) {
+            throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
+        }
+        if (password.equals(user.getPassword())) {
+            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
+            return authenticationToken;
+        } else {
+            throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
+        }
+    }
 
-	}
-
-	@Override
-	public boolean supports(Class<?> authentication)
-	{
-		return true;
-	}
-
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return true;
+    }
 }
