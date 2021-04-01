@@ -17,6 +17,9 @@ public class UserDbMock implements IUserDb
 	public boolean updateUser(User user)
 	{
 		System.out.println(user.getUserCode());
+		if (user.getFirstName().equals("Tony")) {
+			return false;
+		}
 		return true;
 	}
 
