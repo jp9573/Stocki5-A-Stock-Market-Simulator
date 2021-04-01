@@ -12,9 +12,9 @@ public class UserProfileTest {
     private static final String INVALID_EMAIL_MESSAGE = "Invalid Email Id";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    UserDbMock userDbMock = null;
-    UserProfile userProfile = null;
-    User user = null;
+    private UserDbMock userDbMock = null;
+    private UserProfile userProfile = null;
+    private User user = null;
 
     @Before
     public void createObjects() {
