@@ -13,7 +13,7 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 	@Override
 	public List<Stock> getHighestPriceStocks(String segments, int limit)
 	{
-		List<Stock> stockArrayList = new ArrayList<Stock>();
+		List<Stock> stockArrayList = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)
@@ -53,7 +53,7 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 	@Override
 	public List<Stock> getLowestPriceStocks(String segments, int limit)
 	{
-		List<Stock> stockArrayList = new ArrayList<Stock>();
+		List<Stock> stockArrayList = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)

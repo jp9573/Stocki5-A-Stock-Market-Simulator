@@ -19,6 +19,10 @@ import com.csci5308.stocki5.user.UserDb;
 @Controller
 public class StockFetchController
 {
+	private static final String STOCKS = "stocks";
+	private static final String GAINERS = "gainers";
+	private static final String LOSERS = "losers";
+	
 	@Autowired
 	IStockFetch iStockFetch;
 
@@ -39,9 +43,9 @@ public class StockFetchController
 		List<Stock> stocks = iStockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
 		List<Stock> topGainersStocks = iStockFetch.fetchTopGainerStocks(stockDbGainersLosers, userDb, principal.getName());
 		List<Stock> topLosersStocks = iStockFetch.fetchTopLoserStocks(stockDbGainersLosers, userDb, principal.getName());
-		model.addObject("stocks", stocks);
-		model.addObject("gainers", topGainersStocks);
-		model.addObject("losers", topLosersStocks);
+		model.addObject(STOCKS, stocks);
+		model.addObject(GAINERS, topGainersStocks);
+		model.addObject(LOSERS, topLosersStocks);
 		model.setViewName("stocks");
 		return model;
 	}
