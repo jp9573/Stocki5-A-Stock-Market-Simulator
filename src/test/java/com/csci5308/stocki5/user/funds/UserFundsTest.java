@@ -2,7 +2,7 @@ package com.csci5308.stocki5.user.funds;
 
 import com.csci5308.stocki5.user.IUserDb;
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDbMock;
+import com.csci5308.stocki5.user.db.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

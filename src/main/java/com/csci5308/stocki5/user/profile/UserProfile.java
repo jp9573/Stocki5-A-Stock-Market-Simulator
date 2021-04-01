@@ -5,23 +5,19 @@ import com.csci5308.stocki5.user.IUserDb;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserProfile implements IUserProfile
-{
+public class UserProfile implements IUserProfile {
+    private static final String UPDATE_USER_ERROR_MESSAGE = "Error updating user information. Please try again later.";
 
-	public boolean updateUser(IUserDb dbInterface, User user, String dateOfBirth)
-	{
-		boolean isDobValid = user.validateDateOfBirth(dateOfBirth);
-		boolean isUserValid = user.validate();
-		
-		if (isDobValid && isUserValid)
-		{
-			boolean isUserUpdated = dbInterface.updateUser(user);
-			if (isUserUpdated)
-			{
-				return true;
-			}
-			user.setValidityMessage("Error updating user information. Please try again later.");
-		}
-		return false;
-	}
+    public boolean updateUser(IUserDb dbInterface, User user, String dateOfBirth) {
+        boolean isDobValid = user.validateDateOfBirth(dateOfBirth);
+        boolean isUserValid = user.validate();
+        if (isDobValid && isUserValid) {
+            boolean isUserUpdated = dbInterface.updateUser(user);
+            if (isUserUpdated) {
+                return true;
+            }
+            user.setValidityMessage(UPDATE_USER_ERROR_MESSAGE);
+        }
+        return false;
+    }
 }
