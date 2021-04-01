@@ -1,22 +1,22 @@
 package com.csci5308.stocki5.trade.holding;
 
-import java.security.Principal;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.csci5308.stocki5.stock.db.StockDb;
+import com.csci5308.stocki5.trade.db.TradeDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csci5308.stocki5.stock.db.StockDb;
-import com.csci5308.stocki5.trade.TradeDb;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class TradeHoldingController
 {
+	public static final String ORDERS = "orders";
+
 	@Autowired
 	ITradeHolding iTradeHolding;
 	
@@ -33,7 +33,7 @@ public class TradeHoldingController
 		ModelAndView model = new ModelAndView();
 
 		List<Holding> orders = iTradeHolding.fetchUserHoldings(principal.getName(), tradeDb, stockDb);
-		model.addObject("orders", orders);
+		model.addObject(ORDERS, orders);
 		model.setViewName("holdings");
 
 		return model;
