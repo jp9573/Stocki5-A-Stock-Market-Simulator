@@ -10,6 +10,9 @@ public class UserDbMock implements IUserDb
 	@Override
 	public boolean insertUser(User user)
 	{
+		if (user.getFirstName().equals("Tony")) {
+			return false;
+		}
 		return true;
 	}
 
