@@ -3,221 +3,220 @@ package com.csci5308.stocki5.user;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-public class UserTest
-{
-	private User user = new User();
+public class UserTest {
+    private User user = null;
 
-	@Test
-	public void validateEmailTest()
-	{
-		user.setEmailId("example");
-		Assert.assertEquals("Invalid Email Id", user.validate());
-	}
-	
-	@Test
-	public void validateContactNumber()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("1234567");
-		Assert.assertEquals("Invalid Contact Number", user.validate());
-	}
-	
-	@Test
-	public void validateFirstNameLessThanThreeChar()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("Jo");
-		Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validateFirstNameMoreThanTwentyChar()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("Joxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validateLastNameLessThanThreeChar()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Do");
-		Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validateLastNameMoreThanTwentyChar()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validateProvinceLessThanThreeChar()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("ha");
-		Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validateProvinceMoreThanTwentyChar()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifaxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validateDateOfBirth() {
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-		user.setDateOfBirth(new Date());
-		Assert.assertEquals("Invalid Date of Birth.", user.validate());
-	}
-	
-	@Test
-	public void validateDateOfBirthMoreThanEighteenYears() {
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -17);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
-		
-		user.setDateOfBirth(date);
-		Assert.assertEquals("Minimum age to sign up with STOCKI5 is 18 years or above.", user.validate());
-	}
-	
-	@Test
-	public void validatePasswordLengthLessThanEight()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -18);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
-		
-		user.setDateOfBirth(date);
-		user.setPassword("1234567");
-		Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validatePasswordLengthMoreThanTwenty()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -18);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
-		
-		user.setDateOfBirth(date);
-		user.setPassword("1234567123334135788eus2rdf3");
-		Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.validate());
-	}
-	
-	@Test
-	public void validatePasswordMismatchConfirmPassword()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -18);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
-		
-		user.setDateOfBirth(date);
-		user.setPassword("12345678");
-		user.setConfirmPassword("123456789");
-		Assert.assertEquals("Password and confirm password missmatch.", user.validate());
-	}
-	
-	@Test
-	public void validatePasswordMatchConfirmPassword()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
-		
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -18);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
-		
-		user.setDateOfBirth(date);
-		user.setPassword("12345678");
-		user.setConfirmPassword("12345678");
-		Assert.assertEquals("valid", user.validate());
-	}
+    @Before
+    public void createObjects() {
+        user = new User();
+    }
 
-	@Test
-	public void validateUserProfileDataTest()
-	{
-		user.setEmailId("example@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
+    @After
+    public void destroyObjects() {
+        user = null;
+    }
 
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR, -18);
-		cal.add(Calendar.DATE, -1);
-		Date date = cal.getTime();
+    @Test
+    public void validateEmailTest() {
+        user.setEmailId("example");
+        user.validate();
+        Assert.assertEquals("Invalid Email Id", user.getValidityMessage());
+    }
 
-		user.setDateOfBirth(date);
-		Assert.assertEquals("valid", user.validateUserProfileData());
-	}
+    @Test
+    public void validateContactNumber() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("1234567");
+        user.validate();
+        Assert.assertEquals("Invalid Contact Number", user.getValidityMessage());
+    }
 
-	@Test
-	public void validateUserProfileInvalidDataTest()
-	{
-		user.setEmailId("@example.com");
-		user.setContactNo("19324678786");
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setProvince("halifax");
+    @Test
+    public void validateFirstNameLessThanThreeChar() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("Jo");
+        user.validate();
+        Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
+    }
 
-		Assert.assertNotEquals("valid", user.validateUserProfileData());
-	}
+    @Test
+    public void validateFirstNameMoreThanTwentyChar() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("Joxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        user.validate();
+        Assert.assertEquals("First name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validateLastNameLessThanThreeChar() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Do");
+        user.validate();
+        Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validateLastNameMoreThanTwentyChar() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        user.validate();
+        Assert.assertEquals("Last name cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validateProvinceLessThanThreeChar() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("ha");
+        user.validate();
+        Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validateProvinceMoreThanTwentyChar() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifaxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        user.validate();
+        Assert.assertEquals("State/Province cannot be less than 3 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validateDateOfBirth() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifax");
+        user.setDateOfBirth(new Date());
+        user.validateDateOfBirth("19940928");
+        Assert.assertEquals("Invalid Date of Birth.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validateDateOfBirthMoreThanEighteenYears() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifax");
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -17);
+        cal.add(Calendar.DATE, -1);
+        Date date = cal.getTime();
+
+        user.setDateOfBirth(date);
+        user.validateDateOfBirth("2009-09-28");
+        Assert.assertEquals("Minimum age to sign up with STOCKI5 is 18 years or above.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validatePasswordLengthLessThanEight() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifax");
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -18);
+        cal.add(Calendar.DATE, -1);
+        Date date = cal.getTime();
+
+        user.setDateOfBirth(date);
+        user.setPassword("1234567");
+        user.validatePassword();
+        Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validatePasswordLengthMoreThanTwenty() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifax");
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -18);
+        cal.add(Calendar.DATE, -1);
+        Date date = cal.getTime();
+
+        user.setDateOfBirth(date);
+        user.setPassword("1234567123334135788eus2rdf3");
+        user.validatePassword();
+        Assert.assertEquals("Password cannot be less than 8 characters or more than 20 characters.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validatePasswordMismatchConfirmPassword() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifax");
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -18);
+        cal.add(Calendar.DATE, -1);
+        Date date = cal.getTime();
+
+        user.setDateOfBirth(date);
+        user.setPassword("12345678");
+        user.setConfirmPassword("123456789");
+        user.validatePassword();
+        Assert.assertEquals("Password and confirm password mismatch.", user.getValidityMessage());
+    }
+
+    @Test
+    public void validatePasswordMatchConfirmPassword() {
+        user.setEmailId("example@example.com");
+        user.setContactNo("19324678786");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setProvince("halifax");
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -18);
+        cal.add(Calendar.DATE, -1);
+        Date date = cal.getTime();
+
+        user.setDateOfBirth(date);
+        user.setPassword("12345678");
+        user.setConfirmPassword("12345678");
+        user.validateDateOfBirth("1994-09-28");
+        user.validatePassword();
+        user.validate();
+        Assert.assertEquals("Valid", user.getValidityMessage());
+    }
+
+    @Test
+    public void generateUserCodeTestNegative() {
+        user.generateUserCode();
+        Assert.assertNull(user.getUserCode());
+    }
+
+    @Test
+    public void generateUserCodeTest() {
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.generateUserCode();
+        Assert.assertNotNull(user.getUserCode());
+    }
 }
