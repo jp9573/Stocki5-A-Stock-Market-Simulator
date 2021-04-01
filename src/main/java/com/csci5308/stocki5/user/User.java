@@ -30,7 +30,6 @@ public class User implements UserDetails {
     private static final String INVALID_FIRST_NAME_LENGTH_MESSAGE = String.format("First name cannot be less than %d characters or more than %d characters.", MINIMUM_CHARACTERS_LIMIT_FOR_NAME, MAXIMUM_CHARACTERS_LIMIT_FOR_NAME);
     private static final String INVALID_LAST_NAME_LENGTH_MESSAGE = String.format("Last name cannot be less than %d characters or more than %d characters.", MINIMUM_CHARACTERS_LIMIT_FOR_NAME, MAXIMUM_CHARACTERS_LIMIT_FOR_NAME);
     private static final String INVALID_PROVINCE_LENGTH_MESSAGE = String.format("State/Province cannot be less than %d characters or more than %d characters.", MINIMUM_CHARACTERS_LIMIT_FOR_NAME, MAXIMUM_CHARACTERS_LIMIT_FOR_NAME);
-    private static final String INVALID_USER_DETAILS_MESSAGE = "Invalid User Details.";
     private static final String VALID_MESSAGE = "Valid";
 
     private String userCode;
