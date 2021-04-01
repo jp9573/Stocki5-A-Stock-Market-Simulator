@@ -12,9 +12,9 @@ public class UserSignUpTest {
     private static final String ADD_USER_ERROR_MESSAGE = "Error in adding user. Please try again later.";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    UserDbMock userDbMock = new UserDbMock();
-    UserSignUp userSignUp = new UserSignUp();
-    User user = new User();
+    private UserDbMock userDbMock = new UserDbMock();
+    private UserSignUp userSignUp = new UserSignUp();
+    private User user = new User();
 
     @Before
     public void createObjects() {
