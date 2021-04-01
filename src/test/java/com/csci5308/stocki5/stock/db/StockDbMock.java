@@ -39,7 +39,7 @@ public class StockDbMock implements IStockDb
 	@Override
 	public List<Stock> getStocks()
 	{
-		List<Stock> stocks = new ArrayList<Stock>();
+		List<Stock> stocks = new ArrayList<>();
 		Stock stock = new Stock();
 		stock.setSymbol("ABC");
 		stock.setOpen(10);
@@ -70,7 +70,7 @@ public class StockDbMock implements IStockDb
 	@Override
 	public List<Stock> getStocksBySegment(String segments)
 	{
-		List<Stock> stocks = new ArrayList<Stock>();
+		List<Stock> stocks = new ArrayList<>();
 		Stock stock = new Stock();
 		stock.setSymbol("ABC");
 		stock.setOpen(10);
