@@ -17,7 +17,7 @@ public class UserProfileController {
     private static final String FIRST_NAME = "firstName";
     private static final String LAST_NAME = "lastName";
     private static final String EMAIL_ID = "emailId";
-    private static final String CONTACT_NUMBER = "contactNumber";
+    private static final String CONTACT_NUMBER = "contactNo";
     private static final String ADDRESS = "address";
     private static final String PROVINCE = "province";
     private static final String COUNTRY = "country";
