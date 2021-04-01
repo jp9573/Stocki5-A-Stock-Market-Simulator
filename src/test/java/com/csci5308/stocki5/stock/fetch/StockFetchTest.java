@@ -11,7 +11,7 @@ import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.db.StockDbGainersLosersMock;
 import com.csci5308.stocki5.stock.db.StockDbMock;
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDbMock;
+import com.csci5308.stocki5.user.db.UserDbMock;
 
 public class StockFetchTest
 {
