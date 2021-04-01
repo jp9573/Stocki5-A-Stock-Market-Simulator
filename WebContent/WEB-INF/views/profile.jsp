@@ -177,7 +177,7 @@
 						<input type="hidden" id="userCode" name="userCode" type="text" placeholder="User Code" value="${userCode}" class="form-control input-lg">
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					      <input id="currentPassword" type="password" class="form-control" name="currentPassword" placeholder="Current Password">
+					      <input id="password" type="password" class="form-control" name="password" placeholder="Current Password">
 					    </div>
 					    <br>
 					    <div class="input-group">
@@ -187,7 +187,7 @@
 					    <br>
 					    <div class="input-group">
 					      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					      <input id="confirmNewPassword" type="password" class="form-control" name="confirmNewPassword" placeholder="Confirm New Password">
+					      <input id="confirmPassword" type="password" class="form-control" name="confirmPassword" placeholder="Confirm New Password">
 					    </div>
 					    <br>
 					    <div class="input-group" style="display: flex; justify-content: center;">

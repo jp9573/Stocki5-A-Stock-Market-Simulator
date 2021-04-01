@@ -3,12 +3,17 @@ package com.csci5308.stocki5.user.password;
 import com.csci5308.stocki5.config.Stocki5DbConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.ResultSet;
 
-import java.sql.*;
 
 @Repository
 public class UserOtpDb implements IUserOtpDb
 {
+	final String USER_OTP_ATTRIBUTES = "userCode,otp,validity";
 
 	@Autowired
 	Stocki5DbConnection dbConnection;
@@ -38,7 +43,7 @@ public class UserOtpDb implements IUserOtpDb
 	}
 
 	@Override
-	public boolean insertOtp(UserOtp userOtp)
+	public boolean insertOtp(IUserOtp userOtp)
 	{
 		Connection connection = dbConnection.createConnection();
 		String insertUserOtpSql = "INSERT INTO user_otp VALUES (?,?,?)";
@@ -68,12 +73,6 @@ public class UserOtpDb implements IUserOtpDb
 	}
 
 	@Override
-	public boolean updateOtp(UserOtp userOtp)
-	{
-		return false;
-	}
-
-	@Override
 	public UserOtp getOtp(int otp)
 	{
 		Connection connection = dbConnection.createConnection();
@@ -81,7 +80,7 @@ public class UserOtpDb implements IUserOtpDb
 		try
 		{
 			UserOtp userOtp = new UserOtp();
-			String selectUserSql = "SELECT * FROM user_otp WHERE otp='" + String.valueOf(otp) + "'";
+			String selectUserSql = "SELECT "+USER_OTP_ATTRIBUTES+" FROM user_otp WHERE otp='" + String.valueOf(otp) + "'";
 			PreparedStatement statement = connection.prepareStatement(selectUserSql);
 			ResultSet resultSet = statement.executeQuery(selectUserSql);
 			while (resultSet.next())

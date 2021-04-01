@@ -1,16 +1,16 @@
 package com.csci5308.stocki5.trade.eod;
 
+import com.csci5308.stocki5.trade.db.TradeDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.trade.TradeDb;
-
 @Service
 @EnableScheduling
 public class TradeScheduler
 {
+	private final String CRON_TIMING = "0 5 18 * * ?";
 
 	@Autowired
 	ITradeEod iTradeEod;
@@ -18,13 +18,13 @@ public class TradeScheduler
 	@Autowired
 	TradeDb tradeDb;
 
-	@Scheduled(cron = "0 5 18 * * ?")
+	@Scheduled(cron = CRON_TIMING)
 	public void scheduleFailedBuyOrder()
 	{
 		iTradeEod.markFailedBuyOrder(tradeDb);
 	}
 
-	@Scheduled(cron = "0 5 18 * * ?")
+	@Scheduled(cron = CRON_TIMING)
 	public void scheduleFailedSellOrder()
 	{
 		iTradeEod.markFailedSellOrder(tradeDb);

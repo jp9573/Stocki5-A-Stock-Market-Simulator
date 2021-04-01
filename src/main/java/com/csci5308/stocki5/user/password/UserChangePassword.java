@@ -5,9 +5,20 @@ import com.csci5308.stocki5.user.IUserDb;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserChangePassword
+public class UserChangePassword implements IUserChangePassword
 {
+	private String passwordValidityMessage;
 
+	@Override
+	public String getPasswordValidityMessage() {
+		return passwordValidityMessage;
+	}
+
+	public void setPasswordValidityMessage(String passwordValidityMessage) {
+		this.passwordValidityMessage = passwordValidityMessage;
+	}
+
+	@Override
 	public boolean validateCurrentPassword(User user, String currentPassword)
 	{
 		if (currentPassword.equals(user.getPassword()))
@@ -17,15 +28,17 @@ public class UserChangePassword
 		return false;
 	}
 
-	public String changePassword(User user, String newPassword, String confirmNewPassword, IUserDb userDb)
+	@Override
+	public boolean changePassword(User user, String newPassword, String confirmNewPassword, IUserDb userDb)
 	{
 		user.setPassword(newPassword);
 		user.setConfirmPassword(confirmNewPassword);
 		boolean isValid = user.validatePassword();
-		if (isValid)
-		{
-			userDb.updateUserPassword(user);
+		setPasswordValidityMessage(user.getValidityMessage());
+		if(isValid){
+			boolean isChanged = userDb.updateUserPassword(user);
+			return  isChanged;
 		}
-		return user.getValidityMessage();
+		return isValid;
 	}
 }
