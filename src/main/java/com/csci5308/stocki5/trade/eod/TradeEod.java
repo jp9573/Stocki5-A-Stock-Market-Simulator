@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.trade.eod;
 
-import com.csci5308.stocki5.trade.Trade;
+import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.db.ITradeDb;
@@ -14,11 +14,11 @@ public class TradeEod implements ITradeEod
 {
 	public void markFailedBuyOrder(ITradeDb dbInterface)
 	{
-		List<Trade> trades = dbInterface.getPendingTrades(TradeType.BUY);
-		Iterator<Trade> tradesIterator = trades.iterator();
+		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.BUY);
+		Iterator<ITrade> tradesIterator = trades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			Trade trade = tradesIterator.next();
+			ITrade trade = tradesIterator.next();
 			trade.setStatus(TradeStatus.FAILED);
 		}
 		dbInterface.updateBulkTradeStatus(trades);
@@ -26,11 +26,11 @@ public class TradeEod implements ITradeEod
 
 	public void markFailedSellOrder(ITradeDb dbInterface)
 	{
-		List<Trade> trades = dbInterface.getPendingTrades(TradeType.SELL);
-		Iterator<Trade> tradesIterator = trades.iterator();
+		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.SELL);
+		Iterator<ITrade> tradesIterator = trades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			Trade trade = tradesIterator.next();
+			ITrade trade = tradesIterator.next();
 			trade.setStatus(TradeStatus.FAILED);
 		}
 		dbInterface.updateBulkTradeStatus(trades);

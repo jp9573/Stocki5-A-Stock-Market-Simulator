@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Trade
+public class Trade implements ITrade
 {
 
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");

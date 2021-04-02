@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.csci5308.stocki5.trade.ITrade;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,22 +41,19 @@ public class TradeBuyController
 	public static final String SET_BUY_PRICE = "setbuyprice";
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
-	@Autowired
-	ITradeOrder iTradeOrder;
-
-	@Autowired
-	ITradeBuy iTradeBuy;
-
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
+	ITradeBuy iTradeBuy = tradeFactory.createTradeBuy();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDb iStockDb = stockFactory.createStockDb();
+	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Autowired
 	UserDb userDb;
 
-	@Autowired
-	TradeDb tradeDb;
 
 	@RequestMapping(value = "/buystock", method = RequestMethod.POST)
 	public ModelAndView buyStock(HttpServletRequest request, @RequestParam(value = BUY_STOCK_ID) int stockId, @RequestParam(value = QUANTITY) int quantity)
@@ -63,7 +64,7 @@ public class TradeBuyController
 		boolean isBought = iTradeBuy.buyStock(principal.getName(), stockId, quantity, iStockDb, userDb, tradeDb);
 		if (isBought)
 		{
-			List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
+			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
 			model.addObject(ORDERS, orders);
 			model.setViewName("orders");
 			return model;
@@ -90,7 +91,7 @@ public class TradeBuyController
 		boolean isBought = iTradeBuy.setBuyPrice(principal.getName(), stockId, quantity, buyPrice, iStockDb, userDb, tradeDb);
 		if (isBought)
 		{
-			List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
+			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
 			model.addObject(ORDERS, orders);
 			model.setViewName("orders");
 			return model;

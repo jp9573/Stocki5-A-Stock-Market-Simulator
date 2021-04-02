@@ -1,5 +1,9 @@
 package com.csci5308.stocki5.trade;
 
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,29 +20,31 @@ import com.csci5308.stocki5.user.db.UserDbMock;
 public class TradeTest {
 
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+    TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+    TradeAbstractFactory tradeFactory = TradeFactory.instance();
     private ITradeDb tradeDb = null;
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
-    private Trade tradeFirst = null;
-    private Trade tradeSecond = null;
-    private Trade tradeThird = null;
-    private Trade tradeForth = null;
-    private Trade tradeFifth = null;
-    private Trade tradeSixth = null;
-    private Trade tradeSeventh = null;
+    private ITrade tradeFirst = null;
+    private ITrade tradeSecond = null;
+    private ITrade tradeThird = null;
+    private ITrade tradeForth = null;
+    private ITrade tradeFifth = null;
+    private ITrade tradeSixth = null;
+    private ITrade tradeSeventh = null;
 
     @Before
     public void createObjects() {
-        tradeDb = new TradeDbMock();
+        tradeDb = tradeFactoryMock.createTradeDbMock();
         stockDb = stockFactoryMock.createStockDbMock();
         userDb = new UserDbMock();
-        tradeFirst = new Trade("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSecond = new Trade("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeThird = new Trade("AB123456", 1, TradeType.BUY, 100000, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeForth = new Trade("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeFifth = new Trade("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSixth = new Trade("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSeventh = new Trade("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeSecond = tradeFactory.createTradeWithData("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeThird = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 100000, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeForth = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeFifth = tradeFactory.createTradeWithData("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeSixth = tradeFactory.createTradeWithData("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeSeventh = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
     }
 
     @After

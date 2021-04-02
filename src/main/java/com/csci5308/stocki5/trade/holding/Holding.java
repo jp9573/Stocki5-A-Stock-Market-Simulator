@@ -9,7 +9,7 @@ import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.user.IUserDb;
 
-public class Holding extends Trade
+public class Holding extends Trade implements IHolding
 {
 
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");

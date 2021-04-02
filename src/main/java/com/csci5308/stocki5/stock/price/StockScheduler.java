@@ -1,5 +1,9 @@
 package com.csci5308.stocki5.stock.price;
 
+import com.csci5308.stocki5.trade.buy.ITradeBuy;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.sell.ITradeSell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,16 +22,14 @@ public class StockScheduler implements IStockScheduler
 {
 
 	StockAbstractFactory stockFactory = StockFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+
 	IStockPriceAlgorithm iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
 	IStockPriceEod iStockPriceEod = stockFactory.createStockPriceEod();
 	IStockDb iStockDb = stockFactory.createStockDb();
 	IStockMaintainHistory iStockMaintainHistory = stockFactory.createStockMaintainHistory();
-
-	@Autowired
-	TradeBuy tradeBuy;
-	
-	@Autowired
-	TradeSell tradeSell;
+	ITradeBuy tradeBuy = tradeFactory.createTradeBuy();
+	ITradeSell tradeSell = tradeFactory.createTradeSell();
 
 	private static boolean isMarketHours = true;
 

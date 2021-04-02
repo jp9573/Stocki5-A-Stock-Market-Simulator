@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +36,12 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 	private int priceChangeLimit;
 
 	StockAbstractFactory stockFactory = StockFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
+	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Autowired
 	UserDb userDb;
-
-	TradeDb tradeDb = new TradeDb();
 
 	public StockPriceAlgorithm()
 	{

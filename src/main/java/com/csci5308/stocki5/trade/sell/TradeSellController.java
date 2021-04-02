@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.csci5308.stocki5.trade.ITrade;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,22 +41,17 @@ public class TradeSellController
 	public static final String SET_SELL_PRICE = "setsellprice";
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
-	@Autowired
-	ITradeOrder iTradeOrder;
-
-	@Autowired
-	ITradeSell iTradeSell;
-
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDb iStockDb = stockFactory.createStockDb();
+	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
+	ITradeSell iTradeSell = tradeFactory.createTradeSell();
+	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Autowired
 	UserDb userDb;
-
-	@Autowired
-	TradeDb tradeDb;
 
 	@RequestMapping(value = "/sellstock", method = RequestMethod.POST)
 	public ModelAndView sellStock(HttpServletRequest request, @RequestParam(value = SELL_STOCK_ID) int stockId, @RequestParam(value = QUANTITY) int quantity, @RequestParam(value = TRADE_BUY_NUMBER) String tradeBuyNumber)
@@ -63,7 +62,7 @@ public class TradeSellController
 		boolean isSold = iTradeSell.sellStock(principal.getName(), stockId, quantity, iStockDb, userDb, tradeDb, tradeBuyNumber);
 		if (isSold)
 		{
-			List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
+			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
 			model.addObject(ORDERS, orders);
 			model.setViewName("orders");
 			return model;
@@ -90,7 +89,7 @@ public class TradeSellController
 		boolean isSold = iTradeSell.setSellPrice(principal.getName(), stockId, quantity, sellPrice, iStockDb, userDb, tradeDb, tradeBuyNumber);
 		if (isSold)
 		{
-			List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
+			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
 			model.addObject(ORDERS, orders);
 			model.setViewName("orders");
 			return model;
