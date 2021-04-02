@@ -1,8 +1,13 @@
 package com.csci5308.stocki5.trade.order;
 
+import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.db.TradeDbMock;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,13 +18,15 @@ import java.util.List;
 
 public class TradeOrderTest {
 
+    TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+    TradeAbstractFactory tradeFactory = TradeFactory.instance();
     private ITradeDb tradeDb = null;
     private ITradeOrder tradeOrder = null;
 
     @Before
     public void createObjects() {
-        tradeDb = new TradeDbMock();
-        tradeOrder = new TradeOrder();
+        tradeDb = tradeFactoryMock.createTradeDbMock();
+        tradeOrder = tradeFactory.createTradeOrder();
     }
 
     @After
@@ -30,10 +37,10 @@ public class TradeOrderTest {
 
     @Test
     public void fetchUserOrdersTest() {
-        List<Trade> userOrders = tradeOrder.fetchUserOrders("AB123456", tradeDb);
-        Iterator<Trade> userOrdersInterator = userOrders.iterator();
+        List<ITrade> userOrders = tradeOrder.fetchUserOrders("AB123456", tradeDb);
+        Iterator<ITrade> userOrdersInterator = userOrders.iterator();
         while (userOrdersInterator.hasNext()){
-            Trade trade = userOrdersInterator.next();
+            ITrade trade = userOrdersInterator.next();
             Assert.assertTrue(trade.generateTradeNumber());
             Assert.assertNotNull(trade.getTradeNumber());
             Assert.assertNotEquals(0, trade.getStockId());
@@ -47,7 +54,7 @@ public class TradeOrderTest {
 
     @Test
     public void fetchUserOrdersInvalidUserCodeTest() {
-        List<Trade> userOrders = tradeOrder.fetchUserOrders("AB1234", tradeDb);
+        List<ITrade> userOrders = tradeOrder.fetchUserOrders("AB1234", tradeDb);
         int orderListSize = userOrders.size();
         Assert.assertEquals(0, orderListSize);
     }

@@ -1,5 +1,9 @@
 package com.csci5308.stocki5.trade.sell;
 
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,6 +21,8 @@ public class TradeSellTest
 {
 
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	private IStockDb stockDb = null;
 	private IUserDb userDb = null;
 	private ITradeDb tradeDb = null;
@@ -27,8 +33,8 @@ public class TradeSellTest
 	{
 		stockDb = stockFactoryMock.createStockDbMock();
 		userDb = new UserDbMock();
-		tradeDb = new TradeDbMock();
-		tradeSell = new TradeSell();
+		tradeDb = tradeFactoryMock.createTradeDbMock();
+		tradeSell = tradeFactory.createTradeSell();
 	}
 
 	@After

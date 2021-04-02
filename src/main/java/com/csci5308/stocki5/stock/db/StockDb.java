@@ -129,7 +129,7 @@ public class StockDb implements IStockDb
 		}
 	}
 
-	public IStock convertResultSet(ResultSet resultSet)
+	private IStock convertResultSet(ResultSet resultSet)
 	{
 		IStock iStock = stockFactory.createStock();
 		try

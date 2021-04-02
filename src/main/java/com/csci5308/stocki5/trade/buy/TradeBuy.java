@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.csci5308.stocki5.trade.ITrade;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
 import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.stock.IStock;
@@ -20,13 +23,14 @@ import com.csci5308.stocki5.user.User;
 @Service
 public class TradeBuy implements ITradeBuy
 {
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
 
 	public boolean buyStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface)
 	{
 
-		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, stockDbInterface, userDbInterface);
+		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, stockDbInterface, userDbInterface);
 		boolean isTradeDetailsCreated = trade.createTradeDetails();
 		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
 		boolean isTradeNumberGenerated = trade.generateTradeNumber();
@@ -42,8 +46,7 @@ public class TradeBuy implements ITradeBuy
 
 	public boolean setBuyPrice(String userCode, int stockId, int quantity, float buyPrice, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface)
 	{
-
-		Trade trade = new Trade(userCode, stockId, TradeType.BUY, quantity, TradeStatus.PENDING, stockDbInterface, userDbInterface);
+		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.PENDING, stockDbInterface, userDbInterface);
 		boolean isTradeSetBuyPriceTradeDetailsCreated = trade.createSetBuyPriceTradeDetails(buyPrice);
 		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
 		boolean isTradeNumberGenerated = trade.generateTradeNumber();
@@ -56,13 +59,13 @@ public class TradeBuy implements ITradeBuy
 
 	public void buyPendingTrades(ITradeDb dbInterface, IUserDb userDbInterface, List<IStock> stocks)
 	{
-		List<Trade> trades = dbInterface.getPendingTrades(TradeType.BUY);
+		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.BUY);
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(IStock::getSymbol, IStock::getPrice));
 
-		Iterator<Trade> tradesIterator = trades.iterator();
+		Iterator<ITrade> tradesIterator = trades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			Trade trade = tradesIterator.next();
+			ITrade trade = tradesIterator.next();
 			if (trade.getBuyPrice() >= stocksMap.get(trade.getSymbol()))
 			{
 				trade.setBuyPrice(stocksMap.get(trade.getSymbol()));

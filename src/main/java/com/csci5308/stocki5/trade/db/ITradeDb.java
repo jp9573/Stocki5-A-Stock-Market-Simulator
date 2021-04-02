@@ -1,8 +1,10 @@
 package com.csci5308.stocki5.trade.db;
 
+import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.holding.Holding;
+import com.csci5308.stocki5.trade.holding.IHolding;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -10,19 +12,19 @@ import java.util.List;
 public interface ITradeDb
 {
 
-	public boolean insertTrade(Trade trade, boolean isHolding);
+	public boolean insertTrade(ITrade trade, boolean isHolding);
 
-	public List<Trade> getTodaysTradeByUserCode(String userCode);
+	public List<ITrade> getTodaysTradeByUserCode(String userCode);
 
-	public List<Holding> getHoldingsByUserCode(String userCode);
+	public List<IHolding> getHoldingsByUserCode(String userCode);
 
-	public List<Trade> getPendingTrades(TradeType tradeType);
+	public List<ITrade> getPendingTrades(TradeType tradeType);
 
-	public boolean updateBuyTrade(Trade trade, boolean isHolding);
+	public boolean updateBuyTrade(ITrade trade, boolean isHolding);
 
-	public boolean updateSellTrade(Trade trade, boolean isHolding);
+	public boolean updateSellTrade(ITrade trade, boolean isHolding);
 
-	public boolean updateBulkTradeStatus(List<Trade> trades);
+	public boolean updateBulkTradeStatus(List<ITrade> trades);
 
 	public boolean removeHolding(String tradeNumber);
 

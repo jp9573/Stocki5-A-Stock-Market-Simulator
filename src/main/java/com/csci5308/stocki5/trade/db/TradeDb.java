@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csci5308.stocki5.trade.ITrade;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.holding.IHolding;
 import org.springframework.stereotype.Repository;
 
 import com.csci5308.stocki5.config.Stocki5DbConnection;
@@ -23,10 +27,11 @@ public class TradeDb implements ITradeDb
 	final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
 	final String HOLDING_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
 
+	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
 
 	@Override
-	public boolean insertTrade(Trade trade, boolean isHolding)
+	public boolean insertTrade(ITrade trade, boolean isHolding)
 	{
 		Connection connection = dbConnection.createConnection();
 
@@ -68,9 +73,9 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public List<Trade> getTodaysTradeByUserCode(String userCode)
+	public List<ITrade> getTodaysTradeByUserCode(String userCode)
 	{
-		List<Trade> trades = new ArrayList<>();
+		List<ITrade> trades = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
@@ -81,23 +86,10 @@ public class TradeDb implements ITradeDb
 			statement.setDate(2, new Date(System.currentTimeMillis()));
 			ResultSet resultSet = statement.executeQuery();
 
-			Trade trade = null;
+			ITrade trade = null;
 			while (resultSet.next())
 			{
-				trade = new Trade();
-				trade.setTradeNumber(resultSet.getString("tradeNumber"));
-				trade.setUserCode(resultSet.getString("userCode"));
-				trade.setStockId(resultSet.getInt("stockId"));
-				trade.setBuySell(TradeType.valueOf(resultSet.getString("buySell")));
-				trade.setSymbol(resultSet.getString("symbol"));
-				trade.setSegment(resultSet.getString("segment"));
-				trade.setQuantity(resultSet.getInt("quantity"));
-				trade.setBuyPrice(resultSet.getFloat("buyPrice"));
-				trade.setSellPrice(resultSet.getFloat("sellPrice"));
-				trade.setTotalBuyPrice(resultSet.getDouble("totalBuyPrice"));
-				trade.setTotalSellPrice(resultSet.getDouble("totalSellPrice"));
-				trade.setStatus(TradeStatus.valueOf(resultSet.getString("status")));
-				trade.setTradeDate(resultSet.getDate("tradeDate"));
+				trade = convertTradeResultSet(resultSet);
 				trades.add(trade);
 			}
 			return trades;
@@ -112,9 +104,9 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public List<Holding> getHoldingsByUserCode(String userCode)
+	public List<IHolding> getHoldingsByUserCode(String userCode)
 	{
-		List<Holding> holdings = new ArrayList<>();
+		List<IHolding> holdings = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
@@ -125,10 +117,10 @@ public class TradeDb implements ITradeDb
 			statement.setDate(2, new Date(System.currentTimeMillis()));
 			ResultSet resultSet = statement.executeQuery();
 
-			Holding holding = null;
+			IHolding holding = null;
 			while (resultSet.next())
 			{
-				holding = new Holding();
+				holding = tradeFactory.createHolding();
 				holding.setTradeNumber(resultSet.getString("tradeNumber"));
 				holding.setUserCode(resultSet.getString("userCode"));
 				holding.setStockId(resultSet.getInt("stockId"));
@@ -223,9 +215,9 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public List<Trade> getPendingTrades(TradeType tradeType)
+	public List<ITrade> getPendingTrades(TradeType tradeType)
 	{
-		List<Trade> trades = new ArrayList<>();
+		List<ITrade> trades = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
@@ -235,23 +227,10 @@ public class TradeDb implements ITradeDb
 			statement.setString(1, String.valueOf(tradeType));
 			ResultSet resultSet = statement.executeQuery();
 
-			Trade trade = null;
+			ITrade trade = null;
 			while (resultSet.next())
 			{
-				trade = new Trade();
-				trade.setTradeNumber(resultSet.getString("tradeNumber"));
-				trade.setUserCode(resultSet.getString("userCode"));
-				trade.setStockId(resultSet.getInt("stockId"));
-				trade.setBuySell(TradeType.valueOf(resultSet.getString("buySell")));
-				trade.setSymbol(resultSet.getString("symbol"));
-				trade.setSegment(resultSet.getString("segment"));
-				trade.setQuantity(resultSet.getInt("quantity"));
-				trade.setBuyPrice(resultSet.getFloat("buyPrice"));
-				trade.setSellPrice(resultSet.getFloat("sellPrice"));
-				trade.setTotalBuyPrice(resultSet.getDouble("totalBuyPrice"));
-				trade.setTotalSellPrice(resultSet.getDouble("totalSellPrice"));
-				trade.setStatus(TradeStatus.valueOf(resultSet.getString("status")));
-				trade.setTradeDate(resultSet.getDate("tradeDate"));
+				trade = convertTradeResultSet(resultSet);
 				trades.add(trade);
 			}
 			return trades;
@@ -266,7 +245,7 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public boolean updateBuyTrade(Trade trade, boolean isHolding)
+	public boolean updateBuyTrade(ITrade trade, boolean isHolding)
 	{
 		Connection connection = dbConnection.createConnection();
 
@@ -299,7 +278,7 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public boolean updateSellTrade(Trade trade, boolean isHolding)
+	public boolean updateSellTrade(ITrade trade, boolean isHolding)
 	{
 		Connection connection = dbConnection.createConnection();
 
@@ -332,13 +311,13 @@ public class TradeDb implements ITradeDb
 	}
 
 	@Override
-	public boolean updateBulkTradeStatus(List<Trade> trades)
+	public boolean updateBulkTradeStatus(List<ITrade> trades)
 	{
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Statement statement = connection.createStatement();
-			for (Trade trade : trades)
+			for (ITrade trade : trades)
 			{
 				statement.addBatch("UPDATE trade SET status = '" + trade.getStatus() + "' WHERE tradeNumber = '"
 						+ trade.getTradeNumber() + "'");
@@ -353,6 +332,31 @@ public class TradeDb implements ITradeDb
 		{
 			dbConnection.closeConnection(connection);
 		}
+	}
+
+	private ITrade convertTradeResultSet(ResultSet resultSet) {
+
+		ITrade trade = tradeFactory.createTrade();
+		try
+		{
+			trade.setTradeNumber(resultSet.getString("tradeNumber"));
+			trade.setUserCode(resultSet.getString("userCode"));
+			trade.setStockId(resultSet.getInt("stockId"));
+			trade.setBuySell(TradeType.valueOf(resultSet.getString("buySell")));
+			trade.setSymbol(resultSet.getString("symbol"));
+			trade.setSegment(resultSet.getString("segment"));
+			trade.setQuantity(resultSet.getInt("quantity"));
+			trade.setBuyPrice(resultSet.getFloat("buyPrice"));
+			trade.setSellPrice(resultSet.getFloat("sellPrice"));
+			trade.setTotalBuyPrice(resultSet.getDouble("totalBuyPrice"));
+			trade.setTotalSellPrice(resultSet.getDouble("totalSellPrice"));
+			trade.setStatus(TradeStatus.valueOf(resultSet.getString("status")));
+			trade.setTradeDate(resultSet.getDate("tradeDate"));
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return trade;
 	}
 
 }

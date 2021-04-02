@@ -11,14 +11,14 @@ import java.util.ListIterator;
 public class TradeHolding implements ITradeHolding
 {
 
-	public List<Holding> fetchUserHoldings(String userCode, ITradeDb tradeDbInterface,
+	public List<IHolding> fetchUserHoldings(String userCode, ITradeDb tradeDbInterface,
 			IStockDb stockDbInterface)
 	{
-		List<Holding> holdingList = tradeDbInterface.getHoldingsByUserCode(userCode);
-		ListIterator<Holding> holdingListIterator = holdingList.listIterator();
+		List<IHolding> holdingList = tradeDbInterface.getHoldingsByUserCode(userCode);
+		ListIterator<IHolding> holdingListIterator = holdingList.listIterator();
 		while (holdingListIterator.hasNext())
 		{
-			Holding holding = holdingListIterator.next();
+			Holding holding = (Holding) holdingListIterator.next();
 			holding.setStockDbInterface(stockDbInterface);
 			holding.calculateProfitLoss();
 			holdingListIterator.set(holding);
