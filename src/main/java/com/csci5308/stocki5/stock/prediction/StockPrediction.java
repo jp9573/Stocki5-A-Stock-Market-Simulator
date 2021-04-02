@@ -6,28 +6,32 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.history.IStockHistory;
 import com.csci5308.stocki5.stock.history.IStockHistoryDb;
-import com.csci5308.stocki5.stock.history.StockHistory;
 
 @Service
 public class StockPrediction implements IStockPrediction
 {
-	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
+	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	public List<IStock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
 	{
-		List<StockHistory> stockHistorys = iStockHistoryDb.getStockHistoryBySymbol(symbol);
-		int totalCount = stockHistorys.size();
+		List<IStockHistory> iStockHistories = iStockHistoryDb.getStockHistoryBySymbol(symbol);
+		int totalCount = iStockHistories.size();
 		if (totalCount > 0)
 		{
 			float sum = 0.00f;
-			for (StockHistory stockHistory : stockHistorys)
+			for (IStockHistory iStockHistory : iStockHistories)
 			{
-				sum += stockHistory.getPrice();
+				sum += iStockHistory.getPrice();
 			}
 
 			float mean = sum / totalCount;
-			StockHistory lastHistoryStock = stockHistorys.get(totalCount - 1);
-			Stock predictedStock = new Stock();
+			IStockHistory lastHistoryStock = iStockHistories.get(totalCount - 1);
+			IStock predictedStock = stockFactory.createStock();
 			float changeInPercent = mean / lastHistoryStock.getPrice();
 
 			predictedStock.setStockId(lastHistoryStock.getStockId());
@@ -40,9 +44,9 @@ public class StockPrediction implements IStockPrediction
 			predictedStock.setPreviousClose(lastHistoryStock.getPreviousClose());
 			predictedStock.setSegment(lastHistoryStock.getSegment());
 			predictedStock.setPercentIncreaseDecrease(changeInPercent);
-			List<Stock> stocks = new ArrayList<>();
-			stocks.add(predictedStock);
-			return stocks;
+			List<IStock> iStocks = new ArrayList<>();
+			iStocks.add(predictedStock);
+			return iStocks;
 		} else
 		{
 			return null;

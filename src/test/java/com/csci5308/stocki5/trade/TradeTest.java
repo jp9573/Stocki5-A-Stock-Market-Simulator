@@ -1,18 +1,21 @@
 package com.csci5308.stocki5.trade;
 
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.db.TradeDbMock;
+import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.UserDbMock;
+
 public class TradeTest {
 
+	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
     private ITradeDb tradeDb = null;
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
@@ -27,7 +30,7 @@ public class TradeTest {
     @Before
     public void createObjects() {
         tradeDb = new TradeDbMock();
-        stockDb = new StockDbMock();
+        stockDb = stockFactoryMock.createStockDbMock();
         userDb = new UserDbMock();
         tradeFirst = new Trade("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
         tradeSecond = new Trade("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);

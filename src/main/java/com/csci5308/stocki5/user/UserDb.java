@@ -7,14 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.csci5308.stocki5.config.Stocki5DbConnection;
 
 @Repository
 public class UserDb implements IUserDb {
-    @Autowired
-    Stocki5DbConnection dbConnection;
+	
+    Stocki5DbConnection dbConnection = new Stocki5DbConnection();
 
     @Override
     public boolean insertUser(User user) {
@@ -192,6 +192,7 @@ public class UserDb implements IUserDb {
         user.setAddress(resultSet.getString(ADDRESS_COLUMN));
         user.setProvince(resultSet.getString(PROVINCE_COLUMN));
         user.setDateOfBirth(resultSet.getDate(DATE_OF_BIRTH_COLUMN));
+        user.setFunds(resultSet.getDouble(FUNDS_COLUMN));
         user.setInternationalStockExchange(resultSet.getInt(INTERNATIONAL_STOCK_EXCHANGE_COLUMN));
         user.setInternationalDerivativeExchange(resultSet.getInt(INTERNATIONAL_DERIVATIVE_EXCHANGE_COLUMN));
         user.setInternationalCommodityExchange(resultSet.getInt(INTERNATIONAL_COMMODITY_EXCHANGE_COLUMN));

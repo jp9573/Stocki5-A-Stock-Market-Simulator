@@ -5,18 +5,24 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.db.StockDbMock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 
 public class StockPriceEodTest
 {
-	private StockPriceEod stockPriceEod = null;
-	private StockDbMock stockDbMock = null;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	private IStockPriceEod stockPriceEod = null;
+	private IStockDb stockDbMock = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockPriceEod = new StockPriceEod();
-		stockDbMock = new StockDbMock();
+		stockPriceEod = stockFactory.createStockPriceEod();
+		stockDbMock = stockFactoryMock.createStockDbMock();
 	}
 
 	@After

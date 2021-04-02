@@ -1,42 +1,49 @@
 package com.csci5308.stocki5.stock.price;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.history.IStockHistoryDb;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
-import com.csci5308.stocki5.stock.history.StockHistoryDb;
-import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
+import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.user.UserDb;
 
 @Service
 public class StockPriceAlgorithm implements IStockPriceAlgorithm
 {
+	private static final String PROPERTIES_FILE = "config.properties";
 	static final String STOCK_PRICE_DECIMAL_FORMAT = "##.00";
 
-	@Value("${history.noofversions}")
 	private int noOfVersions;
-
-	@Value("${stock.pricelimit}")
 	private int priceChangeLimit;
 
-	@Autowired
-	StockHistoryDb stockHistoryDb;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 
 	@Autowired
 	UserDb userDb;
 
-	@Autowired
-	TradeDb tradeDb;
+	TradeDb tradeDb = new TradeDb();
+
+	public StockPriceAlgorithm()
+	{
+		readProperties();
+	}
 
 	public boolean generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory)
 	{
@@ -44,22 +51,22 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 		{
 			float newPrice = 0.00f;
 			float percent = 0.00f;
-			List<Stock> stocks = iStockDb.getStocks();
-			Iterator<Stock> stocksIterator = stocks.iterator();
-			Stock stock;
-			while (stocksIterator.hasNext())
+			List<IStock> iStocks = iStockDb.getStocks();
+			Iterator<IStock> iStocksIterator = iStocks.iterator();
+			IStock iStock;
+			while (iStocksIterator.hasNext())
 			{
-				stock = stocksIterator.next();
-				newPrice = stockPriceAlgorithm(stock.getPrice());
-				percent = stockPricePercentIncreaseDecrease(newPrice, stock.getPreviousClose());
-				stock.setPrice(newPrice);
-				stock.setPercentIncreaseDecrease(percent);
-				stock.calculateHighAndLow(newPrice);
+				iStock = iStocksIterator.next();
+				newPrice = stockPriceAlgorithm(iStock.getPrice());
+				percent = stockPricePercentIncreaseDecrease(newPrice, iStock.getPreviousClose());
+				iStock.setPrice(newPrice);
+				iStock.setPercentIncreaseDecrease(percent);
+				iStock.calculateHighAndLow(newPrice);
 			}
-			iStockDb.updateStocks(stocks);
-			iTradeBuy.buyPendingTrades(tradeDb, userDb, stocks);
-			iTradeSell.sellPendingTrades(tradeDb, userDb, stocks);
-			iStockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, stockHistoryDb);
+			iStockDb.updateStocks(iStocks);
+			iTradeBuy.buyPendingTrades(tradeDb, userDb, iStocks);
+			iTradeSell.sellPendingTrades(tradeDb, userDb, iStocks);
+			iStockMaintainHistory.maintainStocksHistory(iStocks, noOfVersions, iStockHistoryDb);
 			return true;
 		} catch (Exception e)
 		{
@@ -101,5 +108,36 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 			formatedPercent = Float.parseFloat(df.format(percent));
 		}
 		return formatedPercent;
+	}
+
+	private void readProperties()
+	{
+		InputStream inputStream = null;
+		try
+		{
+			Properties prop = new Properties();
+			inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+			if (inputStream == null)
+			{
+				throw new FileNotFoundException();
+			} else
+			{
+				prop.load(inputStream);
+			}
+			this.noOfVersions = Integer.parseInt(prop.getProperty("history.noofversions"));
+			this.priceChangeLimit = Integer.parseInt(prop.getProperty("stock.pricelimit"));
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				inputStream.close();
+			} catch (IOException ioe)
+			{
+				ioe.printStackTrace();
+			}
+		}
 	}
 }

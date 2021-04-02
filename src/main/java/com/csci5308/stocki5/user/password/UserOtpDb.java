@@ -15,8 +15,7 @@ public class UserOtpDb implements IUserOtpDb
 {
 	final String USER_OTP_ATTRIBUTES = "userCode,otp,validity";
 
-	@Autowired
-	Stocki5DbConnection dbConnection;
+	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
 
 	private boolean executeDelete(String deleteSQL)
 	{

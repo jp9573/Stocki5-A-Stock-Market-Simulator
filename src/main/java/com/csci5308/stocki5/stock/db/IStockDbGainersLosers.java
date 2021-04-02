@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
 
 @Repository
 public interface IStockDbGainersLosers
 {
-	public List<Stock> getHighestPriceStocks(String segments, int limit);
+	public List<IStock> getHighestPriceStocks(String segments, int limit);
 
-	public List<Stock> getLowestPriceStocks(String segments, int limit);
+	public List<IStock> getLowestPriceStocks(String segments, int limit);
 }

@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
 
 @Repository
 public interface IStockDb
 {
-	public List<Stock> getStocks();
+	public List<IStock> getStocks();
 
-	public List<Stock> getStocksBySegment(String segments);
+	public List<IStock> getStocksBySegment(String segments);
 
-	public Stock getStock(int stockId);
+	public IStock getStock(int stockId);
 
-	public boolean updateStocks(List<Stock> stocks);
+	public boolean updateStocks(List<IStock> stocks);
 }

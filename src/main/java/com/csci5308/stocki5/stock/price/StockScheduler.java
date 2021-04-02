@@ -5,59 +5,56 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.db.StockDb;
-import com.csci5308.stocki5.stock.history.StockMaintainHistory;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
 import com.csci5308.stocki5.trade.sell.TradeSell;
 
 @Service
 @EnableScheduling
-public class StockScheduler
+public class StockScheduler implements IStockScheduler
 {
-	@Autowired
-	IStockPriceAlgorithm iStockPriceAlgorithm;
 
-	@Autowired
-	IStockPriceEod iStockPriceEod;
-
-	@Autowired
-	StockDb stockDb;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	IStockPriceAlgorithm iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
+	IStockPriceEod iStockPriceEod = stockFactory.createStockPriceEod();
+	IStockDb iStockDb = stockFactory.createStockDb();
+	IStockMaintainHistory iStockMaintainHistory = stockFactory.createStockMaintainHistory();
 
 	@Autowired
 	TradeBuy tradeBuy;
-
+	
 	@Autowired
 	TradeSell tradeSell;
 
-	@Autowired
-	StockMaintainHistory stockMaintainHistory;
-
-	static boolean isMarketHours = true;
+	private static boolean isMarketHours = true;
 
 	@Scheduled(fixedDelayString = "${stock.delay}")
 	public void scheduleGenerateStockPrice()
 	{
 		if (isMarketHours)
 		{
-			iStockPriceAlgorithm.generateStockPrice(stockDb, tradeBuy, tradeSell, stockMaintainHistory);
+			iStockPriceAlgorithm.generateStockPrice(iStockDb, tradeBuy, tradeSell, iStockMaintainHistory);
 		}
 	}
 
 	@Scheduled(cron = "0 0 9 * * ?")
 	public void scheduleStockBod()
 	{
-		StockScheduler.isMarketHours = true;
+		isMarketHours = true;
 	}
 
 	@Scheduled(cron = "0 0 18 * * ?")
 	public void scheduleStockEod()
 	{
-		StockScheduler.isMarketHours = false;
+		isMarketHours = false;
 	}
 
 	@Scheduled(cron = "0 5 18 * * ?")
 	public void scheduleStockClosingPrice()
 	{
-		iStockPriceEod.setStockClosingPrice(stockDb);
+		iStockPriceEod.setStockClosingPrice(iStockDb);
 	}
 }

@@ -1,26 +1,29 @@
 package com.csci5308.stocki5.trade.holding;
 
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Iterator;
-import java.util.List;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.db.TradeDbMock;
 
 public class TradeHoldingTest {
 
+	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
     private ITradeHolding tradeHolding = null;
     private ITradeDb tradeDb = null;
     private IStockDb stockDb = null;
 
     @Before
     public void createObjects() {
-        stockDb = new StockDbMock();
+        stockDb = stockFactoryMock.createStockDbMock();
         tradeDb = new TradeDbMock();
         tradeHolding = new TradeHolding();
     }

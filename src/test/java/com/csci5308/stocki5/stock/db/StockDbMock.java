@@ -6,14 +6,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 
 public class StockDbMock implements IStockDb
 {
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	
 	@Override
-	public Stock getStock(int stockId)
+	public IStock getStock(int stockId)
 	{
-		Stock stock = new Stock();
+		IStock stock = stockFactory.createStock();
 		if (stockId == 1)
 		{
 			stock.setSymbol("ABC");
@@ -37,10 +41,10 @@ public class StockDbMock implements IStockDb
 	}
 
 	@Override
-	public List<Stock> getStocks()
+	public List<IStock> getStocks()
 	{
-		List<Stock> stocks = new ArrayList<>();
-		Stock stock = new Stock();
+		List<IStock> stocks = new ArrayList<>();
+		IStock stock = stockFactory.createStock();
 		stock.setSymbol("ABC");
 		stock.setOpen(10);
 		stock.setHigh(15);
@@ -62,16 +66,16 @@ public class StockDbMock implements IStockDb
 	}
 
 	@Override
-	public boolean updateStocks(List<Stock> stocks)
+	public boolean updateStocks(List<IStock> stocks)
 	{
 		return true;
 	}
 
 	@Override
-	public List<Stock> getStocksBySegment(String segments)
+	public List<IStock> getStocksBySegment(String segments)
 	{
-		List<Stock> stocks = new ArrayList<>();
-		Stock stock = new Stock();
+		List<IStock> stocks = new ArrayList<>();
+		IStock stock = stockFactory.createStock();
 		stock.setSymbol("ABC");
 		stock.setOpen(10);
 		stock.setHigh(15);
