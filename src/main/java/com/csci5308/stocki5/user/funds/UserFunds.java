@@ -3,7 +3,7 @@ package com.csci5308.stocki5.user.funds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 
 @Service
 public class UserFunds implements IUserFunds
@@ -18,7 +18,7 @@ public class UserFunds implements IUserFunds
 	}
 
 	@Override
-	public boolean resetFunds(User user, IUserDb userDb)
+	public boolean resetFunds(IUser user, IUserDb userDb)
 	{
 		if (user.getFunds() < resetFundAmount)
 		{

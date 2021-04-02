@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.user.password;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class UserChangePassword implements IUserChangePassword
 	}
 
 	@Override
-	public boolean validateCurrentPassword(User user, String currentPassword)
+	public boolean validateCurrentPassword(IUser user, String currentPassword)
 	{
 		if (currentPassword.equals(user.getPassword()))
 		{
@@ -29,7 +29,7 @@ public class UserChangePassword implements IUserChangePassword
 	}
 
 	@Override
-	public boolean changePassword(User user, String newPassword, String confirmNewPassword, IUserDb userDb)
+	public boolean changePassword(IUser user, String newPassword, String confirmNewPassword, IUserDb userDb)
 	{
 		user.setPassword(newPassword);
 		user.setConfirmPassword(confirmNewPassword);

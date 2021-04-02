@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.UserDb;
 
 @Controller
@@ -40,7 +40,7 @@ public class UserFundsController
 	public ModelAndView resetFunds(@RequestParam(value = USER_CODE, required = true) String userCode)
 	{
 
-		User user = userDb.getUser(userCode);
+		IUser user = userDb.getUser(userCode);
 
 		ModelAndView model = new ModelAndView();
 		model.addObject(USER_CODE, user.getUserCode());

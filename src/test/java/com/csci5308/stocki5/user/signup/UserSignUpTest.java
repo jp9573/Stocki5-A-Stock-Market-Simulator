@@ -1,7 +1,9 @@
 package com.csci5308.stocki5.user.signup;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,12 +16,13 @@ public class UserSignUpTest {
 
     private UserDbMock userDbMock = new UserDbMock();
     private UserSignUp userSignUp = new UserSignUp();
-    private User user = new User();
+    private UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    private IUser user = null;
 
     @Before
     public void createObjects() {
         userSignUp = new UserSignUp();
-        user = new User();
+        user = userFactory.createUser();
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setProvince("Toronto");

@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import org.springframework.stereotype.Service;
 import com.csci5308.stocki5.email.IEmail;
 import java.text.ParseException;
@@ -44,7 +44,7 @@ public class UserForgotPassword implements IUserForgotPassword
 	@Override
 	public boolean validateUserCode(String userCode, IUserDb userDb)
 	{
-		User user = userDb.getUser(userCode);
+		IUser user = userDb.getUser(userCode);
 		if (null == user.getUserCode())
 		{
 			return false;
@@ -55,7 +55,7 @@ public class UserForgotPassword implements IUserForgotPassword
 	@Override
 	public boolean generateUserOtp(String userCode, IUserOtp userOtp, IUserOtpDb userOtpDb, IUserDb userDb, IEmail email)
 	{
-		User user = userDb.getUser(userCode);
+		IUser user = userDb.getUser(userCode);
 
 		userOtp.generateOtpForUser(userCode);
 		userOtpDb.insertOtp(userOtp);
@@ -108,7 +108,7 @@ public class UserForgotPassword implements IUserForgotPassword
 	@Override
 	public boolean resetPassword(String userCode, String password, String confirmPassword, IUserDb userDb, IUserOtpDb userOtpDb, IUserChangePassword userChangePassword)
 	{
-		User user = userDb.getUser(userCode);
+		IUser user = userDb.getUser(userCode);
 		boolean isChanged = userChangePassword.changePassword(user, password, confirmPassword, userDb);
 		setPasswordValidityMessage(userChangePassword.getPasswordValidityMessage());
 		if (isChanged)

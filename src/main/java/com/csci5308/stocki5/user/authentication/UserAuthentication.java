@@ -24,7 +24,7 @@ public class UserAuthentication implements AuthenticationProvider {
         if (null == username || null == password) {
             throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
         }
-        User user = userDb.getUser(username);
+        User user = (User) userDb.getUser(username);
         if (null == user.getUserCode()) {
             throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
         }
