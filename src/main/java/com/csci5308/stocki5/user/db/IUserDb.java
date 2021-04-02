@@ -1,19 +1,19 @@
 package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IUserDb {
-    public boolean insertUser(User user);
+    public boolean insertUser(IUser user);
 
-    public boolean updateUser(User user);
+    public boolean updateUser(IUser user);
 
-    public User getUser(String userCode);
+    public IUser getUser(String userCode);
 
-    public User getUserByEmail(String email);
+    public IUser getUserByEmail(String email);
 
-    public boolean updateUserPassword(User user);
+    public boolean updateUserPassword(IUser user);
 
     public double getUserFunds(String userCode);
 

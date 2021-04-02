@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.stereotype.Repository;
 import com.csci5308.stocki5.config.Stocki5DbConnection;
 
@@ -15,9 +17,10 @@ import com.csci5308.stocki5.config.Stocki5DbConnection;
 public class UserDb implements IUserDb {
 
     Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+    UserAbstractFactory userFactory = UserFactory.instance();
 
     @Override
-    public boolean insertUser(User user) {
+    public boolean insertUser(IUser user) {
         Connection connection = dbConnection.createConnection();
         try {
             String insertUserSql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -51,7 +54,7 @@ public class UserDb implements IUserDb {
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public boolean updateUser(IUser user) {
         Connection connection = dbConnection.createConnection();
         try {
             String updateUserSQL = "UPDATE user SET " + "firstName=?," + "lastName=?," + "emailId=?," + "contactNo=?,"
@@ -84,10 +87,10 @@ public class UserDb implements IUserDb {
     }
 
     @Override
-    public User getUser(String userCode) {
+    public IUser getUser(String userCode) {
         Connection connection = dbConnection.createConnection();
         try {
-            User user = new User();
+            IUser user = userFactory.createUser();
             Statement statement = connection.createStatement();
             String selectUserSql = "SELECT * FROM user WHERE userCode='" + userCode + "'";
             ResultSet resultSet = statement.executeQuery(selectUserSql);
@@ -104,10 +107,10 @@ public class UserDb implements IUserDb {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public IUser getUserByEmail(String email) {
         Connection connection = dbConnection.createConnection();
         try {
-            User user = new User();
+            IUser user = userFactory.createUser();
             Statement statement = connection.createStatement();
             String selectSql = "SELECT * FROM user where emailid='" + email + "'";
             ResultSet resultSet = statement.executeQuery(selectSql);
@@ -124,7 +127,7 @@ public class UserDb implements IUserDb {
     }
 
     @Override
-    public boolean updateUserPassword(User user) {
+    public boolean updateUserPassword(IUser user) {
         Connection connection = dbConnection.createConnection();
         try {
             String updateUserSQL = "UPDATE user SET password=?, confirmPassword=? WHERE userCode=?";
@@ -180,7 +183,7 @@ public class UserDb implements IUserDb {
         }
     }
 
-    private void setUserValueFromResultSet(User user, ResultSet resultSet) throws SQLException {
+    private void setUserValueFromResultSet(IUser user, ResultSet resultSet) throws SQLException {
         user.setUserCode(resultSet.getString("userCode"));
         user.setPassword(resultSet.getString("password"));
         user.setFirstName(resultSet.getString("firstName"));

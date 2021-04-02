@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.user.forgotcode;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
@@ -14,7 +14,7 @@ public class UserForgotCode implements IUserForgotCode
 
 	public String getUserCode(String email, String dob, IUserDb userDb) {
 		String result = null;
-		User user = userDb.getUserByEmail(email);
+		IUser user = userDb.getUserByEmail(email);
 		if (null == user) {
 			return result;
 		} else {

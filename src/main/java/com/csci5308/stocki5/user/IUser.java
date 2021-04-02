@@ -3,6 +3,8 @@ package com.csci5308.stocki5.user;
 import java.util.Date;
 
 public interface IUser {
+    public String getUserCode();
+
     public void setUserCode(String userCode);
 
     public String getFirstName();
