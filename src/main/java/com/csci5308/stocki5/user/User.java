@@ -11,7 +11,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class User implements UserDetails {
+public class User implements UserDetails, IUser {
     private static final String YEAR_MONTH_PATTERN = "yyyyMM";
     private static final String YEAR_MONTH_DAY_PATTERN = "yyyy-MM-dd";
     private static final String DAY_PATTERN = "dd";
