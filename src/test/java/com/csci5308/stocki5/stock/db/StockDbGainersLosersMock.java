@@ -6,19 +6,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 
 public class StockDbGainersLosersMock implements IStockDbGainersLosers
 {
+	StockAbstractFactory stockFactory = StockFactory.instance();
+
 	@Override
-	public List<Stock> getHighestPriceStocks(String segments, int limit)
+	public List<IStock> getHighestPriceStocks(String segments, int limit)
 	{
-		List<Stock> stockArrayList = new ArrayList<>();
+		List<IStock> stockArrayList = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)
 		{
-			Stock stock = new Stock();
+			IStock stock = stockFactory.createStock();
 			stock.setSymbol(aStockName);
 			stock.setOpen((float) Math.random());
 			stock.setHigh((float) Math.random());
@@ -51,14 +55,14 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 	}
 
 	@Override
-	public List<Stock> getLowestPriceStocks(String segments, int limit)
+	public List<IStock> getLowestPriceStocks(String segments, int limit)
 	{
-		List<Stock> stockArrayList = new ArrayList<>();
+		List<IStock> stockArrayList = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)
 		{
-			Stock stock = new Stock();
+			IStock stock = stockFactory.createStock();
 			stock.setSymbol(aStockName);
 			stock.setOpen((float) Math.random());
 			stock.setHigh((float) Math.random());

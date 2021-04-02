@@ -6,13 +6,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+
 public class StockHistoryDbMock implements IStockHistoryDb
 {
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	
 	@Override
-	public List<StockHistory> getStockHistoryBySymbol(String symbol)
+	public List<IStockHistory> getStockHistoryBySymbol(String symbol)
 	{
-		List<StockHistory> stockHistories = new ArrayList<>();
-		StockHistory stock = new StockHistory();
+		List<IStockHistory> stockHistories = new ArrayList<>();
+		IStockHistory stock = stockFactory.createStockHistory();
 		if (symbol.equals("ABC"))
 		{
 			stock.setSymbol("ABC");
@@ -39,7 +44,7 @@ public class StockHistoryDbMock implements IStockHistoryDb
 	}
 
 	@Override
-	public boolean insertStocksHistory(List<StockHistory> stocksHistory)
+	public boolean insertStocksHistory(List<IStockHistory> stocksHistory)
 	{
 		return true;
 	}

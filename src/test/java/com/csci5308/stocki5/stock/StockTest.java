@@ -5,18 +5,24 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.db.StockDbMock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 
 public class StockTest
 {
-	private StockDbMock stockDbMock = null;
-	private Stock stock = null;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	private IStockDb stockDbMock = null;
+	private IStock stock = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockDbMock = new StockDbMock();
-		stock = new Stock(1, stockDbMock);
+		stockDbMock = stockFactoryMock.createStockDbMock();
+		stock = stockFactory.createStockById(1, stockDbMock);
 	}
 
 	@After

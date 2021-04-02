@@ -7,20 +7,26 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.history.StockHistoryDbMock;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
+import com.csci5308.stocki5.stock.history.IStockHistoryDb;
 
 public class StockPredictionTest
 {
-	private StockHistoryDbMock stockHistoryDbMock = null;
-	private StockPrediction stockPrediction = null;
-	private List<Stock> stocks = null;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	private IStockHistoryDb stockHistoryDbMock = null;
+	private IStockPrediction stockPrediction = null;
+	private List<IStock> stocks = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockHistoryDbMock = new StockHistoryDbMock();
-		stockPrediction = new StockPrediction();
+		stockHistoryDbMock = stockFactoryMock.createStockHistoryDbMock();
+		stockPrediction = stockFactory.createStockPrediction();
 	}
 
 	@After

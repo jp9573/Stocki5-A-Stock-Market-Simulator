@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
 
-public class Stock
+public class Stock implements IStock
 {
 	private int stockId;
 	private String symbol;
@@ -16,6 +16,49 @@ public class Stock
 	private float previousClose;
 	private float percentIncreaseDecrease;
 	private String segment;
+
+	public Stock()
+	{
+		this.stockId = 0;
+		this.symbol = null;
+		this.open = 0.00f;
+		this.high = 0.00f;
+		this.low = 0.00f;
+		this.price = 0.00f;
+		this.latestTradingDate = null;
+		this.previousClose = 0.00f;
+		this.segment = null;
+		this.percentIncreaseDecrease = 0.00f;
+	}
+
+	public Stock(int stockId, IStockDb iStockDb)
+	{
+		IStock iStock = iStockDb.getStock(stockId);
+		this.stockId = stockId;
+		this.symbol = iStock.getSymbol();
+		this.open = iStock.getOpen();
+		this.high = iStock.getHigh();
+		this.low = iStock.getLow();
+		this.price = iStock.getPrice();
+		this.latestTradingDate = iStock.getLatestTradingDate();
+		this.previousClose = iStock.getPreviousClose();
+		this.segment = iStock.getSegment();
+		this.percentIncreaseDecrease = iStock.getPercentIncreaseDecrease();
+	}
+
+	public Stock(IStock iStock)
+	{
+		this.stockId = iStock.getStockId();
+		this.symbol = iStock.getSymbol();
+		this.open = iStock.getOpen();
+		this.high = iStock.getHigh();
+		this.low = iStock.getLow();
+		this.price = iStock.getPrice();
+		this.latestTradingDate = iStock.getLatestTradingDate();
+		this.previousClose = iStock.getPreviousClose();
+		this.segment = iStock.getSegment();
+		this.percentIncreaseDecrease = iStock.getPercentIncreaseDecrease();
+	}
 
 	public int getStockId()
 	{
@@ -115,49 +158,6 @@ public class Stock
 	public void setPercentIncreaseDecrease(float percentIncreaseDecrease)
 	{
 		this.percentIncreaseDecrease = percentIncreaseDecrease;
-	}
-
-	public Stock()
-	{
-		this.stockId = 0;
-		this.symbol = null;
-		this.open = 0.00f;
-		this.high = 0.00f;
-		this.low = 0.00f;
-		this.price = 0.00f;
-		this.latestTradingDate = null;
-		this.previousClose = 0.00f;
-		this.segment = null;
-		this.percentIncreaseDecrease = 0.00f;
-	}
-
-	public Stock(int stockId, IStockDb iStockDb)
-	{
-		Stock stock = iStockDb.getStock(stockId);
-		this.stockId = stockId;
-		this.symbol = stock.getSymbol();
-		this.open = stock.getOpen();
-		this.high = stock.getHigh();
-		this.low = stock.getLow();
-		this.price = stock.getPrice();
-		this.latestTradingDate = stock.getLatestTradingDate();
-		this.previousClose = stock.getPreviousClose();
-		this.segment = stock.getSegment();
-		this.percentIncreaseDecrease = stock.getPercentIncreaseDecrease();
-	}
-
-	public Stock(Stock stock)
-	{
-		this.stockId = stock.stockId;
-		this.symbol = stock.getSymbol();
-		this.open = stock.getOpen();
-		this.high = stock.getHigh();
-		this.low = stock.getLow();
-		this.price = stock.getPrice();
-		this.latestTradingDate = stock.getLatestTradingDate();
-		this.previousClose = stock.getPreviousClose();
-		this.segment = stock.getSegment();
-		this.percentIncreaseDecrease = stock.getPercentIncreaseDecrease();
 	}
 
 	public void calculateHighAndLow(float newPrice)

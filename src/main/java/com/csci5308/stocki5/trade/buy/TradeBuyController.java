@@ -1,13 +1,10 @@
 package com.csci5308.stocki5.trade.buy;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.StockDb;
-import com.csci5308.stocki5.stock.db.StockDbGainersLosers;
-import com.csci5308.stocki5.stock.fetch.IStockFetch;
-import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.db.TradeDb;
-import com.csci5308.stocki5.trade.order.ITradeOrder;
-import com.csci5308.stocki5.user.UserDb;
+import java.security.Principal;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.List;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.fetch.IStockFetch;
+import com.csci5308.stocki5.trade.Trade;
+import com.csci5308.stocki5.trade.db.TradeDb;
+import com.csci5308.stocki5.trade.order.ITradeOrder;
+import com.csci5308.stocki5.user.UserDb;
 
 @Controller
 public class TradeBuyController
@@ -37,16 +41,12 @@ public class TradeBuyController
 	ITradeOrder iTradeOrder;
 
 	@Autowired
-	IStockFetch iStockFetch;
-
-	@Autowired
 	ITradeBuy iTradeBuy;
-	
-	@Autowired
-	StockDbGainersLosers stockDbHighestLowest;
 
-	@Autowired
-	StockDb stockDb;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
+	IStockFetch iStockFetch = stockFactory.createStockFetch();
+	IStockDb iStockDb = stockFactory.createStockDb();
 
 	@Autowired
 	UserDb userDb;
@@ -55,14 +55,12 @@ public class TradeBuyController
 	TradeDb tradeDb;
 
 	@RequestMapping(value = "/buystock", method = RequestMethod.POST)
-	public ModelAndView buyStock(HttpServletRequest request,
-								 @RequestParam(value = BUY_STOCK_ID) int stockId,
-								 @RequestParam(value = QUANTITY) int quantity)
+	public ModelAndView buyStock(HttpServletRequest request, @RequestParam(value = BUY_STOCK_ID) int stockId, @RequestParam(value = QUANTITY) int quantity)
 	{
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
-		boolean isBought = iTradeBuy.buyStock(principal.getName(), stockId, quantity, stockDb, userDb, tradeDb);
+		boolean isBought = iTradeBuy.buyStock(principal.getName(), stockId, quantity, iStockDb, userDb, tradeDb);
 		if (isBought)
 		{
 			List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
@@ -71,9 +69,9 @@ public class TradeBuyController
 			return model;
 		}
 
-		List<Stock> stocks = iStockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
-		List<Stock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(stockDbHighestLowest, userDb, principal.getName());
-		List<Stock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(stockDbHighestLowest, userDb, principal.getName());
+		List<IStock> stocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
+		List<IStock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, userDb, principal.getName());
+		List<IStock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, userDb, principal.getName());
 
 		model.addObject(STOCKS, stocks);
 		model.addObject(GAINERS, top5GainersStocks);
@@ -84,16 +82,12 @@ public class TradeBuyController
 	}
 
 	@RequestMapping(value = "/setbuystock", method = RequestMethod.POST)
-	public ModelAndView setBuyStock(HttpServletRequest request,
-									@RequestParam(value = SET_BUY_STOCK_ID) int stockId,
-									@RequestParam(value = SET_QUANTITY) int quantity,
-									@RequestParam(value = SET_BUY_PRICE) float buyPrice)
+	public ModelAndView setBuyStock(HttpServletRequest request, @RequestParam(value = SET_BUY_STOCK_ID) int stockId, @RequestParam(value = SET_QUANTITY) int quantity, @RequestParam(value = SET_BUY_PRICE) float buyPrice)
 	{
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
-		boolean isBought = iTradeBuy.setBuyPrice(principal.getName(), stockId, quantity, buyPrice, stockDb, userDb,
-				tradeDb);
+		boolean isBought = iTradeBuy.setBuyPrice(principal.getName(), stockId, quantity, buyPrice, iStockDb, userDb, tradeDb);
 		if (isBought)
 		{
 			List<Trade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
@@ -102,9 +96,9 @@ public class TradeBuyController
 			return model;
 		}
 
-		List<Stock> stocks = iStockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
-		List<Stock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(stockDbHighestLowest, userDb, principal.getName());
-		List<Stock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(stockDbHighestLowest, userDb, principal.getName());
+		List<IStock> stocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
+		List<IStock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, userDb, principal.getName());
+		List<IStock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, userDb, principal.getName());
 
 		model.addObject(STOCKS, stocks);
 		model.addObject(GAINERS, top5GainersStocks);

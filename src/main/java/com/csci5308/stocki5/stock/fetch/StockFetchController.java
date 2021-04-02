@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.StockDb;
-import com.csci5308.stocki5.stock.db.StockDbGainersLosers;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.user.UserDb;
 
 @Controller
@@ -22,16 +24,12 @@ public class StockFetchController
 	private static final String STOCKS = "stocks";
 	private static final String GAINERS = "gainers";
 	private static final String LOSERS = "losers";
+
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	IStockFetch iStockFetch = stockFactory.createStockFetch();
+	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
+	IStockDb iStockDb = stockFactory.createStockDb();
 	
-	@Autowired
-	IStockFetch iStockFetch;
-
-	@Autowired
-	StockDbGainersLosers stockDbGainersLosers;
-
-	@Autowired
-	StockDb stockDb;
-
 	@Autowired
 	UserDb userDb;
 
@@ -40,9 +38,9 @@ public class StockFetchController
 	{
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
-		List<Stock> stocks = iStockFetch.fetchUserStocks(stockDb, userDb, principal.getName());
-		List<Stock> topGainersStocks = iStockFetch.fetchTopGainerStocks(stockDbGainersLosers, userDb, principal.getName());
-		List<Stock> topLosersStocks = iStockFetch.fetchTopLoserStocks(stockDbGainersLosers, userDb, principal.getName());
+		List<IStock> stocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
+		List<IStock> topGainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, userDb, principal.getName());
+		List<IStock> topLosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, userDb, principal.getName());
 		model.addObject(STOCKS, stocks);
 		model.addObject(GAINERS, topGainersStocks);
 		model.addObject(LOSERS, topLosersStocks);

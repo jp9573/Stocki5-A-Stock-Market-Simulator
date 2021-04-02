@@ -5,18 +5,24 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.stock.history.StockMaintainHistory;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
+import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
 import com.csci5308.stocki5.trade.sell.TradeSell;
 
 public class StockPriceAlogrithmTest
 {
-	private StockPriceAlgorithm stockPriceAlgorithm = null;
-	private StockDbMock stockDbMock = null;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	private IStockPriceAlgorithm stockPriceAlgorithm = null;
+	private IStockDb stockDbMock = null;
 	private TradeBuy tradeBuy = null;
 	private TradeSell tradeSell = null;
-	private StockMaintainHistory stockMaintainHistory = null;
+	private IStockMaintainHistory stockMaintainHistory = null;
 	private float currentPrice = 0.00f;
 	private float previousPrice = 0.00f;
 	private int limit = 0;
@@ -24,11 +30,11 @@ public class StockPriceAlogrithmTest
 	@Before
 	public void createStock()
 	{
-		stockPriceAlgorithm = new StockPriceAlgorithm();
-		stockDbMock = new StockDbMock();
+		stockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
+		stockDbMock = stockFactoryMock.createStockDbMock();
 		tradeBuy = new TradeBuy();
 		tradeSell = new TradeSell();
-		stockMaintainHistory = new StockMaintainHistory();
+		stockMaintainHistory = stockFactory.createStockMaintainHistory();
 		currentPrice = 125.02f;
 		previousPrice = 42.63f;
 		limit = 10;
