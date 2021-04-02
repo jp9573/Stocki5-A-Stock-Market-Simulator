@@ -18,5 +18,4 @@ public interface IUserDb {
     public double getUserFunds(String userCode);
 
     public boolean updateUserFunds(String userCode, double amount);
-
 }
