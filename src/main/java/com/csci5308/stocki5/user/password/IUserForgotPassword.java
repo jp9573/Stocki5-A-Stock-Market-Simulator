@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.email.IEmail;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 public interface IUserForgotPassword {
     public String getOtpValidityMessage();

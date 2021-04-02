@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.user.forgotcode;
 
-import com.csci5308.stocki5.user.UserDb;
+import com.csci5308.stocki5.user.db.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,5 +1,6 @@
-package com.csci5308.stocki5.user;
+package com.csci5308.stocki5.user.db;
 
+import com.csci5308.stocki5.user.User;
 import org.springframework.stereotype.Repository;
 
 @Repository

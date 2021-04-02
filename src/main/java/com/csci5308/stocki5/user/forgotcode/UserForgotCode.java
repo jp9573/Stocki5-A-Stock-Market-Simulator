@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.forgotcode;
 
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

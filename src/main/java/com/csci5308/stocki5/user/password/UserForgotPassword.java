@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.user.password;
 
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.User;
 import org.springframework.stereotype.Service;
 import com.csci5308.stocki5.email.IEmail;
