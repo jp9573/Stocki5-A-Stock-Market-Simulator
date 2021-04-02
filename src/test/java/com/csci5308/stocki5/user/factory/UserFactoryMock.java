@@ -3,10 +3,10 @@ package com.csci5308.stocki5.user.factory;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.User;
 
-public class UserFactoryMock extends UserAbstractFactory {
+public class UserFactoryMock extends UserAbstractFactoryMock {
     private static UserFactoryMock uniqueInstance = null;
 
-    public static UserAbstractFactory instance() {
+    public static UserFactoryMock instance() {
         if (null == uniqueInstance) {
             uniqueInstance = new UserFactoryMock();
         }

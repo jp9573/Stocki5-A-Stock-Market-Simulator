@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.user.signup;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ public class UserSignUp implements IUserSignUp {
     private static final String USER_ROLE = "ROLE_USER";
     private static final String ADD_USER_ERROR_MESSAGE = "Error in adding user. Please try again later.";
 
-    public boolean addUser(IUserDb dbInterface, User user, String dob) {
+    public boolean addUser(IUserDb dbInterface, IUser user, String dob) {
         boolean isDobValid = user.validateDateOfBirth(dob);
         boolean isPasswordValid = user.validatePassword();
         boolean isUserValid = user.validate();

@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ public class UserChangePasswordTest{
 
     IUserChangePassword userChangePassword = null;
     IUserDb userDbMock = null;
-    User user = null;
+    IUser user = null;
 
     @Before
     public void createObjects()

@@ -1,6 +1,6 @@
 package com.csci5308.stocki5.user.password;
 
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +57,7 @@ public class UserPasswordController
 	@Autowired
 	Email email;
 
-	private ModelAndView getUserModel(User user)
+	private ModelAndView getUserModel(IUser user)
 	{
 		ModelAndView model = new ModelAndView();
 		model.addObject(USER_CODE, user.getUserCode());
@@ -167,7 +167,7 @@ public class UserPasswordController
 			@RequestParam(value = CONFIRM_PASSWORD, required = true) String confirmNewPassword)
 	{
 
-		User user = userDb.getUser(userCode);
+		IUser user = userDb.getUser(userCode);
 		ModelAndView model = getUserModel(user);
 		boolean currentPasswordIsValid = userChangePassword.validateCurrentPassword(user, currentPassword);
 		if (currentPasswordIsValid)
