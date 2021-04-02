@@ -1,7 +1,6 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.config.Stocki5DbConnection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
