@@ -1,6 +1,5 @@
 package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.user.IUserDb;
 import com.csci5308.stocki5.user.User;
 
 import java.text.ParseException;

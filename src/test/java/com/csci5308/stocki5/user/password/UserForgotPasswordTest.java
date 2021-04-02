@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.email.IEmail;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.db.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
