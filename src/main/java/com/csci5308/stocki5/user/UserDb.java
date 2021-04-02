@@ -8,19 +8,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.springframework.stereotype.Repository;
-
 import com.csci5308.stocki5.config.Stocki5DbConnection;
 
 @Repository
 public class UserDb implements IUserDb {
-	
+
     Stocki5DbConnection dbConnection = new Stocki5DbConnection();
 
     @Override
     public boolean insertUser(User user) {
         Connection connection = dbConnection.createConnection();
         try {
-            String insertUserSql = String.format("INSERT INTO %s VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", USER_TABLE);
+            String insertUserSql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(insertUserSql);
             statement.setString(1, user.getUserCode());
             statement.setString(2, user.getFirstName());
@@ -54,10 +53,10 @@ public class UserDb implements IUserDb {
     public boolean updateUser(User user) {
         Connection connection = dbConnection.createConnection();
         try {
-            String updateUserSQL = String.format("UPDATE %s SET %s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=?,%s=? WHERE %s=?",
-                    USER_TABLE, FIRST_NAME_COLUMN, LAST_NAME_COLUMN, EMAIL_ID_COLUMN, CONTACT_NO_COLUMN, DATE_OF_BIRTH_COLUMN, GENDER_COLUMN, ADDRESS_COLUMN, PROVINCE_COLUMN, COUNTRY_COLUMN,
-                    INTERNATIONAL_STOCK_EXCHANGE_COLUMN, INTERNATIONAL_DERIVATIVE_EXCHANGE_COLUMN,
-                    INTERNATIONAL_COMMODITY_EXCHANGE_COLUMN, FOREIGN_EXCHANGE_COLUMN, USER_CODE_COLUMN);
+            String updateUserSQL = "UPDATE user SET " + "firstName=?," + "lastName=?," + "emailId=?," + "contactNo=?,"
+                    + "dateOfBirth=?," + "gender=?," + "address=?," + "province=?," + "country=?,"
+                    + "internationalStockExchange=?," + "internationalDerivativeExchange=?,"
+                    + "internationalCommodityExchange=?," + "foreignExchange=? " + "WHERE userCode=?";
             PreparedStatement statement = connection.prepareStatement(updateUserSQL);
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
@@ -89,7 +88,7 @@ public class UserDb implements IUserDb {
         try {
             User user = new User();
             Statement statement = connection.createStatement();
-            String selectUserSql = String.format("SELECT * FROM %s WHERE %s='%s'", USER_TABLE, USER_CODE_COLUMN, userCode);
+            String selectUserSql = "SELECT * FROM user WHERE userCode='" + userCode + "'";
             ResultSet resultSet = statement.executeQuery(selectUserSql);
             while (resultSet.next()) {
                 setUserValueFromResultSet(user, resultSet);
@@ -109,7 +108,7 @@ public class UserDb implements IUserDb {
         try {
             User user = new User();
             Statement statement = connection.createStatement();
-            String selectSql = String.format("SELECT * FROM %s where %s='%s'", USER_TABLE, EMAIL_ID_COLUMN, email);
+            String selectSql = "SELECT * FROM user where emailid='" + email + "'";
             ResultSet resultSet = statement.executeQuery(selectSql);
             while (resultSet.next()) {
                 setUserValueFromResultSet(user, resultSet);
@@ -127,7 +126,7 @@ public class UserDb implements IUserDb {
     public boolean updateUserPassword(User user) {
         Connection connection = dbConnection.createConnection();
         try {
-            String updateUserSQL = String.format("UPDATE %s SET %s=?, %s=? WHERE %s=?", USER_TABLE, PASSWORD_COLUMN, CONFIRM_PASSWORD_COLUMN, USER_CODE_COLUMN);
+            String updateUserSQL = "UPDATE user SET password=?, confirmPassword=? WHERE userCode=?";
             PreparedStatement statement = connection.prepareStatement(updateUserSQL);
             statement.setString(1, user.getPassword());
             statement.setString(2, user.getConfirmPassword());
@@ -148,10 +147,10 @@ public class UserDb implements IUserDb {
         try {
             double userFunds = 0;
             Statement statement = connection.createStatement();
-            String selectUserFundsSql = String.format("SELECT %s FROM %s WHERE %s='%s'", FUNDS_COLUMN, USER_TABLE, USER_CODE_COLUMN, userCode);
+            String selectUserFundsSql = "SELECT funds FROM user WHERE userCode='" + userCode + "'";
             ResultSet resultSet = statement.executeQuery(selectUserFundsSql);
             while (resultSet.next()) {
-                userFunds = resultSet.getDouble(FUNDS_COLUMN);
+                userFunds = resultSet.getDouble("funds");
             }
             return userFunds;
         } catch (SQLException e) {
@@ -166,7 +165,7 @@ public class UserDb implements IUserDb {
     public boolean updateUserFunds(String userCode, double amount) {
         Connection connection = dbConnection.createConnection();
         try {
-            String updateUserFundsSQL = String.format("UPDATE %s SET %s=? WHERE %s=?", USER_TABLE, FUNDS_COLUMN, USER_CODE_COLUMN);
+            String updateUserFundsSQL = "UPDATE user SET " + "funds=? " + "WHERE userCode=?";
             PreparedStatement statement = connection.prepareStatement(updateUserFundsSQL);
             statement.setDouble(1, amount);
             statement.setString(2, userCode);
@@ -181,21 +180,21 @@ public class UserDb implements IUserDb {
     }
 
     private void setUserValueFromResultSet(User user, ResultSet resultSet) throws SQLException {
-        user.setUserCode(resultSet.getString(USER_CODE_COLUMN));
-        user.setPassword(resultSet.getString(PASSWORD_COLUMN));
-        user.setFirstName(resultSet.getString(FIRST_NAME_COLUMN));
-        user.setLastName(resultSet.getString(LAST_NAME_COLUMN));
-        user.setEmailId(resultSet.getString(EMAIL_ID_COLUMN));
-        user.setContactNo(resultSet.getString(CONTACT_NO_COLUMN));
-        user.setGender(resultSet.getString(GENDER_COLUMN));
-        user.setCountry(resultSet.getString(COUNTRY_COLUMN));
-        user.setAddress(resultSet.getString(ADDRESS_COLUMN));
-        user.setProvince(resultSet.getString(PROVINCE_COLUMN));
-        user.setDateOfBirth(resultSet.getDate(DATE_OF_BIRTH_COLUMN));
-        user.setFunds(resultSet.getDouble(FUNDS_COLUMN));
-        user.setInternationalStockExchange(resultSet.getInt(INTERNATIONAL_STOCK_EXCHANGE_COLUMN));
-        user.setInternationalDerivativeExchange(resultSet.getInt(INTERNATIONAL_DERIVATIVE_EXCHANGE_COLUMN));
-        user.setInternationalCommodityExchange(resultSet.getInt(INTERNATIONAL_COMMODITY_EXCHANGE_COLUMN));
-        user.setForeignExchange(resultSet.getInt(FOREIGN_EXCHANGE_COLUMN));
+        user.setUserCode(resultSet.getString("userCode"));
+        user.setPassword(resultSet.getString("password"));
+        user.setFirstName(resultSet.getString("firstName"));
+        user.setLastName(resultSet.getString("lastName"));
+        user.setEmailId(resultSet.getString("emailId"));
+        user.setContactNo(resultSet.getString("contactNo"));
+        user.setGender(resultSet.getString("gender"));
+        user.setCountry(resultSet.getString("country"));
+        user.setAddress(resultSet.getString("address"));
+        user.setProvince(resultSet.getString("province"));
+        user.setDateOfBirth(resultSet.getDate("dateOfBirth"));
+        user.setFunds(resultSet.getDouble("funds"));
+        user.setInternationalStockExchange(resultSet.getInt("internationalStockExchange"));
+        user.setInternationalDerivativeExchange(resultSet.getInt("internationalDerivativeExchange"));
+        user.setInternationalCommodityExchange(resultSet.getInt("internationalCommodityExchange"));
+        user.setForeignExchange(resultSet.getInt("foreignExchange"));
     }
 }

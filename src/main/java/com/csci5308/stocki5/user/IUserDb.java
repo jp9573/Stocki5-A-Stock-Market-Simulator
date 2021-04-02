@@ -4,36 +4,18 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IUserDb {
-    String USER_TABLE = "user";
-    String FIRST_NAME_COLUMN = "firstName";
-    String LAST_NAME_COLUMN = "lastName";
-    String PASSWORD_COLUMN = "password";
-    String CONFIRM_PASSWORD_COLUMN = "confirmPassword";
-    String EMAIL_ID_COLUMN = "emailId";
-    String CONTACT_NO_COLUMN = "contactNo";
-    String DATE_OF_BIRTH_COLUMN = "dateOfBirth";
-    String GENDER_COLUMN = "gender";
-    String ADDRESS_COLUMN = "address";
-    String PROVINCE_COLUMN = "province";
-    String COUNTRY_COLUMN = "country";
-    String INTERNATIONAL_STOCK_EXCHANGE_COLUMN = "internationalStockExchange";
-    String INTERNATIONAL_DERIVATIVE_EXCHANGE_COLUMN = "internationalDerivativeExchange";
-    String INTERNATIONAL_COMMODITY_EXCHANGE_COLUMN = "internationalCommodityExchange";
-    String FOREIGN_EXCHANGE_COLUMN = "foreignExchange";
-    String USER_CODE_COLUMN = "userCode";
-    String FUNDS_COLUMN = "funds";
+    public boolean insertUser(User user);
 
-    boolean insertUser(User user);
+    public boolean updateUser(User user);
 
-    boolean updateUser(User user);
+    public User getUser(String userCode);
 
-    User getUser(String userCode);
+    public User getUserByEmail(String email);
 
-    User getUserByEmail(String email);
+    public boolean updateUserPassword(User user);
 
-    boolean updateUserPassword(User user);
+    public double getUserFunds(String userCode);
 
-    double getUserFunds(String userCode);
+    public boolean updateUserFunds(String userCode, double amount);
 
-    boolean updateUserFunds(String userCode, double amount);
 }
