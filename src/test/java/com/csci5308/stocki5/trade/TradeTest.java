@@ -4,6 +4,8 @@ import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,13 +17,13 @@ import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.db.TradeDbMock;
 import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
 
 public class TradeTest {
 
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
     TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
+    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
     private ITradeDb tradeDb = null;
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
@@ -37,7 +39,7 @@ public class TradeTest {
     public void createObjects() {
         tradeDb = tradeFactoryMock.createTradeDbMock();
         stockDb = stockFactoryMock.createStockDbMock();
-        userDb = new UserDbMock();
+        userDb = userFactoryMock.createUserDbMock();
         tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
         tradeSecond = tradeFactory.createTradeWithData("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);
         tradeThird = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 100000, TradeStatus.EXECUTED, stockDb, userDb);
