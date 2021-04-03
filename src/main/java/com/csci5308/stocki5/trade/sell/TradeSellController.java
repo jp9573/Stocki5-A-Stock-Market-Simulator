@@ -9,6 +9,8 @@ import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,7 @@ public class TradeSellController
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	UserAbstractFactory userFactory = UserFactory.instance();
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
@@ -49,9 +52,7 @@ public class TradeSellController
 	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
 	ITradeSell iTradeSell = tradeFactory.createTradeSell();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
-
-	@Autowired
-	IUserDb userDb;
+	IUserDb userDb = userFactory.createUserDb();
 
 	@RequestMapping(value = "/sellstock", method = RequestMethod.POST)
 	public ModelAndView sellStock(HttpServletRequest request, @RequestParam(value = SELL_STOCK_ID) int stockId, @RequestParam(value = QUANTITY) int quantity, @RequestParam(value = TRADE_BUY_NUMBER) String tradeBuyNumber)

@@ -1,6 +1,8 @@
 package com.csci5308.stocki5.user.funds;
 
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +32,9 @@ public class UserFundsController {
     private static final String FUNDS_UPDATE_SUCCESS_MESSAGE = "User funds added successfully.";
     private static final String FUNDS_UPDATE_ERROR_MESSAGE = "Error adding user Funds. Current balance should be less than 10000.";
 
-    @Autowired
-    IUserFunds iUserFunds;
-
-    @Autowired
-    IUserDb userDb;
+    UserAbstractFactory userFactory = UserFactory.instance();
+    IUserFunds iUserFunds = userFactory.createUserFunds();
+    IUserDb userDb = userFactory.createUserDb();
 
     @RequestMapping(value = "/resetFunds", method = RequestMethod.POST)
     public ModelAndView resetFunds(@RequestParam(value = USER_CODE, required = true) String userCode) {
