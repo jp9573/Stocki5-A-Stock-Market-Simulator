@@ -10,7 +10,7 @@ import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.db.UserDbMock;
 
 public class TradeSellTest

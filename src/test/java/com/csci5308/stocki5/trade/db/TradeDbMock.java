@@ -10,7 +10,7 @@ import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.holding.Holding;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.db.UserDbMock;
 
 public class TradeDbMock implements ITradeDb

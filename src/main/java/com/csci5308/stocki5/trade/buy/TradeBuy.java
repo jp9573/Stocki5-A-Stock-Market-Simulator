@@ -14,8 +14,8 @@ import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.IUser;
 
 @Service
 public class TradeBuy implements ITradeBuy
@@ -32,7 +32,7 @@ public class TradeBuy implements ITradeBuy
 		boolean isTradeNumberGenerated = trade.generateTradeNumber();
 		if (isFundSufficient && isTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			User user = userDbInterface.getUser(userCode);
+			IUser user = userDbInterface.getUser(userCode);
 			double updatedFunds = user.getFunds() - trade.getTotalBuyPrice();
 			userDbInterface.updateUserFunds(userCode, Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 			return tradeDbInterface.insertTrade(trade, true);
@@ -71,7 +71,7 @@ public class TradeBuy implements ITradeBuy
 				boolean isTradeUpdated = dbInterface.updateBuyTrade(trade, true);
 				if (isTradeUpdated)
 				{
-					User user = userDbInterface.getUser(trade.getUserCode());
+					IUser user = userDbInterface.getUser(trade.getUserCode());
 					double updatedFunds = user.getFunds() - (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
 					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}
