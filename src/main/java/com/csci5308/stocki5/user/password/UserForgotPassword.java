@@ -69,7 +69,7 @@ public class UserForgotPassword implements IUserForgotPassword
 	@Override
 	public boolean verifyOtp(String userCode, int otp, IUserOtpDb userOtpDb)
 	{
-		UserOtp userOtp = userOtpDb.getOtp(otp);
+		IUserOtp userOtp = userOtpDb.getOtp(otp);
 		if (null == userOtp)
 		{
 			setOtpValidityMessage(OTP_INVALID_MESSAGE);

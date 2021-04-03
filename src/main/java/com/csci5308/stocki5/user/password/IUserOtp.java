@@ -17,4 +17,10 @@ public interface IUserOtp {
 
     public void generateOtpForUser(String userCode);
 
+    public void setOtp(int otp);
+
+    public void setValidity(String validity);
+
+    public void setUserCode(String userCode);
+
 }

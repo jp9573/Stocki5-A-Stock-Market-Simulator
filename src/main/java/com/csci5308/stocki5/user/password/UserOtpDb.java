@@ -1,6 +1,8 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.config.Stocki5DbConnection;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,7 @@ public class UserOtpDb implements IUserOtpDb
 	final String USER_OTP_ATTRIBUTES = "userCode,otp,validity";
 
 	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+	UserAbstractFactory userFactory = UserFactory.instance();
 
 	private boolean executeDelete(String deleteSQL)
 	{
@@ -71,13 +74,13 @@ public class UserOtpDb implements IUserOtpDb
 	}
 
 	@Override
-	public UserOtp getOtp(int otp)
+	public IUserOtp getOtp(int otp)
 	{
 		Connection connection = dbConnection.createConnection();
 
 		try
 		{
-			UserOtp userOtp = new UserOtp();
+			IUserOtp userOtp = userFactory.createUserOtp();
 			String selectUserSql = "SELECT "+USER_OTP_ATTRIBUTES+" FROM user_otp WHERE otp='" + String.valueOf(otp) + "'";
 			PreparedStatement statement = connection.prepareStatement(selectUserSql);
 			ResultSet resultSet = statement.executeQuery(selectUserSql);
