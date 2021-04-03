@@ -14,16 +14,14 @@ public class UserFundsTest {
     IUserFunds userFunds = null;
 
     @Before
-    public void createObjects()
-    {
+    public void createObjects() {
         userDbMock = new UserDbMock();
         userFunds = new UserFunds();
         userFunds.setResetFundAmount(10000);
     }
 
     @After
-    public void destroyObjects()
-    {
+    public void destroyObjects() {
         userDbMock = null;
         userFunds = null;
     }

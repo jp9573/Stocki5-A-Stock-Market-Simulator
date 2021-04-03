@@ -21,7 +21,7 @@ public class UserForgotPasswordTest {
     UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
 
     @Before
-    public void createObjects(){
+    public void createObjects() {
         userForgotPassword = new UserForgotPassword();
         userDbMock = new UserDbMock();
         userOtpDbMock = new UserOtpDbMock();
@@ -31,7 +31,7 @@ public class UserForgotPasswordTest {
     }
 
     @After
-    public void destroyObjects(){
+    public void destroyObjects() {
         userForgotPassword = null;
         userDbMock = null;
         userOtpDbMock = null;
@@ -97,7 +97,7 @@ public class UserForgotPasswordTest {
     @Test
     public void resetPassword() {
         String userCode = "AB123456";
-        String password= "password";
+        String password = "password";
         String confirmPassword = "password";
         Assert.assertTrue(userForgotPassword.resetPassword(userCode, password, confirmPassword, userDbMock, userOtpDbMock, userChangePassword));
     }
@@ -105,7 +105,7 @@ public class UserForgotPasswordTest {
     @Test
     public void resetPasswordInvalid() {
         String userCode = "AB123456";
-        String password= "password";
+        String password = "password";
         String confirmPassword = "confirmpassword";
         Assert.assertFalse(userForgotPassword.resetPassword(userCode, password, confirmPassword, userDbMock, userOtpDbMock, userChangePassword));
     }
