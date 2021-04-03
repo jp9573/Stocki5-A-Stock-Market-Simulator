@@ -16,7 +16,7 @@ import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.user.UserDb;
+import com.csci5308.stocki5.user.db.UserDb;
 
 @Controller
 public class StockFetchController

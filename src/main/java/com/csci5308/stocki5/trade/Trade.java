@@ -1,10 +1,9 @@
 package com.csci5308.stocki5.trade;
 
 import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.IUser;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -190,7 +189,7 @@ public class Trade
 	public boolean isFundSufficient(IUserDb userDbInterface)
 	{
 		this.userDbInterface = userDbInterface;
-		User user = this.getUserDbInterface().getUser(this.userCode);
+		IUser user = this.getUserDbInterface().getUser(this.userCode);
 		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
 		return isSufficient;
 	}

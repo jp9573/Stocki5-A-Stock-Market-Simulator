@@ -3,14 +3,16 @@ package com.csci5308.stocki5.user.profile;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDb;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.UserDb;
 
 @Controller
 public class UserProfileController {
@@ -32,6 +34,8 @@ public class UserProfileController {
     private static final String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User information updated successfully.";
     private static final String SECTOR_DEFAULT_VALUE = "0";
 
+    UserAbstractFactory userFactory = UserFactory.instance();
+
     @Autowired
     UserDb userDb;
 
@@ -42,7 +46,7 @@ public class UserProfileController {
     public ModelAndView userProfile(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
 
-        User user = userDb.getUser(principal.getName());
+        IUser user = userDb.getUser(principal.getName());
 
         ModelAndView model = new ModelAndView();
         model.addObject(USER_CODE, user.getUserCode());
@@ -112,7 +116,7 @@ public class UserProfileController {
         model.addObject(FOREIGN_EXCHANGE, foreignExchange);
         model.addObject(FUNDS, funds);
 
-        User user = new User();
+        IUser user = userFactory.createUser();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setContactNo(contactNo);

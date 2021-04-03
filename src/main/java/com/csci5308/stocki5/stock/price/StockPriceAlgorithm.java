@@ -21,7 +21,7 @@ import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
-import com.csci5308.stocki5.user.UserDb;
+import com.csci5308.stocki5.user.db.UserDb;
 
 @Service
 public class StockPriceAlgorithm implements IStockPriceAlgorithm
