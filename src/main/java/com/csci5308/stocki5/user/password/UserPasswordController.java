@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +39,7 @@ public class UserPasswordController {
     private static final String INVALID_CURRENT_PASSWORD_ERROR_MESSAGE = "Invalid Current Password";
 
     @Autowired
-    UserDb userDb;
+    IUserDb userDb;
 
     @Autowired
     IUserOtpDb userOtpDb;

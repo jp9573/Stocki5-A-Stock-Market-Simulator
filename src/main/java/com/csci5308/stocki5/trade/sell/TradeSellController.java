@@ -25,7 +25,7 @@ import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.order.ITradeOrder;
-import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 @Controller
 public class TradeSellController
@@ -51,7 +51,7 @@ public class TradeSellController
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Autowired
-	UserDb userDb;
+	IUserDb userDb;
 
 	@RequestMapping(value = "/sellstock", method = RequestMethod.POST)
 	public ModelAndView sellStock(HttpServletRequest request, @RequestParam(value = SELL_STOCK_ID) int stockId, @RequestParam(value = QUANTITY) int quantity, @RequestParam(value = TRADE_BUY_NUMBER) String tradeBuyNumber)

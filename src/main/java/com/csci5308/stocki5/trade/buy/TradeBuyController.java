@@ -25,7 +25,7 @@ import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.order.ITradeOrder;
-import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 @Controller
 public class TradeBuyController
@@ -52,7 +52,7 @@ public class TradeBuyController
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Autowired
-	UserDb userDb;
+	IUserDb userDb;
 
 
 	@RequestMapping(value = "/buystock", method = RequestMethod.POST)
