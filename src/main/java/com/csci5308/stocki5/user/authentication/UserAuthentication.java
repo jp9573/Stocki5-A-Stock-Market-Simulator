@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.authentication;
 
 import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDb;
+import com.csci5308.stocki5.user.db.UserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,7 +24,7 @@ public class UserAuthentication implements AuthenticationProvider {
         if (null == username || null == password) {
             throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
         }
-        User user = userDb.getUser(username);
+        User user = (User) userDb.getUser(username);
         if (null == user.getUserCode()) {
             throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
         }

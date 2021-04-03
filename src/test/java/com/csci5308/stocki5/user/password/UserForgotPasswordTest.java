@@ -1,8 +1,10 @@
 package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.email.IEmail;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,6 +18,7 @@ public class UserForgotPasswordTest {
     IEmail emailMock = null;
     IUserChangePassword userChangePassword = null;
     IUserOtp userOtp = null;
+    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
 
     @Before
     public void createObjects(){
@@ -24,7 +27,7 @@ public class UserForgotPasswordTest {
         userOtpDbMock = new UserOtpDbMock();
         emailMock = new EmailMock();
         userChangePassword = new UserChangePassword();
-        userOtp = new UserOtp();
+        userOtp = userFactory.createUserOtp();
     }
 
     @After

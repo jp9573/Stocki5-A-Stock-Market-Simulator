@@ -11,7 +11,7 @@ import com.csci5308.stocki5.trade.holding.IHolding;
 import com.csci5308.stocki5.trade.holding.ITradeHolding;
 import com.csci5308.stocki5.trade.order.ITradeOrder;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
 
 @Service

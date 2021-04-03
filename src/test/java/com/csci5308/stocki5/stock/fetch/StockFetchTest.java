@@ -14,7 +14,7 @@ import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.factory.StockFactoryMock;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.UserDbMock;
 
 public class StockFetchTest
@@ -26,7 +26,7 @@ public class StockFetchTest
 	private IStockDbGainersLosers gainersLosersMock = null;
 	private IStockDb stockDbMock = null;
 	private IStockFetch stockFetch = null;
-	private User user = null;
+	private IUser user = null;
 
 	@Before
 	public void createObjects()
