@@ -25,7 +25,7 @@ import com.csci5308.stocki5.trade.holding.Holding;
 public class TradeDb implements ITradeDb
 {
 	final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
-	final String HOLDING_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
+	final String HOLDING_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,trade.symbol,trade.segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
 
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
@@ -79,7 +79,7 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade WHERE userCode=? AND tradeDate=? ORDER BY tradeDate DESC";
+			String selectTradeSql = "SELECT " + TRADE_ATTRIBUTES + " FROM trade WHERE userCode=? AND tradeDate=? ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -110,7 +110,7 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String selectTradeSql = "SELECT "+HOLDING_ATTRIBUTES+" FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
+			String selectTradeSql = "SELECT " + HOLDING_ATTRIBUTES + " FROM trade INNER JOIN stock_data ON trade.stockId = stock_data.stock_id WHERE userCode=? AND tradeDate=? AND isHolding=1 ORDER BY tradeDate DESC";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, userCode);
@@ -186,9 +186,7 @@ public class TradeDb implements ITradeDb
 
 		try
 		{
-			String removeHoldingSql = "UPDATE trade SET isHolding = ? "
-					+ "WHERE tradeNumber = (SELECT tradeNumber FROM trade "
-					+ "WHERE userCode = ? AND stockId = ? AND quantity = ? AND isHolding = ?)";
+			String removeHoldingSql = "UPDATE trade SET isHolding = ? " + "WHERE tradeNumber = (SELECT tradeNumber FROM trade " + "WHERE userCode = ? AND stockId = ? AND quantity = ? AND isHolding = ?)";
 			PreparedStatement statement = connection.prepareStatement(removeHoldingSql);
 
 			statement.setBoolean(1, false);
@@ -221,7 +219,7 @@ public class TradeDb implements ITradeDb
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			String selectTradeSql = "SELECT "+TRADE_ATTRIBUTES+" FROM trade WHERE status='PENDING' AND buySell=?";
+			String selectTradeSql = "SELECT " + TRADE_ATTRIBUTES + " FROM trade WHERE status='PENDING' AND buySell=?";
 			PreparedStatement statement = connection.prepareStatement(selectTradeSql);
 
 			statement.setString(1, String.valueOf(tradeType));
@@ -319,8 +317,7 @@ public class TradeDb implements ITradeDb
 			Statement statement = connection.createStatement();
 			for (ITrade trade : trades)
 			{
-				statement.addBatch("UPDATE trade SET status = '" + trade.getStatus() + "' WHERE tradeNumber = '"
-						+ trade.getTradeNumber() + "'");
+				statement.addBatch("UPDATE trade SET status = '" + trade.getStatus() + "' WHERE tradeNumber = '" + trade.getTradeNumber() + "'");
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;
@@ -334,7 +331,8 @@ public class TradeDb implements ITradeDb
 		}
 	}
 
-	private ITrade convertTradeResultSet(ResultSet resultSet) {
+	private ITrade convertTradeResultSet(ResultSet resultSet)
+	{
 
 		ITrade trade = tradeFactory.createTrade();
 		try
