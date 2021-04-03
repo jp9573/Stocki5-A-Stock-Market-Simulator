@@ -22,5 +22,4 @@ public interface IUserOtp {
     public void setValidity(String validity);
 
     public void setUserCode(String userCode);
-
 }

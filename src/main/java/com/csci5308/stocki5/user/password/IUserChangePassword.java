@@ -11,5 +11,4 @@ public interface IUserChangePassword {
     public boolean validateCurrentPassword(IUser user, String currentPassword);
 
     public boolean changePassword(IUser user, String newPassword, String confirmNewPassword, IUserDb userDb);
-
 }
