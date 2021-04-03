@@ -27,13 +27,9 @@ public class UserSignUpController {
     private static final String ERROR = "error";
     private static final String USERNAME = "username";
 
-    private UserAbstractFactory userFactory = UserFactory.instance();
-
-    @Autowired
-    IUserDb userDb;
-
-    @Autowired
-    IUserSignUp iUserSignUp;
+    UserAbstractFactory userFactory = UserFactory.instance();
+    IUserDb userDb = userFactory.createUserDb();
+    IUserSignUp iUserSignUp = userFactory.createUserSignUp();
 
     @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
     public ModelAndView signUpUser(@RequestParam(value = FIRST_NAME) String firstName,
