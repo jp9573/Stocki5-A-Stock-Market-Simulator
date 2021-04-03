@@ -1,7 +1,9 @@
 package com.csci5308.stocki5.user.profile;
 
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,18 +14,19 @@ public class UserProfileTest {
     private static final String INVALID_EMAIL_MESSAGE = "Invalid Email Id";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    private UserDbMock userDbMock = null;
-    private UserProfile userProfile = null;
-    private User user = null;
+    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    private IUserDb userDbMock = null;
+    private IUserProfile userProfile = null;
+    private IUser user = null;
 
     @Before
     public void createObjects() {
-        userProfile = new UserProfile();
-        user = new User();
+        userProfile = userFactoryMock.createUserProfile();
+        user = userFactoryMock.createUser();
         user.setFirstName("Jack");
         user.setLastName("Sparrow");
         user.setProvince("Toronto");
-        userDbMock = new UserDbMock();
+        userDbMock = userFactoryMock.createUserDbMock();
     }
 
     @After

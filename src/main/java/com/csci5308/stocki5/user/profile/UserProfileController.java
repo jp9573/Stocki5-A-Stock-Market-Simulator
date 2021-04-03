@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 @Controller
 public class UserProfileController {
@@ -37,7 +37,7 @@ public class UserProfileController {
     UserAbstractFactory userFactory = UserFactory.instance();
 
     @Autowired
-    UserDb userDb;
+    IUserDb userDb;
 
     @Autowired
     IUserProfile iUserProfile;

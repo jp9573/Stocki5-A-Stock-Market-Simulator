@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.user.funds;
 
+import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 @Controller
 public class UserFundsController {
@@ -33,7 +34,7 @@ public class UserFundsController {
     IUserFunds iUserFunds;
 
     @Autowired
-    UserDb userDb;
+    IUserDb userDb;
 
     @RequestMapping(value = "/resetFunds", method = RequestMethod.POST)
     public ModelAndView resetFunds(@RequestParam(value = USER_CODE, required = true) String userCode) {
