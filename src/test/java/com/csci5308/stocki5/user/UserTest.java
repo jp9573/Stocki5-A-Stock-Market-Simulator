@@ -3,17 +3,20 @@ package com.csci5308.stocki5.user;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest {
-    private User user = null;
+    private IUser user = null;
+    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
 
     @Before
     public void createObjects() {
-        user = new User();
+        user = userFactory.createUser();
     }
 
     @After
