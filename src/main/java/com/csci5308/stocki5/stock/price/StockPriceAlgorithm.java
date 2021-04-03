@@ -12,6 +12,8 @@ import java.util.Random;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +39,10 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	UserAbstractFactory userFactory = UserFactory.instance();
 	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
-
-	@Autowired
-	IUserDb userDb;
+	IUserDb userDb = userFactory.createUserDb();
 
 	public StockPriceAlgorithm()
 	{

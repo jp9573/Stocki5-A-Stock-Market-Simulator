@@ -9,6 +9,8 @@ import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +45,7 @@ public class TradeBuyController
 
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	StockAbstractFactory stockFactory = StockFactory.instance();
+	UserAbstractFactory userFactory = UserFactory.instance();
 
 	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
 	ITradeBuy iTradeBuy = tradeFactory.createTradeBuy();
@@ -50,9 +53,7 @@ public class TradeBuyController
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDb iStockDb = stockFactory.createStockDb();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
-
-	@Autowired
-	IUserDb userDb;
+	IUserDb userDb = userFactory.createUserDb();
 
 
 	@RequestMapping(value = "/buystock", method = RequestMethod.POST)

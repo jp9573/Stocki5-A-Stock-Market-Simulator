@@ -2,6 +2,8 @@ package com.csci5308.stocki5.user.authentication;
 
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,9 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserAuthentication implements AuthenticationProvider {
     private static final String INVALID_CREDENTIALS_MESSAGE = "Invalid Credentials.";
-
-    @Autowired
-    IUserDb userDb;
+    UserAbstractFactory userFactory = UserFactory.instance();
+    IUserDb userDb = userFactory.createUserDb();
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

@@ -35,12 +35,8 @@ public class UserProfileController {
     private static final String SECTOR_DEFAULT_VALUE = "0";
 
     UserAbstractFactory userFactory = UserFactory.instance();
-
-    @Autowired
-    IUserDb userDb;
-
-    @Autowired
-    IUserProfile iUserProfile;
+    IUserDb userDb = userFactory.createUserDb();
+    IUserProfile iUserProfile = userFactory.createUserProfile();
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView userProfile(HttpServletRequest request) {
