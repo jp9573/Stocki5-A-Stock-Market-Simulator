@@ -17,13 +17,15 @@ import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
 import com.csci5308.stocki5.trade.holding.Holding;
 import com.csci5308.stocki5.trade.holding.IHolding;
 import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 
 public class TradeDbMock implements ITradeDb
 {
 
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
 
 	@Override
 	public boolean insertTrade(ITrade trade, boolean isHolding)
@@ -37,7 +39,7 @@ public class TradeDbMock implements ITradeDb
 
 		List<ITrade> tradeList = new ArrayList<>();
 		IStockDb stockDb = stockFactoryMock.createStockDbMock();
-		IUserDb userDb = new UserDbMock();
+		IUserDb userDb = userFactoryMock.createUserDbMock();
 		if (userCode.equals("AB123456"))
 		{
 			tradeList.add(tradeFactory.createTradeWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, stockDb, userDb));
@@ -54,7 +56,7 @@ public class TradeDbMock implements ITradeDb
 	{
 		List<IHolding> holdingList = new ArrayList<>();
 		IStockDb stockDb = stockFactoryMock.createStockDbMock();
-		IUserDb userDb = new UserDbMock();
+		IUserDb userDb = userFactoryMock.createUserDbMock();
 		if (userCode.equals("AB123456"))
 		{
 			holdingList.add(tradeFactory.createHoldingWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, stockDb, userDb, true));
@@ -71,7 +73,7 @@ public class TradeDbMock implements ITradeDb
 	{
 		List<ITrade> tradeList = new ArrayList<>();
 		IStockDb stockDb = stockFactoryMock.createStockDbMock();
-		IUserDb userDb = new UserDbMock();
+		IUserDb userDb = userFactoryMock.createUserDbMock();
 		if (tradeType == TradeType.BUY)
 		{
 			tradeList.add(tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 50, TradeStatus.PENDING, stockDb, userDb));
