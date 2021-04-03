@@ -8,23 +8,21 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UserChangePasswordTest{
+public class UserChangePasswordTest {
 
     IUserChangePassword userChangePassword = null;
     IUserDb userDbMock = null;
     IUser user = null;
 
     @Before
-    public void createObjects()
-    {
+    public void createObjects() {
         userChangePassword = new UserChangePassword();
         userDbMock = new UserDbMock();
         user = userDbMock.getUser("AB123456");
     }
 
     @After
-    public void destroyObjects()
-    {
+    public void destroyObjects() {
         userChangePassword = null;
         userDbMock = null;
         user = null;
@@ -33,7 +31,7 @@ public class UserChangePasswordTest{
     @Test
     public void validateCurrentPasswordTestValid() {
         String currentPassword = "password";
-        Assert.assertTrue(userChangePassword.validateCurrentPassword(user, currentPassword ));
+        Assert.assertTrue(userChangePassword.validateCurrentPassword(user, currentPassword));
     }
 
     @Test

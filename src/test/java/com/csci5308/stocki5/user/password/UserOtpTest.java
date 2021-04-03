@@ -12,21 +12,21 @@ public class UserOtpTest {
     UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
 
     @Before
-    public void createObjects(){
+    public void createObjects() {
         userOtp = userFactory.createUserOtp();
         userOtp.setOtpMinValue(999);
         userOtp.setOtpMaxValue(10000);
     }
 
     @After
-    public void destroyObjects(){
-         userOtp = null;
+    public void destroyObjects() {
+        userOtp = null;
     }
 
     @Test
     public void generateOtpForUserTest() {
         String userCode = "TEST1234";
         userOtp.generateOtpForUser(userCode);
-        Assert.assertTrue(userOtp.getOtp()> userOtp.getOtpMinValue() && userOtp.getOtp()< userOtp.getOtpMaxValue());
+        Assert.assertTrue(userOtp.getOtp() > userOtp.getOtpMinValue() && userOtp.getOtp() < userOtp.getOtpMaxValue());
     }
 }
