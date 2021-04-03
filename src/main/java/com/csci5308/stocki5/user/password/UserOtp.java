@@ -30,6 +30,7 @@ public class UserOtp implements IUserOtp
 		return otp;
 	}
 
+	@Override
 	public void setOtp(int otp)
 	{
 		this.otp = otp;
@@ -41,6 +42,7 @@ public class UserOtp implements IUserOtp
 		return validity;
 	}
 
+	@Override
 	public void setValidity(String validity)
 	{
 		this.validity = validity;
@@ -52,6 +54,7 @@ public class UserOtp implements IUserOtp
 		return userCode;
 	}
 
+	@Override
 	public void setUserCode(String userCode)
 	{
 		this.userCode = userCode;

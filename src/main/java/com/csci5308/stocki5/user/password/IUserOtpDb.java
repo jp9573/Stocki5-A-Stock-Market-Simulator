@@ -7,7 +7,7 @@ public interface IUserOtpDb
 {
 	public boolean insertOtp(IUserOtp userOtp);
 
-	public UserOtp getOtp(int otp);
+	public IUserOtp getOtp(int otp);
 
 	public boolean deleteOtp(int otp);
 
