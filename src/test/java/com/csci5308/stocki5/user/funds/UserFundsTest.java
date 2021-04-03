@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.funds;
 
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -30,14 +30,14 @@ public class UserFundsTest {
 
     @Test
     public void resetFundsTest() {
-        User user = userDbMock.getUser("AB1234567");
+        IUser user = userDbMock.getUser("AB1234567");
         boolean resetStatus = userFunds.resetFunds(user, userDbMock);
         Assert.assertTrue(resetStatus);
     }
 
     @Test
     public void resetFundsNegativeTest() {
-        User user = userDbMock.getUser("AB123456");
+        IUser user = userDbMock.getUser("AB123456");
         boolean resetStatus = userFunds.resetFunds(user, userDbMock);
         Assert.assertFalse(resetStatus);
     }

@@ -17,8 +17,8 @@ import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.IUser;
 
 @Service
 public class TradeSell implements ITradeSell
@@ -35,7 +35,7 @@ public class TradeSell implements ITradeSell
 		boolean isTradeNumberGenerated = trade.generateTradeNumber();
 		if (isTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			User user = userDbInterface.getUser(userCode);
+			IUser user = userDbInterface.getUser(userCode);
 			double updatedFunds = user.getFunds() + trade.getTotalSellPrice();
 			boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
 			if (isHoldingRemoved)
@@ -81,7 +81,7 @@ public class TradeSell implements ITradeSell
 				boolean isTradeUpdated = dbInterface.updateSellTrade(trade, false);
 				if (isTradeUpdated)
 				{
-					User user = userDbInterface.getUser(trade.getUserCode());
+					IUser user = userDbInterface.getUser(trade.getUserCode());
 					double updatedFunds = user.getFunds() + (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
 					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}

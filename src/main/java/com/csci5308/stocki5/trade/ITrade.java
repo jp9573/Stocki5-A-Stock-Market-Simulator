@@ -1,7 +1,8 @@
 package com.csci5308.stocki5.trade;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
+
 import java.util.Date;
 
 public interface ITrade {

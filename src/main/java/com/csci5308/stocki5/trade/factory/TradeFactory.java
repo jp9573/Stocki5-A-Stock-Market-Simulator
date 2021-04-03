@@ -21,7 +21,7 @@ import com.csci5308.stocki5.trade.order.ITradeOrder;
 import com.csci5308.stocki5.trade.order.TradeOrder;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.trade.sell.TradeSell;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 public class TradeFactory extends TradeAbstractFactory {
 

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.IUser;
 
 @Service
 public interface IStockFetch
@@ -19,5 +19,5 @@ public interface IStockFetch
 
 	public List<IStock> fetchTopLoserStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode);
 
-	public String getUserStockSegments(User user);
+	public String getUserStockSegments(IUser user);
 }

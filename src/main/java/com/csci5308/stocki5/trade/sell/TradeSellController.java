@@ -25,7 +25,7 @@ import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.order.ITradeOrder;
-import com.csci5308.stocki5.user.UserDb;
+import com.csci5308.stocki5.user.db.UserDb;
 
 @Controller
 public class TradeSellController
