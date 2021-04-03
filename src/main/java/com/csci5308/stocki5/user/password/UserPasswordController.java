@@ -2,6 +2,8 @@ package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,20 +40,12 @@ public class UserPasswordController {
     private static final String PASSWORD_CHANGE_SUCCESS_MESSAGE = "Password changed.";
     private static final String INVALID_CURRENT_PASSWORD_ERROR_MESSAGE = "Invalid Current Password";
 
-    @Autowired
-    IUserDb userDb;
-
-    @Autowired
-    IUserOtpDb userOtpDb;
-
-    @Autowired
-    IUserOtp userOtp;
-
-    @Autowired
-    IUserForgotPassword userForgotPassword;
-
-    @Autowired
-    IUserChangePassword userChangePassword;
+    UserAbstractFactory userFactory = UserFactory.instance();
+    IUserDb userDb = userFactory.createUserDb();
+    IUserOtpDb userOtpDb = userFactory.createUserOtpDb();
+    IUserOtp userOtp = userFactory.createUserOtp();
+    IUserForgotPassword userForgotPassword = userFactory.createUserForgotPassword();
+    IUserChangePassword userChangePassword = userFactory.createUserChangePassword();
 
     @Autowired
     Email email;

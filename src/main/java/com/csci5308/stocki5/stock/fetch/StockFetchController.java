@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +28,11 @@ public class StockFetchController
 	private static final String LOSERS = "losers";
 
 	StockAbstractFactory stockFactory = StockFactory.instance();
+	UserAbstractFactory userFactory = UserFactory.instance();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockDb iStockDb = stockFactory.createStockDb();
-	
-	@Autowired
-	IUserDb userDb;
+	IUserDb userDb = userFactory.createUserDb();
 
 	@RequestMapping(value = { "/stocks" }, method = RequestMethod.GET)
 	public ModelAndView stocksPage(HttpServletRequest request)

@@ -1,6 +1,8 @@
 package com.csci5308.stocki5.user.forgotcode;
 
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,9 @@ public class UserForgotCodeController {
     public static final String ERROR_MESSAGE = "Invalid email or date of birth.";
     public static final String SUCCESS_MESSAGE = "Your UserCode  is - ";
 
-    @Autowired
-    IUserDb userDb;
-
-    @Autowired
-    IUserForgotCode iUserForgotCode;
+    UserAbstractFactory userFactory = UserFactory.instance();
+    IUserDb userDb = userFactory.createUserDb();
+    IUserForgotCode iUserForgotCode = userFactory.createUserForgotCode();
 
     @RequestMapping(value = "/forgotuser", method = RequestMethod.POST)
     public ModelAndView userForgotCode(@RequestParam(value = EMAIL_ID, required = true) String email,
