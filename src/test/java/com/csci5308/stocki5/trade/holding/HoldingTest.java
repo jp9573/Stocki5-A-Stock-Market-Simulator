@@ -2,6 +2,8 @@ package com.csci5308.stocki5.trade.holding;
 
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,12 +15,12 @@ import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
 
 public class HoldingTest {
 
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
+    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
     private IHolding holdingFirst = null;
     private IHolding holdingSecond = null;
     private IStockDb stockDb = null;
@@ -27,7 +29,7 @@ public class HoldingTest {
     @Before
     public void createObjects() {
         stockDb = stockFactoryMock.createStockDbMock();
-        userDb = new UserDbMock();
+        userDb = userFactoryMock.createUserDbMock();
         holdingFirst = tradeFactory.createHoldingWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb, true);
         holdingSecond = tradeFactory.createHoldingWithData("AB1234567", 999, TradeType.BUY, 5000, TradeStatus.EXECUTED, stockDb, userDb, true);
     }
