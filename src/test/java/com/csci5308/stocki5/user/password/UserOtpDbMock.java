@@ -6,7 +6,7 @@ import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UserOtpDbMock  implements IUserOtpDb {
+public class UserOtpDbMock implements IUserOtpDb {
 
     UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
 
@@ -17,7 +17,7 @@ public class UserOtpDbMock  implements IUserOtpDb {
 
     @Override
     public IUserOtp getOtp(int otp) {
-        if(otp == 9999) {
+        if (otp == 9999) {
             String format = "yyyy-MM-dd HH:mm:ss";
             SimpleDateFormat dateFormater = new SimpleDateFormat(format);
             Date currentDateTime = new Date();
@@ -30,15 +30,13 @@ public class UserOtpDbMock  implements IUserOtpDb {
             userOtp.setUserCode("AB123456");
             userOtp.setValidity(dateFormater.format(newDateTime));
             return userOtp;
-        }
-        else if(otp == 8888){
+        } else if (otp == 8888) {
             IUserOtp userOtp = userFactory.createUserOtp();
             userOtp.setOtp(8888);
             userOtp.setUserCode("AB123456");
             userOtp.setValidity("2000-10-10 12:12:12");
             return userOtp;
-        }
-        else {
+        } else {
             return null;
         }
     }

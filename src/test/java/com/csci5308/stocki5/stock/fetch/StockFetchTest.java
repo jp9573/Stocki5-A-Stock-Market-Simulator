@@ -2,6 +2,8 @@ package com.csci5308.stocki5.stock.fetch;
 
 import java.util.List;
 
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,14 +17,15 @@ import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 public class StockFetchTest
 {
 	
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
-	private UserDbMock userDbMock = null;
+	UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+	private IUserDb userDbMock = null;
 	private IStockDbGainersLosers gainersLosersMock = null;
 	private IStockDb stockDbMock = null;
 	private IStockFetch stockFetch = null;
@@ -31,7 +34,7 @@ public class StockFetchTest
 	@Before
 	public void createObjects()
 	{
-		userDbMock = new UserDbMock();
+		userDbMock = userFactoryMock.createUserDbMock();
 		gainersLosersMock = stockFactoryMock.createStockDbGainersLosersMock();
 		stockDbMock = stockFactoryMock.createStockDbMock();
 		stockFetch = stockFactory.createStockFetch();

@@ -1,8 +1,8 @@
 package com.csci5308.stocki5.user.db;
 
 import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import com.csci5308.stocki5.user.factory.UserFactoryMock;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class UserDbMock implements IUserDb {
 
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
 
     @Override
     public boolean insertUser(IUser user) {

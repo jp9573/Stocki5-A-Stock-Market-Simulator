@@ -24,7 +24,7 @@ import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
-import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 @Service
 public class StockPriceAlgorithm implements IStockPriceAlgorithm
@@ -41,7 +41,7 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Autowired
-	UserDb userDb;
+	IUserDb userDb;
 
 	public StockPriceAlgorithm()
 	{
