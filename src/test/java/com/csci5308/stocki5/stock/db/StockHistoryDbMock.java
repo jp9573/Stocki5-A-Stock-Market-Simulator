@@ -1,4 +1,8 @@
-package com.csci5308.stocki5.stock.history;
+package com.csci5308.stocki5.stock.db;
+
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.history.IStockHistory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,12 +10,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 public class StockHistoryDbMock implements IStockHistoryDb
 {
+	private static IStockHistoryDb uniqueInstance = null;
+
 	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	private StockHistoryDbMock() { }
+
+	public static IStockHistoryDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockHistoryDbMock();
+		}
+		return uniqueInstance;
+	}
 	
 	@Override
 	public List<IStockHistory> getStockHistoryBySymbol(String symbol)

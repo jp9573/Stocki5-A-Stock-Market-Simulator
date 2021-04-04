@@ -1,10 +1,10 @@
 package com.csci5308.stocki5.stock.history;
 
-import java.util.List;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.IStock;
+import java.util.List;
 
 @Service
 public interface IStockMaintainHistory

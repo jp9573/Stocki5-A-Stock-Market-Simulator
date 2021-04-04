@@ -1,24 +1,19 @@
 package com.csci5308.stocki5.stock.fetch;
 
-import java.security.Principal;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class StockFetchController
@@ -27,8 +22,9 @@ public class StockFetchController
 	private static final String GAINERS = "gainers";
 	private static final String LOSERS = "losers";
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
-	UserAbstractFactory userFactory = UserFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
+
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockDb iStockDb = stockFactory.createStockDb();

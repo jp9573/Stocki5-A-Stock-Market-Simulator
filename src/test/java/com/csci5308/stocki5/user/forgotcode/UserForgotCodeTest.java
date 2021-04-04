@@ -2,14 +2,13 @@ package com.csci5308.stocki5.user.forgotcode;
 
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class UserForgotCodeTest {
-    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     IUserForgotCode userForgotCode = null;
     IUserDb userDb = null;
 

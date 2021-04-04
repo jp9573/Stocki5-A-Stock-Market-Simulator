@@ -1,8 +1,7 @@
 package com.csci5308.stocki5.stock.price;
 
-import org.springframework.stereotype.Repository;
-
 import com.csci5308.stocki5.stock.db.IStockDb;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IStockPriceEod

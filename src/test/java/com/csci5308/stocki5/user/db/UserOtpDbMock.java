@@ -1,14 +1,25 @@
-package com.csci5308.stocki5.user.password;
+package com.csci5308.stocki5.user.db;
 
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
+import com.csci5308.stocki5.user.password.IUserOtp;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserOtpDbMock implements IUserOtpDb {
 
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    private static IUserOtpDb uniqueInstance = null;
+
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
+
+    private UserOtpDbMock() { }
+
+    public static IUserOtpDb instance(){
+        if(null == uniqueInstance){
+            uniqueInstance = new UserOtpDbMock();
+        }
+        return uniqueInstance;
+    }
 
     @Override
     public boolean insertOtp(IUserOtp userOtp) {

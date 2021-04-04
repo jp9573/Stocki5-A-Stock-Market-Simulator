@@ -2,7 +2,6 @@ package com.csci5308.stocki5.user.db;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +9,18 @@ import java.util.Date;
 
 public class UserDbMock implements IUserDb {
 
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    private static IUserDb uniqueInstance = null;
+
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
+
+    private UserDbMock() { }
+
+    public static IUserDb instance(){
+        if(null == uniqueInstance){
+            uniqueInstance = new UserDbMock();
+        }
+        return uniqueInstance;
+    }
 
     @Override
     public boolean insertUser(IUser user) {

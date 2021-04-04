@@ -1,11 +1,10 @@
 package com.csci5308.stocki5.trade.db;
 
 import com.csci5308.stocki5.trade.ITrade;
-import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeType;
-import com.csci5308.stocki5.trade.holding.Holding;
 import com.csci5308.stocki5.trade.holding.IHolding;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository

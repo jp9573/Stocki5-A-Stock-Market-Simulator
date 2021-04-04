@@ -1,21 +1,19 @@
 package com.csci5308.stocki5.stock.prediction;
 
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.history.IStockHistory;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.history.IStockHistory;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
-
 @Service
 public class StockPrediction implements IStockPrediction
 {
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
 	public List<IStock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
 	{

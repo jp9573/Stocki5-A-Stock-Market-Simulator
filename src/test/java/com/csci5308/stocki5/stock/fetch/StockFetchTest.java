@@ -1,30 +1,27 @@
 package com.csci5308.stocki5.stock.fetch;
 
-import java.util.List;
-
-import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
 
 public class StockFetchTest
 {
 	
 	StockAbstractFactory stockFactory = StockFactory.instance();
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
-	UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
 	private IUserDb userDbMock = null;
 	private IStockDbGainersLosers gainersLosersMock = null;
 	private IStockDb stockDbMock = null;

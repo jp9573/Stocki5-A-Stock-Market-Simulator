@@ -1,5 +1,14 @@
 package com.csci5308.stocki5.trade.db;
 
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
+import com.csci5308.stocki5.trade.ITrade;
+import com.csci5308.stocki5.trade.TradeStatus;
+import com.csci5308.stocki5.trade.TradeType;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.holding.IHolding;
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,26 +18,25 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.csci5308.stocki5.trade.ITrade;
-import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
-import com.csci5308.stocki5.trade.holding.IHolding;
-import org.springframework.stereotype.Repository;
-
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.TradeStatus;
-import com.csci5308.stocki5.trade.TradeType;
-import com.csci5308.stocki5.trade.holding.Holding;
-
 @Repository
 public class TradeDb implements ITradeDb
 {
 	final String TRADE_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,symbol,segment,quantity,buyPrice,sellPrice,totalBuyPrice,totalSellPrice,status,tradeDate";
 	final String HOLDING_ATTRIBUTES = "tradeNumber,userCode,stockId,buySell,trade.symbol,trade.segment,quantity,buyPrice,price,totalBuyPrice,totalSellPrice,status,isHolding,tradeDate";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
-	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+	private static ITradeDb uniqueInstance = null;
+
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
+	IDbConnection dbConnection = DbConnection.instance();
+
+	private TradeDb(){ }
+
+	public static ITradeDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new TradeDb();
+		}
+		return uniqueInstance;
+	}
 
 	@Override
 	public boolean insertTrade(ITrade trade, boolean isHolding)

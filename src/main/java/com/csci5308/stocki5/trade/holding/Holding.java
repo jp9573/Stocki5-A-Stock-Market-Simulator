@@ -1,13 +1,13 @@
 package com.csci5308.stocki5.trade.holding;
 
-import java.text.DecimalFormat;
-
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.user.db.IUserDb;
+
+import java.text.DecimalFormat;
 
 public class Holding extends Trade implements IHolding
 {

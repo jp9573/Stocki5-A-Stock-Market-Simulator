@@ -1,33 +1,25 @@
 package com.csci5308.stocki5.trade.buy;
 
-import java.security.Principal;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.order.ITradeOrder;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.fetch.IStockFetch;
-import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.db.TradeDb;
-import com.csci5308.stocki5.trade.order.ITradeOrder;
-import com.csci5308.stocki5.user.db.IUserDb;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class TradeBuyController
@@ -43,9 +35,9 @@ public class TradeBuyController
 	public static final String SET_BUY_PRICE = "setbuyprice";
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
-	StockAbstractFactory stockFactory = StockFactory.instance();
-	UserAbstractFactory userFactory = UserFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
 	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
 	ITradeBuy iTradeBuy = tradeFactory.createTradeBuy();

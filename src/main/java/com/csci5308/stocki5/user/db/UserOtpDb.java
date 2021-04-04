@@ -1,8 +1,9 @@
-package com.csci5308.stocki5.user.password;
+package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.config.Stocki5DbConnection;
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
+import com.csci5308.stocki5.user.password.IUserOtp;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -12,12 +13,24 @@ import java.sql.Timestamp;
 import java.sql.ResultSet;
 
 
+
 @Repository
 public class UserOtpDb implements IUserOtpDb {
     final String USER_OTP_ATTRIBUTES = "userCode,otp,validity";
 
-    Stocki5DbConnection dbConnection = new Stocki5DbConnection();
-    UserAbstractFactory userFactory = UserFactory.instance();
+    private static IUserOtpDb uniqueInstance = null;
+
+    IDbConnection dbConnection = DbConnection.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
+
+    private UserOtpDb(){ }
+
+    public static IUserOtpDb instance(){
+        if(null == uniqueInstance){
+            uniqueInstance = new UserOtpDb();
+        }
+        return uniqueInstance;
+    }
 
     private boolean executeDelete(String deleteSQL) {
         Connection connection = dbConnection.createConnection();

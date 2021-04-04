@@ -1,29 +1,24 @@
 package com.csci5308.stocki5.trade;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.db.IUserDb;
-
 public class TradeTest {
 
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
-    TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+    TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
-    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     private ITradeDb tradeDb = null;
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
