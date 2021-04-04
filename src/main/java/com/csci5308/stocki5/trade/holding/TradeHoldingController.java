@@ -21,7 +21,7 @@ public class TradeHoldingController
 	public static final String ORDERS = "orders";
 
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
 	ITradeHolding iTradeHolding = tradeFactory.createTradeHolding();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();

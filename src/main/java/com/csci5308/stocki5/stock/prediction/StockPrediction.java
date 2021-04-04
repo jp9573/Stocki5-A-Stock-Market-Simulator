@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class StockPrediction implements IStockPrediction
 {
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
 	public List<IStock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
 	{

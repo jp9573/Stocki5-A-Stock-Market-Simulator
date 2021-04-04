@@ -24,7 +24,7 @@ public class StockFetchController
 	private static final String GAINERS = "gainers";
 	private static final String LOSERS = "losers";
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	UserAbstractFactory userFactory = UserFactory.instance();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();

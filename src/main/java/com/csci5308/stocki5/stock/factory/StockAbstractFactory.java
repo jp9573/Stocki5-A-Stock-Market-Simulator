@@ -16,6 +16,19 @@ import org.springframework.stereotype.Service;
 @Service
 public abstract class StockAbstractFactory
 {
+	private static StockAbstractFactory uniqueInstance = null;
+
+	protected StockAbstractFactory (){ }
+
+	public static StockAbstractFactory instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new StockFactory();
+		}
+		return uniqueInstance;
+	}
+
 	public abstract IStock createStock();
 
 	public abstract IStock createStockById(int stockId, IStockDb iStockDb);

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class StockScheduler implements IStockScheduler
 {
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 
 	IStockPriceAlgorithm iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();

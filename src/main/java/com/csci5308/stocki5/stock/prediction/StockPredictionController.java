@@ -19,7 +19,7 @@ public class StockPredictionController
 	private static final String PREDICTION_LIST = "predictionList";
 	private static final String STOCK_NAME = "stockName";
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 	IStockPrediction iStockPrediction = stockFactory.createStockPrediction();
 
