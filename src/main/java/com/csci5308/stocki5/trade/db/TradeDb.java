@@ -193,6 +193,7 @@ public class TradeDb implements ITradeDb
 			statement.setString(2, userCode);
 			statement.setInt(3, stockId);
 			statement.setInt(4, quantity);
+			statement.setBoolean(5, true);
 
 			int tradeCount = statement.executeUpdate();
 			if (tradeCount > 0)

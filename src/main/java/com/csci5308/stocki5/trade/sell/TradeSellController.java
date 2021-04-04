@@ -32,6 +32,7 @@ import com.csci5308.stocki5.user.db.IUserDb;
 @Controller
 public class TradeSellController
 {
+	public static final String SET_SELL_STOCK_ID = "setsellstockid";
 	public static final String SELL_STOCK_ID = "sellstockid";
 	public static final String QUANTITY = "quantity";
 	public static final String TRADE_BUY_NUMBER = "tradeBuyNumber";
@@ -82,7 +83,7 @@ public class TradeSellController
 	}
 
 	@RequestMapping(value = "/setsellstock", method = RequestMethod.POST)
-	public ModelAndView setBwllStock(HttpServletRequest request, @RequestParam(value = SELL_STOCK_ID) int stockId, @RequestParam(value = SET_QUANTITY) int quantity, @RequestParam(value = SET_SELL_PRICE) float sellPrice, @RequestParam(value = TRADE_BUY_NUMBER) String tradeBuyNumber)
+	public ModelAndView setBwllStock(HttpServletRequest request, @RequestParam(value = SET_SELL_STOCK_ID) int stockId, @RequestParam(value = SET_QUANTITY) int quantity, @RequestParam(value = SET_SELL_PRICE) float sellPrice, @RequestParam(value = TRADE_BUY_NUMBER) String tradeBuyNumber)
 	{
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
