@@ -12,7 +12,7 @@ public class UserDbMock implements IUserDb {
 
     private static IUserDb uniqueInstance = null;
 
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
 
     private UserDbMock() { }
 
