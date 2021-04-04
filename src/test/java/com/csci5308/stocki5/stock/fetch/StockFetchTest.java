@@ -23,7 +23,7 @@ public class StockFetchTest
 	
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
-	UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
 	private IUserDb userDbMock = null;
 	private IStockDbGainersLosers gainersLosersMock = null;
 	private IStockDb stockDbMock = null;

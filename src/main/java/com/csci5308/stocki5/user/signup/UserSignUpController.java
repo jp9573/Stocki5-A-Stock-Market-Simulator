@@ -26,7 +26,7 @@ public class UserSignUpController {
     private static final String ERROR = "error";
     private static final String USERNAME = "username";
 
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     IUserDb userDb = userFactory.createUserDb();
     IUserSignUp iUserSignUp = userFactory.createUserSignUp();

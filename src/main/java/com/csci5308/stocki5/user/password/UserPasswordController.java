@@ -41,7 +41,7 @@ public class UserPasswordController {
     private static final String PASSWORD_CHANGE_SUCCESS_MESSAGE = "Password changed.";
     private static final String INVALID_CURRENT_PASSWORD_ERROR_MESSAGE = "Invalid Current Password";
 
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
     IEmail email = Email.instance();
 
     IUserDb userDb = userFactory.createUserDb();

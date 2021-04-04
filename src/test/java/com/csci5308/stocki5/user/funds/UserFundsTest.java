@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class UserFundsTest {
 
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
     IUserDb userDbMock = null;
     IUserFunds userFunds = null;
 

@@ -17,7 +17,7 @@ public class UserForgotCodeController {
     public static final String ERROR_MESSAGE = "Invalid email or date of birth.";
     public static final String SUCCESS_MESSAGE = "Your UserCode  is - ";
 
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     IUserDb userDb = userFactory.createUserDb();
     IUserForgotCode iUserForgotCode = userFactory.createUserForgotCode();
