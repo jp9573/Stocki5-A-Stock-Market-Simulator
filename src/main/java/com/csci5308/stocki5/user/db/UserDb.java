@@ -6,7 +6,13 @@ import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 @Repository
 public class UserDb implements IUserDb {
