@@ -110,6 +110,7 @@ public class UserProfileController {
         model.addObject(INTERNATIONAL_COMMODITY_EXCHANGE, internationalCommodityExchange);
         model.addObject(FOREIGN_EXCHANGE, foreignExchange);
         model.addObject(FUNDS, funds);
+        model.setViewName("profile");
 
         IUser user = userFactory.createUser();
         user.setFirstName(firstName);
@@ -129,10 +130,10 @@ public class UserProfileController {
         boolean isUserUpdated = iUserProfile.updateUser(userDb, user, dateOfBirth);
         if (isUserUpdated) {
             model.addObject("success", USER_PROFILE_UPDATE_SUCCESS_MESSAGE);
+            return model;
         }
 
         model.addObject("error", user.getValidityMessage());
-        model.setViewName("profile");
         return model;
 
     }

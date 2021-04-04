@@ -1,17 +1,17 @@
 package com.csci5308.stocki5.trade;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 public class TradeTest {
 
@@ -19,7 +19,6 @@ public class TradeTest {
     TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
     UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
-    private ITradeDb tradeDb = null;
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
     private ITrade tradeFirst = null;
@@ -32,7 +31,6 @@ public class TradeTest {
 
     @Before
     public void createObjects() {
-        tradeDb = tradeFactoryMock.createTradeDbMock();
         stockDb = stockFactoryMock.createStockDbMock();
         userDb = userFactoryMock.createUserDbMock();
         tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
@@ -46,7 +44,6 @@ public class TradeTest {
 
     @After
     public void destroyObjects() {
-        tradeDb = null;
         stockDb = null;
         userDb = null;
         tradeFirst = null;

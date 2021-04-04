@@ -1,35 +1,42 @@
-package com.csci5308.stocki5.config;
+package com.csci5308.stocki5.database;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Stocki5EmailConfig implements IStocki5EmailConfig
+
+public class Stocki5DbConfig implements IStocki5DbConfig
 {
 	private static final String PROPERTIES_FILE = "config.properties";
 
-	private static IStocki5EmailConfig uniqueInstance = null;
+	private static IStocki5DbConfig uniqueInstance = null;
 
-	private String host;
+	private String driver;
+	private String database;
 	private String username;
 	private String password;
-	private int port;
 
-	private Stocki5EmailConfig(){
+	private Stocki5DbConfig()
+	{
 		readProperties();
 	}
 
-	public static IStocki5EmailConfig instance(){
+	public static IStocki5DbConfig instance(){
 		if(null == uniqueInstance){
-			uniqueInstance = new Stocki5EmailConfig();
+			uniqueInstance = new Stocki5DbConfig();
 		}
 		return uniqueInstance;
 	}
 
 	@Override
-	public String getHost() {
-		return host;
+	public String getDriver() {
+		return driver;
+	}
+
+	@Override
+	public String getDatabase() {
+		return database;
 	}
 
 	@Override
@@ -40,11 +47,6 @@ public class Stocki5EmailConfig implements IStocki5EmailConfig
 	@Override
 	public String getPassword() {
 		return password;
-	}
-
-	@Override
-	public int getPort() {
-		return port;
 	}
 
 	private void readProperties()
@@ -61,10 +63,10 @@ public class Stocki5EmailConfig implements IStocki5EmailConfig
 			{
 				prop.load(inputStream);
 			}
-			this.host = prop.getProperty("smtp.host");
-			this.username = prop.getProperty("smtp.username");
-			this.password = prop.getProperty("smtp.password");
-			this.port = Integer.parseInt(prop.getProperty("smtp.port"));
+			this.driver = prop.getProperty("jdbc.driverClassName");
+			this.database = prop.getProperty("jdbc.url");
+			this.username = prop.getProperty("jdbc.username");
+			this.password = prop.getProperty("jdbc.password");
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -79,4 +81,5 @@ public class Stocki5EmailConfig implements IStocki5EmailConfig
 			}
 		}
 	}
+
 }

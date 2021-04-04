@@ -1,4 +1,4 @@
-package com.csci5308.stocki5.config;
+package com.csci5308.stocki5.database;
 
 public interface IStocki5DbConfig {
 

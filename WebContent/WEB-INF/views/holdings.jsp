@@ -43,7 +43,7 @@
                     <th>CURRENT VALUE</th>
                     <th>PROFIT/LOSS</th>
                     <th>SELL</th>
-                    <th>SETY SELL PRICE</th>
+                    <th>SET SELL PRICE</th>
                 </tr>
                 </thead>
                 <tbody>

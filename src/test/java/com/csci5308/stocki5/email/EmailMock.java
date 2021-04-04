@@ -1,18 +1,25 @@
 package com.csci5308.stocki5.email;
 
-public class EmailMock implements IEmail{
-    private static IEmail uniqueInstance = null;
+public class EmailMock implements IEmail
+{
+	private static IEmail uniqueInstance = null;
+	
+	private EmailMock()
+	{
+	}
 
-    private EmailMock() { }
-    public static IEmail instance(){
-        if(null == uniqueInstance){
-            uniqueInstance = new EmailMock();
-        }
-        return uniqueInstance;
-    }
+	public static IEmail instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new EmailMock();
+		}
+		return uniqueInstance;
+	}
 
-    @Override
-    public boolean sendEmail(String toEmail, String subject, String content) {
-        return true;
-    }
+	@Override
+	public boolean sendEmail(String toEmail, String subject, String content)
+	{
+		return true;
+	}
 }

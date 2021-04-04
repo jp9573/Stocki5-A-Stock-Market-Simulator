@@ -1,22 +1,37 @@
 package com.csci5308.stocki5.stock.history;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockHistoryDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+
 @Service
 public class StockMaintainHistory implements IStockMaintainHistory
 {
 	static final String MAINTAIN_HISTORY_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	private static IStockMaintainHistory uniqueInstance = null;
 
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
+	private StockMaintainHistory()
+	{
+	}
+
+	public static IStockMaintainHistory instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new StockMaintainHistory();
+		}
+		return uniqueInstance;
+	}
 
 	public boolean maintainStocksHistory(List<IStock> iStocks, int noOfVersions, IStockHistoryDb iStockHistoryDb)
 	{

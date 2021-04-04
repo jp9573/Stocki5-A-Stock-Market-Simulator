@@ -2,6 +2,7 @@ package com.csci5308.stocki5.user.funds;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,13 +11,14 @@ import org.junit.Test;
 
 public class UserFundsTest {
 
-    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
     IUserDb userDbMock = null;
     IUserFunds userFunds = null;
 
     @Before
     public void createObjects() {
-        userDbMock = userFactory.createUserDbMock();
+        userDbMock = userFactoryMock.createUserDbMock();
         userFunds = userFactory.createUserFunds();
         userFunds.setResetFundAmount(10000);
     }
