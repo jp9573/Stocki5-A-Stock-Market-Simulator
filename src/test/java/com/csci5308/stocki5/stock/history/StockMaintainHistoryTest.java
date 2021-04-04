@@ -17,7 +17,7 @@ import java.util.List;
 public class StockMaintainHistoryTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockDb stockDbMock = null;
 	private IStockHistoryDb stockHistoryDbMock = null;
 	private IStockMaintainHistory stockMaintainHistory = null;

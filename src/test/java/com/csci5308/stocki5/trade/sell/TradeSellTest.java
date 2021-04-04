@@ -19,7 +19,7 @@ import org.junit.Test;
 public class TradeSellTest
 {
 
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();

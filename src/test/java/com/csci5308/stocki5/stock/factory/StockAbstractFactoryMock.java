@@ -7,6 +7,19 @@ import com.csci5308.stocki5.stock.price.IStockSchedulerMock;
 
 public abstract class StockAbstractFactoryMock
 {
+	private static StockAbstractFactoryMock uniqueInstance = null;
+
+	protected StockAbstractFactoryMock(){ }
+
+	public static StockAbstractFactoryMock instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new StockFactoryMock();
+		}
+		return uniqueInstance;
+	}
+
 	public abstract IStockDb createStockDbMock();
 	
 	public abstract IStockDbGainersLosers createStockDbGainersLosersMock();

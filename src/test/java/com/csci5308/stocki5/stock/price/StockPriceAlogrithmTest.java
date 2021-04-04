@@ -16,7 +16,7 @@ import org.junit.Test;
 public class StockPriceAlogrithmTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockPriceAlgorithm stockPriceAlgorithm = null;
 	private IStockDb stockDbMock = null;
 	private TradeBuy tradeBuy = null;
