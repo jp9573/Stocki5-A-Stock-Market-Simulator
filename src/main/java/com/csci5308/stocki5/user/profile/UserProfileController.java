@@ -33,7 +33,7 @@ public class UserProfileController {
     private static final String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User information updated successfully.";
     private static final String SECTOR_DEFAULT_VALUE = "0";
 
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     IUserDb userDb = userFactory.createUserDb();
     IUserProfile iUserProfile = userFactory.createUserProfile();

@@ -12,7 +12,7 @@ import org.junit.Test;
 public class UserChangePasswordTest {
 
     IUserChangePassword userChangePassword = null;
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
     IUserDb userDbMock = null;
     IUser user = null;
 

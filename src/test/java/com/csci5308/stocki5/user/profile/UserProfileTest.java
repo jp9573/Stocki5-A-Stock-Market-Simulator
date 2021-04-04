@@ -14,7 +14,7 @@ public class UserProfileTest {
     private static final String INVALID_EMAIL_MESSAGE = "Invalid Email Id";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     private IUserDb userDbMock = null;
     private IUserProfile userProfile = null;
     private IUser user = null;

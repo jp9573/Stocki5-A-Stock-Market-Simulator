@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class UserOtpTest {
     IUserOtp userOtp;
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
 
     @Before
     public void createObjects() {

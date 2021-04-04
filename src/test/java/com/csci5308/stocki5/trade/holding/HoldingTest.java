@@ -19,7 +19,7 @@ public class HoldingTest {
 
 	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
-    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     private IHolding holdingFirst = null;
     private IHolding holdingSecond = null;
     private IStockDb stockDb = null;

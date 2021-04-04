@@ -14,7 +14,7 @@ public class UserSignUpTest {
     private static final String ADD_USER_ERROR_MESSAGE = "Error in adding user. Please try again later.";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
     private IUserDb userDbMock = null;
     private IUserSignUp userSignUp = null;
     private IUser user = null;

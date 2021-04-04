@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UserForgotCodeTest {
-    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     IUserForgotCode userForgotCode = null;
     IUserDb userDb = null;
 

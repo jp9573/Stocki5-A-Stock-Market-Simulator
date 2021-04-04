@@ -18,7 +18,7 @@ public class UserForgotPasswordTest {
     IEmail emailMock = null;
     IUserChangePassword userChangePassword = null;
     IUserOtp userOtp = null;
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
 
     @Before
     public void createObjects() {

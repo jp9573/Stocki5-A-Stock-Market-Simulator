@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class UserTest {
     private IUser user = null;
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
 
     @Before
     public void createObjects() {
