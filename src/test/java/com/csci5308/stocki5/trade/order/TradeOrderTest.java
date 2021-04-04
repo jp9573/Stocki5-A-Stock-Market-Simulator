@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TradeOrderTest {
 
-    TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+    TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
     private ITradeDb tradeDb = null;
     private ITradeOrder tradeOrder = null;
