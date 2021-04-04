@@ -40,7 +40,7 @@ public class TradeSellController
 
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactory userFactory = UserFactory.instance();
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDb iStockDb = stockFactory.createStockDb();

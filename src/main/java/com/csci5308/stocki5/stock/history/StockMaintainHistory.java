@@ -17,7 +17,7 @@ public class StockMaintainHistory implements IStockMaintainHistory
 {
 	static final String MAINTAIN_HISTORY_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
 	public boolean maintainStocksHistory(List<IStock> iStocks, int noOfVersions, IStockHistoryDb iStockHistoryDb)
 	{

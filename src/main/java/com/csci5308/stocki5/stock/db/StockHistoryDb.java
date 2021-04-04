@@ -19,7 +19,7 @@ public class StockHistoryDb implements IStockHistoryDb
 
 	IDbConnection dbConnection = DbConnection.instance();
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
 	private StockHistoryDb(){ }
 

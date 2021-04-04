@@ -17,18 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class StockFactory extends StockAbstractFactory
 {
-
-	private static StockFactory uniqueInstance = null;
-
-	public static StockAbstractFactory instance()
-	{
-		if (null == uniqueInstance)
-		{
-			uniqueInstance = new StockFactory();
-		}
-		return uniqueInstance;
-	}
-
 	@Override
 	public IStock createStock()
 	{

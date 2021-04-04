@@ -22,7 +22,7 @@ public class StockDbGainersLosers implements IStockDbGainersLosers
 	private static IStockDbGainersLosers uniqueInstance = null;
 
 	IDbConnection dbConnection = DbConnection.instance();
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
 	private StockDbGainersLosers(){ }
 
