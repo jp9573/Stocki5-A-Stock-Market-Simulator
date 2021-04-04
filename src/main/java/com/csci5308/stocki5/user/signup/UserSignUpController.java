@@ -1,15 +1,14 @@
 package com.csci5308.stocki5.user.signup;
 
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.IUserDb;
 
 @Controller
 public class UserSignUpController {

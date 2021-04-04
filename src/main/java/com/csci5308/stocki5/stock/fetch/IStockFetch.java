@@ -1,14 +1,13 @@
 package com.csci5308.stocki5.stock.fetch;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
-import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface IStockFetch

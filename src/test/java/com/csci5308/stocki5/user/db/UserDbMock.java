@@ -10,7 +10,18 @@ import java.util.Date;
 
 public class UserDbMock implements IUserDb {
 
+    private static IUserDb uniqueInstance = null;
+
     UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+
+    private UserDbMock() { }
+
+    public static IUserDb instance(){
+        if(null == uniqueInstance){
+            uniqueInstance = new UserDbMock();
+        }
+        return uniqueInstance;
+    }
 
     @Override
     public boolean insertUser(IUser user) {

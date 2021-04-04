@@ -1,5 +1,21 @@
 package com.csci5308.stocki5.stock.price;
 
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
+import com.csci5308.stocki5.trade.buy.ITradeBuy;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.trade.sell.ITradeSell;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserFactory;
+import org.springframework.stereotype.Service;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,25 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
-
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
-import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
-import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
-import com.csci5308.stocki5.trade.buy.ITradeBuy;
-import com.csci5308.stocki5.trade.db.TradeDb;
-import com.csci5308.stocki5.trade.sell.ITradeSell;
-import com.csci5308.stocki5.user.db.IUserDb;
 
 @Service
 public class StockPriceAlgorithm implements IStockPriceAlgorithm

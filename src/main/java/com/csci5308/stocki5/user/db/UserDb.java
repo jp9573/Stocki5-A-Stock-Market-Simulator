@@ -1,23 +1,31 @@
 package com.csci5308.stocki5.user.db;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.stereotype.Repository;
-import com.csci5308.stocki5.config.Stocki5DbConnection;
+
+import java.sql.*;
 
 @Repository
 public class UserDb implements IUserDb {
+    private final String USER_ATTRIBUTES = "userCode,password,firstName,lastName,emailId,contactNo,gender,country,address,province,dateOfBirth,funds,internationalStockExchange,internationalDerivativeExchange,internationalCommodityExchange,foreignExchange";
 
-    Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+    private static IUserDb uniqueInstance = null;
+
+    IDbConnection dbConnection = DbConnection.instance();
     UserAbstractFactory userFactory = UserFactory.instance();
+
+    private UserDb(){ }
+
+    public static IUserDb instance(){
+        if(null == uniqueInstance){
+            uniqueInstance = new UserDb();
+        }
+        return uniqueInstance;
+    }
 
     @Override
     public boolean insertUser(IUser user) {
@@ -92,7 +100,7 @@ public class UserDb implements IUserDb {
         try {
             IUser user = userFactory.createUser();
             Statement statement = connection.createStatement();
-            String selectUserSql = "SELECT * FROM user WHERE userCode='" + userCode + "'";
+            String selectUserSql = "SELECT "+USER_ATTRIBUTES+" FROM user WHERE userCode='" + userCode + "'";
             ResultSet resultSet = statement.executeQuery(selectUserSql);
             while (resultSet.next()) {
                 setUserValueFromResultSet(user, resultSet);
@@ -112,7 +120,7 @@ public class UserDb implements IUserDb {
         try {
             IUser user = userFactory.createUser();
             Statement statement = connection.createStatement();
-            String selectSql = "SELECT * FROM user where emailid='" + email + "'";
+            String selectSql = "SELECT "+USER_ATTRIBUTES+" FROM user where emailid='" + email + "'";
             ResultSet resultSet = statement.executeQuery(selectSql);
             while (resultSet.next()) {
                 setUserValueFromResultSet(user, resultSet);

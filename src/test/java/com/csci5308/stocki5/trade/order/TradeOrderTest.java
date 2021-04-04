@@ -1,9 +1,7 @@
 package com.csci5308.stocki5.trade.order;
 
 import com.csci5308.stocki5.trade.ITrade;
-import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;

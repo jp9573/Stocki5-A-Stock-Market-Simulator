@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.funds;
 
-import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;

@@ -1,22 +1,20 @@
 package com.csci5308.stocki5.trade.sell;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
+import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
+import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.db.IUserDb;
 
 public class TradeSellTest
 {

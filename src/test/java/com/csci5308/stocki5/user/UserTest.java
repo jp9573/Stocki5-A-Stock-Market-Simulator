@@ -1,14 +1,14 @@
 package com.csci5308.stocki5.user;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class UserTest {
     private IUser user = null;

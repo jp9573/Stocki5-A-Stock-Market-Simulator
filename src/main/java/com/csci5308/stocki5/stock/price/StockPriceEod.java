@@ -1,12 +1,11 @@
 package com.csci5308.stocki5.stock.price;
 
-import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
+import org.springframework.stereotype.Repository;
+
+import java.util.Iterator;
+import java.util.List;
 
 @Repository
 public class StockPriceEod implements IStockPriceEod

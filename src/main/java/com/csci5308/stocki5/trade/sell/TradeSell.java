@@ -1,24 +1,22 @@
 package com.csci5308.stocki5.trade.sell;
 
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.trade.ITrade;
+import com.csci5308.stocki5.trade.TradeStatus;
+import com.csci5308.stocki5.trade.TradeType;
+import com.csci5308.stocki5.trade.db.ITradeDb;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import org.springframework.stereotype.Service;
+
 import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.csci5308.stocki5.trade.ITrade;
-import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
-import org.springframework.stereotype.Service;
-
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.trade.Trade;
-import com.csci5308.stocki5.trade.TradeStatus;
-import com.csci5308.stocki5.trade.TradeType;
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.IUser;
 
 @Service
 public class TradeSell implements ITradeSell

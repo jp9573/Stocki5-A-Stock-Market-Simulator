@@ -1,19 +1,17 @@
 package com.csci5308.stocki5.stock.prediction;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class StockPredictionController

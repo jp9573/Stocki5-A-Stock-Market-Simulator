@@ -3,57 +3,50 @@ package com.csci5308.stocki5.config;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Service;
 
-@Service
-@Configuration
-public class Stocki5DbConnection
+public class Stocki5DbConfig implements IStocki5DbConfig
 {
 	private static final String PROPERTIES_FILE = "config.properties";
+
+	private static IStocki5DbConfig uniqueInstance = null;
 
 	private String driver;
 	private String database;
 	private String username;
 	private String password;
 
-	public Stocki5DbConnection()
+	private Stocki5DbConfig()
 	{
 		readProperties();
 	}
 
-	public Connection createConnection()
-	{
-		Connection connection = null;
-		try
-		{
-			Class.forName(driver);
-			connection = DriverManager.getConnection(database.trim(), username.trim(), password.trim());
-
-		} catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
+	public static IStocki5DbConfig instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new Stocki5DbConfig();
 		}
-		return connection;
+		return uniqueInstance;
 	}
 
-	public void closeConnection(Connection connection)
-	{
-		try
-		{
-			connection.close();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+	@Override
+	public String getDriver() {
+		return driver;
+	}
+
+	@Override
+	public String getDatabase() {
+		return database;
+	}
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
 	}
 
 	private void readProperties()

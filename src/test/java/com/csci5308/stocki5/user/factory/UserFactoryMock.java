@@ -3,7 +3,9 @@ package com.csci5308.stocki5.user.factory;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.db.IUserOtpDb;
 import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.db.UserOtpDbMock;
 import com.csci5308.stocki5.user.forgotcode.IUserForgotCode;
 import com.csci5308.stocki5.user.forgotcode.UserForgotCode;
 import com.csci5308.stocki5.user.funds.IUserFunds;
@@ -41,7 +43,7 @@ public class UserFactoryMock extends UserAbstractFactoryMock {
 
     @Override
     public IUserDb createUserDbMock() {
-        return new UserDbMock();
+        return UserDbMock.instance();
     }
 
     @Override
@@ -71,6 +73,6 @@ public class UserFactoryMock extends UserAbstractFactoryMock {
 
     @Override
     public IUserOtpDb createUserOtpDbMock() {
-        return new UserOtpDbMock();
+        return UserOtpDbMock.instance();
     }
 }

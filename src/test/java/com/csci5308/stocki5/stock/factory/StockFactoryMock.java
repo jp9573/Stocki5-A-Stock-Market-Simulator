@@ -1,11 +1,6 @@
 package com.csci5308.stocki5.stock.factory;
 
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
-import com.csci5308.stocki5.stock.db.StockDbGainersLosersMock;
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
-import com.csci5308.stocki5.stock.history.StockHistoryDbMock;
+import com.csci5308.stocki5.stock.db.*;
 import com.csci5308.stocki5.stock.price.IStockSchedulerMock;
 import com.csci5308.stocki5.stock.price.StockSchedulerMock;
 
@@ -26,19 +21,19 @@ public class StockFactoryMock extends StockAbstractFactoryMock
 	@Override
 	public IStockDb createStockDbMock()
 	{
-		return new StockDbMock();
+		return StockDbMock.instance();
 	}
 
 	@Override
 	public IStockDbGainersLosers createStockDbGainersLosersMock()
 	{
-		return new StockDbGainersLosersMock();
+		return StockDbGainersLosersMock.instance();
 	}
 
 	@Override
 	public IStockHistoryDb createStockHistoryDbMock()
 	{
-		return new StockHistoryDbMock();
+		return StockHistoryDbMock.instance();
 	}
 
 	@Override
