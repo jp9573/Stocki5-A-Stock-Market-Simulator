@@ -1,13 +1,10 @@
 package com.csci5308.stocki5.trade.order;
 
 import com.csci5308.stocki5.trade.ITrade;
-import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +15,7 @@ import java.util.List;
 
 public class TradeOrderTest {
 
-    TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+    TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
     private ITradeDb tradeDb = null;
     private ITradeOrder tradeOrder = null;

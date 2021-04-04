@@ -1,10 +1,7 @@
 package com.csci5308.stocki5.trade.eod;
 
 import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,7 +12,8 @@ public class TradeScheduler
 {
 	private final String CRON_TIMING = "0 5 18 * * ?";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
+
 	ITradeEod iTradeEod = tradeFactory.createTradeEod();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 

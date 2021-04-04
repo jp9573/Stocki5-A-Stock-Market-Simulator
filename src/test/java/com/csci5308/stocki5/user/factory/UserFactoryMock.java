@@ -3,7 +3,9 @@ package com.csci5308.stocki5.user.factory;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.db.IUserOtpDb;
 import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.db.UserOtpDbMock;
 import com.csci5308.stocki5.user.forgotcode.IUserForgotCode;
 import com.csci5308.stocki5.user.forgotcode.UserForgotCode;
 import com.csci5308.stocki5.user.funds.IUserFunds;
@@ -15,14 +17,6 @@ import com.csci5308.stocki5.user.signup.IUserSignUp;
 import com.csci5308.stocki5.user.signup.UserSignUp;
 
 public class UserFactoryMock extends UserAbstractFactoryMock {
-    private static UserFactoryMock uniqueInstance = null;
-
-    public static UserFactoryMock instance() {
-        if (null == uniqueInstance) {
-            uniqueInstance = new UserFactoryMock();
-        }
-        return uniqueInstance;
-    }
 
     @Override
     public IUser createUser() {
@@ -41,7 +35,7 @@ public class UserFactoryMock extends UserAbstractFactoryMock {
 
     @Override
     public IUserDb createUserDbMock() {
-        return new UserDbMock();
+        return UserDbMock.instance();
     }
 
     @Override
@@ -71,6 +65,6 @@ public class UserFactoryMock extends UserAbstractFactoryMock {
 
     @Override
     public IUserOtpDb createUserOtpDbMock() {
-        return new UserOtpDbMock();
+        return UserOtpDbMock.instance();
     }
 }

@@ -1,9 +1,8 @@
 package com.csci5308.stocki5.stock.history;
 
-import org.springframework.stereotype.Service;
-
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.Stock;
+import org.springframework.stereotype.Service;
 
 @Service
 public class StockHistory extends Stock implements IStockHistory

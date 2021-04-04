@@ -1,31 +1,36 @@
 package com.csci5308.stocki5.trade.db;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.trade.ITrade;
-import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactoryMock;
-import com.csci5308.stocki5.trade.holding.Holding;
 import com.csci5308.stocki5.trade.holding.IHolding;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TradeDbMock implements ITradeDb
 {
 
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	private static ITradeDb uniqueInstance = null;
+
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
-	UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+
+	private TradeDbMock() { }
+
+	public static ITradeDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new TradeDbMock();
+		}
+		return uniqueInstance;
+	}
 
 	@Override
 	public boolean insertTrade(ITrade trade, boolean isHolding)

@@ -1,28 +1,22 @@
 package com.csci5308.stocki5.stock.price;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
-import com.csci5308.stocki5.trade.buy.TradeBuy;
-import com.csci5308.stocki5.trade.sell.TradeSell;
 
 @Service
 @EnableScheduling
 public class StockScheduler implements IStockScheduler
 {
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
 	IStockPriceAlgorithm iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
 	IStockPriceEod iStockPriceEod = stockFactory.createStockPriceEod();

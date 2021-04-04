@@ -1,27 +1,61 @@
 package com.csci5308.stocki5.user.password;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 @Service
 public class UserOtp implements IUserOtp {
     private static final String SIMPLE_DATE_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final String PROPERTIES_FILE = "config.properties";
 
-    @Value("${otp.expireaftermillisecs}")
     private long expireAfterMS;
-
-    @Value("${otp.minvalue}")
     private int otpMinValue;
-
-    @Value("${otp.maxvalue}")
     private int otpMaxValue;
-
     private int otp;
     private String validity;
     private String userCode;
+
+    public UserOtp(){
+        readProperties();
+    }
+
+    private void readProperties()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            Properties prop = new Properties();
+            inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+            if (inputStream == null)
+            {
+                throw new FileNotFoundException();
+            } else
+            {
+                prop.load(inputStream);
+            }
+            this.expireAfterMS = Long.parseLong(prop.getProperty("otp.expireaftermillisecs"));
+            this.otpMinValue = Integer.parseInt(prop.getProperty("otp.minvalue"));
+            this.otpMaxValue = Integer.parseInt(prop.getProperty("otp.maxvalue"));
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            try
+            {
+                inputStream.close();
+            } catch (IOException ioe)
+            {
+                ioe.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public int getOtp() {

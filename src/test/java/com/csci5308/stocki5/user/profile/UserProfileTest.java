@@ -3,7 +3,6 @@ package com.csci5308.stocki5.user.profile;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +13,7 @@ public class UserProfileTest {
     private static final String INVALID_EMAIL_MESSAGE = "Invalid Email Id";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     private IUserDb userDbMock = null;
     private IUserProfile userProfile = null;
     private IUser user = null;

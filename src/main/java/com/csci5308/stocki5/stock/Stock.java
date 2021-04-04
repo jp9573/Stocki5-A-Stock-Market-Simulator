@@ -1,8 +1,8 @@
 package com.csci5308.stocki5.stock;
 
-import java.util.Date;
-
 import com.csci5308.stocki5.stock.db.IStockDb;
+
+import java.util.Date;
 
 public class Stock implements IStock
 {

@@ -1,9 +1,10 @@
 package com.csci5308.stocki5.user.password;
 
-import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.IUser;
-import org.springframework.stereotype.Service;
 import com.csci5308.stocki5.email.IEmail;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.db.IUserOtpDb;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,15 +1,15 @@
 package com.csci5308.stocki5.user;
 
+import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class User implements UserDetails, IUser {
     private static final String YEAR_MONTH_PATTERN = "yyyyMM";

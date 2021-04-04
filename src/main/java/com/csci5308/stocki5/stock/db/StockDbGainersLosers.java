@@ -1,5 +1,11 @@
 package com.csci5308.stocki5.stock.db;
 
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,21 +13,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 @Repository
 public class StockDbGainersLosers implements IStockDbGainersLosers
 {
 	final String STOCK_ATTRIBUTES = "stock_id,symbol,open,high,low,price,latest_trading_date,previous_close,segment,percent";
 
-	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+	private static IStockDbGainersLosers uniqueInstance = null;
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	IDbConnection dbConnection = DbConnection.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
+	private StockDbGainersLosers(){ }
+
+	public static IStockDbGainersLosers instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockDbGainersLosers();
+		}
+		return uniqueInstance;
+	}
 
 	@Override
 	public List<IStock> getHighestPriceStocks(String segments, int limit)

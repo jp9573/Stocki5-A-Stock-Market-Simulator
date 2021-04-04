@@ -1,28 +1,38 @@
-package com.csci5308.stocki5.stock.history;
+package com.csci5308.stocki5.stock.db;
+
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.history.IStockHistory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 @Repository
 public class StockHistoryDb implements IStockHistoryDb
 {
-	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+	private static IStockHistoryDb uniqueInstance = null;
 
-	StockAbstractFactory stockFactory = StockFactory.instance();
+	IDbConnection dbConnection = DbConnection.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
+	private StockHistoryDb(){ }
+
+	public static IStockHistoryDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockHistoryDb();
+		}
+		return uniqueInstance;
+	}
 
 	@Override
 	public List<IStockHistory> getStockHistoryBySymbol(String symbol)

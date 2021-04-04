@@ -3,7 +3,9 @@ package com.csci5308.stocki5.user.factory;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.db.IUserOtpDb;
 import com.csci5308.stocki5.user.db.UserDb;
+import com.csci5308.stocki5.user.db.UserOtpDb;
 import com.csci5308.stocki5.user.forgotcode.IUserForgotCode;
 import com.csci5308.stocki5.user.forgotcode.UserForgotCode;
 import com.csci5308.stocki5.user.funds.IUserFunds;
@@ -15,14 +17,6 @@ import com.csci5308.stocki5.user.signup.IUserSignUp;
 import com.csci5308.stocki5.user.signup.UserSignUp;
 
 public class UserFactory extends UserAbstractFactory {
-    private static UserFactory uniqueInstance = null;
-
-    public static UserAbstractFactory instance() {
-        if (null == uniqueInstance) {
-            uniqueInstance = new UserFactory();
-        }
-        return uniqueInstance;
-    }
 
     @Override
     public IUser createUser() {
@@ -31,7 +25,7 @@ public class UserFactory extends UserAbstractFactory {
 
     @Override
     public IUserDb createUserDb() {
-        return new UserDb();
+        return UserDb.instance();
     }
 
     @Override
@@ -61,7 +55,7 @@ public class UserFactory extends UserAbstractFactory {
 
     @Override
     public IUserOtpDb createUserOtpDb() {
-        return new UserOtpDb();
+        return UserOtpDb.instance();
     }
 
     @Override

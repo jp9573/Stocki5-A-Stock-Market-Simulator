@@ -1,8 +1,6 @@
 package com.csci5308.stocki5.trade.factory;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
@@ -24,17 +22,6 @@ import com.csci5308.stocki5.trade.sell.TradeSell;
 import com.csci5308.stocki5.user.db.IUserDb;
 
 public class TradeFactory extends TradeAbstractFactory {
-
-    private static TradeAbstractFactory uniqueInstance = null;
-
-    public static TradeAbstractFactory instance()
-    {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new TradeFactory();
-        }
-        return uniqueInstance;
-    }
 
     @Override
     public ITrade createTrade() {
@@ -83,6 +70,6 @@ public class TradeFactory extends TradeAbstractFactory {
 
     @Override
     public ITradeDb createTradeDb() {
-        return new TradeDb();
+        return TradeDb.instance();
     }
 }

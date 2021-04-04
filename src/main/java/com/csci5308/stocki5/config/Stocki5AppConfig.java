@@ -16,7 +16,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @PropertySource(value = { "classpath:config.properties" })
-@Import({ Stocki5DbConnection.class })
+@Import({ Stocki5DbConfig.class })
 @ComponentScan(basePackages = { "com.csci5308.stocki5" })
 public class Stocki5AppConfig implements WebMvcConfigurer
 {

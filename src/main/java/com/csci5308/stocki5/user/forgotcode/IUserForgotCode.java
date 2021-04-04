@@ -1,7 +1,7 @@
 package com.csci5308.stocki5.user.forgotcode;
 
-import org.springframework.stereotype.Service;
 import com.csci5308.stocki5.user.db.IUserDb;
+import org.springframework.stereotype.Service;
 
 @Service
 public interface IUserForgotCode {

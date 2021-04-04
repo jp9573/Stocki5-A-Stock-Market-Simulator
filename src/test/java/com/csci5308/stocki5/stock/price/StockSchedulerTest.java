@@ -1,16 +1,14 @@
 package com.csci5308.stocki5.stock.price;
 
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
-
 public class StockSchedulerTest
 {
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockSchedulerMock stockSchedulerMock = null;
 
 	@Before
