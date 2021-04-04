@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 public abstract class UserAbstractFactory {
     private static UserAbstractFactory uniqueInstance = null;
 
+    protected UserAbstractFactory() { }
+
     public static UserAbstractFactory instance() {
         if (null == uniqueInstance) {
             uniqueInstance = new UserFactory();

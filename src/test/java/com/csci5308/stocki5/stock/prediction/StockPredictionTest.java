@@ -5,7 +5,6 @@ import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

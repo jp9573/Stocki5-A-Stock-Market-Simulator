@@ -4,7 +4,6 @@ import com.csci5308.stocki5.database.DbConnection;
 import com.csci5308.stocki5.database.IDbConnection;
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;

@@ -4,7 +4,6 @@ import com.csci5308.stocki5.database.DbConnection;
 import com.csci5308.stocki5.database.IDbConnection;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -16,7 +15,7 @@ public class UserDb implements IUserDb {
     private static IUserDb uniqueInstance = null;
 
     IDbConnection dbConnection = DbConnection.instance();
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     private UserDb(){ }
 

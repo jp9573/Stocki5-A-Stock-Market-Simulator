@@ -4,16 +4,13 @@ import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.order.ITradeOrder;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,7 +37,7 @@ public class TradeBuyController
 
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
-	UserAbstractFactory userFactory = UserFactory.instance();
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
 	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
 	ITradeBuy iTradeBuy = tradeFactory.createTradeBuy();

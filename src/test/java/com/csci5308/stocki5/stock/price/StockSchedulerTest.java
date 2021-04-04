@@ -1,7 +1,6 @@
 package com.csci5308.stocki5.stock.price;
 
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

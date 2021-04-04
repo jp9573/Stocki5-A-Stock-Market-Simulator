@@ -2,13 +2,11 @@ package com.csci5308.stocki5.user.funds;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.DoubleSummaryStatistics;
 import java.util.Properties;
 
 @Service

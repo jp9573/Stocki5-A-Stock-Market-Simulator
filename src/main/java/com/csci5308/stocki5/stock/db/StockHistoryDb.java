@@ -3,7 +3,6 @@ package com.csci5308.stocki5.stock.db;
 import com.csci5308.stocki5.database.DbConnection;
 import com.csci5308.stocki5.database.IDbConnection;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.history.IStockHistory;
 import org.springframework.stereotype.Repository;
 
