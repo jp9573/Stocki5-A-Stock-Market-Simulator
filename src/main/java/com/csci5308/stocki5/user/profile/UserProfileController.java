@@ -34,6 +34,7 @@ public class UserProfileController {
     private static final String SECTOR_DEFAULT_VALUE = "0";
 
     UserAbstractFactory userFactory = UserFactory.instance();
+
     IUserDb userDb = userFactory.createUserDb();
     IUserProfile iUserProfile = userFactory.createUserProfile();
 

@@ -23,7 +23,7 @@ public class TradeSell implements ITradeSell
 {
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
 	@Override
 	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)

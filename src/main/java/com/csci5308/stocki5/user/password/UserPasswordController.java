@@ -42,12 +42,13 @@ public class UserPasswordController {
     private static final String INVALID_CURRENT_PASSWORD_ERROR_MESSAGE = "Invalid Current Password";
 
     UserAbstractFactory userFactory = UserFactory.instance();
+    IEmail email = Email.instance();
+
     IUserDb userDb = userFactory.createUserDb();
     IUserOtpDb userOtpDb = userFactory.createUserOtpDb();
     IUserOtp userOtp = userFactory.createUserOtp();
     IUserForgotPassword userForgotPassword = userFactory.createUserForgotPassword();
     IUserChangePassword userChangePassword = userFactory.createUserChangePassword();
-    IEmail email = Email.instance();
 
     private ModelAndView getUserModel(IUser user) {
         ModelAndView model = new ModelAndView();

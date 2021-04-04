@@ -18,7 +18,7 @@ public class StockScheduler implements IStockScheduler
 {
 
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
 	IStockPriceAlgorithm iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
 	IStockPriceEod iStockPriceEod = stockFactory.createStockPriceEod();

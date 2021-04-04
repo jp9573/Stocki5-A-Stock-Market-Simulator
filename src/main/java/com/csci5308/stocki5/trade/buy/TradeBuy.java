@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @Service
 public class TradeBuy implements ITradeBuy
 {
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
-
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
+
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
 	public boolean buyStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface)
 	{
