@@ -2,6 +2,7 @@ package com.csci5308.stocki5.user.profile;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,14 +15,15 @@ public class UserProfileTest {
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
     UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
     private IUserDb userDbMock = null;
     private IUserProfile userProfile = null;
     private IUser user = null;
 
     @Before
     public void createObjects() {
-        userProfile = userFactoryMock.createUserProfile();
-        user = userFactoryMock.createUser();
+        userProfile = userFactory.createUserProfile();
+        user = userFactory.createUser();
         user.setFirstName("Jack");
         user.setLastName("Sparrow");
         user.setProvince("Toronto");

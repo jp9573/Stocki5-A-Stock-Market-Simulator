@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @EnableScheduling
-public class TradeScheduler
+public class TradeScheduler implements ITradeScheduler
 {
 	private final String CRON_TIMING = "0 5 18 * * ?";
 
@@ -18,15 +18,15 @@ public class TradeScheduler
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 
 	@Scheduled(cron = CRON_TIMING)
-	public void scheduleFailedBuyOrder()
+	public boolean scheduleFailedBuyOrder()
 	{
-		iTradeEod.markFailedBuyOrder(tradeDb);
+		return iTradeEod.markFailedBuyOrder(tradeDb);
 	}
 
 	@Scheduled(cron = CRON_TIMING)
-	public void scheduleFailedSellOrder()
+	public boolean scheduleFailedSellOrder()
 	{
-		iTradeEod.markFailedSellOrder(tradeDb);
+		return iTradeEod.markFailedSellOrder(tradeDb);
 	}
 
 }

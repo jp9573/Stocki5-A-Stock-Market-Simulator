@@ -2,6 +2,7 @@ package com.csci5308.stocki5.user.password;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,14 +12,15 @@ import org.junit.Test;
 public class UserChangePasswordTest {
 
     IUserChangePassword userChangePassword = null;
-    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
     IUserDb userDbMock = null;
     IUser user = null;
 
     @Before
     public void createObjects() {
         userChangePassword = userFactory.createUserChangePassword();
-        userDbMock = userFactory.createUserDbMock();
+        userDbMock = userFactoryMock.createUserDbMock();
         user = userDbMock.getUser("AB123456");
     }
 

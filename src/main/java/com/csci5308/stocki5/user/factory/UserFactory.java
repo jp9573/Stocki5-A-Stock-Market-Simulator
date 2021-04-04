@@ -1,7 +1,10 @@
 package com.csci5308.stocki5.user.factory;
 
+import org.springframework.security.authentication.AuthenticationProvider;
+
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.User;
+import com.csci5308.stocki5.user.authentication.UserAuthentication;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.db.IUserOtpDb;
 import com.csci5308.stocki5.user.db.UserDb;
@@ -40,17 +43,17 @@ public class UserFactory extends UserAbstractFactory {
 
     @Override
     public IUserProfile createUserProfile() {
-        return new UserProfile();
+        return UserProfile.instance();
     }
 
     @Override
     public IUserSignUp createUserSignUp() {
-        return new UserSignUp();
+        return UserSignUp.instance();
     }
 
     @Override
     public IUserForgotCode createUserForgotCode() {
-        return new UserForgotCode();
+        return UserForgotCode.instance();
     }
 
     @Override
@@ -67,4 +70,10 @@ public class UserFactory extends UserAbstractFactory {
     public IUserChangePassword createUserChangePassword() {
         return new UserChangePassword();
     }
+
+	@Override
+	public AuthenticationProvider createUserAuthentication()
+	{
+		return UserAuthentication.instance();
+	}
 }

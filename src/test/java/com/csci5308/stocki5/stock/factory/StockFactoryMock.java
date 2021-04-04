@@ -6,9 +6,10 @@ import com.csci5308.stocki5.stock.db.StockDbGainersLosersMock;
 import com.csci5308.stocki5.stock.db.StockDbMock;
 import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.db.StockHistoryDbMock;
+import com.csci5308.stocki5.stock.price.IStockPriceAlgorithmMock;
 import com.csci5308.stocki5.stock.price.IStockSchedulerMock;
+import com.csci5308.stocki5.stock.price.StockPriceAlgorithmMock;
 import com.csci5308.stocki5.stock.price.StockSchedulerMock;
-
 
 public class StockFactoryMock extends StockAbstractFactoryMock
 {
@@ -35,6 +36,12 @@ public class StockFactoryMock extends StockAbstractFactoryMock
 	public IStockSchedulerMock createStockSchedulerMock()
 	{
 		return new StockSchedulerMock();
+	}
+
+	@Override
+	public IStockPriceAlgorithmMock createStockPriceAlgorithmMock()
+	{
+		return StockPriceAlgorithmMock.instance();
 	}
 
 }

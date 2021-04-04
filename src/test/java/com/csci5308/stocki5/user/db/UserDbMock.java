@@ -1,17 +1,17 @@
 package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 
 public class UserDbMock implements IUserDb {
 
     private static IUserDb uniqueInstance = null;
 
-    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     private UserDbMock() { }
 
@@ -32,7 +32,6 @@ public class UserDbMock implements IUserDb {
 
     @Override
     public boolean updateUser(IUser user) {
-        System.out.println(user.getUserCode());
         if (user.getFirstName().equals("Tony")) {
             return false;
         }

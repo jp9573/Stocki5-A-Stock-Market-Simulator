@@ -1,6 +1,7 @@
 package com.csci5308.stocki5.user.forgotcode;
 
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,13 +10,14 @@ import org.junit.Test;
 
 public class UserForgotCodeTest {
     UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
     IUserForgotCode userForgotCode = null;
     IUserDb userDb = null;
 
     @Before
     public void createObjects() {
         userDb = userFactoryMock.createUserDbMock();
-        userForgotCode = userFactoryMock.createUserForgotCode();
+        userForgotCode = userFactory.createUserForgotCode();
     }
 
     @After

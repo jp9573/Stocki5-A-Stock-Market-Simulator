@@ -1,16 +1,17 @@
 package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.password.IUserOtp;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.password.IUserOtp;
 
 public class UserOtpDbMock implements IUserOtpDb {
 
     private static IUserOtpDb uniqueInstance = null;
 
-    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
+
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     private UserOtpDbMock() { }
 

@@ -1,8 +1,5 @@
 package com.csci5308.stocki5.database;
 
-import com.csci5308.stocki5.config.IStocki5DbConfig;
-import com.csci5308.stocki5.config.Stocki5DbConfig;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

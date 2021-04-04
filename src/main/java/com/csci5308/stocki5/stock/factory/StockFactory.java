@@ -1,12 +1,14 @@
 package com.csci5308.stocki5.stock.factory;
 
+import org.springframework.stereotype.Service;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.Stock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.db.StockDb;
 import com.csci5308.stocki5.stock.db.StockDbGainersLosers;
-import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.db.StockHistoryDb;
 import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.stock.fetch.StockFetch;
@@ -18,11 +20,10 @@ import com.csci5308.stocki5.stock.prediction.IStockPrediction;
 import com.csci5308.stocki5.stock.prediction.StockPrediction;
 import com.csci5308.stocki5.stock.price.IStockPriceAlgorithm;
 import com.csci5308.stocki5.stock.price.IStockPriceEod;
+import com.csci5308.stocki5.stock.price.IStockScheduler;
 import com.csci5308.stocki5.stock.price.StockPriceAlgorithm;
 import com.csci5308.stocki5.stock.price.StockPriceEod;
-import com.csci5308.stocki5.stock.price.IStockScheduler;
 import com.csci5308.stocki5.stock.price.StockScheduler;
-import org.springframework.stereotype.Service;
 
 @Service
 public class StockFactory extends StockAbstractFactory
@@ -60,7 +61,7 @@ public class StockFactory extends StockAbstractFactory
 	@Override
 	public IStockFetch createStockFetch()
 	{
-		return new StockFetch();
+		return StockFetch.instance();
 	}
 
 	@Override
@@ -83,25 +84,25 @@ public class StockFactory extends StockAbstractFactory
 	@Override
 	public IStockMaintainHistory createStockMaintainHistory()
 	{
-		return new StockMaintainHistory();
+		return StockMaintainHistory.instance();
 	}
 
 	@Override
 	public IStockPrediction createStockPrediction()
 	{
-		return new StockPrediction();
+		return StockPrediction.instance();
 	}
 
 	@Override
 	public IStockPriceAlgorithm createStockPriceAlgorithm()
 	{
-		return new StockPriceAlgorithm();
+		return StockPriceAlgorithm.instance();
 	}
 
 	@Override
 	public IStockPriceEod createStockPriceEod()
 	{
-		return new StockPriceEod();
+		return StockPriceEod.instance();
 	}
 
 	@Override

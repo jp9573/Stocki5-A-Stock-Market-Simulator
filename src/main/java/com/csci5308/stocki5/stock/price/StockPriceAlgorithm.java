@@ -1,5 +1,16 @@
 package com.csci5308.stocki5.stock.price;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
+
+import org.springframework.stereotype.Service;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockHistoryDb;
@@ -11,22 +22,14 @@ import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import org.springframework.stereotype.Service;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
 
 @Service
 public class StockPriceAlgorithm implements IStockPriceAlgorithm
 {
 	private static final String PROPERTIES_FILE = "config.properties";
-	static final String STOCK_PRICE_DECIMAL_FORMAT = "##.00";
+	private static final String STOCK_PRICE_DECIMAL_FORMAT = "##.00";
+
+	private static IStockPriceAlgorithm uniqueInstance = null;
 
 	private int noOfVersions;
 	private int priceChangeLimit;
@@ -39,9 +42,18 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 	IUserDb userDb = userFactory.createUserDb();
 
-	public StockPriceAlgorithm()
+	private StockPriceAlgorithm()
 	{
 		readProperties();
+	}
+
+	public static IStockPriceAlgorithm instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new StockPriceAlgorithm();
+		}
+		return uniqueInstance;
 	}
 
 	public boolean generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory)

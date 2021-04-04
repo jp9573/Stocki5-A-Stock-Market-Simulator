@@ -1,7 +1,5 @@
 package com.csci5308.stocki5.email;
 
-import com.csci5308.stocki5.config.IStocki5EmailConfig;
-import com.csci5308.stocki5.config.Stocki5EmailConfig;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
