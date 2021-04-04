@@ -11,7 +11,7 @@ public class UserOtpDbMock implements IUserOtpDb {
 
     private static IUserOtpDb uniqueInstance = null;
 
-    UserAbstractFactoryMock userFactory = UserFactoryMock.instance();
+    UserAbstractFactoryMock userFactory = UserAbstractFactoryMock.instance();
 
     private UserOtpDbMock() { }
 

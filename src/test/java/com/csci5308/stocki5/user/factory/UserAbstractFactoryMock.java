@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 public abstract class UserAbstractFactoryMock {
     private static UserAbstractFactoryMock uniqueInstance = null;
 
+    protected UserAbstractFactoryMock() { }
+
     public static UserAbstractFactoryMock instance() {
         if (null == uniqueInstance) {
             uniqueInstance = new UserFactoryMock();
