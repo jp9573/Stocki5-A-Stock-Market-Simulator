@@ -23,17 +23,6 @@ import com.csci5308.stocki5.user.db.IUserDb;
 
 public class TradeFactory extends TradeAbstractFactory {
 
-    private static TradeAbstractFactory uniqueInstance = null;
-
-    public static TradeAbstractFactory instance()
-    {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new TradeFactory();
-        }
-        return uniqueInstance;
-    }
-
     @Override
     public ITrade createTrade() {
         return new Trade();
