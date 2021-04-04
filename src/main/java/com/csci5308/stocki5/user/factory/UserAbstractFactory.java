@@ -14,6 +14,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public abstract class UserAbstractFactory {
+    private static UserAbstractFactory uniqueInstance = null;
+
+    public static UserAbstractFactory instance() {
+        if (null == uniqueInstance) {
+            uniqueInstance = new UserFactory();
+        }
+        return uniqueInstance;
+    }
+    
     public abstract IUser createUser();
 
     public abstract IUserDb createUserDb();

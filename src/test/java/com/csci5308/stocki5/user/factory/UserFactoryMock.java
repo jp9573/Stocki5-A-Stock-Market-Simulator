@@ -17,14 +17,6 @@ import com.csci5308.stocki5.user.signup.IUserSignUp;
 import com.csci5308.stocki5.user.signup.UserSignUp;
 
 public class UserFactoryMock extends UserAbstractFactoryMock {
-    private static UserFactoryMock uniqueInstance = null;
-
-    public static UserFactoryMock instance() {
-        if (null == uniqueInstance) {
-            uniqueInstance = new UserFactoryMock();
-        }
-        return uniqueInstance;
-    }
 
     @Override
     public IUser createUser() {
