@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class StockSchedulerTest
 {
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockSchedulerMock stockSchedulerMock = null;
 
 	@Before

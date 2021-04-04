@@ -16,7 +16,7 @@ import java.util.List;
 public class StockPredictionTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockHistoryDb stockHistoryDbMock = null;
 	private IStockPrediction stockPrediction = null;
 	private List<IStock> stocks = null;

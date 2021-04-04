@@ -13,7 +13,7 @@ import org.junit.Test;
 public class StockPriceEodTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockPriceEod stockPriceEod = null;
 	private IStockDb stockDbMock = null;
 

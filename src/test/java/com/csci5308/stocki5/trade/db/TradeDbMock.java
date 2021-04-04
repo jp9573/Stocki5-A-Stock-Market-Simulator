@@ -21,7 +21,7 @@ public class TradeDbMock implements ITradeDb
 
 	private static ITradeDb uniqueInstance = null;
 
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactoryMock userFactoryMock = UserFactoryMock.instance();
 

@@ -7,17 +7,6 @@ import com.csci5308.stocki5.stock.price.StockSchedulerMock;
 public class StockFactoryMock extends StockAbstractFactoryMock
 {
 
-	private static StockFactoryMock uniqueInstance = null;
-
-	public static StockAbstractFactoryMock instance()
-	{
-		if (null == uniqueInstance)
-		{
-			uniqueInstance = new StockFactoryMock();
-		}
-		return uniqueInstance;
-	}
-
 	@Override
 	public IStockDb createStockDbMock()
 	{

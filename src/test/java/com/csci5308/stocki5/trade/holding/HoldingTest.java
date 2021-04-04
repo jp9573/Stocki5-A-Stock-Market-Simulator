@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class HoldingTest {
 
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
     UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     private IHolding holdingFirst = null;

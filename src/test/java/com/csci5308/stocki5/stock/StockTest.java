@@ -13,7 +13,7 @@ import org.junit.Test;
 public class StockTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
 	private IStockDb stockDbMock = null;
 	private IStock stock = null;
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TradeHoldingTest {
 
-	StockAbstractFactoryMock stockFactoryMock = StockFactoryMock.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
     TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
     TradeAbstractFactory tradeFactory = TradeFactory.instance();
     private ITradeHolding tradeHolding = null;
