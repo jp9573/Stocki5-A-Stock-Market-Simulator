@@ -134,5 +134,7 @@ public class TradeTest {
 
     @Test
     public void generateTradeNumberTest() {
+    	tradeFirst.generateTradeNumber();
+    	Assert.assertTrue(tradeFirst.getTradeNumber().startsWith("AB123456"));
     }
 }
