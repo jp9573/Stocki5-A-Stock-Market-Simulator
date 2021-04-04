@@ -3,7 +3,6 @@ package com.csci5308.stocki5.user.db;
 import com.csci5308.stocki5.database.DbConnection;
 import com.csci5308.stocki5.database.IDbConnection;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
 import com.csci5308.stocki5.user.password.IUserOtp;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +16,7 @@ public class UserOtpDb implements IUserOtpDb {
     private static IUserOtpDb uniqueInstance = null;
 
     IDbConnection dbConnection = DbConnection.instance();
-    UserAbstractFactory userFactory = UserFactory.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     private UserOtpDb(){ }
 

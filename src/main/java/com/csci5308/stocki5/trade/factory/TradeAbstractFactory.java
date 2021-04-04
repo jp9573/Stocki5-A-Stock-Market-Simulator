@@ -19,6 +19,8 @@ public abstract class TradeAbstractFactory
 {
     private static TradeAbstractFactory uniqueInstance = null;
 
+    protected TradeAbstractFactory(){ }
+
     public static TradeAbstractFactory instance()
     {
         if (null == uniqueInstance)

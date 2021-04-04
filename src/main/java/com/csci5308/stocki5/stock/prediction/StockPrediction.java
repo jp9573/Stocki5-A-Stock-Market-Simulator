@@ -3,7 +3,6 @@ package com.csci5308.stocki5.stock.prediction;
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.history.IStockHistory;
 import org.springframework.stereotype.Service;
 

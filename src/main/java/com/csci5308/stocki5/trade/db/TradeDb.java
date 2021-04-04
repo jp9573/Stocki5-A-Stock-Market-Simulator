@@ -6,7 +6,6 @@ import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.holding.IHolding;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,7 @@ public class TradeDb implements ITradeDb
 
 	private static ITradeDb uniqueInstance = null;
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 	IDbConnection dbConnection = DbConnection.instance();
 
 	private TradeDb(){ }

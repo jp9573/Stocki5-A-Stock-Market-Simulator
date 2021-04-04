@@ -5,7 +5,6 @@ import com.csci5308.stocki5.email.IEmail;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.db.IUserOtpDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

@@ -2,11 +2,9 @@ package com.csci5308.stocki5.stock.price;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

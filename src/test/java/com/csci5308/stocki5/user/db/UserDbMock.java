@@ -2,7 +2,6 @@ package com.csci5308.stocki5.user.db;
 
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import com.csci5308.stocki5.user.factory.UserFactoryMock;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

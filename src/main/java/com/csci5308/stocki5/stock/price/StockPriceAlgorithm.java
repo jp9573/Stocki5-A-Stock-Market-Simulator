@@ -4,16 +4,13 @@ import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
@@ -36,7 +33,7 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
-	UserAbstractFactory userFactory = UserFactory.instance();
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
 	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
