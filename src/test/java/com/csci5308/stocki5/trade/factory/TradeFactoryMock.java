@@ -5,17 +5,6 @@ import com.csci5308.stocki5.trade.db.TradeDbMock;
 
 public class TradeFactoryMock extends TradeAbstractFactoryMock{
 
-    private static TradeFactoryMock uniqueInstance = null;
-
-    public static TradeAbstractFactoryMock instance()
-    {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new TradeFactoryMock();
-        }
-        return uniqueInstance;
-    }
-
     @Override
     public ITradeDb createTradeDbMock() {
         return TradeDbMock.instance();

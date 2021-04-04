@@ -20,7 +20,7 @@ public class TradeSellTest
 {
 
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	TradeAbstractFactoryMock tradeFactoryMock = TradeFactoryMock.instance();
+	TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
 	private IStockDb stockDb = null;
