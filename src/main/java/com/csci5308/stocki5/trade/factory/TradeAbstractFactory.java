@@ -17,6 +17,17 @@ import org.springframework.stereotype.Service;
 @Service
 public abstract class TradeAbstractFactory
 {
+    private static TradeAbstractFactory uniqueInstance = null;
+
+    public static TradeAbstractFactory instance()
+    {
+        if (null == uniqueInstance)
+        {
+            uniqueInstance = new TradeFactory();
+        }
+        return uniqueInstance;
+    }
+
     public abstract ITrade createTrade();
 
     public abstract ITrade createTradeWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb stockDbInterface, IUserDb userDbInterface);
