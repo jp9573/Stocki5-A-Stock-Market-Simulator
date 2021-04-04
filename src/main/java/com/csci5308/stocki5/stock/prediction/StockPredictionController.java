@@ -20,6 +20,7 @@ public class StockPredictionController
 	private static final String STOCK_NAME = "stockName";
 
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
 	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 	IStockPrediction iStockPrediction = stockFactory.createStockPrediction();
 

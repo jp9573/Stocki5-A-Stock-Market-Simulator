@@ -26,6 +26,7 @@ public class StockFetchController
 
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	UserAbstractFactory userFactory = UserFactory.instance();
+
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockDb iStockDb = stockFactory.createStockDb();

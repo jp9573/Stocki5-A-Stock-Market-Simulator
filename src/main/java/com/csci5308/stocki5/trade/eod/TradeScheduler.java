@@ -13,7 +13,8 @@ public class TradeScheduler
 {
 	private final String CRON_TIMING = "0 5 18 * * ?";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
+
 	ITradeEod iTradeEod = tradeFactory.createTradeEod();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 

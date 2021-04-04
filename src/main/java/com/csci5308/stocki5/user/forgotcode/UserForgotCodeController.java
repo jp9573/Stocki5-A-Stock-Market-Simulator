@@ -18,6 +18,7 @@ public class UserForgotCodeController {
     public static final String SUCCESS_MESSAGE = "Your UserCode  is - ";
 
     UserAbstractFactory userFactory = UserFactory.instance();
+
     IUserDb userDb = userFactory.createUserDb();
     IUserForgotCode iUserForgotCode = userFactory.createUserForgotCode();
 

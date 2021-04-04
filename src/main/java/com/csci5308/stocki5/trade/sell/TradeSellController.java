@@ -38,9 +38,10 @@ public class TradeSellController
 	public static final String SET_SELL_PRICE = "setsellprice";
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 	UserAbstractFactory userFactory = UserFactory.instance();
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDb iStockDb = stockFactory.createStockDb();

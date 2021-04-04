@@ -18,7 +18,8 @@ public class TradeOrderController
 {
 	public static final String ORDERS = "orders";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
+
 	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 	

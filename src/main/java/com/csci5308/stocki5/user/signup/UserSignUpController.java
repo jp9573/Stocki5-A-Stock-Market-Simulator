@@ -27,6 +27,7 @@ public class UserSignUpController {
     private static final String USERNAME = "username";
 
     UserAbstractFactory userFactory = UserFactory.instance();
+
     IUserDb userDb = userFactory.createUserDb();
     IUserSignUp iUserSignUp = userFactory.createUserSignUp();
 

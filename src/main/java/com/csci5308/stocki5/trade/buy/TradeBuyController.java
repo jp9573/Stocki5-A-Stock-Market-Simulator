@@ -38,7 +38,7 @@ public class TradeBuyController
 	public static final String SET_BUY_PRICE = "setbuyprice";
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
-	TradeAbstractFactory tradeFactory = TradeFactory.instance();
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	UserAbstractFactory userFactory = UserFactory.instance();
 

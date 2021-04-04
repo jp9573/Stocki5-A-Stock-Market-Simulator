@@ -31,6 +31,7 @@ public class UserFundsController {
     private static final String FUNDS_UPDATE_ERROR_MESSAGE = "Error adding user Funds. Current balance should be less than 10000.";
 
     UserAbstractFactory userFactory = UserFactory.instance();
+
     IUserFunds iUserFunds = userFactory.createUserFunds();
     IUserDb userDb = userFactory.createUserDb();
 
