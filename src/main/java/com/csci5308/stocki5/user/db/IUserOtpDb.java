@@ -1,5 +1,6 @@
-package com.csci5308.stocki5.user.password;
+package com.csci5308.stocki5.user.db;
 
+import com.csci5308.stocki5.user.password.IUserOtp;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,18 +1,29 @@
 package com.csci5308.stocki5.stock.db;
 
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 public class StockDbGainersLosersMock implements IStockDbGainersLosers
 {
+	private static IStockDbGainersLosers uniqueInstance = null;
+
 	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	private  StockDbGainersLosersMock(){ }
+
+	public static IStockDbGainersLosers instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockDbGainersLosersMock();
+		}
+		return uniqueInstance;
+	}
 
 	@Override
 	public List<IStock> getHighestPriceStocks(String segments, int limit)

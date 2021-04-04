@@ -1,18 +1,29 @@
 package com.csci5308.stocki5.stock.db;
 
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 public class StockDbMock implements IStockDb
 {
+	private static IStockDb uniqueInstance = null;
+
 	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	private StockDbMock(){ }
+
+	public static IStockDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockDbMock();
+		}
+		return uniqueInstance;
+	}
 	
 	@Override
 	public IStock getStock(int stockId)

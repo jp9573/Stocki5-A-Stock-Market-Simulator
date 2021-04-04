@@ -2,8 +2,9 @@ package com.csci5308.stocki5.trade;
 
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

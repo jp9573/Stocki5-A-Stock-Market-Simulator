@@ -1,8 +1,9 @@
-package com.csci5308.stocki5.stock.history;
+package com.csci5308.stocki5.stock.db;
+
+import com.csci5308.stocki5.stock.history.IStockHistory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IStockHistoryDb

@@ -1,10 +1,9 @@
 package com.csci5308.stocki5.stock.db;
 
-import java.util.List;
-
+import com.csci5308.stocki5.stock.IStock;
 import org.springframework.stereotype.Repository;
 
-import com.csci5308.stocki5.stock.IStock;
+import java.util.List;
 
 @Repository
 public interface IStockDbGainersLosers

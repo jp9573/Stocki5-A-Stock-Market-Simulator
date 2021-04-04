@@ -1,18 +1,17 @@
 package com.csci5308.stocki5.stock.factory;
 
-import org.springframework.stereotype.Service;
-
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.stock.history.IStockHistory;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.stock.prediction.IStockPrediction;
 import com.csci5308.stocki5.stock.price.IStockPriceAlgorithm;
 import com.csci5308.stocki5.stock.price.IStockPriceEod;
 import com.csci5308.stocki5.stock.price.IStockScheduler;
+import org.springframework.stereotype.Service;
 
 @Service
 public abstract class StockAbstractFactory

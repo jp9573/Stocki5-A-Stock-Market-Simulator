@@ -1,18 +1,18 @@
 package com.csci5308.stocki5.stock.history;
 
-import java.util.List;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-import com.csci5308.stocki5.stock.factory.StockFactoryMock;
+import java.util.List;
 
 public class StockMaintainHistoryTest
 {

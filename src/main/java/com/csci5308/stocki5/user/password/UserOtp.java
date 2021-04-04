@@ -84,5 +84,9 @@ public class UserOtp implements IUserOtp {
         Date newDateTime = new Date(newDateTimeMS);
         this.validity = dateFormater.format(newDateTime);
         this.otp = (int) (Math.random() * (otpMaxValue - otpMinValue + 1) + otpMinValue);
+        System.out.println(otpMaxValue);
+        System.out.println(otpMinValue);
+        System.out.println(expireAfterMS);
+        System.out.println(this.otp);
     }
 }

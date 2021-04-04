@@ -1,10 +1,5 @@
 package com.csci5308.stocki5.stock.price;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
@@ -13,6 +8,10 @@ import com.csci5308.stocki5.stock.factory.StockFactoryMock;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
 import com.csci5308.stocki5.trade.sell.TradeSell;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class StockPriceAlogrithmTest
 {

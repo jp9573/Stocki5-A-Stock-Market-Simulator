@@ -1,16 +1,17 @@
 package com.csci5308.stocki5.user.password;
 
+import com.csci5308.stocki5.email.Email;
+import com.csci5308.stocki5.email.IEmail;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.db.IUserOtpDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import com.csci5308.stocki5.user.factory.UserFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.csci5308.stocki5.email.Email;
 
 @Controller
 public class UserPasswordController {
@@ -46,9 +47,7 @@ public class UserPasswordController {
     IUserOtp userOtp = userFactory.createUserOtp();
     IUserForgotPassword userForgotPassword = userFactory.createUserForgotPassword();
     IUserChangePassword userChangePassword = userFactory.createUserChangePassword();
-
-    @Autowired
-    Email email;
+    IEmail email = Email.instance();
 
     private ModelAndView getUserModel(IUser user) {
         ModelAndView model = new ModelAndView();

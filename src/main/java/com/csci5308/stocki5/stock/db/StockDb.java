@@ -1,5 +1,12 @@
 package com.csci5308.stocki5.stock.db;
 
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,21 +15,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 @Repository
 public class StockDb implements IStockDb
 {
 	final String STOCK_ATTRIBUTES = "stock_id,symbol,open,high,low,price,latest_trading_date,previous_close,segment,percent";
 
-	Stocki5DbConnection dbConnection = new Stocki5DbConnection();
+	private static IStockDb uniqueInstance = null;
 
+	IDbConnection dbConnection = DbConnection.instance();
 	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	private StockDb(){ }
+
+	public static IStockDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockDb();
+		}
+		return uniqueInstance;
+	}
 
 	@Override
 	public IStock getStock(int stockId)
