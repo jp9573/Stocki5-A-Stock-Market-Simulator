@@ -13,8 +13,8 @@ import java.util.Properties;
 
 @Service
 public class UserFunds implements IUserFunds {
-    private static final String PROPERTIES_FILE="config.properties";
-    
+    private static final String PROPERTIES_FILE = "config.properties";
+
     private int resetFundAmount;
 
     public UserFunds(){
