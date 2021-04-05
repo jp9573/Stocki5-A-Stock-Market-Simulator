@@ -1,16 +1,29 @@
 package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+
 public class UserDbMock implements IUserDb {
 
+    private static IUserDb uniqueInstance = null;
+
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
+
+    private UserDbMock() { }
+
+    public static IUserDb instance(){
+        if(null == uniqueInstance){
+            uniqueInstance = new UserDbMock();
+        }
+        return uniqueInstance;
+    }
+
     @Override
-    public boolean insertUser(User user) {
+    public boolean insertUser(IUser user) {
         if (user.getFirstName().equals("Tony")) {
             return false;
         }
@@ -18,8 +31,7 @@ public class UserDbMock implements IUserDb {
     }
 
     @Override
-    public boolean updateUser(User user) {
-        System.out.println(user.getUserCode());
+    public boolean updateUser(IUser user) {
         if (user.getFirstName().equals("Tony")) {
             return false;
         }
@@ -27,8 +39,8 @@ public class UserDbMock implements IUserDb {
     }
 
     @Override
-    public User getUser(String userCode) {
-        User user = new User();
+    public IUser getUser(String userCode) {
+        IUser user = userFactory.createUser();
         switch (userCode) {
             case "AB123456": {
                 user.setEmailId("test@test.com");
@@ -93,9 +105,9 @@ public class UserDbMock implements IUserDb {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public IUser getUserByEmail(String email) {
         if (email.equals("test@example.com")) {
-            User user = new User();
+            IUser user = userFactory.createUser();
             user.setEmailId(email);
             user.setUserCode("TEST12456789");
             Date dob = null;
@@ -112,7 +124,7 @@ public class UserDbMock implements IUserDb {
     }
 
     @Override
-    public boolean updateUserPassword(User user) {
+    public boolean updateUserPassword(IUser user) {
         return true;
     }
 

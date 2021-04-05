@@ -1,5 +1,11 @@
 package com.csci5308.stocki5.stock.db;
 
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,44 +14,40 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-import com.csci5308.stocki5.stock.Stock;
-
 @Repository
 public class StockDb implements IStockDb
 {
 	final String STOCK_ATTRIBUTES = "stock_id,symbol,open,high,low,price,latest_trading_date,previous_close,segment,percent";
 
-	@Autowired
-	Stocki5DbConnection dbConnection;
-	
+	private static IStockDb uniqueInstance = null;
+
+	IDbConnection dbConnection = DbConnection.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
+	private StockDb(){ }
+
+	public static IStockDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockDb();
+		}
+		return uniqueInstance;
+	}
+
 	@Override
-	public Stock getStock(int stockId)
+	public IStock getStock(int stockId)
 	{
 		Connection connection = dbConnection.createConnection();
 		try
 		{
-			Stock stock = new Stock();
+			IStock iStock = null;
 			Statement statement = connection.createStatement();
 			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE stock_id=" + stockId;
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next())
 			{
-				stock.setStockId(resultSet.getInt("stock_id"));
-				stock.setSymbol(resultSet.getString("symbol"));
-				stock.setOpen(resultSet.getFloat("open"));
-				stock.setHigh(resultSet.getFloat("high"));
-				stock.setLow(resultSet.getFloat("low"));
-				stock.setPrice(resultSet.getFloat("price"));
-				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
-				stock.setPreviousClose(resultSet.getFloat("previous_close"));
-				stock.setSegment(resultSet.getString("segment"));
-				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
+				iStock = convertResultSet(resultSet);
 			}
-			return stock;
+			return iStock;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
@@ -57,36 +59,26 @@ public class StockDb implements IStockDb
 	}
 
 	@Override
-	public List<Stock> getStocksBySegment(String segments)
+	public List<IStock> getStocksBySegment(String segments)
 	{
-		List<Stock> stocks = new ArrayList<>();
+		List<IStock> iStocks = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Statement statement = connection.createStatement();
 			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data WHERE segment IN " + "(" + segments + ")";
 			ResultSet resultSet = statement.executeQuery(query);
-			Stock stock = null;
+			IStock iStock = null;
 			while (resultSet.next())
 			{
-				stock = new Stock();
-				stock.setStockId(resultSet.getInt("stock_id"));
-				stock.setSymbol(resultSet.getString("symbol"));
-				stock.setOpen(resultSet.getFloat("open"));
-				stock.setHigh(resultSet.getFloat("high"));
-				stock.setLow(resultSet.getFloat("low"));
-				stock.setPrice(resultSet.getFloat("price"));
-				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
-				stock.setPreviousClose(resultSet.getFloat("previous_close"));
-				stock.setSegment(resultSet.getString("segment"));
-				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
-				stocks.add(stock);
+				iStock = convertResultSet(resultSet);
+				iStocks.add(iStock);
 			}
-			return stocks;
+			return iStocks;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			return stocks;
+			return iStocks;
 		} finally
 		{
 			dbConnection.closeConnection(connection);
@@ -94,36 +86,26 @@ public class StockDb implements IStockDb
 	}
 
 	@Override
-	public List<Stock> getStocks()
+	public List<IStock> getStocks()
 	{
-		List<Stock> stocks = new ArrayList<>();
+		List<IStock> iStocks = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Statement statement = connection.createStatement();
 			String query = "SELECT " + STOCK_ATTRIBUTES + " FROM stock_data";
 			ResultSet resultSet = statement.executeQuery(query);
-			Stock stock = null;
+			IStock iStock = null;
 			while (resultSet.next())
 			{
-				stock = new Stock();
-				stock.setStockId(resultSet.getInt("stock_id"));
-				stock.setSymbol(resultSet.getString("symbol"));
-				stock.setOpen(resultSet.getFloat("open"));
-				stock.setHigh(resultSet.getFloat("high"));
-				stock.setLow(resultSet.getFloat("low"));
-				stock.setPrice(resultSet.getFloat("price"));
-				stock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
-				stock.setPreviousClose(resultSet.getFloat("previous_close"));
-				stock.setSegment(resultSet.getString("segment"));
-				stock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
-				stocks.add(stock);
+				iStock = convertResultSet(resultSet);
+				iStocks.add(iStock);
 			}
-			return stocks;
+			return iStocks;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			return stocks;
+			return iStocks;
 		} finally
 		{
 			dbConnection.closeConnection(connection);
@@ -131,18 +113,18 @@ public class StockDb implements IStockDb
 	}
 
 	@Override
-	public boolean updateStocks(List<Stock> stocks)
+	public boolean updateStocks(List<IStock> iStocks)
 	{
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Statement statement = connection.createStatement();
-			Iterator<Stock> stocksIterator = stocks.iterator();
-			Stock stock;
-			while (stocksIterator.hasNext())
+			Iterator<IStock> iStocksIterator = iStocks.iterator();
+			IStock iStock;
+			while (iStocksIterator.hasNext())
 			{
-				stock = stocksIterator.next();
-				statement.addBatch("UPDATE stock_data SET " + "symbol='" + stock.getSymbol() + "'," + "open=" + stock.getOpen() + "," + "high=" + stock.getHigh() + "," + "low=" + stock.getLow() + "," + "price=" + stock.getPrice() + "," + "previous_close=" + stock.getPreviousClose() + "," + "segment='" + stock.getSegment() + "'," + "percent=" + stock.getPercentIncreaseDecrease() + " WHERE stock_id = " + stock.getStockId());
+				iStock = iStocksIterator.next();
+				statement.addBatch("UPDATE stock_data SET " + "symbol='" + iStock.getSymbol() + "'," + "open=" + iStock.getOpen() + "," + "high=" + iStock.getHigh() + "," + "low=" + iStock.getLow() + "," + "price=" + iStock.getPrice() + "," + "previous_close=" + iStock.getPreviousClose() + "," + "segment='" + iStock.getSegment() + "'," + "percent=" + iStock.getPercentIncreaseDecrease() + " WHERE stock_id = " + iStock.getStockId());
 			}
 			int[] result = statement.executeBatch();
 			return result.length > 0;
@@ -154,5 +136,27 @@ public class StockDb implements IStockDb
 		{
 			dbConnection.closeConnection(connection);
 		}
+	}
+
+	private IStock convertResultSet(ResultSet resultSet)
+	{
+		IStock iStock = stockFactory.createStock();
+		try
+		{
+			iStock.setStockId(resultSet.getInt("stock_id"));
+			iStock.setSymbol(resultSet.getString("symbol"));
+			iStock.setOpen(resultSet.getFloat("open"));
+			iStock.setHigh(resultSet.getFloat("high"));
+			iStock.setLow(resultSet.getFloat("low"));
+			iStock.setPrice(resultSet.getFloat("price"));
+			iStock.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
+			iStock.setPreviousClose(resultSet.getFloat("previous_close"));
+			iStock.setSegment(resultSet.getString("segment"));
+			iStock.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return iStock;
 	}
 }

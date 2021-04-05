@@ -1,33 +1,54 @@
 package com.csci5308.stocki5.stock.prediction;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
-import com.csci5308.stocki5.stock.history.StockHistory;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.history.IStockHistory;
 
 @Service
 public class StockPrediction implements IStockPrediction
 {
-	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
+	private static final String STOCK_PRICE_DECIMAL_FORMAT = "##.00";
+	private static IStockPrediction uniqueInstance = null;
+	
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+	
+	private StockPrediction()
 	{
-		List<StockHistory> stockHistorys = iStockHistoryDb.getStockHistoryBySymbol(symbol);
-		int totalCount = stockHistorys.size();
+	}
+
+	public static IStockPrediction instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new StockPrediction();
+		}
+		return uniqueInstance;
+	}
+
+	public List<IStock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol)
+	{
+		DecimalFormat df = new DecimalFormat(STOCK_PRICE_DECIMAL_FORMAT);
+		List<IStockHistory> iStockHistories = iStockHistoryDb.getStockHistoryBySymbol(symbol);
+		int totalCount = iStockHistories.size();
 		if (totalCount > 0)
 		{
 			float sum = 0.00f;
-			for (StockHistory stockHistory : stockHistorys)
+			for (IStockHistory iStockHistory : iStockHistories)
 			{
-				sum += stockHistory.getPrice();
+				sum += iStockHistory.getPrice();
 			}
 
 			float mean = sum / totalCount;
-			StockHistory lastHistoryStock = stockHistorys.get(totalCount - 1);
-			Stock predictedStock = new Stock();
+			IStockHistory lastHistoryStock = iStockHistories.get(totalCount - 1);
+			IStock predictedStock = stockFactory.createStock();
 			float changeInPercent = mean / lastHistoryStock.getPrice();
 
 			predictedStock.setStockId(lastHistoryStock.getStockId());
@@ -35,14 +56,14 @@ public class StockPrediction implements IStockPrediction
 			predictedStock.setOpen(lastHistoryStock.getOpen());
 			predictedStock.setHigh(lastHistoryStock.getHigh());
 			predictedStock.setLow(lastHistoryStock.getLow());
-			predictedStock.setPrice(mean);
+			predictedStock.setPrice(Float.parseFloat(df.format(mean)));
 			predictedStock.setLatestTradingDate(new Date());
 			predictedStock.setPreviousClose(lastHistoryStock.getPreviousClose());
 			predictedStock.setSegment(lastHistoryStock.getSegment());
-			predictedStock.setPercentIncreaseDecrease(changeInPercent);
-			List<Stock> stocks = new ArrayList<>();
-			stocks.add(predictedStock);
-			return stocks;
+			predictedStock.setPercentIncreaseDecrease(Float.parseFloat(df.format(changeInPercent)));
+			List<IStock> iStocks = new ArrayList<>();
+			iStocks.add(predictedStock);
+			return iStocks;
 		} else
 		{
 			return null;

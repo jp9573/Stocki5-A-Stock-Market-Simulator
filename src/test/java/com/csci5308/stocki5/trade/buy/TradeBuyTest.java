@@ -1,17 +1,24 @@
 package com.csci5308.stocki5.trade.buy;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.StockDbMock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TradeBuyTest {
+
+    StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+    TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
+    TradeAbstractFactory tradeFactory = TradeFactory.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
 
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
@@ -20,10 +27,10 @@ public class TradeBuyTest {
 
     @Before
     public void createObjects() {
-        stockDb = new StockDbMock();
-        userDb = new UserDbMock();
-        tradeDb = new TradeDbMock();
-        tradeBuy = new TradeBuy();
+        stockDb = stockFactoryMock.createStockDbMock();
+        userDb = userFactoryMock.createUserDbMock();
+        tradeDb = tradeFactoryMock.createTradeDbMock();
+        tradeBuy = tradeFactory.createTradeBuy();
     }
 
     @After

@@ -1,30 +1,31 @@
 package com.csci5308.stocki5.user.password;
 
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UserChangePasswordTest{
+public class UserChangePasswordTest {
 
     IUserChangePassword userChangePassword = null;
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
     IUserDb userDbMock = null;
-    User user = null;
+    IUser user = null;
 
     @Before
-    public void createObjects()
-    {
-        userChangePassword = new UserChangePassword();
-        userDbMock = new UserDbMock();
+    public void createObjects() {
+        userChangePassword = userFactory.createUserChangePassword();
+        userDbMock = userFactoryMock.createUserDbMock();
         user = userDbMock.getUser("AB123456");
     }
 
     @After
-    public void destroyObjects()
-    {
+    public void destroyObjects() {
         userChangePassword = null;
         userDbMock = null;
         user = null;
@@ -33,7 +34,7 @@ public class UserChangePasswordTest{
     @Test
     public void validateCurrentPasswordTestValid() {
         String currentPassword = "password";
-        Assert.assertTrue(userChangePassword.validateCurrentPassword(user, currentPassword ));
+        Assert.assertTrue(userChangePassword.validateCurrentPassword(user, currentPassword));
     }
 
     @Test

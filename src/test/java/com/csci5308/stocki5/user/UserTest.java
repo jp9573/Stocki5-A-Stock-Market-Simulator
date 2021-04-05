@@ -8,12 +8,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+
 public class UserTest {
-    private User user = null;
+    private IUser user = null;
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     @Before
     public void createObjects() {
-        user = new User();
+        user = userFactory.createUser();
     }
 
     @After

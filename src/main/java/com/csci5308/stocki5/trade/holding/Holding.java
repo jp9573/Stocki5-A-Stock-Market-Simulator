@@ -1,15 +1,15 @@
 package com.csci5308.stocki5.trade.holding;
 
-import com.csci5308.stocki5.stock.Stock;
+import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
-import com.csci5308.stocki5.user.IUserDb;
+import com.csci5308.stocki5.user.db.IUserDb;
 
 import java.text.DecimalFormat;
 
-public class Holding extends Trade
+public class Holding extends Trade implements IHolding
 {
 
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
@@ -45,8 +45,8 @@ public class Holding extends Trade
 
 	public void calculateProfitLoss()
 	{
-		Stock stock = this.getStockDbInterface().getStock(this.getStockId());
-		float price = stock.getPrice();
+		IStock iStock = this.getStockDbInterface().getStock(this.getStockId());
+		float price = iStock.getPrice();
 		this.setSellPrice(price);
 		float totalSellPrice = this.getQuantity() * this.getSellPrice();
 		this.setTotalSellPrice(totalSellPrice);

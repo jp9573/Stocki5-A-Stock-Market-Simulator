@@ -1,7 +1,9 @@
 package com.csci5308.stocki5.user.signup;
 
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,18 +14,20 @@ public class UserSignUpTest {
     private static final String ADD_USER_ERROR_MESSAGE = "Error in adding user. Please try again later.";
     private static final String INVALID_CONTACT_NUMBER_MESSAGE = "Invalid Contact Number";
 
-    private UserDbMock userDbMock = new UserDbMock();
-    private UserSignUp userSignUp = new UserSignUp();
-    private User user = new User();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
+    private IUserDb userDbMock = null;
+    private IUserSignUp userSignUp = null;
+    private IUser user = null;
 
     @Before
     public void createObjects() {
-        userSignUp = new UserSignUp();
-        user = new User();
+        userSignUp = userFactory.createUserSignUp();
+        user = userFactory.createUser();
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setProvince("Toronto");
-        userDbMock = new UserDbMock();
+        userDbMock = userFactoryMock.createUserDbMock();
     }
 
     @After

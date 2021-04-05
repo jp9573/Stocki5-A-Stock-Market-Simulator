@@ -16,21 +16,43 @@
 <%@ include file="header.jsp" %>
 <div class="container" style="margin-top: 70px; margin-bottom: 40px;">
     <div class="row">
-        <h2 class="text-center">Prediction</h2>
+        <h3 class="text-center" style="margin-top: 0px; text-transform: uppercase;">Stock Prediction</h3>
         <form action="<c:url value='/predict' />" method='POST'
-              style="display: flex; align-items: flex-end; justify-content: center;">
+              style="display: flex; align-items: flex-end; justify-content: center; margin-bottom: 20px;">
             <div class="form-group" style="width: 40%; margin: 0;">
-                <label for="exampleInputEmail1">Search stock to predict</label>
+                <label for="exampleInputEmail1"></label>
                 <input type="text" class="form-control" name="stockName" id="exampleInputEmail1"
-                       placeholder="Stock name">
+                       placeholder="Stock Symbol">
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Search</button>
         </form>
 
-        <c:if test="${empty predictionList}">
+       <%--  <c:if test="${empty predictionList}">
             Find prediction with the stock symbol.
-        </c:if>
-        <c:forEach items="${predictionList}" var="predictionList">
+        </c:if> --%>
+        <table class="table">
+                <thead>
+                <tr>
+                    <th>STOCK SYMBOL</th>
+                    <th>SEGMENT</th>
+                    <th>PREDICTED PRICE</th>
+                    <th>PERCENT INCREASE DECREASE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${predictionList}" var="predicted" varStatus="loop">
+                    <tr>
+                        <td><c:out value="${predicted.symbol}" /></td>
+                        <td><c:out value="${predicted.segment}" /></td>
+                        <td><c:out value="${predicted.price}" /></td>
+                        <td style="text-align: left;"><span class="${predicted.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}"><c:out
+                        value="${predicted.percentIncreaseDecrease}"/>%&nbsp;<span
+                        class="${predicted.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        <%-- <c:forEach items="${predictionList}" var="predictionList">
             <div class="mt-2"
                     style="display: flex; align-items: center; justify-content: space-between; width: 50%; margin: auto;">
                 <div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Symbol&nbsp;</span><span
@@ -41,7 +63,7 @@
                         value="${predictionList.percentIncreaseDecrease}"/>%&nbsp;<span
                         class="${predictionList.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span>
             </div>
-        </c:forEach>
+        </c:forEach> --%>
     </div>
 </div>
 <%@ include file="footer.jsp" %>

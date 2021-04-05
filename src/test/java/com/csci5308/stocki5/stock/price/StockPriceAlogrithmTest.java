@@ -5,18 +5,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.stock.history.StockMaintainHistory;
-import com.csci5308.stocki5.trade.buy.TradeBuy;
-import com.csci5308.stocki5.trade.sell.TradeSell;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 
 public class StockPriceAlogrithmTest
 {
-	private StockPriceAlgorithm stockPriceAlgorithm = null;
-	private StockDbMock stockDbMock = null;
-	private TradeBuy tradeBuy = null;
-	private TradeSell tradeSell = null;
-	private StockMaintainHistory stockMaintainHistory = null;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+	private IStockPriceAlgorithm stockPriceAlgorithm = null;
+	private IStockPriceAlgorithmMock stockPriceAlgorithmMock = null;
 	private float currentPrice = 0.00f;
 	private float previousPrice = 0.00f;
 	private int limit = 0;
@@ -24,11 +22,8 @@ public class StockPriceAlogrithmTest
 	@Before
 	public void createStock()
 	{
-		stockPriceAlgorithm = new StockPriceAlgorithm();
-		stockDbMock = new StockDbMock();
-		tradeBuy = new TradeBuy();
-		tradeSell = new TradeSell();
-		stockMaintainHistory = new StockMaintainHistory();
+		stockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
+		stockPriceAlgorithmMock = stockFactoryMock.createStockPriceAlgorithmMock();
 		currentPrice = 125.02f;
 		previousPrice = 42.63f;
 		limit = 10;
@@ -38,10 +33,7 @@ public class StockPriceAlogrithmTest
 	public void destroyStock()
 	{
 		stockPriceAlgorithm = null;
-		stockDbMock = null;
-		tradeBuy = null;
-		tradeSell = null;
-		stockMaintainHistory = null;
+		stockPriceAlgorithmMock = null;
 		currentPrice = 0.00f;
 		previousPrice = 0.00f;
 		limit = 0;
@@ -96,7 +88,7 @@ public class StockPriceAlogrithmTest
 	@Test
 	public void generateStockPriceTest()
 	{
-		boolean isStockPriceGenerated = stockPriceAlgorithm.generateStockPrice(stockDbMock, tradeBuy, tradeSell, stockMaintainHistory);
-		Assert.assertEquals(false, isStockPriceGenerated);
+		boolean isStockPriceGenerated = stockPriceAlgorithmMock.generateStockPrice();
+		Assert.assertEquals(true, isStockPriceGenerated);
 	}
 }

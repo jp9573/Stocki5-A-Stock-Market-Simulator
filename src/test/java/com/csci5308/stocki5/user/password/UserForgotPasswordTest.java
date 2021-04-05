@@ -1,13 +1,15 @@
 package com.csci5308.stocki5.user.password;
 
+import com.csci5308.stocki5.email.EmailMock;
 import com.csci5308.stocki5.email.IEmail;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.db.IUserOtpDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import com.csci5308.stocki5.email.EmailMock;
 
 public class UserForgotPasswordTest {
     IUserForgotPassword userForgotPassword = null;
@@ -16,19 +18,21 @@ public class UserForgotPasswordTest {
     IEmail emailMock = null;
     IUserChangePassword userChangePassword = null;
     IUserOtp userOtp = null;
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
     @Before
-    public void createObjects(){
-        userForgotPassword = new UserForgotPassword();
-        userDbMock = new UserDbMock();
-        userOtpDbMock = new UserOtpDbMock();
-        emailMock = new EmailMock();
-        userChangePassword = new UserChangePassword();
-        userOtp = new UserOtp();
+    public void createObjects() {
+        userForgotPassword = userFactory.createUserForgotPassword();
+        userDbMock = userFactoryMock.createUserDbMock();
+        userOtpDbMock = userFactoryMock.createUserOtpDbMock();
+        emailMock = EmailMock.instance();
+        userChangePassword = userFactory.createUserChangePassword();
+        userOtp = userFactory.createUserOtp();
     }
 
     @After
-    public void destroyObjects(){
+    public void destroyObjects() {
         userForgotPassword = null;
         userDbMock = null;
         userOtpDbMock = null;
@@ -94,7 +98,7 @@ public class UserForgotPasswordTest {
     @Test
     public void resetPassword() {
         String userCode = "AB123456";
-        String password= "password";
+        String password = "password";
         String confirmPassword = "password";
         Assert.assertTrue(userForgotPassword.resetPassword(userCode, password, confirmPassword, userDbMock, userOtpDbMock, userChangePassword));
     }
@@ -102,7 +106,7 @@ public class UserForgotPasswordTest {
     @Test
     public void resetPasswordInvalid() {
         String userCode = "AB123456";
-        String password= "password";
+        String password = "password";
         String confirmPassword = "confirmpassword";
         Assert.assertFalse(userForgotPassword.resetPassword(userCode, password, confirmPassword, userDbMock, userOtpDbMock, userChangePassword));
     }

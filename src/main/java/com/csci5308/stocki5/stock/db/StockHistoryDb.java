@@ -1,59 +1,71 @@
-package com.csci5308.stocki5.stock.history;
+package com.csci5308.stocki5.stock.db;
+
+import com.csci5308.stocki5.database.DbConnection;
+import com.csci5308.stocki5.database.IDbConnection;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.history.IStockHistory;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import com.csci5308.stocki5.config.Stocki5DbConnection;
-
 @Repository
 public class StockHistoryDb implements IStockHistoryDb
 {
-	@Autowired
-	Stocki5DbConnection dbConnection;
-	
+	private static IStockHistoryDb uniqueInstance = null;
+
+	IDbConnection dbConnection = DbConnection.instance();
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+
+	private StockHistoryDb(){ }
+
+	public static IStockHistoryDb instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockHistoryDb();
+		}
+		return uniqueInstance;
+	}
+
 	@Override
-	public List<StockHistory> getStockHistoryBySymbol(String symbol)
+	public List<IStockHistory> getStockHistoryBySymbol(String symbol)
 	{
-		List<StockHistory> stockHistorys = new ArrayList<>();
+		List<IStockHistory> iStockHistories = new ArrayList<>();
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			Statement statement = connection.createStatement();
 			String query = "SELECT history_id,stock_id,symbol,open,high,low,price,latest_trading_date,previous_close,segment,percent,insert_timestamp FROM stock_data_history WHERE symbol = \"" + symbol + "\"";
 			ResultSet resultSet = statement.executeQuery(query);
-			StockHistory stockHistory = new StockHistory();
+			IStockHistory iStockHistory = stockFactory.createStockHistory();
 			while (resultSet.next())
 			{
-				stockHistory.setHistoryId(resultSet.getLong("history_id"));
-				stockHistory.setStockId(resultSet.getInt("stock_id"));
-				stockHistory.setSymbol(resultSet.getString("symbol"));
-				stockHistory.setOpen(resultSet.getFloat("open"));
-				stockHistory.setHigh(resultSet.getFloat("high"));
-				stockHistory.setLow(resultSet.getFloat("low"));
-				stockHistory.setPrice(resultSet.getFloat("price"));
-				stockHistory.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
-				stockHistory.setPreviousClose(resultSet.getFloat("previous_close"));
-				stockHistory.setSegment(resultSet.getString("segment"));
-				stockHistory.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
-				stockHistory.setInsertTimestamp(resultSet.getTimestamp("insert_timestamp").toString());
-				stockHistorys.add(stockHistory);
+				iStockHistory.setHistoryId(resultSet.getLong("history_id"));
+				iStockHistory.setStockId(resultSet.getInt("stock_id"));
+				iStockHistory.setSymbol(resultSet.getString("symbol"));
+				iStockHistory.setOpen(resultSet.getFloat("open"));
+				iStockHistory.setHigh(resultSet.getFloat("high"));
+				iStockHistory.setLow(resultSet.getFloat("low"));
+				iStockHistory.setPrice(resultSet.getFloat("price"));
+				iStockHistory.setLatestTradingDate(resultSet.getDate("latest_trading_date"));
+				iStockHistory.setPreviousClose(resultSet.getFloat("previous_close"));
+				iStockHistory.setSegment(resultSet.getString("segment"));
+				iStockHistory.setPercentIncreaseDecrease(resultSet.getFloat("percent"));
+				iStockHistory.setInsertTimestamp(resultSet.getTimestamp("insert_timestamp").toString());
+				iStockHistories.add(iStockHistory);
 			}
-			return stockHistorys;
+			return iStockHistories;
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-			return stockHistorys;
+			return iStockHistories;
 		} finally
 		{
 			dbConnection.closeConnection(connection);
@@ -62,30 +74,30 @@ public class StockHistoryDb implements IStockHistoryDb
 	}
 
 	@Override
-	public boolean insertStocksHistory(List<StockHistory> stocksHistorys)
+	public boolean insertStocksHistory(List<IStockHistory> iStockHistories)
 	{
 		Connection connection = dbConnection.createConnection();
 		try
 		{
 			String query = "INSERT INTO stock_data_history VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement statement = connection.prepareStatement(query);
-			Iterator<StockHistory> stockHistoryIterator = stocksHistorys.iterator();
-			StockHistory stockHistory;
-			while (stockHistoryIterator.hasNext())
+			Iterator<IStockHistory> iStockHistoriesIterator = iStockHistories.iterator();
+			IStockHistory iStockHistory;
+			while (iStockHistoriesIterator.hasNext())
 			{
-				stockHistory = stockHistoryIterator.next();
-				statement.setLong(1, stockHistory.getHistoryId());
-				statement.setInt(2, stockHistory.getStockId());
-				statement.setString(3, stockHistory.getSymbol());
-				statement.setFloat(4, stockHistory.getOpen());
-				statement.setFloat(5, stockHistory.getHigh());
-				statement.setFloat(6, stockHistory.getLow());
-				statement.setFloat(7, stockHistory.getPrice());
-				statement.setDate(8, (Date) stockHistory.getLatestTradingDate());
-				statement.setFloat(9, stockHistory.getPreviousClose());
-				statement.setString(10, stockHistory.getSegment());
-				statement.setFloat(11, stockHistory.getPercentIncreaseDecrease());
-				statement.setTimestamp(12, Timestamp.valueOf(stockHistory.getInsertTimestamp()));
+				iStockHistory = iStockHistoriesIterator.next();
+				statement.setLong(1, iStockHistory.getHistoryId());
+				statement.setInt(2, iStockHistory.getStockId());
+				statement.setString(3, iStockHistory.getSymbol());
+				statement.setFloat(4, iStockHistory.getOpen());
+				statement.setFloat(5, iStockHistory.getHigh());
+				statement.setFloat(6, iStockHistory.getLow());
+				statement.setFloat(7, iStockHistory.getPrice());
+				statement.setDate(8, (Date) iStockHistory.getLatestTradingDate());
+				statement.setFloat(9, iStockHistory.getPreviousClose());
+				statement.setString(10, iStockHistory.getSegment());
+				statement.setFloat(11, iStockHistory.getPercentIncreaseDecrease());
+				statement.setTimestamp(12, Timestamp.valueOf(iStockHistory.getInsertTimestamp()));
 				statement.addBatch();
 				statement.clearParameters();
 			}
