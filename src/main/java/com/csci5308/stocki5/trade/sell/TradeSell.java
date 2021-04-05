@@ -73,7 +73,7 @@ public class TradeSell implements ITradeSell
 			{
 				dbInterface.removeHoldingForAutoSell(trade.getUserCode(), trade.getStockId(), trade.getQuantity());
 				trade.setSellPrice(stocksMap.get(trade.getSymbol()));
-				trade.setTotalSellPrice(trade.getQuantity() * trade.getBuyPrice());
+				trade.setTotalSellPrice(trade.getQuantity() * trade.getSellPrice());
 				trade.setStatus(TradeStatus.EXECUTED);
 				boolean isTradeUpdated = dbInterface.updateSellTrade(trade, false);
 				if (isTradeUpdated)
