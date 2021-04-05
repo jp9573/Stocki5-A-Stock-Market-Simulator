@@ -1,5 +1,13 @@
 package com.csci5308.stocki5.trade.buy;
 
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.trade.ITrade;
@@ -9,13 +17,6 @@ import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
-import org.springframework.stereotype.Service;
-
-import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TradeBuy implements ITradeBuy

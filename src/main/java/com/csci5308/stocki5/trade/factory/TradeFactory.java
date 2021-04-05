@@ -1,12 +1,14 @@
 package com.csci5308.stocki5.trade.factory;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.observer.IObserver;
 import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.Trade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
 import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.buy.TradeBuy;
+import com.csci5308.stocki5.trade.buy.TradeBuyPendingObserver;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.db.TradeDb;
 import com.csci5308.stocki5.trade.eod.ITradeEod;
@@ -19,6 +21,7 @@ import com.csci5308.stocki5.trade.order.ITradeOrder;
 import com.csci5308.stocki5.trade.order.TradeOrder;
 import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.trade.sell.TradeSell;
+import com.csci5308.stocki5.trade.sell.TradeSellPendingObserver;
 import com.csci5308.stocki5.user.db.IUserDb;
 
 public class TradeFactory extends TradeAbstractFactory
@@ -41,11 +44,23 @@ public class TradeFactory extends TradeAbstractFactory
 	{
 		return new TradeBuy();
 	}
+	
+	@Override
+	public IObserver createTradeBuyPendingObserver()
+	{
+		return new TradeBuyPendingObserver();
+	}
 
 	@Override
 	public ITradeSell createTradeSell()
 	{
 		return new TradeSell();
+	}
+	
+	@Override
+	public IObserver createTradeSellPendingObserver()
+	{
+		return new TradeSellPendingObserver();
 	}
 
 	@Override
@@ -83,4 +98,5 @@ public class TradeFactory extends TradeAbstractFactory
 	{
 		return TradeDb.instance();
 	}
+
 }
