@@ -1,6 +1,7 @@
 package com.csci5308.stocki5.trade.factory;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.observer.IObserver;
 import com.csci5308.stocki5.trade.ITrade;
 import com.csci5308.stocki5.trade.TradeStatus;
 import com.csci5308.stocki5.trade.TradeType;
@@ -35,8 +36,12 @@ public abstract class TradeAbstractFactory
     public abstract ITrade createTradeWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb stockDbInterface, IUserDb userDbInterface);
 
     public abstract ITradeBuy createTradeBuy();
+    
+    public abstract IObserver createTradeBuyPendingObserver();
 
     public abstract ITradeSell createTradeSell();
+    
+    public abstract IObserver createTradeSellPendingObserver();
 
     public abstract ITradeEod createTradeEod();
 

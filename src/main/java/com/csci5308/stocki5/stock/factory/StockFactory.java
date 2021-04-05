@@ -16,6 +16,9 @@ import com.csci5308.stocki5.stock.history.IStockHistory;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
 import com.csci5308.stocki5.stock.history.StockHistory;
 import com.csci5308.stocki5.stock.history.StockMaintainHistory;
+import com.csci5308.stocki5.stock.history.StockMaintainHistoryObserver;
+import com.csci5308.stocki5.stock.observer.IObserver;
+import com.csci5308.stocki5.stock.observer.Subject;
 import com.csci5308.stocki5.stock.prediction.IStockPrediction;
 import com.csci5308.stocki5.stock.prediction.StockPrediction;
 import com.csci5308.stocki5.stock.price.IStockPriceAlgorithm;
@@ -23,6 +26,7 @@ import com.csci5308.stocki5.stock.price.IStockPriceEod;
 import com.csci5308.stocki5.stock.price.IStockScheduler;
 import com.csci5308.stocki5.stock.price.StockPriceAlgorithm;
 import com.csci5308.stocki5.stock.price.StockPriceEod;
+import com.csci5308.stocki5.stock.price.StockPriceSubject;
 import com.csci5308.stocki5.stock.price.StockScheduler;
 
 @Service
@@ -71,7 +75,8 @@ public class StockFactory extends StockAbstractFactory
 	}
 
 	@Override
-	public IStockHistory createStockHistoryByHistoryId(long historyId, String insertTimestamp, IStock iStock) {
+	public IStockHistory createStockHistoryByHistoryId(long historyId, String insertTimestamp, IStock iStock)
+	{
 		return new StockHistory(historyId, insertTimestamp, iStock);
 	}
 
@@ -86,6 +91,12 @@ public class StockFactory extends StockAbstractFactory
 	{
 		return StockMaintainHistory.instance();
 	}
+	
+	@Override
+	public IObserver createStockMaintainHistoryObserver()
+	{
+		return new StockMaintainHistoryObserver();
+	}
 
 	@Override
 	public IStockPrediction createStockPrediction()
@@ -97,6 +108,12 @@ public class StockFactory extends StockAbstractFactory
 	public IStockPriceAlgorithm createStockPriceAlgorithm()
 	{
 		return StockPriceAlgorithm.instance();
+	}
+
+	@Override
+	public Subject createStockPriceSubject()
+	{
+		return new StockPriceSubject();
 	}
 
 	@Override
