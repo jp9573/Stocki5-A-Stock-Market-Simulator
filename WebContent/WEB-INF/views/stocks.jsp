@@ -89,27 +89,71 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12"
 						style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
-						<h3>Top 5 Gainers</h3>
-						<c:forEach items="${gainers}" var="gainers">
+						<h3 style="text-align: center; text-transform: uppercase; margin-top: 0px; color: #5cb85c; font-weight: bold;">Top 5 Gainers</h3>
+						<%-- <c:forEach items="${gainers}" var="gainers">
 							<div style="display: flex; align-items: center; justify-content: space-between;">
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Symbol&nbsp;</span><span class="label label-info"><c:out value="${gainers.symbol}" /></span></div>
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Price&nbsp;</span><span class="label label-info"><c:out value="${gainers.price}" /></span></div>
 								<span class="${gainers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${gainers.percentIncreaseDecrease}" />%&nbsp;<span class="${gainers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span>
 							</div>
-						</c:forEach>
+						</c:forEach> --%>
+						<table class="table" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th>SYMBOL</th>
+								<th>SEGMENT</th>
+								<th>CLOSING PRICE</th>
+								<th>PRICE</th>
+								<th>PERCENT INCREASE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${gainers}" var="gainers">
+								<tr>
+									<td><c:out value="${gainers.symbol}" /></td>
+									<td><c:out value="${gainers.segment}" /></td>
+									<td><c:out value="${gainers.previousClose}" /></td>
+									<td><c:out value="${gainers.price}" /></td>
+									<td style="text-align: right;"><span class="${gainers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${gainers.percentIncreaseDecrease}" />%&nbsp;<span class="${gainers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12"
 						style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
-						<h3>Top 5 Losers</h3>
-						<c:forEach items="${losers}" var="losers">
+						<h3 style="text-align: center; text-transform: uppercase; margin-top: 0px; color: #d9534f; font-weight: bold;">Top 5 Losers</h3>
+						<%-- <c:forEach items="${losers}" var="losers">
 							<div style="display: flex; align-items: center; justify-content: space-between;">
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Symbol&nbsp;</span><span class="label label-info"><c:out value="${losers.symbol}" /></span></div>
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Price&nbsp;</span><span class="label label-info"><c:out value="${losers.price}" /></span></div>
 								<span class="${losers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${losers.percentIncreaseDecrease}" />%&nbsp;<span class="${losers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span>
 							</div>
-						</c:forEach>
+						</c:forEach> --%>
+						<table class="table" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th>SYMBOL</th>
+								<th>SEGMENT</th>
+								<th>CLOSING PRICE</th>
+								<th>PRICE</th>
+								<th>PERCENT INCREASE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${losers}" var="losers">
+								<tr>
+									<td><c:out value="${losers.symbol}" /></td>
+									<td><c:out value="${losers.segment}" /></td>
+									<td><c:out value="${losers.previousClose}" /></td>
+									<td><c:out value="${losers.price}" /></td>
+									<td style="text-align: right;"><span class="${losers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${losers.percentIncreaseDecrease}" />%&nbsp;<span class="${losers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

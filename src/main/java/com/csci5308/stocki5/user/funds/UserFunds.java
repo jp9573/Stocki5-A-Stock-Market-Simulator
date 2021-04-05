@@ -1,32 +1,66 @@
 package com.csci5308.stocki5.user.funds;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.User;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 @Service
-public class UserFunds implements IUserFunds
-{
-	@Value("${user.resetfundamount}")
-	private int resetFundAmount;
+public class UserFunds implements IUserFunds {
+    private static final String PROPERTIES_FILE = "config.properties";
 
+    private int resetFundAmount;
 
-	@Override
-	public void setResetFundAmount(int resetFundAmount) {
-		this.resetFundAmount = resetFundAmount;
-	}
+    public UserFunds(){
+        readProperties();
+    }
 
-	@Override
-	public boolean resetFunds(User user, IUserDb userDb)
-	{
-		if (user.getFunds() < resetFundAmount)
-		{
-			user.setFunds(resetFundAmount);
-			return userDb.updateUserFunds(user.getUserCode(), resetFundAmount);
-		} else
-		{
-			return false;
-		}
-	}
+    private void readProperties()
+    {
+        InputStream inputStream = null;
+        try
+        {
+            Properties prop = new Properties();
+            inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+            if (inputStream == null)
+            {
+                throw new FileNotFoundException();
+            } else
+            {
+                prop.load(inputStream);
+            }
+            this.resetFundAmount = Integer.parseInt(prop.getProperty("user.resetfundamount"));
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            try
+            {
+                inputStream.close();
+            } catch (IOException ioe)
+            {
+                ioe.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void setResetFundAmount(int resetFundAmount) {
+        this.resetFundAmount = resetFundAmount;
+    }
+
+    @Override
+    public boolean resetFunds(IUser user, IUserDb userDb) {
+        if (user.getFunds() < resetFundAmount) {
+            user.setFunds(resetFundAmount);
+            return userDb.updateUserFunds(user.getUserCode(), resetFundAmount);
+        } else {
+            return false;
+        }
+    }
 }

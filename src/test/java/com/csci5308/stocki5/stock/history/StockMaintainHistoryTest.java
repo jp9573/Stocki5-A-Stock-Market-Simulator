@@ -1,28 +1,33 @@
 package com.csci5308.stocki5.stock.history;
 
-import java.util.List;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.StockDbMock;
+import java.util.List;
 
 public class StockMaintainHistoryTest
 {
-	private StockDbMock stockDbMock = null;
-	private StockHistoryDbMock stockHistoryDbMock = null;
-	private StockMaintainHistory stockMaintainHistory = null;
-	private List<Stock> stocks = null;
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+	private IStockDb stockDbMock = null;
+	private IStockHistoryDb stockHistoryDbMock = null;
+	private IStockMaintainHistory stockMaintainHistory = null;
+	private List<IStock> stocks = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockDbMock = new StockDbMock();
-		stockHistoryDbMock = new StockHistoryDbMock();
-		stockMaintainHistory = new StockMaintainHistory();
+		stockDbMock = stockFactoryMock.createStockDbMock();
+		stockHistoryDbMock = stockFactoryMock.createStockHistoryDbMock();
+		stockMaintainHistory = stockFactory.createStockMaintainHistory();
 		stocks = stockDbMock.getStocks();
 	}
 

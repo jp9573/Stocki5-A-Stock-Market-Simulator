@@ -1,5 +1,6 @@
 package com.csci5308.stocki5.stock.price;
 
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,43 +8,42 @@ import org.junit.Test;
 
 public class StockSchedulerTest
 {
-	private StockScheduler stockScheduler = null;
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+	private IStockSchedulerMock stockSchedulerMock = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockScheduler = new StockScheduler();
+		stockSchedulerMock = stockFactoryMock.createStockSchedulerMock();
 	}
 
 	@After
 	public void destriyObjects()
 	{
-		stockScheduler = null;
+		stockSchedulerMock = null;
 	}
 
 	@Test
 	public void scheduleGenerateStockPriceTest()
 	{
-		Assert.assertTrue(true);
+		Assert.assertEquals(true, stockSchedulerMock.scheduleGenerateStockPrice());
 	}
 
 	@Test
 	public void scheduleStockBodTest()
 	{
-		stockScheduler.scheduleStockBod();
-		Assert.assertEquals(true, StockScheduler.isMarketHours);
+		Assert.assertEquals(true, stockSchedulerMock.scheduleStockBod());
 	}
 
 	@Test
 	public void scheduleStockEodTest()
 	{
-		stockScheduler.scheduleStockEod();
-		Assert.assertEquals(false, StockScheduler.isMarketHours);
+		Assert.assertEquals(true, stockSchedulerMock.scheduleStockEod());
 	}
 
 	@Test
 	public void scheduleStockClosingPriceTest()
 	{
-		Assert.assertTrue(true);
+		Assert.assertEquals(true, stockSchedulerMock.scheduleStockClosingPrice());
 	}
 }

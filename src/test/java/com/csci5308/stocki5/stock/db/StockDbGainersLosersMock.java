@@ -1,24 +1,39 @@
 package com.csci5308.stocki5.stock.db;
 
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.csci5308.stocki5.stock.Stock;
-
 public class StockDbGainersLosersMock implements IStockDbGainersLosers
 {
+	private static IStockDbGainersLosers uniqueInstance = null;
+
+	StockAbstractFactory stockFactory = StockFactory.instance();
+
+	private  StockDbGainersLosersMock(){ }
+
+	public static IStockDbGainersLosers instance(){
+		if(null == uniqueInstance){
+			uniqueInstance = new StockDbGainersLosersMock();
+		}
+		return uniqueInstance;
+	}
+
 	@Override
-	public List<Stock> getHighestPriceStocks(String segments, int limit)
+	public List<IStock> getHighestPriceStocks(String segments, int limit)
 	{
-		List<Stock> stockArrayList = new ArrayList<Stock>();
+		List<IStock> stockArrayList = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)
 		{
-			Stock stock = new Stock();
+			IStock stock = stockFactory.createStock();
 			stock.setSymbol(aStockName);
 			stock.setOpen((float) Math.random());
 			stock.setHigh((float) Math.random());
@@ -51,14 +66,14 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 	}
 
 	@Override
-	public List<Stock> getLowestPriceStocks(String segments, int limit)
+	public List<IStock> getLowestPriceStocks(String segments, int limit)
 	{
-		List<Stock> stockArrayList = new ArrayList<Stock>();
+		List<IStock> stockArrayList = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)
 		{
-			Stock stock = new Stock();
+			IStock stock = stockFactory.createStock();
 			stock.setSymbol(aStockName);
 			stock.setOpen((float) Math.random());
 			stock.setHigh((float) Math.random());

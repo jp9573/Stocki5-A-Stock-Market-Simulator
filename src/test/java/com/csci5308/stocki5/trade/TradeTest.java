@@ -1,46 +1,49 @@
 package com.csci5308.stocki5.trade;
 
-import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.trade.db.ITradeDb;
-import com.csci5308.stocki5.trade.db.TradeDbMock;
-import com.csci5308.stocki5.user.IUserDb;
-import com.csci5308.stocki5.user.db.UserDbMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
+import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
+import com.csci5308.stocki5.trade.factory.TradeFactory;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
+
 public class TradeTest {
 
-    private ITradeDb tradeDb = null;
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+    TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
+    TradeAbstractFactory tradeFactory = TradeFactory.instance();
+    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
     private IStockDb stockDb = null;
     private IUserDb userDb = null;
-    private Trade tradeFirst = null;
-    private Trade tradeSecond = null;
-    private Trade tradeThird = null;
-    private Trade tradeForth = null;
-    private Trade tradeFifth = null;
-    private Trade tradeSixth = null;
-    private Trade tradeSeventh = null;
+    private ITrade tradeFirst = null;
+    private ITrade tradeSecond = null;
+    private ITrade tradeThird = null;
+    private ITrade tradeForth = null;
+    private ITrade tradeFifth = null;
+    private ITrade tradeSixth = null;
+    private ITrade tradeSeventh = null;
 
     @Before
     public void createObjects() {
-        tradeDb = new TradeDbMock();
-        stockDb = new StockDbMock();
-        userDb = new UserDbMock();
-        tradeFirst = new Trade("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSecond = new Trade("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeThird = new Trade("AB123456", 1, TradeType.BUY, 100000, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeForth = new Trade("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeFifth = new Trade("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSixth = new Trade("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSeventh = new Trade("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        stockDb = stockFactoryMock.createStockDbMock();
+        userDb = userFactoryMock.createUserDbMock();
+        tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeSecond = tradeFactory.createTradeWithData("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeThird = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 100000, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeForth = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeFifth = tradeFactory.createTradeWithData("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeSixth = tradeFactory.createTradeWithData("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+        tradeSeventh = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
     }
 
     @After
     public void destroyObjects() {
-        tradeDb = null;
         stockDb = null;
         userDb = null;
         tradeFirst = null;
@@ -131,5 +134,7 @@ public class TradeTest {
 
     @Test
     public void generateTradeNumberTest() {
+    	tradeFirst.generateTradeNumber();
+    	Assert.assertTrue(tradeFirst.getTradeNumber().startsWith("AB123456"));
     }
 }

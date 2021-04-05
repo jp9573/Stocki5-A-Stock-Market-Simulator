@@ -1,14 +1,13 @@
 package com.csci5308.stocki5.stock.prediction;
 
-import java.util.List;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import org.springframework.stereotype.Service;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.history.IStockHistoryDb;
+import java.util.List;
 
 @Service
 public interface IStockPrediction
 {
-	public List<Stock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol);
+	public List<IStock> predictStockValue(IStockHistoryDb iStockHistoryDb, String symbol);
 }

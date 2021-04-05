@@ -1,13 +1,13 @@
 package com.csci5308.stocki5.user.signup;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.UserDb;
 
 @Controller
 public class UserSignUpController {
@@ -25,11 +25,10 @@ public class UserSignUpController {
     private static final String ERROR = "error";
     private static final String USERNAME = "username";
 
-    @Autowired
-    UserDb userDb;
+    UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
-    @Autowired
-    IUserSignUp iUserSignUp;
+    IUserDb userDb = userFactory.createUserDb();
+    IUserSignUp iUserSignUp = userFactory.createUserSignUp();
 
     @RequestMapping(value = "/signupuser", method = RequestMethod.POST)
     public ModelAndView signUpUser(@RequestParam(value = FIRST_NAME) String firstName,
@@ -56,7 +55,7 @@ public class UserSignUpController {
         model.addObject(COUNTRY, country);
         model.addObject(DOB, dob);
 
-        User user = new User();
+        IUser user = userFactory.createUser();
         user.setPassword(password);
         user.setConfirmPassword(confirmPassword);
         user.setEmailId(emailId);

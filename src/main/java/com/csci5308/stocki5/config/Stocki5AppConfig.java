@@ -13,10 +13,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.csci5308.stocki5.database.Stocki5DbConfig;
+
 @Configuration
 @EnableWebMvc
 @PropertySource(value = { "classpath:config.properties" })
-@Import({ Stocki5DbConnection.class })
+@Import({ Stocki5DbConfig.class })
 @ComponentScan(basePackages = { "com.csci5308.stocki5" })
 public class Stocki5AppConfig implements WebMvcConfigurer
 {

@@ -1,33 +1,40 @@
 package com.csci5308.stocki5.stock.fetch;
 
-import java.util.List;
-
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockDb;
+import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.csci5308.stocki5.stock.Stock;
-import com.csci5308.stocki5.stock.db.StockDbGainersLosersMock;
-import com.csci5308.stocki5.stock.db.StockDbMock;
-import com.csci5308.stocki5.user.User;
-import com.csci5308.stocki5.user.db.UserDbMock;
+import java.util.List;
 
 public class StockFetchTest
 {
-	private UserDbMock userDbMock = null;
-	private StockDbGainersLosersMock gainersLosersMock = null;
-	private StockDbMock stockDbMock = null;
-	private StockFetch stockFetch = null;
-	private User user = null;
+	
+	StockAbstractFactory stockFactory = StockFactory.instance();
+	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
+	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+	private IUserDb userDbMock = null;
+	private IStockDbGainersLosers gainersLosersMock = null;
+	private IStockDb stockDbMock = null;
+	private IStockFetch stockFetch = null;
+	private IUser user = null;
 
 	@Before
 	public void createObjects()
 	{
-		userDbMock = new UserDbMock();
-		gainersLosersMock = new StockDbGainersLosersMock();
-		stockDbMock = new StockDbMock();
-		stockFetch = new StockFetch();
+		userDbMock = userFactoryMock.createUserDbMock();
+		gainersLosersMock = stockFactoryMock.createStockDbGainersLosersMock();
+		stockDbMock = stockFactoryMock.createStockDbMock();
+		stockFetch = stockFactory.createStockFetch();
 		user = userDbMock.getUser("AB123456");
 	}
 
@@ -44,14 +51,14 @@ public class StockFetchTest
 	@Test
 	public void getUserSegmentsTest()
 	{
-		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.getUserStockSegments(user));
+		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.generateUserStockSegmentsList(user));
 	}
 
 	@Test
 	public void getUserSegmentsTestThreeSegments()
 	{
 		user.setForeignExchange(0);
-		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.getUserStockSegments(user));
+		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.generateUserStockSegmentsList(user));
 	}
 
 	@Test
@@ -59,7 +66,7 @@ public class StockFetchTest
 	{
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
-		Assert.assertEquals("'ICE','ISE'", stockFetch.getUserStockSegments(user));
+		Assert.assertEquals("'ICE','ISE'", stockFetch.generateUserStockSegmentsList(user));
 	}
 
 	@Test
@@ -68,7 +75,7 @@ public class StockFetchTest
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
-		Assert.assertEquals("'ISE'", stockFetch.getUserStockSegments(user));
+		Assert.assertEquals("'ISE'", stockFetch.generateUserStockSegmentsList(user));
 	}
 
 	@Test
@@ -78,7 +85,7 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		Assert.assertEquals("", stockFetch.getUserStockSegments(user));
+		Assert.assertEquals("", stockFetch.generateUserStockSegmentsList(user));
 	}
 
 	@Test
@@ -87,7 +94,7 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> stocks = stockFetch.fetchUserStocks(stockDbMock, userDbMock, "AB123456");
+		List<IStock> stocks = stockFetch.fetchUserStocks(stockDbMock, userDbMock, "AB123456");
 		Assert.assertEquals("FOREX", stocks.get(0).getSegment());
 	}
 
@@ -97,7 +104,7 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> topGainersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
+		List<IStock> topGainersStocks = stockFetch.fetchTopGainerStocks(gainersLosersMock, userDbMock, "AB123456");
 		Assert.assertEquals(5, topGainersStocks.size());
 	}
 
@@ -107,7 +114,7 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		List<Stock> topLosersStocks = stockFetch.fetchTopLoserStocks(gainersLosersMock, userDbMock, "AB123456");
+		List<IStock> topLosersStocks = stockFetch.fetchTopLoserStocks(gainersLosersMock, userDbMock, "AB123456");
 		Assert.assertEquals(5, topLosersStocks.size());
 	}
 }

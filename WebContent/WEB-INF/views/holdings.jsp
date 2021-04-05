@@ -42,7 +42,8 @@
                     <th>TOTAL BUY AMOUNT</th>
                     <th>CURRENT VALUE</th>
                     <th>PROFIT/LOSS</th>
-                    <th>ACTION</th>
+                    <th>SELL</th>
+                    <th>SET SELL PRICE</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,16 +56,15 @@
                         <td><c:out value="${order.totalBuyPrice}" /></td>
                         <td><c:out value="${order.totalSellPrice}" /></td>
                         <td><c:out value="${order.profitLoss}" /></td>
-                        <td>
+                        <td style="text-align: center;">
                             <form action="<c:url value='sellstock' />" method='POST'>
                                 <input name="sellstockid" value="${order.stockId}" hidden>
                                 <input name="quantity" value="${order.quantity}" hidden>
                                 <input name="tradeBuyNumber" value="${order.tradeNumber}" hidden>
-                                <button type="submit" class="btn btn-primary">Sell Stock</button>
+                                <button type="submit" class="btn btn-primary my-1 btn-sm">Sell Stock</button>
                             </form>
-                            <br>
-                            <button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" onclick="getStockIdSellPrice('${order.stockId}','${order.symbol}','${order.segment}', '${order.tradeNumber}', '${order.quantity}')">Set Sell Price</button>
                         </td>
+                        <td style="text-align: center;"><button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" onclick="getStockIdSellPrice('${order.stockId}','${order.symbol}','${order.segment}', '${order.tradeNumber}', '${order.quantity}')">Set Sell Price</button></td>
                     </tr>
                 </c:forEach>
                 </tbody>
