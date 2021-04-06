@@ -15,11 +15,20 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+	setTimeout(function(){ location.reload(); }, 40000);
+	
 	function getStockId(stockid,symbol,segment){
 		$("#buystocksymbol").val(symbol);
 		$("#buystockseg").val(segment);
 		$("#buyModal").modal();
 		$("#buystockid").val(stockid);
+	}
+
+	function getStockIdBuyPrice(stockid,symbol,segment){
+		$("#setbuystocksymbol").val(symbol);
+		$("#setbuystockseg").val(segment);
+		$("#buyPriceModal").modal();
+		$("#setbuystockid").val(stockid);
 	}
 </script>
 </head>
@@ -65,12 +74,11 @@
 								<td colspan="4">
 									<div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
 										<div style="display: inline-flex; padding: 4px;">
-											<input class="form-control input-sm" id="buyprice" name="buyprice" type="number" placeholder="Buy Price" />
-											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" >Set Buy Price</button>
+											<!-- <input class="form-control input-sm" id="buyprice" name="buyprice" type="number" placeholder="Buy Price" /> -->
+											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm" onclick="getStockIdBuyPrice('${stock.stockId}','${stock.symbol}','${stock.segment}')">Set Buy Price</button>
 										</div>
 										<div style="display: inline-flex; padding: 4px;">
 											<button type="submit" class="btn btn-primary my-1 btn-sm" onclick="getStockId('${stock.stockId}','${stock.symbol}','${stock.segment}')" >Buy</button>
-											<button type="submit" style="margin-left: 5px;" class="btn btn-primary my-1 btn-sm">Sell</button>
 										</div>
 									</div>
 								</td>
@@ -83,27 +91,71 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12"
 						style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
-						<h3>Top 5 Gainers</h3>
-						<c:forEach items="${gainers}" var="gainers">
+						<h3 style="text-align: center; text-transform: uppercase; margin-top: 0px; color: #5cb85c; font-weight: bold;">Top 5 Gainers</h3>
+						<%-- <c:forEach items="${gainers}" var="gainers">
 							<div style="display: flex; align-items: center; justify-content: space-between;">
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Symbol&nbsp;</span><span class="label label-info"><c:out value="${gainers.symbol}" /></span></div>
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Price&nbsp;</span><span class="label label-info"><c:out value="${gainers.price}" /></span></div>
 								<span class="${gainers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${gainers.percentIncreaseDecrease}" />%&nbsp;<span class="${gainers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span>
 							</div>
-						</c:forEach>
+						</c:forEach> --%>
+						<table class="table" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th>SYMBOL</th>
+								<th>SEGMENT</th>
+								<th>CLOSING PRICE</th>
+								<th>PRICE</th>
+								<th>PERCENT INCREASE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${gainers}" var="gainers">
+								<tr>
+									<td><c:out value="${gainers.symbol}" /></td>
+									<td><c:out value="${gainers.segment}" /></td>
+									<td><c:out value="${gainers.previousClose}" /></td>
+									<td><c:out value="${gainers.price}" /></td>
+									<td style="text-align: right;"><span class="${gainers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${gainers.percentIncreaseDecrease}" />%&nbsp;<span class="${gainers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12"
 						style="background-color: #f6f6f6; padding: 20px; border: 5px solid #ffffff;">
-						<h3>Top 5 Losers</h3>
-						<c:forEach items="${losers}" var="losers">
+						<h3 style="text-align: center; text-transform: uppercase; margin-top: 0px; color: #d9534f; font-weight: bold;">Top 5 Losers</h3>
+						<%-- <c:forEach items="${losers}" var="losers">
 							<div style="display: flex; align-items: center; justify-content: space-between;">
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Symbol&nbsp;</span><span class="label label-info"><c:out value="${losers.symbol}" /></span></div>
 								<div><span style="font-size: 14px; color: #337ab7; font-weight: bold">Price&nbsp;</span><span class="label label-info"><c:out value="${losers.price}" /></span></div>
 								<span class="${losers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${losers.percentIncreaseDecrease}" />%&nbsp;<span class="${losers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span>
 							</div>
-						</c:forEach>
+						</c:forEach> --%>
+						<table class="table" style="margin-bottom: 0px;">
+						<thead>
+							<tr>
+								<th>SYMBOL</th>
+								<th>SEGMENT</th>
+								<th>CLOSING PRICE</th>
+								<th>PRICE</th>
+								<th>PERCENT INCREASE</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${losers}" var="losers">
+								<tr>
+									<td><c:out value="${losers.symbol}" /></td>
+									<td><c:out value="${losers.segment}" /></td>
+									<td><c:out value="${losers.previousClose}" /></td>
+									<td><c:out value="${losers.price}" /></td>
+									<td style="text-align: right;"><span class="${losers.percentIncreaseDecrease > 0 ? 'label label-success' : 'label label-danger'}" ><c:out value="${losers.percentIncreaseDecrease}" />%&nbsp;<span class="${losers.percentIncreaseDecrease > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'}"></span></span></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -147,7 +199,51 @@
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
-	    
+
+	  </div>
+	</div>
+	<div class="modal fade" id="buyPriceModal" role="dialog">
+	   <div class="modal-dialog">
+
+	     <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Set Buy Price</h4>
+	      </div>
+	      <div class="modal-body">
+			<form class="profile-form" action="<c:url value='setbuystock' />" method='POST'>
+				<input style="display: none" class="form-control" id="setbuystockid" name="setbuystockid" type="text" readonly/>
+				<div class="input-group">
+				  <span class="input-group-addon">Symbol</span>
+				  <input class="form-control" id="setbuystocksymbol" name="setbuystocksymbol" type="text" readonly/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Segment</span>
+				  <input class="form-control" id="setbuystockseg" name="setbuystockseg" type="text" readonly/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Quantity</span>
+				  <input class="form-control" min="1" max="5000" id="setquantity" name="setquantity" type="number"/>
+				</div>
+				<br>
+				<div class="input-group">
+				  <span class="input-group-addon">Buy Price</span>
+				  <input class="form-control" id="setbuyprice" name="setbuyprice" type="number"/>
+				</div>
+				<br>
+				<div class="input-group" style="display: flex; justify-content: center;">
+					<button type="submit" class="btn btn-primary">Set Buy Price</button>
+				</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
 	  </div>
 	</div>
 </body>
