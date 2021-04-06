@@ -45,7 +45,7 @@ public class TradeBuy implements ITradeBuy
 	public boolean setBuyPrice(String userCode, int stockId, int quantity, float buyPrice, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface)
 	{
 		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.PENDING, stockDbInterface, userDbInterface);
-		boolean isTradeSetBuyPriceTradeDetailsCreated = trade.createSetBuyPriceTradeDetails(buyPrice);
+		boolean isTradeSetBuyPriceTradeDetailsCreated = createSetBuyPriceTradeDetails(stockDbInterface, trade, buyPrice);
 		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
 		boolean isTradeNumberGenerated = trade.generateTradeNumber();
 		if (isFundSufficient && isTradeSetBuyPriceTradeDetailsCreated && isTradeNumberGenerated)
@@ -77,6 +77,24 @@ public class TradeBuy implements ITradeBuy
 					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}
 			}
+		}
+	}
+	
+	public boolean createSetBuyPriceTradeDetails(IStockDb stockDbInterface,ITrade trade, float buyPrice)
+	{
+		try
+		{
+			IStock iStock = stockDbInterface.getStock(trade.getStockId());
+			trade.setSymbol(iStock.getSymbol());
+			trade.setSegment(iStock.getSegment());
+			trade.setBuyPrice(buyPrice);
+			
+			double totalBuyPrice = trade.getQuantity() * trade.getBuyPrice();
+			trade.setTotalBuyPrice(totalBuyPrice);
+			return true;
+		} catch (Exception e)
+		{
+			return false;
 		}
 	}
 

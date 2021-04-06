@@ -67,9 +67,5 @@ public interface ITrade {
 
     public boolean createTradeDetails();
 
-    public boolean createSetBuyPriceTradeDetails(float buyPrice);
-
-    public boolean createSetSellPriceTradeDetails(float sellPrice);
-
     public boolean generateTradeNumber();
 }
