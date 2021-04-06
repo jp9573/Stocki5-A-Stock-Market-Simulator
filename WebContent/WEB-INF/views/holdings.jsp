@@ -17,7 +17,7 @@
 
 
     <script type="text/javascript">
-    	setTimeout(function(){ location.reload(); }, 20000);
+    	setTimeout(function(){ location.reload(); }, 40000);
     	
         function getStockIdSellPrice(stockid,symbol,segment, buyTradeNumber, setquantity){
             $("#setsellstocksymbol").val(symbol);

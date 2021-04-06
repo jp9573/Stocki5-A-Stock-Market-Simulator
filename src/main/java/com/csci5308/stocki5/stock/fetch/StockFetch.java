@@ -2,10 +2,12 @@ package com.csci5308.stocki5.stock.fetch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.StockSegment;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.user.IUser;
@@ -16,7 +18,7 @@ public class StockFetch implements IStockFetch
 {
 	private final int LIMIT = 5;
 	private static IStockFetch uniqueInstance = null;
-	
+
 	private StockFetch()
 	{
 	}
@@ -29,11 +31,11 @@ public class StockFetch implements IStockFetch
 		}
 		return uniqueInstance;
 	}
-	
+
 	public List<IStock> fetchUserStocks(IStockDb iStockDb, IUserDb iUserDb, String userCode)
 	{
 		IUser user = iUserDb.getUser(userCode);
-		String segments = generateUserStockSegmentsList(user);
+		String segments = generateStockSegmentsList(user);
 		List<IStock> iStocks = iStockDb.getStocksBySegment(segments);
 		return iStocks;
 	}
@@ -41,7 +43,7 @@ public class StockFetch implements IStockFetch
 	public List<IStock> fetchTopGainerStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode)
 	{
 		IUser user = iUserDb.getUser(userCode);
-		String segments = generateUserStockSegmentsList(user);
+		String segments = generateStockSegmentsList(user);
 		List<IStock> topStocks = iStockDbGainersLosers.getHighestPriceStocks(segments, LIMIT);
 		return topStocks;
 	}
@@ -49,42 +51,33 @@ public class StockFetch implements IStockFetch
 	public List<IStock> fetchTopLoserStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode)
 	{
 		IUser user = iUserDb.getUser(userCode);
-		String segments = generateUserStockSegmentsList(user);
+		String segments = generateStockSegmentsList(user);
 		List<IStock> bottomStocks = iStockDbGainersLosers.getLowestPriceStocks(segments, LIMIT);
 		return bottomStocks;
 	}
 
-	public String generateUserStockSegmentsList(IUser user)
+	public String generateStockSegmentsList(IUser user)
 	{
 		List<String> segmentsList = new ArrayList<>();
+		
 		if (user.getForeignExchange() == 1)
 		{
-			segmentsList.add("FOREX");
+			segmentsList.add(String.valueOf(StockSegment.FOREX));
 		}
 		if (user.getInternationalDerivativeExchange() == 1)
 		{
-			segmentsList.add("IDE");
+			segmentsList.add(String.valueOf(StockSegment.IDE));
 		}
 		if (user.getInternationalCommodityExchange() == 1)
 		{
-			segmentsList.add("ICE");
+			segmentsList.add(String.valueOf(StockSegment.ICE));
 		}
 		if (user.getInternationalStockExchange() == 1)
 		{
-			segmentsList.add("ISE");
+			segmentsList.add(String.valueOf(StockSegment.ISE));
 		}
 
-		String segments = "";
-		for (int i = 0; i < segmentsList.size(); i++)
-		{
-			if (i < (segmentsList.size() - 1))
-			{
-				segments += "'" + segmentsList.get(i) + "',";
-			} else
-			{
-				segments += "'" + segmentsList.get(i) + "'";
-			}
-		}
+		String segments = String.join(",", segmentsList.stream().map(segment -> ("'" + segment + "'")).collect(Collectors.toList()));
 		return segments;
 	}
 }

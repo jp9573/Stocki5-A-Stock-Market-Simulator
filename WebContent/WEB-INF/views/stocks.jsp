@@ -15,7 +15,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	setTimeout(function(){ location.reload(); }, 20000);
+	setTimeout(function(){ location.reload(); }, 40000);
 	
 	function getStockId(stockid,symbol,segment){
 		$("#buystocksymbol").val(symbol);

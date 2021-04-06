@@ -51,14 +51,14 @@ public class StockFetchTest
 	@Test
 	public void getUserSegmentsTest()
 	{
-		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.generateUserStockSegmentsList(user));
+		Assert.assertEquals("'FOREX','IDE','ICE','ISE'", stockFetch.generateStockSegmentsList(user));
 	}
 
 	@Test
 	public void getUserSegmentsTestThreeSegments()
 	{
 		user.setForeignExchange(0);
-		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.generateUserStockSegmentsList(user));
+		Assert.assertEquals("'IDE','ICE','ISE'", stockFetch.generateStockSegmentsList(user));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class StockFetchTest
 	{
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
-		Assert.assertEquals("'ICE','ISE'", stockFetch.generateUserStockSegmentsList(user));
+		Assert.assertEquals("'ICE','ISE'", stockFetch.generateStockSegmentsList(user));
 	}
 
 	@Test
@@ -75,7 +75,7 @@ public class StockFetchTest
 		user.setForeignExchange(0);
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
-		Assert.assertEquals("'ISE'", stockFetch.generateUserStockSegmentsList(user));
+		Assert.assertEquals("'ISE'", stockFetch.generateStockSegmentsList(user));
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class StockFetchTest
 		user.setInternationalDerivativeExchange(0);
 		user.setInternationalCommodityExchange(0);
 		user.setInternationalStockExchange(0);
-		Assert.assertEquals("", stockFetch.generateUserStockSegmentsList(user));
+		Assert.assertEquals("", stockFetch.generateStockSegmentsList(user));
 	}
 
 	@Test
