@@ -1,13 +1,13 @@
 package com.csci5308.stocki5.trade;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
-
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Trade implements ITrade
 {
@@ -213,40 +213,6 @@ public class Trade implements ITrade
 				this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 			}
 			return true;
-		} catch (Exception e)
-		{
-			return false;
-		}
-	}
-
-	public boolean createSetBuyPriceTradeDetails(float buyPrice)
-	{
-		try
-		{
-			IStock iStock = this.getStockDbInterface().getStock(this.getStockId());
-			this.symbol = iStock.getSymbol();
-			this.segment = iStock.getSegment();
-			this.buyPrice = buyPrice;
-			this.totalBuyPrice = this.getQuantity() * this.getBuyPrice();
-			return true;
-		} catch (Exception e)
-		{
-			return false;
-		}
-	}
-
-	public boolean createSetSellPriceTradeDetails(float sellPrice)
-	{
-		try
-		{
-			IStock iStock = this.getStockDbInterface().getStock(this.getStockId());
-			this.symbol = iStock.getSymbol();
-			this.segment = iStock.getSegment();
-
-			this.sellPrice = sellPrice;
-			this.totalSellPrice = this.getQuantity() * this.getSellPrice();
-			return true;
-
 		} catch (Exception e)
 		{
 			return false;
