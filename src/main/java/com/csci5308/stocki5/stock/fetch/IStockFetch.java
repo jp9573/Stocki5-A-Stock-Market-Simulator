@@ -18,5 +18,5 @@ public interface IStockFetch
 
 	public List<IStock> fetchTopLoserStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode);
 
-	public String generateUserStockSegmentsList(IUser user);
+	public String generateStockSegmentsList(IUser user);
 }

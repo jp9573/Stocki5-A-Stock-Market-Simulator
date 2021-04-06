@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
-import com.csci5308.stocki5.trade.buy.ITradeBuy;
+import com.csci5308.stocki5.stock.observer.IObserver;
+import com.csci5308.stocki5.stock.observer.Subject;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.sell.ITradeSell;
 
 @Service
 @EnableScheduling
@@ -22,12 +21,13 @@ public class StockScheduler implements IStockScheduler
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
-	IStockPriceAlgorithm iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
+	Subject stockPriceSubject;
 	IStockPriceEod iStockPriceEod = stockFactory.createStockPriceEod();
 	IStockDb iStockDb = stockFactory.createStockDb();
-	IStockMaintainHistory iStockMaintainHistory = stockFactory.createStockMaintainHistory();
-	ITradeBuy tradeBuy = tradeFactory.createTradeBuy();
-	ITradeSell tradeSell = tradeFactory.createTradeSell();
+
+	IObserver tradeBuyPendingObserver = tradeFactory.createTradeBuyPendingObserver();
+	IObserver tradeSellPendingObserver = tradeFactory.createTradeSellPendingObserver();
+	IObserver stockMaintainHistoryObserver = stockFactory.createStockMaintainHistoryObserver();
 
 	private static boolean isMarketHours = true;
 
@@ -36,7 +36,11 @@ public class StockScheduler implements IStockScheduler
 	{
 		if (isMarketHours)
 		{
-			iStockPriceAlgorithm.generateStockPrice(iStockDb, tradeBuy, tradeSell, iStockMaintainHistory);
+			stockPriceSubject = stockFactory.createStockPriceSubject();
+			stockPriceSubject.attach(tradeBuyPendingObserver);
+			stockPriceSubject.attach(tradeSellPendingObserver);
+			stockPriceSubject.attach(stockMaintainHistoryObserver);
+			stockPriceSubject.notifyObservers();
 		}
 	}
 
