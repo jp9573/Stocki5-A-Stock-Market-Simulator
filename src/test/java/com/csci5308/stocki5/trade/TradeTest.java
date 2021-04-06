@@ -25,9 +25,6 @@ public class TradeTest {
     private ITrade tradeSecond = null;
     private ITrade tradeThird = null;
     private ITrade tradeForth = null;
-    private ITrade tradeFifth = null;
-    private ITrade tradeSixth = null;
-    private ITrade tradeSeventh = null;
 
     @Before
     public void createObjects() {
@@ -37,9 +34,6 @@ public class TradeTest {
         tradeSecond = tradeFactory.createTradeWithData("AB12345678", 1, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb);
         tradeThird = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 100000, TradeStatus.EXECUTED, stockDb, userDb);
         tradeForth = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeFifth = tradeFactory.createTradeWithData("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSixth = tradeFactory.createTradeWithData("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-        tradeSeventh = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
     }
 
     @After
@@ -50,9 +44,6 @@ public class TradeTest {
         tradeSecond = null;
         tradeThird = null;
         tradeForth = null;
-        tradeFifth = null;
-        tradeSixth = null;
-        tradeSeventh = null;
     }
 
     @Test
@@ -90,46 +81,6 @@ public class TradeTest {
     public void isFundSufficientNegativeTwoTest() {
         Assert.assertTrue(tradeThird.createTradeDetails());
         Assert.assertFalse(tradeThird.isFundSufficient(userDb));
-    }
-
-    @Test
-    public void createSetBuyPriceTradeDetailsPositiveTest() {
-        Assert.assertTrue(tradeFirst.createSetBuyPriceTradeDetails(13.0f));
-        Assert.assertEquals("ABC", tradeFirst.getSymbol());
-        Assert.assertEquals("ISE", tradeFirst.getSegment());
-        Assert.assertEquals(TradeType.BUY, tradeFirst.getBuySell());
-        Assert.assertEquals(13.0, tradeFirst.getBuyPrice(), 0);
-        Assert.assertEquals(130.0, tradeFirst.getTotalBuyPrice(), 0);
-    }
-
-    @Test
-    public void createSetBuyPriceTradeDetailsNegativeTest() {
-        Assert.assertTrue(tradeFifth.createSetBuyPriceTradeDetails(0f));
-        Assert.assertNull(tradeFifth.getSymbol());
-        Assert.assertNull(tradeFifth.getSegment());
-        Assert.assertEquals(TradeType.BUY, tradeFifth.getBuySell());
-        Assert.assertEquals(0.0, tradeFifth.getBuyPrice(), 0);
-        Assert.assertEquals(0.0, tradeFifth.getTotalBuyPrice(), 0);
-    }
-
-    @Test
-    public void createSetSellPriceTradeDetailsPositiveTest() {
-        Assert.assertTrue(tradeSixth.createSetSellPriceTradeDetails(13.0f));
-        Assert.assertEquals("ABC", tradeSixth.getSymbol());
-        Assert.assertEquals("ISE", tradeSixth.getSegment());
-        Assert.assertEquals(TradeType.SELL, tradeSixth.getBuySell());
-        Assert.assertEquals(13.0, tradeSixth.getSellPrice(), 0);
-        Assert.assertEquals(130.0, tradeSixth.getTotalSellPrice(), 0);
-    }
-
-    @Test
-    public void createSetSellPriceTradeDetailsNegativeTest() {
-        Assert.assertTrue(tradeSeventh.createSetSellPriceTradeDetails(0f));
-        Assert.assertNull(tradeSeventh.getSymbol());
-        Assert.assertNull(tradeSeventh.getSegment());
-        Assert.assertEquals(TradeType.SELL, tradeSeventh.getBuySell());
-        Assert.assertEquals(0.0, tradeSeventh.getSellPrice(), 0);
-        Assert.assertEquals(0.0, tradeSeventh.getTotalSellPrice(), 0);
     }
 
     @Test

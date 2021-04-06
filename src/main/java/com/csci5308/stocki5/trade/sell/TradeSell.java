@@ -49,7 +49,7 @@ public class TradeSell implements ITradeSell
 	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
 	{
 		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.SELL, quantity, TradeStatus.PENDING, stockDbInterface, userDbInterface);
-		boolean isSetSellPriceTradeDetailsCreated = trade.createSetSellPriceTradeDetails(sellPrice);
+		boolean isSetSellPriceTradeDetailsCreated = createSetSellPriceTradeDetails(stockDbInterface, trade, sellPrice);
 		boolean isTradeNumberGenerated = trade.generateTradeNumber();
 		boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
 		if (isSetSellPriceTradeDetailsCreated && isTradeNumberGenerated && isHoldingRemoved)
@@ -83,6 +83,25 @@ public class TradeSell implements ITradeSell
 					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}
 			}
+		}
+	}
+
+	public boolean createSetSellPriceTradeDetails(IStockDb stockDbInterface, ITrade trade, float sellPrice)
+	{
+		try
+		{
+			IStock iStock = stockDbInterface.getStock(trade.getStockId());
+			trade.setSymbol(iStock.getSymbol());
+			trade.setSegment(iStock.getSegment());
+			trade.setSellPrice(sellPrice);
+
+			double totalSellPrice = trade.getQuantity() * trade.getSellPrice();
+			trade.setTotalSellPrice(totalSellPrice);
+			return true;
+
+		} catch (Exception e)
+		{
+			return false;
 		}
 	}
 }
