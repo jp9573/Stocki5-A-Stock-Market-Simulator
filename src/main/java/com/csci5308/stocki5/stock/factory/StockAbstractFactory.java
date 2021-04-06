@@ -1,5 +1,7 @@
 package com.csci5308.stocki5.stock.factory;
 
+import org.springframework.stereotype.Service;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
@@ -7,11 +9,12 @@ import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.fetch.IStockFetch;
 import com.csci5308.stocki5.stock.history.IStockHistory;
 import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
+import com.csci5308.stocki5.stock.observer.IObserver;
+import com.csci5308.stocki5.stock.observer.Subject;
 import com.csci5308.stocki5.stock.prediction.IStockPrediction;
 import com.csci5308.stocki5.stock.price.IStockPriceAlgorithm;
 import com.csci5308.stocki5.stock.price.IStockPriceEod;
 import com.csci5308.stocki5.stock.price.IStockScheduler;
-import org.springframework.stereotype.Service;
 
 @Service
 public abstract class StockAbstractFactory
@@ -48,10 +51,14 @@ public abstract class StockAbstractFactory
 	public abstract IStockHistoryDb createStockHistoryDb();
 
 	public abstract IStockMaintainHistory createStockMaintainHistory();
+	
+	public abstract IObserver createStockMaintainHistoryObserver();
 
 	public abstract IStockPrediction createStockPrediction();
 
 	public abstract IStockPriceAlgorithm createStockPriceAlgorithm();
+	
+	public abstract Subject createStockPriceSubject();
 
 	public abstract IStockPriceEod createStockPriceEod();
 

@@ -13,13 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
-import com.csci5308.stocki5.stock.db.IStockHistoryDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.history.IStockMaintainHistory;
-import com.csci5308.stocki5.trade.buy.ITradeBuy;
 import com.csci5308.stocki5.trade.db.ITradeDb;
 import com.csci5308.stocki5.trade.factory.TradeAbstractFactory;
-import com.csci5308.stocki5.trade.sell.ITradeSell;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 
@@ -31,14 +26,11 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 
 	private static IStockPriceAlgorithm uniqueInstance = null;
 
-	private int noOfVersions;
 	private int priceChangeLimit;
 
-	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 	UserAbstractFactory userFactory = UserAbstractFactory.instance();
 
-	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
 	IUserDb userDb = userFactory.createUserDb();
 
@@ -56,7 +48,7 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 		return uniqueInstance;
 	}
 
-	public boolean generateStockPrice(IStockDb iStockDb, ITradeBuy iTradeBuy, ITradeSell iTradeSell, IStockMaintainHistory iStockMaintainHistory)
+	public boolean generateStockPrice(IStockDb iStockDb)
 	{
 		try
 		{
@@ -75,9 +67,6 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 				iStock.calculateHighAndLow(newPrice);
 			}
 			iStockDb.updateStocks(iStocks);
-			iTradeBuy.buyPendingTrades(tradeDb, userDb, iStocks);
-			iTradeSell.sellPendingTrades(tradeDb, userDb, iStocks);
-			iStockMaintainHistory.maintainStocksHistory(iStocks, noOfVersions, iStockHistoryDb);
 			return true;
 		} catch (Exception e)
 		{
@@ -135,7 +124,6 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 			{
 				prop.load(inputStream);
 			}
-			this.noOfVersions = Integer.parseInt(prop.getProperty("history.noofversions"));
 			this.priceChangeLimit = Integer.parseInt(prop.getProperty("stock.pricelimit"));
 		} catch (Exception e)
 		{
