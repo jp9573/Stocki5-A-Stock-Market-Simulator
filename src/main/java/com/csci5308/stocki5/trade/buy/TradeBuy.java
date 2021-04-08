@@ -25,72 +25,72 @@ public class TradeBuy implements ITradeBuy
 
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
-	public boolean buyStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface)
+	public boolean buyStock(String userCode, int stockId, int quantity, IStockDb iStockDb, IUserDb iUserDb, ITradeDb iTradeDb)
 	{
 
-		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, stockDbInterface, userDbInterface);
-		boolean isTradeDetailsCreated = trade.createTradeDetails();
-		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
-		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		ITrade iTrade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.EXECUTED, iStockDb, iUserDb);
+		boolean isTradeDetailsCreated = iTrade.createTradeDetails();
+		boolean isFundSufficient = iTrade.isFundSufficient(iUserDb);
+		boolean isTradeNumberGenerated = iTrade.generateTradeNumber();
 		if (isFundSufficient && isTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			IUser user = userDbInterface.getUser(userCode);
-			double updatedFunds = user.getFunds() - trade.getTotalBuyPrice();
-			userDbInterface.updateUserFunds(userCode, Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
-			return tradeDbInterface.insertTrade(trade, true);
+			IUser iUser = iUserDb.getUser(userCode);
+			double updatedFunds = iUser.getFunds() - iTrade.getTotalBuyPrice();
+			iUserDb.updateUserFunds(userCode, Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
+			return iTradeDb.insertTrade(iTrade, true);
 		}
 		return false;
 	}
 
-	public boolean setBuyPrice(String userCode, int stockId, int quantity, float buyPrice, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface)
+	public boolean setBuyPrice(String userCode, int stockId, int quantity, float buyPrice, IStockDb iStockDb, IUserDb iUserDb, ITradeDb iTradeDb)
 	{
-		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.PENDING, stockDbInterface, userDbInterface);
-		boolean isTradeSetBuyPriceTradeDetailsCreated = createSetBuyPriceTradeDetails(stockDbInterface, trade, buyPrice);
-		boolean isFundSufficient = trade.isFundSufficient(userDbInterface);
-		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		ITrade iTrade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.BUY, quantity, TradeStatus.PENDING, iStockDb, iUserDb);
+		boolean isTradeSetBuyPriceTradeDetailsCreated = createSetBuyPriceTradeDetails(iStockDb, iTrade, buyPrice);
+		boolean isFundSufficient = iTrade.isFundSufficient(iUserDb);
+		boolean isTradeNumberGenerated = iTrade.generateTradeNumber();
 		if (isFundSufficient && isTradeSetBuyPriceTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			return tradeDbInterface.insertTrade(trade, false);
+			return iTradeDb.insertTrade(iTrade, false);
 		}
 		return false;
 	}
 
-	public void buyPendingTrades(ITradeDb dbInterface, IUserDb userDbInterface, List<IStock> stocks)
+	public void buyPendingTrades(ITradeDb iTradeDb, IUserDb iUserDb, List<IStock> iStocks)
 	{
-		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.BUY);
-		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(IStock::getSymbol, IStock::getPrice));
+		List<ITrade> iTrades = iTradeDb.getPendingTrades(TradeType.BUY);
+		Map<String, Float> stocksMap = iStocks.stream().collect(Collectors.toMap(IStock::getSymbol, IStock::getPrice));
 
-		Iterator<ITrade> tradesIterator = trades.iterator();
+		Iterator<ITrade> tradesIterator = iTrades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			ITrade trade = tradesIterator.next();
-			if (trade.getBuyPrice() >= stocksMap.get(trade.getSymbol()))
+			ITrade iTrade = tradesIterator.next();
+			if (iTrade.getBuyPrice() >= stocksMap.get(iTrade.getSymbol()))
 			{
-				trade.setBuyPrice(stocksMap.get(trade.getSymbol()));
-				trade.setTotalBuyPrice(trade.getQuantity() * trade.getBuyPrice());
-				trade.setStatus(TradeStatus.EXECUTED);
-				boolean isTradeUpdated = dbInterface.updateBuyTrade(trade, true);
+				iTrade.setBuyPrice(stocksMap.get(iTrade.getSymbol()));
+				iTrade.setTotalBuyPrice(iTrade.getQuantity() * iTrade.getBuyPrice());
+				iTrade.setStatus(TradeStatus.EXECUTED);
+				boolean isTradeUpdated = iTradeDb.updateBuyTrade(iTrade, true);
 				if (isTradeUpdated)
 				{
-					IUser user = userDbInterface.getUser(trade.getUserCode());
-					double updatedFunds = user.getFunds() - (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
-					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
+					IUser iUser = iUserDb.getUser(iTrade.getUserCode());
+					double updatedFunds = iUser.getFunds() - (stocksMap.get(iTrade.getSymbol()) * iTrade.getQuantity());
+					iUserDb.updateUserFunds(iTrade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}
 			}
 		}
 	}
-	
-	public boolean createSetBuyPriceTradeDetails(IStockDb stockDbInterface,ITrade trade, float buyPrice)
+
+	public boolean createSetBuyPriceTradeDetails(IStockDb iStockDb, ITrade iTrade, float buyPrice)
 	{
 		try
 		{
-			IStock iStock = stockDbInterface.getStock(trade.getStockId());
-			trade.setSymbol(iStock.getSymbol());
-			trade.setSegment(iStock.getSegment());
-			trade.setBuyPrice(buyPrice);
-			
-			double totalBuyPrice = trade.getQuantity() * trade.getBuyPrice();
-			trade.setTotalBuyPrice(totalBuyPrice);
+			IStock iStock = iStockDb.getStock(iTrade.getStockId());
+			iTrade.setSymbol(iStock.getSymbol());
+			iTrade.setSegment(iStock.getSegment());
+			iTrade.setBuyPrice(buyPrice);
+
+			double totalBuyPrice = iTrade.getQuantity() * iTrade.getBuyPrice();
+			iTrade.setTotalBuyPrice(totalBuyPrice);
 			return true;
 		} catch (Exception e)
 		{

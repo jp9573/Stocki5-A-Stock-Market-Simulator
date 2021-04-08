@@ -11,23 +11,23 @@ import com.csci5308.stocki5.stock.observer.IObserverMock;
 public class StockMaintainHistoryObserverMockTest
 {
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	IObserverMock stockMaintainHistoryObserverMock = null;
+	IObserverMock iStockMaintainHistoryObserverMock = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockMaintainHistoryObserverMock = stockFactoryMock.createStockMaintainHistoryObserverMock();
+		iStockMaintainHistoryObserverMock = stockFactoryMock.createStockMaintainHistoryObserverMock();
 	}
 
 	@After
 	public void destroyObjects()
 	{
-		stockMaintainHistoryObserverMock = null;
+		iStockMaintainHistoryObserverMock = null;
 	}
 
 	@Test
 	public void updateTest()
 	{
-		Assert.assertEquals(true, stockMaintainHistoryObserverMock.update());
+		Assert.assertEquals(true, iStockMaintainHistoryObserverMock.update());
 	}
 }

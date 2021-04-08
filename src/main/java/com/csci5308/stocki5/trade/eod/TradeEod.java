@@ -27,29 +27,29 @@ public class TradeEod implements ITradeEod
 		}
 		return uniqueInstance;
 	}
-	
-	public boolean markFailedBuyOrder(ITradeDb dbInterface)
+
+	public boolean markFailedBuyOrder(ITradeDb iTradeDb)
 	{
-		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.BUY);
-		Iterator<ITrade> tradesIterator = trades.iterator();
+		List<ITrade> iTrades = iTradeDb.getPendingTrades(TradeType.BUY);
+		Iterator<ITrade> tradesIterator = iTrades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			ITrade trade = tradesIterator.next();
-			trade.setStatus(TradeStatus.FAILED);
+			ITrade iTrade = tradesIterator.next();
+			iTrade.setStatus(TradeStatus.FAILED);
 		}
-		return dbInterface.updateBulkTradeStatus(trades);
+		return iTradeDb.updateBulkTradeStatus(iTrades);
 	}
 
-	public boolean markFailedSellOrder(ITradeDb dbInterface)
+	public boolean markFailedSellOrder(ITradeDb iTradeDb)
 	{
-		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.SELL);
-		Iterator<ITrade> tradesIterator = trades.iterator();
+		List<ITrade> iTrades = iTradeDb.getPendingTrades(TradeType.SELL);
+		Iterator<ITrade> tradesIterator = iTrades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			ITrade trade = tradesIterator.next();
-			trade.setStatus(TradeStatus.FAILED);
+			ITrade iTrade = tradesIterator.next();
+			iTrade.setStatus(TradeStatus.FAILED);
 		}
-		return dbInterface.updateBulkTradeStatus(trades);
+		return iTradeDb.updateBulkTradeStatus(iTrades);
 	}
 
 }

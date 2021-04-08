@@ -1,14 +1,14 @@
 package com.csci5308.stocki5.stock.db;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 
 public class StockDbGainersLosersMock implements IStockDbGainersLosers
 {
@@ -16,10 +16,14 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 
 	StockAbstractFactory stockFactory = StockFactory.instance();
 
-	private  StockDbGainersLosersMock(){ }
+	private StockDbGainersLosersMock()
+	{
+	}
 
-	public static IStockDbGainersLosers instance(){
-		if(null == uniqueInstance){
+	public static IStockDbGainersLosers instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new StockDbGainersLosersMock();
 		}
 		return uniqueInstance;
@@ -28,17 +32,17 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 	@Override
 	public List<IStock> getHighestPriceStocks(String segments, int limit)
 	{
-		List<IStock> stockArrayList = new ArrayList<>();
+		List<IStock> iStocks = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
-		for (String aStockName : stocksName)
+		for (String stockName : stocksName)
 		{
-			IStock stock = stockFactory.createStock();
-			stock.setSymbol(aStockName);
-			stock.setOpen((float) Math.random());
-			stock.setHigh((float) Math.random());
-			stock.setLow((float) Math.random());
-			stock.setPrice((float) Math.random());
+			IStock iStock = stockFactory.createStock();
+			iStock.setSymbol(stockName);
+			iStock.setOpen((float) Math.random());
+			iStock.setHigh((float) Math.random());
+			iStock.setLow((float) Math.random());
+			iStock.setPrice((float) Math.random());
 			Date latestTradingDate = null;
 			try
 			{
@@ -47,38 +51,38 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 			{
 				e.printStackTrace();
 			}
-			stock.setLatestTradingDate(latestTradingDate);
-			stock.setPreviousClose(8);
+			iStock.setLatestTradingDate(latestTradingDate);
+			iStock.setPreviousClose(8);
 			if (segments.contains("FOREX"))
 			{
-				stock.setSegment("FOREX");
+				iStock.setSegment("FOREX");
 			} else if (segments.contains("IDE"))
 			{
-				stock.setSegment("IDE");
+				iStock.setSegment("IDE");
 			} else if (segments.contains("ISE"))
 			{
-				stock.setSegment("ISE");
+				iStock.setSegment("ISE");
 			}
-			stockArrayList.add(stock);
+			iStocks.add(iStock);
 		}
 
-		return stockArrayList.subList(0, limit);
+		return iStocks.subList(0, limit);
 	}
 
 	@Override
 	public List<IStock> getLowestPriceStocks(String segments, int limit)
 	{
-		List<IStock> stockArrayList = new ArrayList<>();
+		List<IStock> iStocks = new ArrayList<>();
 		final String[] stocksName = { "XYZ", "ABC", "DEW", "OBJ", "PQL", "LMN", "OYO", "BVN" };
 
 		for (String aStockName : stocksName)
 		{
-			IStock stock = stockFactory.createStock();
-			stock.setSymbol(aStockName);
-			stock.setOpen((float) Math.random());
-			stock.setHigh((float) Math.random());
-			stock.setLow((float) Math.random());
-			stock.setPrice((float) Math.random());
+			IStock iStock = stockFactory.createStock();
+			iStock.setSymbol(aStockName);
+			iStock.setOpen((float) Math.random());
+			iStock.setHigh((float) Math.random());
+			iStock.setLow((float) Math.random());
+			iStock.setPrice((float) Math.random());
 			Date latestTradingDate = null;
 			try
 			{
@@ -87,21 +91,21 @@ public class StockDbGainersLosersMock implements IStockDbGainersLosers
 			{
 				e.printStackTrace();
 			}
-			stock.setLatestTradingDate(latestTradingDate);
-			stock.setPreviousClose(8);
+			iStock.setLatestTradingDate(latestTradingDate);
+			iStock.setPreviousClose(8);
 			if (segments.contains("FOREX"))
 			{
-				stock.setSegment("FOREX");
+				iStock.setSegment("FOREX");
 			} else if (segments.contains("IDE"))
 			{
-				stock.setSegment("IDE");
+				iStock.setSegment("IDE");
 			} else if (segments.contains("ISE"))
 			{
-				stock.setSegment("ISE");
+				iStock.setSegment("ISE");
 			}
-			stockArrayList.add(stock);
+			iStocks.add(iStock);
 		}
 
-		return stockArrayList.subList(0, limit);
+		return iStocks.subList(0, limit);
 	}
 }

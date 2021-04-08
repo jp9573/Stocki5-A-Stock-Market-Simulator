@@ -15,37 +15,42 @@ import com.csci5308.stocki5.user.profile.IUserProfile;
 import com.csci5308.stocki5.user.signup.IUserSignUp;
 
 @Service
-public abstract class UserAbstractFactory {
-    private static UserAbstractFactory uniqueInstance = null;
+public abstract class UserAbstractFactory
+{
+	private static UserAbstractFactory uniqueInstance = null;
 
-    protected UserAbstractFactory() { }
+	protected UserAbstractFactory()
+	{
+	}
 
-    public static UserAbstractFactory instance() {
-        if (null == uniqueInstance) {
-            uniqueInstance = new UserFactory();
-        }
-        return uniqueInstance;
-    }
-    
-    public abstract IUser createUser();
+	public static UserAbstractFactory instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new UserFactory();
+		}
+		return uniqueInstance;
+	}
 
-    public abstract IUserDb createUserDb();
+	public abstract IUser createUser();
 
-    public abstract IUserOtp createUserOtp();
+	public abstract IUserDb createUserDb();
 
-    public abstract IUserFunds createUserFunds();
+	public abstract IUserOtp createUserOtp();
 
-    public abstract IUserProfile createUserProfile();
+	public abstract IUserFunds createUserFunds();
 
-    public abstract IUserSignUp createUserSignUp();
+	public abstract IUserProfile createUserProfile();
 
-    public abstract IUserForgotCode createUserForgotCode();
+	public abstract IUserSignUp createUserSignUp();
 
-    public abstract IUserOtpDb createUserOtpDb();
+	public abstract IUserForgotCode createUserForgotCode();
 
-    public abstract IUserForgotPassword createUserForgotPassword();
+	public abstract IUserOtpDb createUserOtpDb();
 
-    public abstract IUserChangePassword createUserChangePassword();
-    
-    public abstract AuthenticationProvider createUserAuthentication();
+	public abstract IUserForgotPassword createUserForgotPassword();
+
+	public abstract IUserChangePassword createUserChangePassword();
+
+	public abstract AuthenticationProvider createUserAuthentication();
 }

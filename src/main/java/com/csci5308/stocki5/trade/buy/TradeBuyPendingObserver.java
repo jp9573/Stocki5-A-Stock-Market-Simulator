@@ -26,8 +26,8 @@ public class TradeBuyPendingObserver implements IObserver
 	@Override
 	public void update()
 	{
-		List<IStock> stocks = iStockDb.getStocks();
-		iTradeBuy.buyPendingTrades(iTradeDb, iUserDb, stocks);
+		List<IStock> iStocks = iStockDb.getStocks();
+		iTradeBuy.buyPendingTrades(iTradeDb, iUserDb, iStocks);
 	}
 
 }

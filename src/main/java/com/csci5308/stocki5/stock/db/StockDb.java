@@ -24,10 +24,14 @@ public class StockDb implements IStockDb
 	IDbConnection dbConnection = DbConnection.instance();
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
-	private StockDb(){ }
+	private StockDb()
+	{
+	}
 
-	public static IStockDb instance(){
-		if(null == uniqueInstance){
+	public static IStockDb instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new StockDb();
 		}
 		return uniqueInstance;

@@ -25,20 +25,19 @@ public class TradeHolding implements ITradeHolding
 		}
 		return uniqueInstance;
 	}
-	
-	public List<IHolding> fetchUserHoldings(String userCode, ITradeDb tradeDbInterface,
-			IStockDb stockDbInterface)
+
+	public List<IHolding> fetchUserHoldings(String userCode, ITradeDb iTradeDb, IStockDb iStockDb)
 	{
-		List<IHolding> holdingList = tradeDbInterface.getHoldingsByUserCode(userCode);
-		ListIterator<IHolding> holdingListIterator = holdingList.listIterator();
-		while (holdingListIterator.hasNext())
+		List<IHolding> iHoldings = iTradeDb.getHoldingsByUserCode(userCode);
+		ListIterator<IHolding> iHoldingsIterator = iHoldings.listIterator();
+		while (iHoldingsIterator.hasNext())
 		{
-			Holding holding = (Holding) holdingListIterator.next();
-			holding.setStockDbInterface(stockDbInterface);
-			holding.calculateProfitLoss();
-			holdingListIterator.set(holding);
+			IHolding iHolding = iHoldingsIterator.next();
+			iHolding.setStockDbInterface(iStockDb);
+			iHolding.calculateProfitLoss();
+			iHoldingsIterator.set(iHolding);
 		}
-		return holdingList;
+		return iHoldings;
 	}
 
 }

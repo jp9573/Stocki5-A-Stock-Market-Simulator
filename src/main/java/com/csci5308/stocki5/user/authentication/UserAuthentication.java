@@ -5,8 +5,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.User;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
@@ -19,7 +21,7 @@ public class UserAuthentication implements AuthenticationProvider
 	private static AuthenticationProvider uniqueInstance = null;
 
 	UserAbstractFactory userFactory = UserAbstractFactory.instance();
-	IUserDb userDb = userFactory.createUserDb();
+	IUserDb iUserDb = userFactory.createUserDb();
 
 	private UserAuthentication()
 	{
@@ -44,14 +46,15 @@ public class UserAuthentication implements AuthenticationProvider
 		{
 			throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
 		}
-		User user = (User) userDb.getUser(username);
+		UserDetails userDetails = (User) iUserDb.getUser(username);
+		IUser user = iUserDb.getUser(username);
 		if (null == user.getUserCode())
 		{
 			throw new BadCredentialsException(INVALID_CREDENTIALS_MESSAGE);
 		}
 		if (password.equals(user.getPassword()))
 		{
-			Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
+			Authentication authenticationToken = new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
 			return authenticationToken;
 		} else
 		{
