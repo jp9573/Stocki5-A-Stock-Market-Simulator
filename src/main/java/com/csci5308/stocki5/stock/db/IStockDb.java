@@ -14,5 +14,5 @@ public interface IStockDb
 
 	public IStock getStock(int stockId);
 
-	public boolean updateStocks(List<IStock> stocks);
+	public boolean updateStocks(List<IStock> iStocks);
 }

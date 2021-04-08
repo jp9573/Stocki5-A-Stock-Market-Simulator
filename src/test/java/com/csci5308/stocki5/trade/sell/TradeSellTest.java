@@ -1,5 +1,10 @@
 package com.csci5308.stocki5.trade.sell;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.trade.ITrade;
@@ -11,10 +16,6 @@ import com.csci5308.stocki5.trade.factory.TradeAbstractFactoryMock;
 import com.csci5308.stocki5.trade.factory.TradeFactory;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 public class TradeSellTest
 {
@@ -23,79 +24,79 @@ public class TradeSellTest
 	TradeAbstractFactoryMock tradeFactoryMock = TradeAbstractFactoryMock.instance();
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
-	private IStockDb stockDb = null;
-	private IUserDb userDb = null;
-	private ITradeDb tradeDb = null;
+	private IStockDb iStockDb = null;
+	private IUserDb iUserDb = null;
+	private ITradeDb iTradeDb = null;
 	private ITradeSell tradeSell = null;
-	private ITrade tradeSixth = null;
-	private ITrade tradeSeventh = null;
+	private ITrade tradeFirst = null;
+	private ITrade tradeSecond = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockDb = stockFactoryMock.createStockDbMock();
-		userDb = userFactoryMock.createUserDbMock();
-		tradeDb = tradeFactoryMock.createTradeDbMock();
+		iStockDb = stockFactoryMock.createStockDbMock();
+		iUserDb = userFactoryMock.createUserDbMock();
+		iTradeDb = tradeFactoryMock.createTradeDbMock();
 		tradeSell = tradeFactory.createTradeSell();
-		tradeSixth = tradeFactory.createTradeWithData("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
-		tradeSeventh = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, stockDb, userDb);
+		tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.SELL, 10, TradeStatus.EXECUTED, iStockDb, iUserDb);
+		tradeSecond = tradeFactory.createTradeWithData("AB123456", 999, TradeType.SELL, 10, TradeStatus.EXECUTED, iStockDb, iUserDb);
 	}
 
 	@After
 	public void destroyObjects()
 	{
-		stockDb = null;
-		userDb = null;
-		tradeDb = null;
+		iStockDb = null;
+		iUserDb = null;
+		iTradeDb = null;
 		tradeSell = null;
-		tradeSixth = null;
-		tradeSeventh = null;
+		tradeFirst = null;
+		tradeSecond = null;
 	}
 
 	@Test
 	public void sellStockPositiveTest()
 	{
-		Assert.assertTrue(tradeSell.sellStock("AB123456", 1, 50, stockDb, userDb, tradeDb, "ABC123"));
+		Assert.assertTrue(tradeSell.sellStock("AB123456", 1, 50, iStockDb, iUserDb, iTradeDb, "ABC123"));
 	}
 
 	@Test
 	public void sellStockNegativeTest()
 	{
-		Assert.assertFalse(tradeSell.sellStock("AB123456", 999, 50, stockDb, userDb, tradeDb, "ABC1234"));
+		Assert.assertFalse(tradeSell.sellStock("AB123456", 999, 50, iStockDb, iUserDb, iTradeDb, "ABC1234"));
 	}
 
 	@Test
 	public void setSellPricePositiveTest()
 	{
-		Assert.assertTrue(tradeSell.setSellPrice("AB123456", 1, 50, 500, stockDb, userDb, tradeDb, "ABC123"));
+		Assert.assertTrue(tradeSell.setSellPrice("AB123456", 1, 50, 500, iStockDb, iUserDb, iTradeDb, "ABC123"));
 	}
 
 	@Test
 	public void setSellPriceNegativeTest()
 	{
-		Assert.assertFalse(tradeSell.setSellPrice("AB123456", 1, 50, 500, stockDb, userDb, tradeDb, "ABC1234"));
+		Assert.assertFalse(tradeSell.setSellPrice("AB123456", 1, 50, 500, iStockDb, iUserDb, iTradeDb, "ABC1234"));
 	}
 
 	@Test
 	public void createSetSellPriceTradeDetailsPositiveTest()
 	{
-		Assert.assertTrue(tradeSell.createSetSellPriceTradeDetails(stockDb, tradeSixth, 13.0f));
-		Assert.assertEquals("ABC", tradeSixth.getSymbol());
-		Assert.assertEquals("ISE", tradeSixth.getSegment());
-		Assert.assertEquals(TradeType.SELL, tradeSixth.getBuySell());
-		Assert.assertEquals(13.0, tradeSixth.getSellPrice(), 0);
-		Assert.assertEquals(130.0, tradeSixth.getTotalSellPrice(), 0);
+		Assert.assertTrue(tradeSell.createSetSellPriceTradeDetails(iStockDb, tradeFirst, 13.0f));
+		Assert.assertEquals("ABC", tradeFirst.getSymbol());
+		Assert.assertEquals("ISE", tradeFirst.getSegment());
+		Assert.assertEquals(TradeType.SELL, tradeFirst.getBuySell());
+		Assert.assertEquals(13.0, tradeFirst.getSellPrice(), 0);
+		Assert.assertEquals(130.0, tradeFirst.getTotalSellPrice(), 0);
 	}
 
 	@Test
 	public void createSetSellPriceTradeDetailsNegativeTest()
 	{
-		Assert.assertTrue(tradeSell.createSetSellPriceTradeDetails(stockDb, tradeSeventh, 0f));
-		Assert.assertNull(tradeSeventh.getSymbol());
-		Assert.assertNull(tradeSeventh.getSegment());
-		Assert.assertEquals(TradeType.SELL, tradeSeventh.getBuySell());
-		Assert.assertEquals(0.0, tradeSeventh.getSellPrice(), 0);
-		Assert.assertEquals(0.0, tradeSeventh.getTotalSellPrice(), 0);
+		Assert.assertTrue(tradeSell.createSetSellPriceTradeDetails(iStockDb, tradeSecond, 0f));
+		Assert.assertNull(tradeSecond.getSymbol());
+		Assert.assertNull(tradeSecond.getSegment());
+		Assert.assertEquals(TradeType.SELL, tradeSecond.getBuySell());
+		Assert.assertEquals(0.0, tradeSecond.getSellPrice(), 0);
+		Assert.assertEquals(0.0, tradeSecond.getTotalSellPrice(), 0);
 	}
 
 }

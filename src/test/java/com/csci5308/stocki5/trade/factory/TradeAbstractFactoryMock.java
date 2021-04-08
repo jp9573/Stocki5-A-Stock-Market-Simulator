@@ -6,25 +6,27 @@ import com.csci5308.stocki5.trade.eod.ITradeScheduler;
 
 public abstract class TradeAbstractFactoryMock
 {
-    private static TradeAbstractFactoryMock uniqueInstance = null;
+	private static TradeAbstractFactoryMock uniqueInstance = null;
 
-    protected TradeAbstractFactoryMock(){ }
+	protected TradeAbstractFactoryMock()
+	{
+	}
 
-    public static TradeAbstractFactoryMock instance()
-    {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new TradeFactoryMock();
-        }
-        return uniqueInstance;
-    }
+	public static TradeAbstractFactoryMock instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new TradeFactoryMock();
+		}
+		return uniqueInstance;
+	}
 
-    public abstract ITradeDb createTradeDbMock();
-    
-    public abstract ITradeScheduler createTradeSchedulerMock();
-    
-    public abstract IObserverMock createTradeBuyPendingObserverMock();
-    
-    public abstract IObserverMock createTradeSellPendingObserverMock();
+	public abstract ITradeDb createTradeDbMock();
+
+	public abstract ITradeScheduler createTradeSchedulerMock();
+
+	public abstract IObserverMock createTradeBuyPendingObserverMock();
+
+	public abstract IObserverMock createTradeSellPendingObserverMock();
 
 }

@@ -3,6 +3,7 @@ package com.csci5308.stocki5.stock.prediction;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -17,9 +18,9 @@ public class StockPrediction implements IStockPrediction
 {
 	private static final String STOCK_PRICE_DECIMAL_FORMAT = "##.00";
 	private static IStockPrediction uniqueInstance = null;
-	
+
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
-	
+
 	private StockPrediction()
 	{
 	}
@@ -41,8 +42,12 @@ public class StockPrediction implements IStockPrediction
 		if (totalCount > 0)
 		{
 			float sum = 0.00f;
-			for (IStockHistory iStockHistory : iStockHistories)
+
+			Iterator<IStockHistory> iStockHistoriesIterator = iStockHistories.iterator();
+			IStockHistory iStockHistory;
+			while (iStockHistoriesIterator.hasNext())
 			{
+				iStockHistory = iStockHistoriesIterator.next();
 				sum += iStockHistory.getPrice();
 			}
 

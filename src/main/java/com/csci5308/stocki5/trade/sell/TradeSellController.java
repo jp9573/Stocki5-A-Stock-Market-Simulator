@@ -32,21 +32,23 @@ public class TradeSellController
 	public static final String STOCKS = "stocks";
 	public static final String GAINERS = "gainers";
 	public static final String LOSERS = "losers";
+	public static final String ERROR = "error";
 	public static final String SET_QUANTITY = "setquantity";
 	public static final String SET_SELL_PRICE = "setsellprice";
 	public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds";
 
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
-	UserAbstractFactory userFactory = UserAbstractFactory.instance();
-	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
+	ITradeSell iTradeSell = tradeFactory.createTradeSell();
+	ITradeDb iTradeDb = tradeFactory.createTradeDb();
 
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	IStockDbGainersLosers iStockDbGainersLosers = stockFactory.createStockDbGainersLosers();
 	IStockFetch iStockFetch = stockFactory.createStockFetch();
 	IStockDb iStockDb = stockFactory.createStockDb();
-	ITradeOrder iTradeOrder = tradeFactory.createTradeOrder();
-	ITradeSell iTradeSell = tradeFactory.createTradeSell();
-	ITradeDb tradeDb = tradeFactory.createTradeDb();
-	IUserDb userDb = userFactory.createUserDb();
+
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
+	IUserDb iUserDb = userFactory.createUserDb();
 
 	@RequestMapping(value = "/sellstock", method = RequestMethod.POST)
 	public ModelAndView sellStock(HttpServletRequest request, @RequestParam(value = SELL_STOCK_ID) int stockId, @RequestParam(value = QUANTITY) int quantity, @RequestParam(value = TRADE_BUY_NUMBER) String tradeBuyNumber)
@@ -54,23 +56,23 @@ public class TradeSellController
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
-		boolean isSold = iTradeSell.sellStock(principal.getName(), stockId, quantity, iStockDb, userDb, tradeDb, tradeBuyNumber);
+		boolean isSold = iTradeSell.sellStock(principal.getName(), stockId, quantity, iStockDb, iUserDb, iTradeDb, tradeBuyNumber);
 		if (isSold)
 		{
-			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
+			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), iTradeDb);
 			model.addObject(ORDERS, orders);
 			model.setViewName("orders");
 			return model;
 		}
 
-		List<IStock> stocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
-		List<IStock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, userDb, principal.getName());
-		List<IStock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, userDb, principal.getName());
+		List<IStock> iStocks = iStockFetch.fetchUserStocks(iStockDb, iUserDb, principal.getName());
+		List<IStock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, iUserDb, principal.getName());
+		List<IStock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, iUserDb, principal.getName());
 
-		model.addObject(STOCKS, stocks);
+		model.addObject(STOCKS, iStocks);
 		model.addObject(GAINERS, top5GainersStocks);
 		model.addObject(LOSERS, top5LosersStocks);
-		model.addObject("error", INSUFFICIENT_FUNDS_ERROR_MESSAGE);
+		model.addObject(ERROR, INSUFFICIENT_FUNDS_ERROR_MESSAGE);
 		model.setViewName("stocks");
 		return model;
 	}
@@ -81,23 +83,23 @@ public class TradeSellController
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
-		boolean isSold = iTradeSell.setSellPrice(principal.getName(), stockId, quantity, sellPrice, iStockDb, userDb, tradeDb, tradeBuyNumber);
+		boolean isSold = iTradeSell.setSellPrice(principal.getName(), stockId, quantity, sellPrice, iStockDb, iUserDb, iTradeDb, tradeBuyNumber);
 		if (isSold)
 		{
-			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), tradeDb);
+			List<ITrade> orders = iTradeOrder.fetchUserOrders(principal.getName(), iTradeDb);
 			model.addObject(ORDERS, orders);
 			model.setViewName("orders");
 			return model;
 		}
 
-		List<IStock> stocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
-		List<IStock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, userDb, principal.getName());
-		List<IStock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, userDb, principal.getName());
+		List<IStock> iStocks = iStockFetch.fetchUserStocks(iStockDb, iUserDb, principal.getName());
+		List<IStock> top5GainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, iUserDb, principal.getName());
+		List<IStock> top5LosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, iUserDb, principal.getName());
 
-		model.addObject(STOCKS, stocks);
+		model.addObject(STOCKS, iStocks);
 		model.addObject(GAINERS, top5GainersStocks);
 		model.addObject(LOSERS, top5LosersStocks);
-		model.addObject("error", INSUFFICIENT_FUNDS_ERROR_MESSAGE);
+		model.addObject(ERROR, INSUFFICIENT_FUNDS_ERROR_MESSAGE);
 		model.setViewName("stocks");
 		return model;
 	}

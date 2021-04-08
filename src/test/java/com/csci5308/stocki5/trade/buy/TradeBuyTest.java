@@ -25,31 +25,31 @@ public class TradeBuyTest
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
 
-	private IStockDb stockDb = null;
-	private IUserDb userDb = null;
-	private ITradeDb tradeDb = null;
-	private ITradeBuy tradeBuy = null;
+	private IStockDb iStockDb = null;
+	private IUserDb iUserDb = null;
+	private ITradeDb iTradeDb = null;
+	private ITradeBuy iTradeBuy = null;
 	private ITrade tradeFirst = null;
 	private ITrade tradeSecond = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockDb = stockFactoryMock.createStockDbMock();
-		userDb = userFactoryMock.createUserDbMock();
-		tradeDb = tradeFactoryMock.createTradeDbMock();
-		tradeBuy = tradeFactory.createTradeBuy();
-		tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
-		tradeSecond = tradeFactory.createTradeWithData("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, stockDb, userDb);
+		iStockDb = stockFactoryMock.createStockDbMock();
+		iUserDb = userFactoryMock.createUserDbMock();
+		iTradeDb = tradeFactoryMock.createTradeDbMock();
+		iTradeBuy = tradeFactory.createTradeBuy();
+		tradeFirst = tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 10, TradeStatus.EXECUTED, iStockDb, iUserDb);
+		tradeSecond = tradeFactory.createTradeWithData("AB123456", 999, TradeType.BUY, 10, TradeStatus.EXECUTED, iStockDb, iUserDb);
 	}
 
 	@After
 	public void destroyObjects()
 	{
-		stockDb = null;
-		userDb = null;
-		tradeDb = null;
-		tradeBuy = null;
+		iStockDb = null;
+		iUserDb = null;
+		iTradeDb = null;
+		iTradeBuy = null;
 		tradeFirst = null;
 		tradeSecond = null;
 	}
@@ -57,43 +57,43 @@ public class TradeBuyTest
 	@Test
 	public void buyStockPositiveTest()
 	{
-		Assert.assertTrue(tradeBuy.buyStock("AB123456", 1, 50, stockDb, userDb, tradeDb));
+		Assert.assertTrue(iTradeBuy.buyStock("AB123456", 1, 50, iStockDb, iUserDb, iTradeDb));
 	}
 
 	@Test
 	public void buyStockFundValidationTest()
 	{
-		Assert.assertFalse(tradeBuy.buyStock("AB12345678", 1, 50, stockDb, userDb, tradeDb));
+		Assert.assertFalse(iTradeBuy.buyStock("AB12345678", 1, 50, iStockDb, iUserDb, iTradeDb));
 	}
 
 	@Test
 	public void buyStockQuantityValidationTest()
 	{
-		Assert.assertFalse(tradeBuy.buyStock("AB12345678", 1, 500, stockDb, userDb, tradeDb));
+		Assert.assertFalse(iTradeBuy.buyStock("AB12345678", 1, 500, iStockDb, iUserDb, iTradeDb));
 	}
 
 	@Test
 	public void setBuyPricePositiveTest()
 	{
-		Assert.assertTrue(tradeBuy.setBuyPrice("AB123456", 1, 50, 500, stockDb, userDb, tradeDb));
+		Assert.assertTrue(iTradeBuy.setBuyPrice("AB123456", 1, 50, 500, iStockDb, iUserDb, iTradeDb));
 	}
 
 	@Test
 	public void setBuyPriceFundValidationTest()
 	{
-		Assert.assertFalse(tradeBuy.setBuyPrice("AB12345678", 1, 50, 500, stockDb, userDb, tradeDb));
+		Assert.assertFalse(iTradeBuy.setBuyPrice("AB12345678", 1, 50, 500, iStockDb, iUserDb, iTradeDb));
 	}
 
 	@Test
 	public void setBuyPriceQuantityValidationTest()
 	{
-		Assert.assertFalse(tradeBuy.setBuyPrice("AB12345678", 1, 500, 500, stockDb, userDb, tradeDb));
+		Assert.assertFalse(iTradeBuy.setBuyPrice("AB12345678", 1, 500, 500, iStockDb, iUserDb, iTradeDb));
 	}
 
 	@Test
 	public void createSetBuyPriceTradeDetailsPositiveTest()
 	{
-		Assert.assertTrue(tradeBuy.createSetBuyPriceTradeDetails(stockDb, tradeFirst, 13.0f));
+		Assert.assertTrue(iTradeBuy.createSetBuyPriceTradeDetails(iStockDb, tradeFirst, 13.0f));
 		Assert.assertEquals("ABC", tradeFirst.getSymbol());
 		Assert.assertEquals("ISE", tradeFirst.getSegment());
 		Assert.assertEquals(TradeType.BUY, tradeFirst.getBuySell());
@@ -104,7 +104,7 @@ public class TradeBuyTest
 	@Test
 	public void createSetBuyPriceTradeDetailsNegativeTest()
 	{
-		Assert.assertTrue(tradeBuy.createSetBuyPriceTradeDetails(stockDb, tradeSecond, 0f));
+		Assert.assertTrue(iTradeBuy.createSetBuyPriceTradeDetails(iStockDb, tradeSecond, 0f));
 		Assert.assertNull(tradeSecond.getSymbol());
 		Assert.assertNull(tradeSecond.getSegment());
 		Assert.assertEquals(TradeType.BUY, tradeSecond.getBuySell());

@@ -13,8 +13,8 @@ public class StockPriceAlogrithmTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	private IStockPriceAlgorithm stockPriceAlgorithm = null;
-	private IStockPriceAlgorithmMock stockPriceAlgorithmMock = null;
+	private IStockPriceAlgorithm iStockPriceAlgorithm = null;
+	private IStockPriceAlgorithmMock iStockPriceAlgorithmMock = null;
 	private float currentPrice = 0.00f;
 	private float previousPrice = 0.00f;
 	private int limit = 0;
@@ -22,8 +22,8 @@ public class StockPriceAlogrithmTest
 	@Before
 	public void createStock()
 	{
-		stockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
-		stockPriceAlgorithmMock = stockFactoryMock.createStockPriceAlgorithmMock();
+		iStockPriceAlgorithm = stockFactory.createStockPriceAlgorithm();
+		iStockPriceAlgorithmMock = stockFactoryMock.createStockPriceAlgorithmMock();
 		currentPrice = 125.02f;
 		previousPrice = 42.63f;
 		limit = 10;
@@ -32,8 +32,8 @@ public class StockPriceAlogrithmTest
 	@After
 	public void destroyStock()
 	{
-		stockPriceAlgorithm = null;
-		stockPriceAlgorithmMock = null;
+		iStockPriceAlgorithm = null;
+		iStockPriceAlgorithmMock = null;
 		currentPrice = 0.00f;
 		previousPrice = 0.00f;
 		limit = 0;
@@ -42,14 +42,14 @@ public class StockPriceAlogrithmTest
 	@Test
 	public void stockPriceAlgorithmTest()
 	{
-		Assert.assertNotNull(stockPriceAlgorithm.stockPriceAlgorithm(currentPrice));
+		Assert.assertNotNull(iStockPriceAlgorithm.stockPriceAlgorithm(currentPrice));
 	}
 
 	@Test
 	public void stockPriceAlgorithmTestNotMoreThanTenPlusStockPrice()
 	{
 		float maxStockPrice = currentPrice + limit;
-		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
+		float newStockPrice = iStockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
 		Assert.assertTrue(maxStockPrice >= newStockPrice);
 	}
 
@@ -57,7 +57,7 @@ public class StockPriceAlogrithmTest
 	public void stockPriceAlgorithmTestNotLessThanTenMinusStockPrice()
 	{
 		float minStockPrice = currentPrice - limit;
-		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
+		float newStockPrice = iStockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
 		Assert.assertTrue(minStockPrice <= newStockPrice);
 	}
 
@@ -65,7 +65,7 @@ public class StockPriceAlogrithmTest
 	public void stockPriceAlgorithmTestNegativeNumber()
 	{
 		currentPrice = -25.00f;
-		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
+		float newStockPrice = iStockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
 		Assert.assertTrue(newStockPrice >= 0.00f);
 	}
 
@@ -73,7 +73,7 @@ public class StockPriceAlogrithmTest
 	public void stockPriceAlgorithmTestZero()
 	{
 		currentPrice = 0.00f;
-		float newStockPrice = stockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
+		float newStockPrice = iStockPriceAlgorithm.stockPriceAlgorithm(currentPrice);
 		Assert.assertTrue(newStockPrice >= 0.00f);
 	}
 
@@ -81,14 +81,14 @@ public class StockPriceAlogrithmTest
 	public void stockPricePercentIncreaseDecreaseTest()
 	{
 		currentPrice = 47.89f;
-		float percent = stockPriceAlgorithm.stockPricePercentIncreaseDecrease(currentPrice, previousPrice);
+		float percent = iStockPriceAlgorithm.stockPricePercentIncreaseDecrease(currentPrice, previousPrice);
 		Assert.assertEquals(percent, 12.34f, 0);
 	}
 
 	@Test
 	public void generateStockPriceTest()
 	{
-		boolean isStockPriceGenerated = stockPriceAlgorithmMock.generateStockPrice();
+		boolean isStockPriceGenerated = iStockPriceAlgorithmMock.generateStockPrice();
 		Assert.assertEquals(true, isStockPriceGenerated);
 	}
 }

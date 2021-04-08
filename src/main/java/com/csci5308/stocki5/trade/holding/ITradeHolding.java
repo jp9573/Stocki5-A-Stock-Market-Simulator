@@ -9,5 +9,5 @@ import java.util.List;
 @Service
 public interface ITradeHolding
 {
-	public List<IHolding> fetchUserHoldings(String userCode, ITradeDb tradeDbInterface, IStockDb stockDbInterface);
+	public List<IHolding> fetchUserHoldings(String userCode, ITradeDb iTradeDb, IStockDb iStockDb);
 }

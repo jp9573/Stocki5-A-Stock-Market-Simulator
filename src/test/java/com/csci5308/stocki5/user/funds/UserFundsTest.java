@@ -1,45 +1,51 @@
 package com.csci5308.stocki5.user.funds;
 
-import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UserFundsTest {
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 
-    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
-    UserAbstractFactory userFactory = UserAbstractFactory.instance();
-    IUserDb userDbMock = null;
-    IUserFunds userFunds = null;
+public class UserFundsTest
+{
 
-    @Before
-    public void createObjects() {
-        userDbMock = userFactoryMock.createUserDbMock();
-        userFunds = userFactory.createUserFunds();
-        userFunds.setResetFundAmount(10000);
-    }
+	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
+	IUserDb iUserDbMock = null;
+	IUserFunds iUserFunds = null;
 
-    @After
-    public void destroyObjects() {
-        userDbMock = null;
-        userFunds = null;
-    }
+	@Before
+	public void createObjects()
+	{
+		iUserDbMock = userFactoryMock.createUserDbMock();
+		iUserFunds = userFactory.createUserFunds();
+		iUserFunds.setResetFundAmount(10000);
+	}
 
-    @Test
-    public void resetFundsTest() {
-        IUser user = userDbMock.getUser("AB1234567");
-        boolean resetStatus = userFunds.resetFunds(user, userDbMock);
-        Assert.assertTrue(resetStatus);
-    }
+	@After
+	public void destroyObjects()
+	{
+		iUserDbMock = null;
+		iUserFunds = null;
+	}
 
-    @Test
-    public void resetFundsNegativeTest() {
-        IUser user = userDbMock.getUser("AB123456");
-        boolean resetStatus = userFunds.resetFunds(user, userDbMock);
-        Assert.assertFalse(resetStatus);
-    }
+	@Test
+	public void resetFundsTest()
+	{
+		IUser user = iUserDbMock.getUser("AB1234567");
+		boolean resetStatus = iUserFunds.resetFunds(user, iUserDbMock);
+		Assert.assertTrue(resetStatus);
+	}
+
+	@Test
+	public void resetFundsNegativeTest()
+	{
+		IUser user = iUserDbMock.getUser("AB123456");
+		boolean resetStatus = iUserFunds.resetFunds(user, iUserDbMock);
+		Assert.assertFalse(resetStatus);
+	}
 }
