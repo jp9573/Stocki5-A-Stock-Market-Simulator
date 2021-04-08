@@ -7,29 +7,29 @@ import org.junit.Test;
 
 public class DbConnectionTest
 {
-	private IDbConnectionMock iDbConnection = null;
+	private IDbConnectionMock iDbConnectionMock = null;
 
 	@Before
 	public void createObjects()
 	{
-		iDbConnection = DbConnectionMock.instance();
+		iDbConnectionMock = DbConnectionMock.instance();
 	}
 
 	@After
 	public void destroyObject()
 	{
-		iDbConnection = null;
+		iDbConnectionMock = null;
 	}
 
 	@Test
 	public void createConnectionTest()
 	{
-		Assert.assertEquals(true, iDbConnection.createConnection());
+		Assert.assertEquals(true, iDbConnectionMock.createConnection());
 	}
 
 	@Test
 	public void closeConnectionTest()
 	{
-		Assert.assertEquals(true, iDbConnection.closeConnection());
+		Assert.assertEquals(true, iDbConnectionMock.closeConnection());
 	}
 }

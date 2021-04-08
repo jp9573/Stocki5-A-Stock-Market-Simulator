@@ -1,19 +1,21 @@
 package com.csci5308.stocki5.stock.fetch;
 
+import java.security.Principal;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockDbGainersLosers;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class StockFetchController
@@ -35,13 +37,16 @@ public class StockFetchController
 	{
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
-		List<IStock> stocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
+		
+		List<IStock> iStocks = iStockFetch.fetchUserStocks(iStockDb, userDb, principal.getName());
 		List<IStock> topGainersStocks = iStockFetch.fetchTopGainerStocks(iStockDbGainersLosers, userDb, principal.getName());
 		List<IStock> topLosersStocks = iStockFetch.fetchTopLoserStocks(iStockDbGainersLosers, userDb, principal.getName());
-		model.addObject(STOCKS, stocks);
+		
+		model.addObject(STOCKS, iStocks);
 		model.addObject(GAINERS, topGainersStocks);
 		model.addObject(LOSERS, topLosersStocks);
 		model.setViewName("stocks");
+		
 		return model;
 	}
 }

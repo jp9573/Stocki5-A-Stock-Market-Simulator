@@ -27,6 +27,6 @@ public abstract class UserAbstractFactoryMock
 	public abstract IUserDb createUserDbMock();
 
 	public abstract IUserOtpDb createUserOtpDbMock();
-	
+
 	public abstract IAuthenticationProviderMock createUserAuthenticationMock();
 }

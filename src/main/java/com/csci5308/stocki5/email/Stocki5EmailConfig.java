@@ -16,34 +16,41 @@ public class Stocki5EmailConfig implements IStocki5EmailConfig
 	private String password;
 	private int port;
 
-	private Stocki5EmailConfig(){
+	private Stocki5EmailConfig()
+	{
 		readProperties();
 	}
 
-	public static IStocki5EmailConfig instance(){
-		if(null == uniqueInstance){
+	public static IStocki5EmailConfig instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new Stocki5EmailConfig();
 		}
 		return uniqueInstance;
 	}
 
 	@Override
-	public String getHost() {
+	public String getHost()
+	{
 		return host;
 	}
 
 	@Override
-	public String getUsername() {
+	public String getUsername()
+	{
 		return username;
 	}
 
 	@Override
-	public String getPassword() {
+	public String getPassword()
+	{
 		return password;
 	}
 
 	@Override
-	public int getPort() {
+	public int getPort()
+	{
 		return port;
 	}
 

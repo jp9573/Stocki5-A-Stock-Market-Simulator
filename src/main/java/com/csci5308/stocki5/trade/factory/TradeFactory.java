@@ -34,9 +34,9 @@ public class TradeFactory extends TradeAbstractFactory
 	}
 
 	@Override
-	public ITrade createTradeWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb stockDbInterface, IUserDb userDbInterface)
+	public ITrade createTradeWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb iStockDb, IUserDb iUserDb)
 	{
-		return new Trade(userCode, stockId, buySell, quantity, status, stockDbInterface, userDbInterface);
+		return new Trade(userCode, stockId, buySell, quantity, status, iStockDb, iUserDb);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class TradeFactory extends TradeAbstractFactory
 	{
 		return new TradeBuy();
 	}
-	
+
 	@Override
 	public IObserver createTradeBuyPendingObserver()
 	{
@@ -56,7 +56,7 @@ public class TradeFactory extends TradeAbstractFactory
 	{
 		return new TradeSell();
 	}
-	
+
 	@Override
 	public IObserver createTradeSellPendingObserver()
 	{
@@ -76,9 +76,9 @@ public class TradeFactory extends TradeAbstractFactory
 	}
 
 	@Override
-	public IHolding createHoldingWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb stockDbInterface, IUserDb userDbInterface, boolean isHolding)
+	public IHolding createHoldingWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb iStockDb, IUserDb iUserDb, boolean isHolding)
 	{
-		return new Holding(userCode, stockId, buySell, quantity, status, stockDbInterface, userDbInterface, isHolding);
+		return new Holding(userCode, stockId, buySell, quantity, status, iStockDb, iUserDb, isHolding);
 	}
 
 	@Override

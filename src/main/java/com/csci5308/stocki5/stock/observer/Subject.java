@@ -10,7 +10,7 @@ public abstract class Subject
 
 	public Subject()
 	{
-			observers = new ArrayList<IObserver>();	
+		observers = new ArrayList<>();
 	}
 
 	public void attach(IObserver observer)

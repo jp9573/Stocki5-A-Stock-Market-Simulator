@@ -1,49 +1,50 @@
 package com.csci5308.stocki5.stock.price;
 
-import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+
 public class StockSchedulerTest
 {
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	private IStockSchedulerMock stockSchedulerMock = null;
+	private IStockSchedulerMock iStockSchedulerMock = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockSchedulerMock = stockFactoryMock.createStockSchedulerMock();
+		iStockSchedulerMock = stockFactoryMock.createStockSchedulerMock();
 	}
 
 	@After
 	public void destriyObjects()
 	{
-		stockSchedulerMock = null;
+		iStockSchedulerMock = null;
 	}
 
 	@Test
 	public void scheduleGenerateStockPriceTest()
 	{
-		Assert.assertEquals(true, stockSchedulerMock.scheduleGenerateStockPrice());
+		Assert.assertEquals(true, iStockSchedulerMock.scheduleGenerateStockPrice());
 	}
 
 	@Test
 	public void scheduleStockBodTest()
 	{
-		Assert.assertEquals(true, stockSchedulerMock.scheduleStockBod());
+		Assert.assertEquals(true, iStockSchedulerMock.scheduleStockBod());
 	}
 
 	@Test
 	public void scheduleStockEodTest()
 	{
-		Assert.assertEquals(true, stockSchedulerMock.scheduleStockEod());
+		Assert.assertEquals(true, iStockSchedulerMock.scheduleStockEod());
 	}
 
 	@Test
 	public void scheduleStockClosingPriceTest()
 	{
-		Assert.assertEquals(true, stockSchedulerMock.scheduleStockClosingPrice());
+		Assert.assertEquals(true, iStockSchedulerMock.scheduleStockClosingPrice());
 	}
 }
