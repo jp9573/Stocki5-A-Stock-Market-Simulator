@@ -12,7 +12,9 @@ public abstract class StockAbstractFactoryMock
 {
 	private static StockAbstractFactoryMock uniqueInstance = null;
 
-	protected StockAbstractFactoryMock(){ }
+	protected StockAbstractFactoryMock()
+	{
+	}
 
 	public static StockAbstractFactoryMock instance()
 	{
@@ -24,16 +26,16 @@ public abstract class StockAbstractFactoryMock
 	}
 
 	public abstract IStockDb createStockDbMock();
-	
+
 	public abstract IStockDbGainersLosers createStockDbGainersLosersMock();
-	
+
 	public abstract IStockHistoryDb createStockHistoryDbMock();
 
 	public abstract IStockSchedulerMock createStockSchedulerMock();
-	
+
 	public abstract IStockPriceAlgorithmMock createStockPriceAlgorithmMock();
-	
+
 	public abstract Subject createStockPriceSubjectMock();
-	
+
 	public abstract IObserverMock createStockMaintainHistoryObserverMock();
 }

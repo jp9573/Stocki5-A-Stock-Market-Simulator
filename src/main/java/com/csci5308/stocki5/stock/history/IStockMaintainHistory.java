@@ -9,5 +9,5 @@ import java.util.List;
 @Service
 public interface IStockMaintainHistory
 {
-	public boolean maintainStocksHistory(List<IStock> stocks, int noOfVersions, IStockHistoryDb iStockHistoryDb);
+	public boolean maintainStocksHistory(List<IStock> iStocks, int noOfVersions, IStockHistoryDb iStockHistoryDb);
 }

@@ -1,67 +1,68 @@
 package com.csci5308.stocki5.stock.prediction;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.db.IStockHistoryDb;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
-import com.csci5308.stocki5.stock.factory.StockFactory;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.db.IStockHistoryDb;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 
 public class StockPredictionTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	private IStockHistoryDb stockHistoryDbMock = null;
-	private IStockPrediction stockPrediction = null;
-	private List<IStock> stocks = null;
+	private IStockHistoryDb iStockHistoryDbMock = null;
+	private IStockPrediction iStockPrediction = null;
+	private List<IStock> iStocks = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockHistoryDbMock = stockFactoryMock.createStockHistoryDbMock();
-		stockPrediction = stockFactory.createStockPrediction();
+		iStockHistoryDbMock = stockFactoryMock.createStockHistoryDbMock();
+		iStockPrediction = stockFactory.createStockPrediction();
 	}
 
 	@After
 	public void destroyObjects()
 	{
-		stockHistoryDbMock = null;
-		stockPrediction = null;
-		stocks = null;
+		iStockHistoryDbMock = null;
+		iStockPrediction = null;
+		iStocks = null;
 	}
 
 	@Test
 	public void predictStockValueTest()
 	{
-		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "ABC");
-		Assert.assertEquals(13, stocks.get(0).getPrice(), 0);
+		iStocks = iStockPrediction.predictStockValue(iStockHistoryDbMock, "ABC");
+		Assert.assertEquals(13, iStocks.get(0).getPrice(), 0);
 	}
 
 	@Test
 	public void predictStockValueTestNull()
 	{
-		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "DEF");
-		Assert.assertNull(stocks);
+		iStocks = iStockPrediction.predictStockValue(iStockHistoryDbMock, "DEF");
+		Assert.assertNull(iStocks);
 	}
 
 	@Test
 	public void predictStockValueTestNegative()
 	{
-		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "ABC");
-		stocks.get(0).setPrice(-13);
-		Assert.assertEquals(-13, stocks.get(0).getPrice(), 0);
+		iStocks = iStockPrediction.predictStockValue(iStockHistoryDbMock, "ABC");
+		iStocks.get(0).setPrice(-13);
+		Assert.assertEquals(-13, iStocks.get(0).getPrice(), 0);
 	}
 
 	@Test
 	public void predictStockValueTestZero()
 	{
-		stocks = stockPrediction.predictStockValue(stockHistoryDbMock, "ABC");
-		stocks.get(0).setPrice(0);
-		Assert.assertEquals(0, stocks.get(0).getPrice(), 0);
+		iStocks = iStockPrediction.predictStockValue(iStockHistoryDbMock, "ABC");
+		iStocks.get(0).setPrice(0);
+		Assert.assertEquals(0, iStocks.get(0).getPrice(), 0);
 	}
 }

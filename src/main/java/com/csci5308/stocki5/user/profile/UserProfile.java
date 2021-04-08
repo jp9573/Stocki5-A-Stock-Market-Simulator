@@ -24,18 +24,18 @@ public class UserProfile implements IUserProfile
 		return uniqueInstance;
 	}
 
-	public boolean updateUser(IUserDb dbInterface, IUser user, String dateOfBirth)
+	public boolean updateUser(IUserDb iUserDb, IUser iUser, String dateOfBirth)
 	{
-		boolean isDobValid = user.validateDateOfBirth(dateOfBirth);
-		boolean isUserValid = user.validate();
+		boolean isDobValid = iUser.validateDateOfBirth(dateOfBirth);
+		boolean isUserValid = iUser.validate();
 		if (isDobValid && isUserValid)
 		{
-			boolean isUserUpdated = dbInterface.updateUser(user);
+			boolean isUserUpdated = iUserDb.updateUser(iUser);
 			if (isUserUpdated)
 			{
 				return true;
 			}
-			user.setValidityMessage(UPDATE_USER_ERROR_MESSAGE);
+			iUser.setValidityMessage(UPDATE_USER_ERROR_MESSAGE);
 		}
 		return false;
 	}

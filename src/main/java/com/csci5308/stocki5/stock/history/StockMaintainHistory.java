@@ -15,7 +15,7 @@ import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 @Service
 public class StockMaintainHistory implements IStockMaintainHistory
 {
-	static final String MAINTAIN_HISTORY_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	private static final String MAINTAIN_HISTORY_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	private static IStockMaintainHistory uniqueInstance = null;
 
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();

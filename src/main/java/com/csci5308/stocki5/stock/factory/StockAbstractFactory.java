@@ -21,7 +21,9 @@ public abstract class StockAbstractFactory
 {
 	private static StockAbstractFactory uniqueInstance = null;
 
-	protected StockAbstractFactory (){ }
+	protected StockAbstractFactory()
+	{
+	}
 
 	public static StockAbstractFactory instance()
 	{
@@ -51,13 +53,13 @@ public abstract class StockAbstractFactory
 	public abstract IStockHistoryDb createStockHistoryDb();
 
 	public abstract IStockMaintainHistory createStockMaintainHistory();
-	
+
 	public abstract IObserver createStockMaintainHistoryObserver();
 
 	public abstract IStockPrediction createStockPrediction();
 
 	public abstract IStockPriceAlgorithm createStockPriceAlgorithm();
-	
+
 	public abstract Subject createStockPriceSubject();
 
 	public abstract IStockPriceEod createStockPriceEod();

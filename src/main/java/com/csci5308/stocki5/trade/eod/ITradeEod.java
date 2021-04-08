@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ITradeEod
 {
-	public boolean markFailedBuyOrder(ITradeDb dbInterface);
+	public boolean markFailedBuyOrder(ITradeDb iTradeDb);
 	
-	public boolean markFailedSellOrder(ITradeDb dbInterface);
+	public boolean markFailedSellOrder(ITradeDb iTradeDb);
 }

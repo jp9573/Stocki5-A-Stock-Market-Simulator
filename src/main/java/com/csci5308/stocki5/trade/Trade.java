@@ -1,17 +1,16 @@
 package com.csci5308.stocki5.trade;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.user.IUser;
 import com.csci5308.stocki5.user.db.IUserDb;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Trade implements ITrade
 {
-
 	private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("##.00");
 	private final String DATE_FORMAT = "ddMMyyyyHHmmss";
 
@@ -28,23 +27,23 @@ public class Trade implements ITrade
 	protected double totalSellPrice;
 	private TradeStatus status;
 	private Date tradeDate;
-	protected IStockDb stockDbInterface;
-	protected IUserDb userDbInterface;
+	protected IStockDb iStockDb;
+	protected IUserDb iUserDb;
 
 	public Trade()
 	{
 
 	}
 
-	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb stockDbInterface, IUserDb userDbInterface)
+	public Trade(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb iStockDb, IUserDb iUserDb)
 	{
 		this.userCode = userCode;
 		this.stockId = stockId;
 		this.buySell = buySell;
 		this.quantity = quantity;
 		this.status = status;
-		this.stockDbInterface = stockDbInterface;
-		this.userDbInterface = userDbInterface;
+		this.iStockDb = iStockDb;
+		this.iUserDb = iUserDb;
 	}
 
 	public String getTradeNumber()
@@ -174,22 +173,22 @@ public class Trade implements ITrade
 
 	public IStockDb getStockDbInterface()
 	{
-		return stockDbInterface;
+		return iStockDb;
 	}
 
-	public void setStockDbInterface(IStockDb stockDbInterface)
+	public void setStockDbInterface(IStockDb iStockDb)
 	{
-		this.stockDbInterface = stockDbInterface;
+		this.iStockDb = iStockDb;
 	}
 
 	public IUserDb getUserDbInterface()
 	{
-		return userDbInterface;
+		return iUserDb;
 	}
 
-	public boolean isFundSufficient(IUserDb userDbInterface)
+	public boolean isFundSufficient(IUserDb iUserDb)
 	{
-		this.userDbInterface = userDbInterface;
+		this.iUserDb = iUserDb;
 		IUser user = this.getUserDbInterface().getUser(this.userCode);
 		boolean isSufficient = user.getFunds() >= this.getTotalBuyPrice();
 		return isSufficient;
@@ -213,40 +212,6 @@ public class Trade implements ITrade
 				this.totalSellPrice = this.getQuantity() * this.getSellPrice();
 			}
 			return true;
-		} catch (Exception e)
-		{
-			return false;
-		}
-	}
-
-	public boolean createSetBuyPriceTradeDetails(float buyPrice)
-	{
-		try
-		{
-			IStock iStock = this.getStockDbInterface().getStock(this.getStockId());
-			this.symbol = iStock.getSymbol();
-			this.segment = iStock.getSegment();
-			this.buyPrice = buyPrice;
-			this.totalBuyPrice = this.getQuantity() * this.getBuyPrice();
-			return true;
-		} catch (Exception e)
-		{
-			return false;
-		}
-	}
-
-	public boolean createSetSellPriceTradeDetails(float sellPrice)
-	{
-		try
-		{
-			IStock iStock = this.getStockDbInterface().getStock(this.getStockId());
-			this.symbol = iStock.getSymbol();
-			this.segment = iStock.getSegment();
-
-			this.sellPrice = sellPrice;
-			this.totalSellPrice = this.getQuantity() * this.getSellPrice();
-			return true;
-
 		} catch (Exception e)
 		{
 			return false;

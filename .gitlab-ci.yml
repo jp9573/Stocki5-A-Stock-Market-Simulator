@@ -44,6 +44,6 @@ deploy_release:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_PROD --api-key=$HEROKU_API_KEY_PROD
   only:
-    - release/0.3.0
+    - release/1.0.0
   tags:
     - dalfcs_docker_kvm

@@ -18,16 +18,15 @@ public class StockScheduler implements IStockScheduler
 	private final String MARKET_STOP_TIMING = "0 0 18 * * ?";
 	private final String EOD_TIMING = "0 5 18 * * ?";
 
-	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
-	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
-
 	Subject stockPriceSubject;
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
+	IObserver stockMaintainHistoryObserver = stockFactory.createStockMaintainHistoryObserver();
 	IStockPriceEod iStockPriceEod = stockFactory.createStockPriceEod();
 	IStockDb iStockDb = stockFactory.createStockDb();
 
+	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 	IObserver tradeBuyPendingObserver = tradeFactory.createTradeBuyPendingObserver();
 	IObserver tradeSellPendingObserver = tradeFactory.createTradeSellPendingObserver();
-	IObserver stockMaintainHistoryObserver = stockFactory.createStockMaintainHistoryObserver();
 
 	private static boolean isMarketHours = true;
 

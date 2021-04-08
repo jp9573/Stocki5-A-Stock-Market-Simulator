@@ -1,63 +1,72 @@
 package com.csci5308.stocki5.user.forgotcode;
 
-import com.csci5308.stocki5.user.db.IUserDb;
-import com.csci5308.stocki5.user.factory.UserAbstractFactory;
-import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UserForgotCodeTest {
-    UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
-    UserAbstractFactory userFactory = UserAbstractFactory.instance();
-    IUserForgotCode userForgotCode = null;
-    IUserDb userDb = null;
+import com.csci5308.stocki5.user.db.IUserDb;
+import com.csci5308.stocki5.user.factory.UserAbstractFactory;
+import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 
-    @Before
-    public void createObjects() {
-        userDb = userFactoryMock.createUserDbMock();
-        userForgotCode = userFactory.createUserForgotCode();
-    }
+public class UserForgotCodeTest
+{
+	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
+	IUserForgotCode iUserForgotCode = null;
+	IUserDb iUserDb = null;
 
-    @After
-    public void destroyObjects() {
-        userDb = null;
-        userForgotCode = null;
-    }
+	@Before
+	public void createObjects()
+	{
+		iUserDb = userFactoryMock.createUserDbMock();
+		iUserForgotCode = userFactory.createUserForgotCode();
+	}
 
-    @Test
-    public void getUserCodeTestBothEmpty() {
-        String email = "";
-        String dob = "";
-        Assert.assertNull(userForgotCode.getUserCode(email, dob, userDb));
-    }
+	@After
+	public void destroyObjects()
+	{
+		iUserDb = null;
+		iUserForgotCode = null;
+	}
 
-    @Test
-    public void getUserCodeTestOnlyEmail() {
-        String email = "test@example.com";
-        String dob = "";
-        Assert.assertNull(userForgotCode.getUserCode(email, dob, userDb));
-    }
+	@Test
+	public void getUserCodeTestBothEmpty()
+	{
+		String email = "";
+		String dob = "";
+		Assert.assertNull(iUserForgotCode.getUserCode(email, dob, iUserDb));
+	}
 
-    @Test
-    public void getUserCodeTestOnlyDob() {
-        String email = "";
-        String dob = "2000-10-12";
-        Assert.assertNull(userForgotCode.getUserCode(email, dob, userDb));
-    }
+	@Test
+	public void getUserCodeTestOnlyEmail()
+	{
+		String email = "test@example.com";
+		String dob = "";
+		Assert.assertNull(iUserForgotCode.getUserCode(email, dob, iUserDb));
+	}
 
-    @Test
-    public void getUserCodeTestBothCorrect() {
-        String email = "test@example.com";
-        String dob = "2000-10-12";
-        Assert.assertEquals("TEST12456789", userForgotCode.getUserCode(email, dob, userDb));
-    }
+	@Test
+	public void getUserCodeTestOnlyDob()
+	{
+		String email = "";
+		String dob = "2000-10-12";
+		Assert.assertNull(iUserForgotCode.getUserCode(email, dob, iUserDb));
+	}
 
-    @Test
-    public void getUserCodeTestWrongDob() {
-        String email = "test@example.com";
-        String dob = "2001-10-12";
-        Assert.assertNull(userForgotCode.getUserCode(email, dob, userDb));
-    }
+	@Test
+	public void getUserCodeTestBothCorrect()
+	{
+		String email = "test@example.com";
+		String dob = "2000-10-12";
+		Assert.assertEquals("TEST12456789", iUserForgotCode.getUserCode(email, dob, iUserDb));
+	}
+
+	@Test
+	public void getUserCodeTestWrongDob()
+	{
+		String email = "test@example.com";
+		String dob = "2001-10-12";
+		Assert.assertNull(iUserForgotCode.getUserCode(email, dob, iUserDb));
+	}
 }

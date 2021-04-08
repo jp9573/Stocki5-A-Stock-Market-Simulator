@@ -13,44 +13,44 @@ public class StockTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	private IStockDb stockDbMock = null;
-	private IStock stock = null;
+	private IStockDb iStockDbMock = null;
+	private IStock iStock = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockDbMock = stockFactoryMock.createStockDbMock();
-		stock = stockFactory.createStockById(1, stockDbMock);
+		iStockDbMock = stockFactoryMock.createStockDbMock();
+		iStock = stockFactory.createStockById(1, iStockDbMock);
 	}
 
 	@After
 	public void destroyObjects()
 	{
-		stockDbMock = null;
-		stock = null;
+		iStockDbMock = null;
+		iStock = null;
 	}
 
 	@Test
 	public void testCalculateHighAndLow()
 	{
-		stock.calculateHighAndLow(16);
-		stock.calculateHighAndLow(40);
-		Assert.assertEquals(40, stock.getHigh(), 0);
+		iStock.calculateHighAndLow(16);
+		iStock.calculateHighAndLow(40);
+		Assert.assertEquals(40, iStock.getHigh(), 0);
 	}
 
 	@Test
 	public void testCalculateHighAndLowNegative()
 	{
-		stock.calculateHighAndLow(30);
-		stock.calculateHighAndLow(-40);
-		Assert.assertEquals(-40, stock.getLow(), 0);
+		iStock.calculateHighAndLow(30);
+		iStock.calculateHighAndLow(-40);
+		Assert.assertEquals(-40, iStock.getLow(), 0);
 	}
 
 	@Test
 	public void testCalculateHighAndLowZero()
 	{
-		stock.calculateHighAndLow(30);
-		stock.calculateHighAndLow(0);
-		Assert.assertEquals(0, stock.getLow(), 0);
+		iStock.calculateHighAndLow(30);
+		iStock.calculateHighAndLow(0);
+		Assert.assertEquals(0, iStock.getLow(), 0);
 	}
 }

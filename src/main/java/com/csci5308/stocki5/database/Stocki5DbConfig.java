@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
 public class Stocki5DbConfig implements IStocki5DbConfig
 {
 	private static final String PROPERTIES_FILE = "config.properties";
@@ -22,30 +21,36 @@ public class Stocki5DbConfig implements IStocki5DbConfig
 		readProperties();
 	}
 
-	public static IStocki5DbConfig instance(){
-		if(null == uniqueInstance){
+	public static IStocki5DbConfig instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new Stocki5DbConfig();
 		}
 		return uniqueInstance;
 	}
 
 	@Override
-	public String getDriver() {
+	public String getDriver()
+	{
 		return driver;
 	}
 
 	@Override
-	public String getDatabase() {
+	public String getDatabase()
+	{
 		return database;
 	}
 
 	@Override
-	public String getUsername() {
+	public String getUsername()
+	{
 		return username;
 	}
 
 	@Override
-	public String getPassword() {
+	public String getPassword()
+	{
 		return password;
 	}
 

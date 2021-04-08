@@ -91,7 +91,7 @@ public class StockFactory extends StockAbstractFactory
 	{
 		return StockMaintainHistory.instance();
 	}
-	
+
 	@Override
 	public IObserver createStockMaintainHistoryObserver()
 	{

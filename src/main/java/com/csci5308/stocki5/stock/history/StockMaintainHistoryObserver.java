@@ -15,23 +15,22 @@ import com.csci5308.stocki5.stock.observer.IObserver;
 public class StockMaintainHistoryObserver implements IObserver
 {
 	private static final String PROPERTIES_FILE = "config.properties";
-	
+
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	IStockMaintainHistory iStockMaintainHistory = stockFactory.createStockMaintainHistory();
 	IStockHistoryDb iStockHistoryDb = stockFactory.createStockHistoryDb();
 	IStockDb iStockDb = stockFactory.createStockDb();
-	
+
 	private int noOfVersions;
-	
 
 	@Override
 	public void update()
 	{
 		readProperties();
-		List<IStock> stocks = iStockDb.getStocks();
-		iStockMaintainHistory.maintainStocksHistory(stocks, noOfVersions, iStockHistoryDb);
+		List<IStock> iStocks = iStockDb.getStocks();
+		iStockMaintainHistory.maintainStocksHistory(iStocks, noOfVersions, iStockHistoryDb);
 	}
-	
+
 	private void readProperties()
 	{
 		InputStream inputStream = null;

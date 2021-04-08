@@ -7,26 +7,30 @@ import org.junit.Test;
 
 import com.csci5308.stocki5.user.factory.UserAbstractFactory;
 
-public class UserOtpTest {
-    IUserOtp userOtp;
-    UserAbstractFactory userFactory = UserAbstractFactory.instance();
+public class UserOtpTest
+{
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
+	IUserOtp iUserOtp;
 
-    @Before
-    public void createObjects() {
-        userOtp = userFactory.createUserOtp();
-        userOtp.setOtpMinValue(999);
-        userOtp.setOtpMaxValue(10000);
-    }
+	@Before
+	public void createObjects()
+	{
+		iUserOtp = userFactory.createUserOtp();
+		iUserOtp.setOtpMinValue(999);
+		iUserOtp.setOtpMaxValue(10000);
+	}
 
-    @After
-    public void destroyObjects() {
-        userOtp = null;
-    }
+	@After
+	public void destroyObjects()
+	{
+		iUserOtp = null;
+	}
 
-    @Test
-    public void generateOtpForUserTest() {
-        String userCode = "TEST1234";
-        userOtp.generateOtpForUser(userCode);
-        Assert.assertTrue(userOtp.getOtp() > userOtp.getOtpMinValue() && userOtp.getOtp() < userOtp.getOtpMaxValue());
-    }
+	@Test
+	public void generateOtpForUserTest()
+	{
+		String userCode = "TEST1234";
+		iUserOtp.generateOtpForUser(userCode);
+		Assert.assertTrue(iUserOtp.getOtp() > iUserOtp.getOtpMinValue() && iUserOtp.getOtp() < iUserOtp.getOtpMaxValue());
+	}
 }

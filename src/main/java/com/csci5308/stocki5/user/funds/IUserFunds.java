@@ -1,12 +1,14 @@
 package com.csci5308.stocki5.user.funds;
 
-import com.csci5308.stocki5.user.IUser;
-import com.csci5308.stocki5.user.db.IUserDb;
 import org.springframework.stereotype.Service;
 
-@Service
-public interface IUserFunds {
-    public boolean resetFunds(IUser user, IUserDb userDb);
+import com.csci5308.stocki5.user.IUser;
+import com.csci5308.stocki5.user.db.IUserDb;
 
-    public void setResetFundAmount(int resetFundAmount);
+@Service
+public interface IUserFunds
+{
+	public boolean resetFunds(IUser iUser, IUserDb iUserDb);
+
+	public void setResetFundAmount(int resetFundAmount);
 }
