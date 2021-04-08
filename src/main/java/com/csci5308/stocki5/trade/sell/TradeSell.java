@@ -25,20 +25,20 @@ public class TradeSell implements ITradeSell
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
 
 	@Override
-	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
+	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb iStockDb, IUserDb iUserDb, ITradeDb iTradeDb, String tradeBuyNumber)
 	{
-		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.SELL, quantity, TradeStatus.EXECUTED, stockDbInterface, userDbInterface);
-		boolean isTradeDetailsCreated = trade.createTradeDetails();
-		boolean isTradeNumberGenerated = trade.generateTradeNumber();
+		ITrade iTrade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.SELL, quantity, TradeStatus.EXECUTED, iStockDb, iUserDb);
+		boolean isTradeDetailsCreated = iTrade.createTradeDetails();
+		boolean isTradeNumberGenerated = iTrade.generateTradeNumber();
 		if (isTradeDetailsCreated && isTradeNumberGenerated)
 		{
-			IUser user = userDbInterface.getUser(userCode);
-			double updatedFunds = user.getFunds() + trade.getTotalSellPrice();
-			boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
+			IUser iUser = iUserDb.getUser(userCode);
+			double updatedFunds = iUser.getFunds() + iTrade.getTotalSellPrice();
+			boolean isHoldingRemoved = iTradeDb.removeHolding(tradeBuyNumber);
 			if (isHoldingRemoved)
 			{
-				userDbInterface.updateUserFunds(userCode, Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
-				return tradeDbInterface.insertTrade(trade, false);
+				iUserDb.updateUserFunds(userCode, Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
+				return iTradeDb.insertTrade(iTrade, false);
 			}
 			return false;
 		}
@@ -46,15 +46,15 @@ public class TradeSell implements ITradeSell
 	}
 
 	@Override
-	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber)
+	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb iStockDb, IUserDb iUserDb, ITradeDb iTradeDb, String tradeBuyNumber)
 	{
-		ITrade trade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.SELL, quantity, TradeStatus.PENDING, stockDbInterface, userDbInterface);
-		boolean isSetSellPriceTradeDetailsCreated = createSetSellPriceTradeDetails(stockDbInterface, trade, sellPrice);
-		boolean isTradeNumberGenerated = trade.generateTradeNumber();
-		boolean isHoldingRemoved = tradeDbInterface.removeHolding(tradeBuyNumber);
+		ITrade iTrade = tradeFactory.createTradeWithData(userCode, stockId, TradeType.SELL, quantity, TradeStatus.PENDING, iStockDb, iUserDb);
+		boolean isSetSellPriceTradeDetailsCreated = createSetSellPriceTradeDetails(iStockDb, iTrade, sellPrice);
+		boolean isTradeNumberGenerated = iTrade.generateTradeNumber();
+		boolean isHoldingRemoved = iTradeDb.removeHolding(tradeBuyNumber);
 		if (isSetSellPriceTradeDetailsCreated && isTradeNumberGenerated && isHoldingRemoved)
 		{
-			return tradeDbInterface.insertTrade(trade, false);
+			return iTradeDb.insertTrade(iTrade, false);
 		}
 		return false;
 	}
@@ -62,43 +62,42 @@ public class TradeSell implements ITradeSell
 	@Override
 	public void sellPendingTrades(ITradeDb dbInterface, IUserDb userDbInterface, List<IStock> stocks)
 	{
-		List<ITrade> trades = dbInterface.getPendingTrades(TradeType.SELL);
+		List<ITrade> iTrades = dbInterface.getPendingTrades(TradeType.SELL);
 		Map<String, Float> stocksMap = stocks.stream().collect(Collectors.toMap(IStock::getSymbol, IStock::getPrice));
 
-		Iterator<ITrade> tradesIterator = trades.iterator();
+		Iterator<ITrade> tradesIterator = iTrades.iterator();
 		while (tradesIterator.hasNext())
 		{
-			ITrade trade = tradesIterator.next();
-			if (trade.getSellPrice() <= stocksMap.get(trade.getSymbol()))
+			ITrade iTrade = tradesIterator.next();
+			if (iTrade.getSellPrice() <= stocksMap.get(iTrade.getSymbol()))
 			{
-				dbInterface.removeHoldingForAutoSell(trade.getUserCode(), trade.getStockId(), trade.getQuantity());
-				trade.setSellPrice(stocksMap.get(trade.getSymbol()));
-				trade.setTotalSellPrice(trade.getQuantity() * trade.getSellPrice());
-				trade.setStatus(TradeStatus.EXECUTED);
-				boolean isTradeUpdated = dbInterface.updateSellTrade(trade, false);
+				dbInterface.removeHoldingForAutoSell(iTrade.getUserCode(), iTrade.getStockId(), iTrade.getQuantity());
+				iTrade.setSellPrice(stocksMap.get(iTrade.getSymbol()));
+				iTrade.setTotalSellPrice(iTrade.getQuantity() * iTrade.getSellPrice());
+				iTrade.setStatus(TradeStatus.EXECUTED);
+				boolean isTradeUpdated = dbInterface.updateSellTrade(iTrade, false);
 				if (isTradeUpdated)
 				{
-					IUser user = userDbInterface.getUser(trade.getUserCode());
-					double updatedFunds = user.getFunds() + (stocksMap.get(trade.getSymbol()) * trade.getQuantity());
-					userDbInterface.updateUserFunds(trade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
+					IUser iUser = userDbInterface.getUser(iTrade.getUserCode());
+					double updatedFunds = iUser.getFunds() + (stocksMap.get(iTrade.getSymbol()) * iTrade.getQuantity());
+					userDbInterface.updateUserFunds(iTrade.getUserCode(), Double.parseDouble(DECIMAL_FORMAT.format(updatedFunds)));
 				}
 			}
 		}
 	}
 
-	public boolean createSetSellPriceTradeDetails(IStockDb stockDbInterface, ITrade trade, float sellPrice)
+	public boolean createSetSellPriceTradeDetails(IStockDb stockDbInterface, ITrade iTrade, float sellPrice)
 	{
 		try
 		{
-			IStock iStock = stockDbInterface.getStock(trade.getStockId());
-			trade.setSymbol(iStock.getSymbol());
-			trade.setSegment(iStock.getSegment());
-			trade.setSellPrice(sellPrice);
+			IStock iStock = stockDbInterface.getStock(iTrade.getStockId());
+			iTrade.setSymbol(iStock.getSymbol());
+			iTrade.setSegment(iStock.getSegment());
+			iTrade.setSellPrice(sellPrice);
 
-			double totalSellPrice = trade.getQuantity() * trade.getSellPrice();
-			trade.setTotalSellPrice(totalSellPrice);
+			double totalSellPrice = iTrade.getQuantity() * iTrade.getSellPrice();
+			iTrade.setTotalSellPrice(totalSellPrice);
 			return true;
-
 		} catch (Exception e)
 		{
 			return false;

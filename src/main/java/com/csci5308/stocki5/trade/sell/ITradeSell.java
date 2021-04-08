@@ -12,12 +12,11 @@ import java.util.List;
 @Service
 public interface ITradeSell
 {
+	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb iStockDb, IUserDb iUserDb, ITradeDb iTradeDb, String tradeBuyNumber);
 
-	public boolean sellStock(String userCode, int stockId, int quantity, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber);
+	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb iStockDb, IUserDb iUserDb, ITradeDb iTradeDb, String tradeBuyNumber);
 
-	public boolean setSellPrice(String userCode, int stockId, int quantity, float sellPrice, IStockDb stockDbInterface, IUserDb userDbInterface, ITradeDb tradeDbInterface, String tradeBuyNumber);
+	public void sellPendingTrades(ITradeDb iTradeDb, IUserDb iUserDb, List<IStock> iStocks);
 
-	public void sellPendingTrades(ITradeDb dbInterface, IUserDb userDbInterface, List<IStock> stocks);
-	
-	public boolean createSetSellPriceTradeDetails(IStockDb stockDbInterface, ITrade trade, float sellPrice);
+	public boolean createSetSellPriceTradeDetails(IStockDb iStockDb, ITrade iTrade, float sellPrice);
 }

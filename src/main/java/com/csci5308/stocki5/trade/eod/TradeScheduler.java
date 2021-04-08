@@ -13,20 +13,18 @@ public class TradeScheduler implements ITradeScheduler
 	private final String CRON_TIMING = "0 5 18 * * ?";
 
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
-
 	ITradeEod iTradeEod = tradeFactory.createTradeEod();
-	ITradeDb tradeDb = tradeFactory.createTradeDb();
+	ITradeDb iTradeDb = tradeFactory.createTradeDb();
 
 	@Scheduled(cron = CRON_TIMING)
 	public boolean scheduleFailedBuyOrder()
 	{
-		return iTradeEod.markFailedBuyOrder(tradeDb);
+		return iTradeEod.markFailedBuyOrder(iTradeDb);
 	}
 
 	@Scheduled(cron = CRON_TIMING)
 	public boolean scheduleFailedSellOrder()
 	{
-		return iTradeEod.markFailedSellOrder(tradeDb);
+		return iTradeEod.markFailedSellOrder(iTradeDb);
 	}
-
 }

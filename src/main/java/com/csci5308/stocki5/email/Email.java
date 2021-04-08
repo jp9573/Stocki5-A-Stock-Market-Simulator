@@ -16,14 +16,19 @@ public class Email implements IEmail
 
 	private static IEmail uniqueInstance = null;
 
-	private Email(){ }
+	private Email()
+	{
+	}
 
-	public static IEmail instance(){
-		if(null == uniqueInstance){
+	public static IEmail instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new Email();
 		}
 		return uniqueInstance;
 	}
+
 	IStocki5EmailConfig stocki5EmailConfig = Stocki5EmailConfig.instance();
 
 	private JavaMailSender configureJavaMail()

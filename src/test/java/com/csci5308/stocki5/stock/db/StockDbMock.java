@@ -1,14 +1,14 @@
 package com.csci5308.stocki5.stock.db;
 
-import com.csci5308.stocki5.stock.IStock;
-import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
-import com.csci5308.stocki5.stock.factory.StockFactory;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.csci5308.stocki5.stock.IStock;
+import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
+import com.csci5308.stocki5.stock.factory.StockFactory;
 
 public class StockDbMock implements IStockDb
 {
@@ -16,26 +16,30 @@ public class StockDbMock implements IStockDb
 
 	StockAbstractFactory stockFactory = StockFactory.instance();
 
-	private StockDbMock(){ }
+	private StockDbMock()
+	{
+	}
 
-	public static IStockDb instance(){
-		if(null == uniqueInstance){
+	public static IStockDb instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new StockDbMock();
 		}
 		return uniqueInstance;
 	}
-	
+
 	@Override
 	public IStock getStock(int stockId)
 	{
-		IStock stock = stockFactory.createStock();
+		IStock iStock = stockFactory.createStock();
 		if (stockId == 1)
 		{
-			stock.setSymbol("ABC");
-			stock.setOpen(10);
-			stock.setHigh(15);
-			stock.setLow(5);
-			stock.setPrice(13);
+			iStock.setSymbol("ABC");
+			iStock.setOpen(10);
+			iStock.setHigh(15);
+			iStock.setLow(5);
+			iStock.setPrice(13);
 			Date latestTradingDate = null;
 			try
 			{
@@ -44,23 +48,23 @@ public class StockDbMock implements IStockDb
 			{
 				e.printStackTrace();
 			}
-			stock.setLatestTradingDate(latestTradingDate);
-			stock.setPreviousClose(8);
-			stock.setSegment("ISE");
+			iStock.setLatestTradingDate(latestTradingDate);
+			iStock.setPreviousClose(8);
+			iStock.setSegment("ISE");
 		}
-		return stock;
+		return iStock;
 	}
 
 	@Override
 	public List<IStock> getStocks()
 	{
-		List<IStock> stocks = new ArrayList<>();
-		IStock stock = stockFactory.createStock();
-		stock.setSymbol("ABC");
-		stock.setOpen(10);
-		stock.setHigh(15);
-		stock.setLow(5);
-		stock.setPrice(13);
+		List<IStock> iStocks = new ArrayList<>();
+		IStock iStock = stockFactory.createStock();
+		iStock.setSymbol("ABC");
+		iStock.setOpen(10);
+		iStock.setHigh(15);
+		iStock.setLow(5);
+		iStock.setPrice(13);
 		Date latestTradingDate = null;
 		try
 		{
@@ -69,15 +73,15 @@ public class StockDbMock implements IStockDb
 		{
 			e.printStackTrace();
 		}
-		stock.setLatestTradingDate(latestTradingDate);
-		stock.setPreviousClose(8);
-		stock.setSegment("ISE");
-		stocks.add(stock);
-		return stocks;
+		iStock.setLatestTradingDate(latestTradingDate);
+		iStock.setPreviousClose(8);
+		iStock.setSegment("ISE");
+		iStocks.add(iStock);
+		return iStocks;
 	}
 
 	@Override
-	public boolean updateStocks(List<IStock> stocks)
+	public boolean updateStocks(List<IStock> iStocks)
 	{
 		return true;
 	}
@@ -85,13 +89,13 @@ public class StockDbMock implements IStockDb
 	@Override
 	public List<IStock> getStocksBySegment(String segments)
 	{
-		List<IStock> stocks = new ArrayList<>();
-		IStock stock = stockFactory.createStock();
-		stock.setSymbol("ABC");
-		stock.setOpen(10);
-		stock.setHigh(15);
-		stock.setLow(5);
-		stock.setPrice(13);
+		List<IStock> iStocks = new ArrayList<>();
+		IStock iStock = stockFactory.createStock();
+		iStock.setSymbol("ABC");
+		iStock.setOpen(10);
+		iStock.setHigh(15);
+		iStock.setLow(5);
+		iStock.setPrice(13);
 		Date latestTradingDate = null;
 		try
 		{
@@ -100,22 +104,22 @@ public class StockDbMock implements IStockDb
 		{
 			e.printStackTrace();
 		}
-		stock.setLatestTradingDate(latestTradingDate);
-		stock.setPreviousClose(8);
+		iStock.setLatestTradingDate(latestTradingDate);
+		iStock.setPreviousClose(8);
 		if (segments.contains("FOREX"))
 		{
-			stock.setSegment("FOREX");
+			iStock.setSegment("FOREX");
 		} else if (segments.contains("IDE"))
 		{
-			stock.setSegment("IDE");
+			iStock.setSegment("IDE");
 		} else if (segments.contains("IDE"))
 		{
-			stock.setSegment("IDE");
+			iStock.setSegment("IDE");
 		} else if (segments.contains("ISE"))
 		{
-			stock.setSegment("ISE");
+			iStock.setSegment("ISE");
 		}
-		stocks.add(stock);
-		return stocks;
+		iStocks.add(iStock);
+		return iStocks;
 	}
 }

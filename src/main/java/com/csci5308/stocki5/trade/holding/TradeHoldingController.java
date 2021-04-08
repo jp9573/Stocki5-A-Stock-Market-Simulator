@@ -19,10 +19,10 @@ public class TradeHoldingController
 	public static final String ORDERS = "orders";
 
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
-	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
-
 	ITradeHolding iTradeHolding = tradeFactory.createTradeHolding();
-	ITradeDb tradeDb = tradeFactory.createTradeDb();
+	ITradeDb iTradeDb = tradeFactory.createTradeDb();
+
+	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 	IStockDb iStockDb = stockFactory.createStockDb();
 
 	@RequestMapping(value = { "/holdings" }, method = RequestMethod.GET)
@@ -31,7 +31,7 @@ public class TradeHoldingController
 		Principal principal = request.getUserPrincipal();
 		ModelAndView model = new ModelAndView();
 
-		List<IHolding> orders = iTradeHolding.fetchUserHoldings(principal.getName(), tradeDb, iStockDb);
+		List<IHolding> orders = iTradeHolding.fetchUserHoldings(principal.getName(), iTradeDb, iStockDb);
 		model.addObject(ORDERS, orders);
 		model.setViewName("holdings");
 

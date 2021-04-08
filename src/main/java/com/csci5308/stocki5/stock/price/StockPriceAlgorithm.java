@@ -29,9 +29,9 @@ public class StockPriceAlgorithm implements IStockPriceAlgorithm
 	private int priceChangeLimit;
 
 	TradeAbstractFactory tradeFactory = TradeAbstractFactory.instance();
-	UserAbstractFactory userFactory = UserAbstractFactory.instance();
-
 	ITradeDb tradeDb = tradeFactory.createTradeDb();
+
+	UserAbstractFactory userFactory = UserAbstractFactory.instance();
 	IUserDb userDb = userFactory.createUserDb();
 
 	private StockPriceAlgorithm()

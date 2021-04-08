@@ -26,8 +26,8 @@ public class TradeSellPendingObserver implements IObserver
 	@Override
 	public void update()
 	{
-		List<IStock> stocks = iStockDb.getStocks();
-		iTradeSell.sellPendingTrades(iTradeDb, iUserDb, stocks);
+		List<IStock> iStocks = iStockDb.getStocks();
+		iTradeSell.sellPendingTrades(iTradeDb, iUserDb, iStocks);
 	}
 
 }

@@ -10,8 +10,7 @@ import java.util.List;
 @Repository
 public interface ITradeDb
 {
-
-	public boolean insertTrade(ITrade trade, boolean isHolding);
+	public boolean insertTrade(ITrade iTrade, boolean isHolding);
 
 	public List<ITrade> getTodaysTradeByUserCode(String userCode);
 
@@ -19,11 +18,11 @@ public interface ITradeDb
 
 	public List<ITrade> getPendingTrades(TradeType tradeType);
 
-	public boolean updateBuyTrade(ITrade trade, boolean isHolding);
+	public boolean updateBuyTrade(ITrade iTrade, boolean isHolding);
 
-	public boolean updateSellTrade(ITrade trade, boolean isHolding);
+	public boolean updateSellTrade(ITrade iTrade, boolean isHolding);
 
-	public boolean updateBulkTradeStatus(List<ITrade> trades);
+	public boolean updateBulkTradeStatus(List<ITrade> iTrades);
 
 	public boolean removeHolding(String tradeNumber);
 
