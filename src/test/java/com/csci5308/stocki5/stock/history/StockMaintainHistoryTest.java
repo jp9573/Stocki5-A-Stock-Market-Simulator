@@ -1,49 +1,50 @@
 package com.csci5308.stocki5.stock.history;
 
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.csci5308.stocki5.stock.IStock;
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.db.IStockHistoryDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactory;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.stock.factory.StockFactory;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
 
 public class StockMaintainHistoryTest
 {
 	StockAbstractFactory stockFactory = StockFactory.instance();
 	StockAbstractFactoryMock stockFactoryMock = StockAbstractFactoryMock.instance();
-	private IStockDb stockDbMock = null;
-	private IStockHistoryDb stockHistoryDbMock = null;
-	private IStockMaintainHistory stockMaintainHistory = null;
-	private List<IStock> stocks = null;
+	private IStockDb iStockDbMock = null;
+	private IStockHistoryDb iStockHistoryDbMock = null;
+	private IStockMaintainHistory iStockMaintainHistory = null;
+	private List<IStock> iStocks = null;
 
 	@Before
 	public void createObjects()
 	{
-		stockDbMock = stockFactoryMock.createStockDbMock();
-		stockHistoryDbMock = stockFactoryMock.createStockHistoryDbMock();
-		stockMaintainHistory = stockFactory.createStockMaintainHistory();
-		stocks = stockDbMock.getStocks();
+		iStockDbMock = stockFactoryMock.createStockDbMock();
+		iStockHistoryDbMock = stockFactoryMock.createStockHistoryDbMock();
+		iStockMaintainHistory = stockFactory.createStockMaintainHistory();
+		iStocks = iStockDbMock.getStocks();
 	}
 
 	@After
 	public void destroyObjects()
 	{
-		stockDbMock = null;
-		stockHistoryDbMock = null;
-		stockMaintainHistory = null;
-		stocks = null;
+		iStockDbMock = null;
+		iStockHistoryDbMock = null;
+		iStockMaintainHistory = null;
+		iStocks = null;
 	}
 
 	@Test
 	public void maintainStocksHistoryTest()
 	{
-		boolean isHistoryMaintained = stockMaintainHistory.maintainStocksHistory(stocks, 0, stockHistoryDbMock);
+		boolean isHistoryMaintained = iStockMaintainHistory.maintainStocksHistory(iStocks, 0, iStockHistoryDbMock);
 		Assert.assertEquals(true, isHistoryMaintained);
 	}
 }

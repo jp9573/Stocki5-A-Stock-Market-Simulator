@@ -10,7 +10,7 @@ public interface IStockHistoryDb
 {
 	public List<IStockHistory> getStockHistoryBySymbol(String symbol);
 
-	public boolean insertStocksHistory(List<IStockHistory> stocksHistory);
+	public boolean insertStocksHistory(List<IStockHistory> iStockHistories);
 
 	public boolean deleteStockHistoryLesserThanHistoryId(long historyId);
 

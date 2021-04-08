@@ -25,10 +25,14 @@ public class StockHistoryDb implements IStockHistoryDb
 	IDbConnection dbConnection = DbConnection.instance();
 	StockAbstractFactory stockFactory = StockAbstractFactory.instance();
 
-	private StockHistoryDb(){ }
+	private StockHistoryDb()
+	{
+	}
 
-	public static IStockHistoryDb instance(){
-		if(null == uniqueInstance){
+	public static IStockHistoryDb instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new StockHistoryDb();
 		}
 		return uniqueInstance;

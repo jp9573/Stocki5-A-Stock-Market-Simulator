@@ -5,67 +5,67 @@ import com.csci5308.stocki5.user.db.IUserDb;
 
 import java.util.Date;
 
-public interface ITrade {
+public interface ITrade
+{
+	public String getTradeNumber();
 
-    public String getTradeNumber();
+	public void setTradeNumber(String tradeNumber);
 
-    public void setTradeNumber(String tradeNumber);
+	public String getUserCode();
 
-    public String getUserCode();
+	public void setUserCode(String userCode);
 
-    public void setUserCode(String userCode);
+	public int getStockId();
 
-    public int getStockId();
+	public void setStockId(int stockId);
 
-    public void setStockId(int stockId);
+	public String getSymbol();
 
-    public String getSymbol();
+	public void setSymbol(String symbol);
 
-    public void setSymbol(String symbol);
+	public String getSegment();
 
-    public String getSegment();
+	public void setSegment(String segment);
 
-    public void setSegment(String segment);
+	public int getQuantity();
 
-    public int getQuantity();
+	public void setQuantity(int quantity);
 
-    public void setQuantity(int quantity);
+	public float getBuyPrice();
 
-    public float getBuyPrice();
+	public void setBuyPrice(float buyPrice);
 
-    public void setBuyPrice(float buyPrice);
+	public float getSellPrice();
 
-    public float getSellPrice();
+	public void setSellPrice(float sellPrice);
 
-    public void setSellPrice(float sellPrice);
+	public TradeType getBuySell();
 
-    public TradeType getBuySell();
+	public void setBuySell(TradeType buySell);
 
-    public void setBuySell(TradeType buySell);
+	public double getTotalBuyPrice();
 
-    public double getTotalBuyPrice();
+	public void setTotalBuyPrice(double totalBuyPrice);
 
-    public void setTotalBuyPrice(double totalBuyPrice);
+	public double getTotalSellPrice();
 
-    public double getTotalSellPrice();
+	public void setTotalSellPrice(double totalSellPrice);
 
-    public void setTotalSellPrice(double totalSellPrice);
+	public TradeStatus getStatus();
 
-    public TradeStatus getStatus();
+	public void setStatus(TradeStatus status);
 
-    public void setStatus(TradeStatus status);
+	public void setTradeDate(Date tradeDate);
 
-    public void setTradeDate(Date tradeDate);
+	public IStockDb getStockDbInterface();
 
-    public IStockDb getStockDbInterface();
+	public void setStockDbInterface(IStockDb iStockDb);
 
-    public void setStockDbInterface(IStockDb stockDbInterface);
+	public IUserDb getUserDbInterface();
 
-    public IUserDb getUserDbInterface();
+	public boolean isFundSufficient(IUserDb iUserDb);
 
-    public boolean isFundSufficient(IUserDb userDbInterface);
+	public boolean createTradeDetails();
 
-    public boolean createTradeDetails();
-
-    public boolean generateTradeNumber();
+	public boolean generateTradeNumber();
 }

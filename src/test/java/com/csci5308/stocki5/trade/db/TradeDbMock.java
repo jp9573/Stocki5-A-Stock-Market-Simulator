@@ -1,5 +1,8 @@
 package com.csci5308.stocki5.trade.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.csci5308.stocki5.stock.db.IStockDb;
 import com.csci5308.stocki5.stock.factory.StockAbstractFactoryMock;
 import com.csci5308.stocki5.trade.ITrade;
@@ -11,9 +14,6 @@ import com.csci5308.stocki5.trade.holding.IHolding;
 import com.csci5308.stocki5.user.db.IUserDb;
 import com.csci5308.stocki5.user.factory.UserAbstractFactoryMock;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TradeDbMock implements ITradeDb
 {
 
@@ -23,17 +23,21 @@ public class TradeDbMock implements ITradeDb
 	TradeAbstractFactory tradeFactory = TradeFactory.instance();
 	UserAbstractFactoryMock userFactoryMock = UserAbstractFactoryMock.instance();
 
-	private TradeDbMock() { }
+	private TradeDbMock()
+	{
+	}
 
-	public static ITradeDb instance(){
-		if(null == uniqueInstance){
+	public static ITradeDb instance()
+	{
+		if (null == uniqueInstance)
+		{
 			uniqueInstance = new TradeDbMock();
 		}
 		return uniqueInstance;
 	}
 
 	@Override
-	public boolean insertTrade(ITrade trade, boolean isHolding)
+	public boolean insertTrade(ITrade iTrade, boolean isHolding)
 	{
 		return true;
 	}
@@ -42,68 +46,68 @@ public class TradeDbMock implements ITradeDb
 	public List<ITrade> getTodaysTradeByUserCode(String userCode)
 	{
 
-		List<ITrade> tradeList = new ArrayList<>();
-		IStockDb stockDb = stockFactoryMock.createStockDbMock();
-		IUserDb userDb = userFactoryMock.createUserDbMock();
+		List<ITrade> iTrades = new ArrayList<>();
+		IStockDb iStockDb = stockFactoryMock.createStockDbMock();
+		IUserDb iUserDb = userFactoryMock.createUserDbMock();
 		if (userCode.equals("AB123456"))
 		{
-			tradeList.add(tradeFactory.createTradeWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData(userCode, 1, TradeType.SELL, 50, TradeStatus.EXECUTED, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData(userCode, 2, TradeType.BUY, 100, TradeStatus.PENDING, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData(userCode, 3, TradeType.BUY, 75, TradeStatus.EXECUTED, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData(userCode, 3, TradeType.SELL, 75, TradeStatus.FAILED, stockDb, userDb));
+			iTrades.add(tradeFactory.createTradeWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData(userCode, 1, TradeType.SELL, 50, TradeStatus.EXECUTED, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData(userCode, 2, TradeType.BUY, 100, TradeStatus.PENDING, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData(userCode, 3, TradeType.BUY, 75, TradeStatus.EXECUTED, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData(userCode, 3, TradeType.SELL, 75, TradeStatus.FAILED, iStockDb, iUserDb));
 		}
-		return tradeList;
+		return iTrades;
 	}
 
 	@Override
 	public List<IHolding> getHoldingsByUserCode(String userCode)
 	{
-		List<IHolding> holdingList = new ArrayList<>();
-		IStockDb stockDb = stockFactoryMock.createStockDbMock();
-		IUserDb userDb = userFactoryMock.createUserDbMock();
+		List<IHolding> iHoldings = new ArrayList<>();
+		IStockDb iStockDb = stockFactoryMock.createStockDbMock();
+		IUserDb iUserDb = userFactoryMock.createUserDbMock();
 		if (userCode.equals("AB123456"))
 		{
-			holdingList.add(tradeFactory.createHoldingWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, stockDb, userDb, true));
-			holdingList.add(tradeFactory.createHoldingWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, stockDb, userDb, true));
-			holdingList.add(tradeFactory.createHoldingWithData(userCode, 2, TradeType.BUY, 100, TradeStatus.EXECUTED, stockDb, userDb, true));
-			holdingList.add(tradeFactory.createHoldingWithData(userCode, 3, TradeType.BUY, 75, TradeStatus.EXECUTED, stockDb, userDb, true));
-			holdingList.add(tradeFactory.createHoldingWithData(userCode, 3, TradeType.BUY, 75, TradeStatus.EXECUTED, stockDb, userDb, true));
+			iHoldings.add(tradeFactory.createHoldingWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, iStockDb, iUserDb, true));
+			iHoldings.add(tradeFactory.createHoldingWithData(userCode, 1, TradeType.BUY, 50, TradeStatus.EXECUTED, iStockDb, iUserDb, true));
+			iHoldings.add(tradeFactory.createHoldingWithData(userCode, 2, TradeType.BUY, 100, TradeStatus.EXECUTED, iStockDb, iUserDb, true));
+			iHoldings.add(tradeFactory.createHoldingWithData(userCode, 3, TradeType.BUY, 75, TradeStatus.EXECUTED, iStockDb, iUserDb, true));
+			iHoldings.add(tradeFactory.createHoldingWithData(userCode, 3, TradeType.BUY, 75, TradeStatus.EXECUTED, iStockDb, iUserDb, true));
 		}
-		return holdingList;
+		return iHoldings;
 	}
 
 	@Override
 	public List<ITrade> getPendingTrades(TradeType tradeType)
 	{
-		List<ITrade> tradeList = new ArrayList<>();
-		IStockDb stockDb = stockFactoryMock.createStockDbMock();
-		IUserDb userDb = userFactoryMock.createUserDbMock();
+		List<ITrade> iTrades = new ArrayList<>();
+		IStockDb iStockDb = stockFactoryMock.createStockDbMock();
+		IUserDb iUserDb = userFactoryMock.createUserDbMock();
 		if (tradeType == TradeType.BUY)
 		{
-			tradeList.add(tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 50, TradeStatus.PENDING, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 50, TradeStatus.PENDING, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData("AB123456", 2, TradeType.BUY, 100, TradeStatus.PENDING, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData("AB123456", 3, TradeType.BUY, 75, TradeStatus.PENDING, stockDb, userDb));
-			tradeList.add(tradeFactory.createTradeWithData("AB123456", 3, TradeType.BUY, 75, TradeStatus.PENDING, stockDb, userDb));
+			iTrades.add(tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 50, TradeStatus.PENDING, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData("AB123456", 1, TradeType.BUY, 50, TradeStatus.PENDING, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData("AB123456", 2, TradeType.BUY, 100, TradeStatus.PENDING, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData("AB123456", 3, TradeType.BUY, 75, TradeStatus.PENDING, iStockDb, iUserDb));
+			iTrades.add(tradeFactory.createTradeWithData("AB123456", 3, TradeType.BUY, 75, TradeStatus.PENDING, iStockDb, iUserDb));
 		}
-		return tradeList;
+		return iTrades;
 	}
 
 	@Override
-	public boolean updateBuyTrade(ITrade trade, boolean isHolding)
+	public boolean updateBuyTrade(ITrade iTrade, boolean isHolding)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean updateSellTrade(ITrade trade, boolean isHolding)
+	public boolean updateSellTrade(ITrade iTrade, boolean isHolding)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean updateBulkTradeStatus(List<ITrade> trades)
+	public boolean updateBulkTradeStatus(List<ITrade> iTrades)
 	{
 		return true;
 	}

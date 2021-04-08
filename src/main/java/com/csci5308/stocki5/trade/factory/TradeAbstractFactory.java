@@ -18,43 +18,43 @@ import org.springframework.stereotype.Service;
 @Service
 public abstract class TradeAbstractFactory
 {
-    private static TradeAbstractFactory uniqueInstance = null;
+	private static TradeAbstractFactory uniqueInstance = null;
 
-    protected TradeAbstractFactory(){ }
+	protected TradeAbstractFactory()
+	{
+	}
 
-    public static TradeAbstractFactory instance()
-    {
-        if (null == uniqueInstance)
-        {
-            uniqueInstance = new TradeFactory();
-        }
-        return uniqueInstance;
-    }
+	public static TradeAbstractFactory instance()
+	{
+		if (null == uniqueInstance)
+		{
+			uniqueInstance = new TradeFactory();
+		}
+		return uniqueInstance;
+	}
 
-    public abstract ITrade createTrade();
+	public abstract ITrade createTrade();
 
-    public abstract ITrade createTradeWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb stockDbInterface, IUserDb userDbInterface);
+	public abstract ITrade createTradeWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb iStockDb, IUserDb iUserDb);
 
-    public abstract ITradeBuy createTradeBuy();
-    
-    public abstract IObserver createTradeBuyPendingObserver();
+	public abstract ITradeBuy createTradeBuy();
 
-    public abstract ITradeSell createTradeSell();
-    
-    public abstract IObserver createTradeSellPendingObserver();
+	public abstract IObserver createTradeBuyPendingObserver();
 
-    public abstract ITradeEod createTradeEod();
+	public abstract ITradeSell createTradeSell();
 
-    public abstract IHolding createHolding();
+	public abstract IObserver createTradeSellPendingObserver();
 
-    public abstract IHolding createHoldingWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status,
-                                                   IStockDb stockDbInterface, IUserDb userDbInterface, boolean isHolding);
+	public abstract ITradeEod createTradeEod();
 
-    public abstract ITradeHolding createTradeHolding();
+	public abstract IHolding createHolding();
 
-    public abstract ITradeOrder createTradeOrder();
+	public abstract IHolding createHoldingWithData(String userCode, int stockId, TradeType buySell, int quantity, TradeStatus status, IStockDb iStockDb, IUserDb iUserDb, boolean isHolding);
 
-    public abstract ITradeDb createTradeDb();
+	public abstract ITradeHolding createTradeHolding();
 
+	public abstract ITradeOrder createTradeOrder();
+
+	public abstract ITradeDb createTradeDb();
 
 }

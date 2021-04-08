@@ -8,12 +8,14 @@ import com.csci5308.stocki5.trade.eod.ITradeScheduler;
 import com.csci5308.stocki5.trade.eod.TradeEodMock;
 import com.csci5308.stocki5.trade.sell.TradeSellPendingObserverMock;
 
-public class TradeFactoryMock extends TradeAbstractFactoryMock{
+public class TradeFactoryMock extends TradeAbstractFactoryMock
+{
 
-    @Override
-    public ITradeDb createTradeDbMock() {
-        return TradeDbMock.instance();
-    }
+	@Override
+	public ITradeDb createTradeDbMock()
+	{
+		return TradeDbMock.instance();
+	}
 
 	@Override
 	public ITradeScheduler createTradeSchedulerMock()

@@ -25,9 +25,9 @@ public class TradeOrder implements ITradeOrder
 		return uniqueInstance;
 	}
 
-	public List<ITrade> fetchUserOrders(String userCode, ITradeDb tradeDbInterface)
+	public List<ITrade> fetchUserOrders(String userCode, ITradeDb iTradeDb)
 	{
-		return tradeDbInterface.getTodaysTradeByUserCode(userCode);
+		return iTradeDb.getTodaysTradeByUserCode(userCode);
 	}
 
 }

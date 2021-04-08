@@ -29,11 +29,11 @@ public class UserForgotCode implements IUserForgotCode
 		return uniqueInstance;
 	}
 
-	public String getUserCode(String email, String dob, IUserDb userDb)
+	public String getUserCode(String email, String dob, IUserDb iUserDb)
 	{
 		String result = null;
-		IUser user = userDb.getUserByEmail(email);
-		if (null == user)
+		IUser iUser = iUserDb.getUserByEmail(email);
+		if (null == iUser)
 		{
 			return result;
 		} else
@@ -41,9 +41,9 @@ public class UserForgotCode implements IUserForgotCode
 			try
 			{
 				Date dobDate = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN).parse(dob);
-				if (user.getEmailId().equals(email) && user.getDateOfBirth().compareTo(dobDate) == 0)
+				if (iUser.getEmailId().equals(email) && iUser.getDateOfBirth().compareTo(dobDate) == 0)
 				{
-					result = user.getUserCode();
+					result = iUser.getUserCode();
 					return result;
 				}
 			} catch (ParseException e)

@@ -1,15 +1,17 @@
 package com.csci5308.stocki5.user.db;
 
-import com.csci5308.stocki5.user.password.IUserOtp;
 import org.springframework.stereotype.Repository;
 
+import com.csci5308.stocki5.user.password.IUserOtp;
+
 @Repository
-public interface IUserOtpDb {
-    public boolean insertOtp(IUserOtp userOtp);
+public interface IUserOtpDb
+{
+	public boolean insertOtp(IUserOtp iUserOtp);
 
-    public IUserOtp getOtp(int otp);
+	public IUserOtp getOtp(int otp);
 
-    public boolean deleteOtp(int otp);
+	public boolean deleteOtp(int otp);
 
-    public boolean deleteOtpByUserCode(String userCode);
+	public boolean deleteOtpByUserCode(String userCode);
 }

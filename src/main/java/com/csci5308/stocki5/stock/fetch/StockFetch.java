@@ -34,45 +34,45 @@ public class StockFetch implements IStockFetch
 
 	public List<IStock> fetchUserStocks(IStockDb iStockDb, IUserDb iUserDb, String userCode)
 	{
-		IUser user = iUserDb.getUser(userCode);
-		String segments = generateStockSegmentsList(user);
+		IUser iUser = iUserDb.getUser(userCode);
+		String segments = generateStockSegmentsList(iUser);
 		List<IStock> iStocks = iStockDb.getStocksBySegment(segments);
 		return iStocks;
 	}
 
 	public List<IStock> fetchTopGainerStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode)
 	{
-		IUser user = iUserDb.getUser(userCode);
-		String segments = generateStockSegmentsList(user);
+		IUser iUser = iUserDb.getUser(userCode);
+		String segments = generateStockSegmentsList(iUser);
 		List<IStock> topStocks = iStockDbGainersLosers.getHighestPriceStocks(segments, LIMIT);
 		return topStocks;
 	}
 
 	public List<IStock> fetchTopLoserStocks(IStockDbGainersLosers iStockDbGainersLosers, IUserDb iUserDb, String userCode)
 	{
-		IUser user = iUserDb.getUser(userCode);
-		String segments = generateStockSegmentsList(user);
+		IUser iUser = iUserDb.getUser(userCode);
+		String segments = generateStockSegmentsList(iUser);
 		List<IStock> bottomStocks = iStockDbGainersLosers.getLowestPriceStocks(segments, LIMIT);
 		return bottomStocks;
 	}
 
-	public String generateStockSegmentsList(IUser user)
+	public String generateStockSegmentsList(IUser iUser)
 	{
 		List<String> segmentsList = new ArrayList<>();
-		
-		if (user.getForeignExchange() == 1)
+
+		if (iUser.getForeignExchange() == 1)
 		{
 			segmentsList.add(String.valueOf(StockSegment.FOREX));
 		}
-		if (user.getInternationalDerivativeExchange() == 1)
+		if (iUser.getInternationalDerivativeExchange() == 1)
 		{
 			segmentsList.add(String.valueOf(StockSegment.IDE));
 		}
-		if (user.getInternationalCommodityExchange() == 1)
+		if (iUser.getInternationalCommodityExchange() == 1)
 		{
 			segmentsList.add(String.valueOf(StockSegment.ICE));
 		}
-		if (user.getInternationalStockExchange() == 1)
+		if (iUser.getInternationalStockExchange() == 1)
 		{
 			segmentsList.add(String.valueOf(StockSegment.ISE));
 		}
